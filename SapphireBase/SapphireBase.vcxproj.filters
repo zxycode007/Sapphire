@@ -150,6 +150,12 @@
     <ClInclude Include="SapphireAnimable.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireAny.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireColorValue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -210,6 +216,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCommon.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireColorValue.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

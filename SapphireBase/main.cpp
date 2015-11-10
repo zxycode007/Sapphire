@@ -5,6 +5,7 @@
 #include "SapphireLogManager.h"
 #include "SapphireQMath.h"
 #include "SapphireMath.h"
+#include "SapphireAny.h"
 
 
 using namespace Sapphire;
@@ -45,6 +46,14 @@ public:
 		std::cout << ss.str() << std::endl;
 	}
 	 
+};
+
+class CustomAny : public AnyNumeric
+{
+public:
+
+	CustomAny()
+	{}
 };
 
 //函数模板的特别化
@@ -129,9 +138,20 @@ int main()
 
 	Real texp = Math::Exp(8);
 	
-	 
-	 
-	 
+	CustomAny any;
+	Any aint(12);
+	Any afloat(24.25);
+	std::cout << "CLASS ANY: aint type: " << aint.getType().name() << " afloat type :"<<afloat.getType().name()<<std::endl;
+	std::cout << "aint value = " << aint.get<int>() << std::endl;
+	
+	double f = 12.51;
+	AnyNumeric anum = f;
+	AnyNumeric anum2(12);
+	AnyNumeric anum3(anum+anum2);
+	AnyNumeric* anump = new AnyNumeric(f);
+	std::cout << " anum names :" << anum.getType().name() << std::endl;
+	std::cout << " anum2 names :" << anum2.getType().name() << std::endl;
+	std::cout << " anum3 names :" << anum3.getType().name() << std::endl;
 	printf(c);
 	getchar();
 	return 0;

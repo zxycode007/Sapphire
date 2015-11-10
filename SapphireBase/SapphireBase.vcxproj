@@ -71,8 +71,10 @@
   <ItemGroup>
     <ClInclude Include="SapphireAlignedAllocator.h" />
     <ClInclude Include="SapphireAnimable.h" />
+    <ClInclude Include="SapphireAny.h" />
     <ClInclude Include="SapphireAxisAlignedBox.h" />
     <ClInclude Include="SapphireBuildSets.h" />
+    <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
     <ClInclude Include="SapphireException.h" />
@@ -114,6 +116,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
+    <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireException.cpp" />
     <ClCompile Include="SapphireFrustum.cpp" />
