@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\threads">
+      <UniqueIdentifier>{a13ef421-db3a-4f9f-8c28-3e33dbc9f265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\memory">
+      <UniqueIdentifier>{1aaae061-d14a-4fdc-b670-26c9d461523e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\memory">
+      <UniqueIdentifier>{f072863b-22e3-48b5-9cb4-fcc48adaf2bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\math">
+      <UniqueIdentifier>{11d77b97-746e-41a0-87d2-6b948191ea62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\math">
+      <UniqueIdentifier>{2724f344-3c28-42a3-ab85-41809275ace3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SapphirePlatfrom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireBuildSets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePrerequisites.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="threads\SapphireThreadDefines.h">
+      <Filter>头文件\threads</Filter>
+    </ClInclude>
+    <ClInclude Include="threads\SapphireThreadDefinesNone.h">
+      <Filter>头文件\threads</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMemoryTracker.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireStableHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMemoryAllocatorConfig.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMemoryAllocatedObject.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMemorySTLAllocator.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMemoryStdAlloc.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireStdHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireAlignedAllocator.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireStringVector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSharedPtr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireLog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireLogManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSingleton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireHeaderPrefix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireHeaderSuffix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireException.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMath.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireQMath.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVector2.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVector3.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireQuaternion.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMatrix3.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVector4.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMatrix4.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireAxisAlignedBox.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePlane.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireRay.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSphere.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePlaneBoundedVolume.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCommon.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMovableObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireFrustum.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireAnimable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireMemoryTracker.cpp">
+      <Filter>源文件\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireMemoryAllocatedObject.cpp">
+      <Filter>源文件\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireString.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireLogManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireException.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireMath.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireQMath.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireVector2.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireMatrix3.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireVector3.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireQuaternion.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireVector4.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireMatrix4.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireAxisAlignedBox.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphirePlane.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireAlignedAllocator.cpp">
+      <Filter>源文件\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireFrustum.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCommon.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+</Project>

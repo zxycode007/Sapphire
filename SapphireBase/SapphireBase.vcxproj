@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{47FEF1F2-CE39-48FB-9EDF-770065AE680F}</ProjectGuid>
+    <RootNamespace>SapphireBase</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
+      <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="SapphireAlignedAllocator.h" />
+    <ClInclude Include="SapphireAnimable.h" />
+    <ClInclude Include="SapphireAxisAlignedBox.h" />
+    <ClInclude Include="SapphireBuildSets.h" />
+    <ClInclude Include="SapphireCommon.h" />
+    <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireException.h" />
+    <ClInclude Include="SapphireFrustum.h" />
+    <ClInclude Include="SapphireHeaderPrefix.h" />
+    <ClInclude Include="SapphireHeaderSuffix.h" />
+    <ClInclude Include="SapphireLog.h" />
+    <ClInclude Include="SapphireLogManager.h" />
+    <ClInclude Include="SapphireMath.h" />
+    <ClInclude Include="SapphireMatrix3.h" />
+    <ClInclude Include="SapphireMatrix4.h" />
+    <ClInclude Include="SapphireMemoryAllocatedObject.h" />
+    <ClInclude Include="SapphireMemoryAllocatorConfig.h" />
+    <ClInclude Include="SapphireMemoryStdAlloc.h" />
+    <ClInclude Include="SapphireMemorySTLAllocator.h" />
+    <ClInclude Include="SapphireMemoryTracker.h" />
+    <ClInclude Include="SapphireMovableObject.h" />
+    <ClInclude Include="SapphirePlane.h" />
+    <ClInclude Include="SapphirePlaneBoundedVolume.h" />
+    <ClInclude Include="SapphirePlatfrom.h" />
+    <ClInclude Include="SapphirePrerequisites.h" />
+    <ClInclude Include="SapphireQMath.h" />
+    <ClInclude Include="SapphireQuaternion.h" />
+    <ClInclude Include="SapphireRay.h" />
+    <ClInclude Include="SapphireSharedPtr.h" />
+    <ClInclude Include="SapphireSingleton.h" />
+    <ClInclude Include="SapphireSphere.h" />
+    <ClInclude Include="SapphireStableHeader.h" />
+    <ClInclude Include="SapphireStdHeader.h" />
+    <ClInclude Include="SapphireString.h" />
+    <ClInclude Include="SapphireStringVector.h" />
+    <ClInclude Include="SapphireVector2.h" />
+    <ClInclude Include="SapphireVector3.h" />
+    <ClInclude Include="SapphireVector4.h" />
+    <ClInclude Include="threads\SapphireThreadDefines.h" />
+    <ClInclude Include="threads\SapphireThreadDefinesNone.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SapphireAlignedAllocator.cpp" />
+    <ClCompile Include="SapphireAxisAlignedBox.cpp" />
+    <ClCompile Include="SapphireCommon.cpp" />
+    <ClCompile Include="SapphireException.cpp" />
+    <ClCompile Include="SapphireFrustum.cpp" />
+    <ClCompile Include="SapphireLog.cpp" />
+    <ClCompile Include="SapphireLogManager.cpp" />
+    <ClCompile Include="SapphireMath.cpp" />
+    <ClCompile Include="SapphireMatrix3.cpp" />
+    <ClCompile Include="SapphireMatrix4.cpp" />
+    <ClCompile Include="SapphireMemoryAllocatedObject.cpp" />
+    <ClCompile Include="SapphireMemoryTracker.cpp" />
+    <ClCompile Include="SapphirePlane.cpp" />
+    <ClCompile Include="SapphireQMath.cpp" />
+    <ClCompile Include="SapphireQuaternion.cpp" />
+    <ClCompile Include="SapphireString.cpp" />
+    <ClCompile Include="SapphireVector2.cpp" />
+    <ClCompile Include="SapphireVector3.cpp" />
+    <ClCompile Include="SapphireVector4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
