@@ -28,6 +28,9 @@
     <Filter Include="源文件\math">
       <UniqueIdentifier>{2724f344-3c28-42a3-ab85-41809275ace3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\renderSystem">
+      <UniqueIdentifier>{07ab50cc-4cec-412f-a402-d2539a8841aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -156,6 +159,18 @@
     <ClInclude Include="SapphireColorValue.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireShadowCaster.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireUserObjectBinding.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireFactoryObj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEdgeListBuilder.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -219,6 +234,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SapphireColorValue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireAnimable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireUserObjectBinding.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

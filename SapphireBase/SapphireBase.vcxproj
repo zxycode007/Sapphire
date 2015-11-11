@@ -77,7 +77,9 @@
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireEdgeListBuilder.h" />
     <ClInclude Include="SapphireException.h" />
+    <ClInclude Include="SapphireFactoryObj.h" />
     <ClInclude Include="SapphireFrustum.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
@@ -99,6 +101,7 @@
     <ClInclude Include="SapphireQMath.h" />
     <ClInclude Include="SapphireQuaternion.h" />
     <ClInclude Include="SapphireRay.h" />
+    <ClInclude Include="SapphireShadowCaster.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
     <ClInclude Include="SapphireSphere.h" />
@@ -106,6 +109,7 @@
     <ClInclude Include="SapphireStdHeader.h" />
     <ClInclude Include="SapphireString.h" />
     <ClInclude Include="SapphireStringVector.h" />
+    <ClInclude Include="SapphireUserObjectBinding.h" />
     <ClInclude Include="SapphireVector2.h" />
     <ClInclude Include="SapphireVector3.h" />
     <ClInclude Include="SapphireVector4.h" />
@@ -115,6 +119,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
+    <ClCompile Include="SapphireAnimable.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
@@ -131,6 +136,7 @@
     <ClCompile Include="SapphireQMath.cpp" />
     <ClCompile Include="SapphireQuaternion.cpp" />
     <ClCompile Include="SapphireString.cpp" />
+    <ClCompile Include="SapphireUserObjectBinding.cpp" />
     <ClCompile Include="SapphireVector2.cpp" />
     <ClCompile Include="SapphireVector3.cpp" />
     <ClCompile Include="SapphireVector4.cpp" />

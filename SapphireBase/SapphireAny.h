@@ -19,15 +19,15 @@ namespace Sapphire
 			: mContent(0)
 		{
 		}
-
+		//模板函数
 		template<typename ValueType>   //声明ValueType是一个参数
 		explicit Any(const ValueType & value)
-			: mContent(SAPPHIRE_NEW_T(holder<ValueType>, MEMCATEGORY_GENERAL)(value))
+			: mContent(SAPPHIRE_NEW_T(holder<ValueType>, MEMCATEGORY_GENERAL)(value))   //mContent 是holder类型，保存具体数据
 		{
 		}
 
 		Any(const Any & other)
-			: mContent(other.mContent ? other.mContent->clone() : 0)
+			: mContent(other.mContent ? other.mContent->clone() : 0)  //拷贝构造函数
 		{
 		}
 
@@ -38,6 +38,7 @@ namespace Sapphire
 
 	public: 
 
+		//进行交换
 		Any& swap(Any & rhs)
 		{
 			std::swap(mContent, rhs.mContent);

@@ -21,7 +21,7 @@ namespace Sapphire {
 		uint8 val8;
 		uint32 val32 = 0;
 
-		// Convert to 32bit pattern
+		// 转换到32位模式
 		// (RGBA = 8888)
 
 		// Red
@@ -52,7 +52,7 @@ namespace Sapphire {
 		uint8 val8;
 		uint32 val32 = 0;
 
-		// Convert to 32bit pattern
+		// 转换到32位模式
 		// (ARGB = 8888)
 
 		// Alpha
@@ -84,7 +84,7 @@ namespace Sapphire {
 		uint8 val8;
 		uint32 val32 = 0;
 
-		// Convert to 32bit pattern
+		// 转换到32位模式
 		// (ARGB = 8888)
 
 		// Blue
@@ -116,7 +116,7 @@ namespace Sapphire {
 		uint8 val8;
 		uint32 val32 = 0;
 
-		// Convert to 32bit pattern
+		// 转换到32位模式
 		// (ABRG = 8888)
 
 		// Alpha
@@ -147,7 +147,7 @@ namespace Sapphire {
 	{
 		uint32 val32 = val;
 
-		// Convert from 32bit pattern
+		// 转换到32位模式
 		// (RGBA = 8888)
 
 		// Red
@@ -171,7 +171,7 @@ namespace Sapphire {
 	{
 		uint32 val32 = val;
 
-		// Convert from 32bit pattern
+		// 转换到32位模式
 		// (ARGB = 8888)
 
 		// Alpha
@@ -195,7 +195,7 @@ namespace Sapphire {
 	{
 		uint32 val32 = val;
 
-		// Convert from 32bit pattern
+		// 转换到32位模式
 		// (ARGB = 8888)
 
 		// Blue
@@ -219,7 +219,7 @@ namespace Sapphire {
 	{
 		uint32 val32 = val;
 
-		// Convert from 32bit pattern
+		// 转换到32位模式
 		// (ABGR = 8888)
 
 		// Alpha
@@ -250,7 +250,7 @@ namespace Sapphire {
 	//---------------------------------------------------------------------
 	void ColourValue::setHSB(Real hue, Real saturation, Real brightness)
 	{
-		// wrap hue
+		// 包装色相
 		if (hue > 1.0f)
 		{
 			hue -= (int)hue;
@@ -259,7 +259,7 @@ namespace Sapphire {
 		{
 			hue += (int)hue + 1;
 		}
-		// clamp saturation / brightness
+		// 截断 饱和度/明度
 		saturation = std::min(saturation, (Real)1.0);
 		saturation = std::max(saturation, (Real)0.0);
 		brightness = std::min(brightness, (Real)1.0);
@@ -267,14 +267,14 @@ namespace Sapphire {
 
 		if (brightness == 0.0f)
 		{
-			// early exit, this has to be black
+			//这是黑色
 			r = g = b = 0.0f;
 			return;
 		}
 
 		if (saturation == 0.0f)
 		{
-			// early exit, this has to be grey
+			// 灰色
 
 			r = g = b = brightness;
 			return;
@@ -284,7 +284,7 @@ namespace Sapphire {
 		Real hueDomain = hue * 6.0f;
 		if (hueDomain >= 6.0f)
 		{
-			// wrap around, and allow mathematical errors
+			// 环绕允许数学错误
 			hueDomain = 0.0f;
 		}
 		unsigned short domain = (unsigned short)hueDomain;
@@ -346,13 +346,13 @@ namespace Sapphire {
 
 		if (Math::RealEqual(delta, 0.0f, 1e-6))
 		{
-			// grey
+			// 灰色
 			*hue = 0;
 			*saturation = 0;
 		}
 		else
 		{
-			// a colour
+			// 一个颜色
 			*saturation = delta / vMax;
 
 			Real deltaR = (((vMax - r) / 6.0f) + (delta / 2.0f)) / delta;

@@ -5,32 +5,32 @@
 
 namespace Sapphire {
 	 
-
-	typedef uint32 RGBA;
+	////32位RGBA
+	typedef uint32 RGBA; 
+	////32位ARGB
 	typedef uint32 ARGB;
+	////32位ABGR
 	typedef uint32 ABGR;
+	////32位BGRA
 	typedef uint32 BGRA;
 
-	/** Class representing colour.
+	/** 表示颜色的类
 	@remarks
-	Colour is represented as 4 components, each of which is a
-	floating-point value from 0.0 to 1.0.
+	颜色由4个分量所表示，每个分量为一个0.0到1.0的浮点值
 	@par
-	The 3 'normal' colour components are red, green and blue, a higher
-	number indicating greater amounts of that component in the colour.
-	The forth component is the 'alpha' value, which represents
-	transparency. In this case, 0.0 is completely transparent and 1.0 is
-	fully opaque.
+	这3个标准的颜色分量是红，绿，蓝， 一个更大数指定这个颜色中的这个分量有更大的份量。
+	第四个分量是‘alpha’值，它表示透明度。 0.0完全透明，1.0完全不透明。
 	*/
 	class _SapphireExport ColourValue
 	{
 	public:
+		//定义常用颜色
 		static const ColourValue ZERO;
-		static const ColourValue Black;
-		static const ColourValue White;
-		static const ColourValue Red;
-		static const ColourValue Green;
-		static const ColourValue Blue;
+		static const ColourValue Black;   //黑   
+		static const ColourValue White;    //白
+		static const ColourValue Red;      //红
+		static const ColourValue Green;     //绿
+		static const ColourValue Blue;        //蓝
 
 		explicit ColourValue(float red = 1.0f,
 			float green = 1.0f,
@@ -43,38 +43,38 @@ namespace Sapphire {
 
 		float r, g, b, a;
 
-		/** Retrieves colour as RGBA.
+		/** 返回RGBA
 		*/
 		RGBA getAsRGBA(void) const;
 
-		/** Retrieves colour as ARGB.
+		/** 返回ARGB
 		*/
 		ARGB getAsARGB(void) const;
 
-		/** Retrieves colour as BGRA.
+		/**返回BGRA
 		*/
 		BGRA getAsBGRA(void) const;
 
-		/** Retrieves colours as ABGR */
+		/** 返回ABGR */
 		ABGR getAsABGR(void) const;
 
-		/** Sets colour as RGBA.
+		/** 设置 RGBA.
 		*/
 		void setAsRGBA(const RGBA val);
 
-		/** Sets colour as ARGB.
+		/** 设置 ARGB.
 		*/
 		void setAsARGB(const ARGB val);
 
-		/** Sets colour as BGRA.
+		/**设置 BGRA.
 		*/
 		void setAsBGRA(const BGRA val);
 
-		/** Sets colour as ABGR.
+		/** 设置 ABGR.
 		*/
 		void setAsABGR(const ABGR val);
 
-		/** Clamps colour value to the range [0, 1].
+		/** 截断颜色值到范围[0,1]中
 		*/
 		void saturate(void)
 		{
@@ -99,8 +99,9 @@ namespace Sapphire {
 				a = 1;
 		}
 
-		/** As saturate, except that this colour value is unaffected and
-		the saturated colour value is returned as a copy. */
+		/** 
+		对于一个饱和度，As saturate,除这个颜色值不受影响之外和饱和颜色值作为一个拷贝返回
+		  */
 		ColourValue saturateCopy(void) const
 		{
 			ColourValue ret = *this;
@@ -108,7 +109,7 @@ namespace Sapphire {
 			return ret;
 		}
 
-		/// Array accessor operator
+		/// 数组访问器
 		inline float operator [] (const size_t i) const
 		{
 			assert(i < 4);
@@ -116,7 +117,7 @@ namespace Sapphire {
 			return *(&r + i);
 		}
 
-		/// Array accessor operator
+		///数组访问器
 		inline float& operator [] (const size_t i)
 		{
 			assert(i < 4);
@@ -124,19 +125,19 @@ namespace Sapphire {
 			return *(&r + i);
 		}
 
-		/// Pointer accessor for direct copying
+		/// 对于直接拷贝的指针访问器
 		inline float* ptr()
 		{
 			return &r;
 		}
-		/// Pointer accessor for direct copying
+		///对于直接拷贝的指针访问器
 		inline const float* ptr() const
 		{
 			return &r;
 		}
 
 
-		// arithmetic operations
+		// 数学操作
 		inline ColourValue operator + (const ColourValue& rkVector) const
 		{
 			ColourValue kSum;
@@ -224,7 +225,7 @@ namespace Sapphire {
 			return kProd;
 		}
 
-		// arithmetic updates
+		 
 		inline ColourValue& operator += (const ColourValue& rkVector)
 		{
 			r += rkVector.r;
@@ -268,23 +269,23 @@ namespace Sapphire {
 			return *this;
 		}
 
-		/** Set a colour value from Hue, Saturation and Brightness.
-		@param hue Hue value, scaled to the [0,1] range as opposed to the 0-360
-		@param saturation Saturation level, [0,1]
-		@param brightness Brightness level, [0,1]
+		/** 设置色相Hue，饱和度Saturation，和明亮度Brithtness
+		@param hue 色相值, 将0-360缩放到 [0,1]范围
+		@param saturation 饱和度级别, [0,1]
+		@param brightness 明亮度级别, [0,1]
 		*/
 		void setHSB(Real hue, Real saturation, Real brightness);
 
-		/** Convert the current colour to Hue, Saturation and Brightness values.
-		@param hue Output hue value, scaled to the [0,1] range as opposed to the 0-360
-		@param saturation Output saturation level, [0,1]
-		@param brightness Output brightness level, [0,1]
+		/** 转换当前颜色到设置色相Hue，饱和度Saturation，和明亮度Brithtness值
+		@param hue 输出色相值, 将0-360缩放到 [0,1]范围
+		@param saturation 输出饱和度级别, [0,1]
+		@param brightness 输出明亮度级别, [0,1]
 		*/
 		void getHSB(Real* hue, Real* saturation, Real* brightness) const;
 
 
 
-		/** Function for writing to a stream.
+		/** 输出到一个流
 		*/
 		inline _SapphireExport friend std::ostream& operator <<
 			(std::ostream& o, const ColourValue& c)
@@ -297,6 +298,6 @@ namespace Sapphire {
 	/** @} */
 	/** @} */
 
-} // namespace
+}  
 
 #endif
