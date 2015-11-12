@@ -77,10 +77,8 @@
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
-    <ClInclude Include="SapphireEdgeListBuilder.h" />
     <ClInclude Include="SapphireException.h" />
     <ClInclude Include="SapphireFactoryObj.h" />
-    <ClInclude Include="SapphireFrustum.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
     <ClInclude Include="SapphireLog.h" />
@@ -124,7 +122,6 @@
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireException.cpp" />
-    <ClCompile Include="SapphireFrustum.cpp" />
     <ClCompile Include="SapphireLog.cpp" />
     <ClCompile Include="SapphireLogManager.cpp" />
     <ClCompile Include="SapphireMath.cpp" />

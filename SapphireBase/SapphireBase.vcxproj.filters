@@ -31,6 +31,15 @@
     <Filter Include="头文件\renderSystem">
       <UniqueIdentifier>{07ab50cc-4cec-412f-a402-d2539a8841aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\scene">
+      <UniqueIdentifier>{ea155848-d6ab-479d-9993-26f6e939bada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\rendersystem">
+      <UniqueIdentifier>{ddcf2b33-0691-4d95-917b-3ba7c2574527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\scene">
+      <UniqueIdentifier>{b9ccbc34-0bb5-48f2-8dc6-9bf1a7e3bba0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -147,9 +156,6 @@
     <ClInclude Include="SapphireMovableObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireFrustum.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireAnimable.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -167,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="SapphireFactoryObj.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireEdgeListBuilder.h">
-      <Filter>头文件\renderSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="SapphireAlignedAllocator.cpp">
       <Filter>源文件\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="SapphireFrustum.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCommon.cpp">
       <Filter>源文件</Filter>
