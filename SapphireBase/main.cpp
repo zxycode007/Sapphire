@@ -6,6 +6,7 @@
 #include "SapphireQMath.h"
 #include "SapphireMath.h"
 #include "SapphireAny.h"
+#include "SapphireVertex.h"
 
 
 using namespace Sapphire;
@@ -60,8 +61,40 @@ public:
 //Singleton的静态变量msSingleton做初始化  T  class<T>::xxx = xxx;
 template<> CustomSingleTest*  Singleton<CustomSingleTest>::msSingleton = 0;
 
+
+void TestSVertex();
+
+void TestSTL()
+{
+	std::list<int> lis;
+	lis.push_back(5);
+	lis.push_back(8);
+	lis.push_back(1);
+	std::list<int>::iterator it0 = lis.begin();
+	while (it0 != lis.end())
+	{
+		int a = *it0;
+		it0++;
+		std::cout << a << std::endl;
+	}
+	std::vector<UserData> v;
+	UserData u1;
+	u1.age = 16;
+	u1.name = "dasd";
+	v.push_back(u1);
+	v.push_back(u1);
+	v.push_back(u1);
+	v.push_back(u1);
+	std::vector<UserData>::iterator it = v.begin()+3;
+	UserData u2 = v.at(0);
+	std::cout << u2.name << std::endl;
+	std::cout << "TEST STL"<<v.size() << std::endl;
+ 
+}
+
 int main()
 {
+	TestSTL();
 	
 	int v = SAPPHIRE_COMP_VER;
 
@@ -102,7 +135,7 @@ int main()
 	LogManager::getSingletonPtr()->getDefaultLog()->removeListener(listener);
 	delete listener;
  
-	SAPPHIRE_DELETE lm;
+
 
 	CustomSingleTest * stst1 = new CustomSingleTest(1);
 
@@ -152,7 +185,25 @@ int main()
 	std::cout << " anum names :" << anum.getType().name() << std::endl;
 	std::cout << " anum2 names :" << anum2.getType().name() << std::endl;
 	std::cout << " anum3 names :" << anum3.getType().name() << std::endl;
+
+	TestSVertex();
+	int ara[2];
+	ara[1] = 5;
+	ara[0] = 1;
 	printf(c);
 	getchar();
+	
+	
+	SAPPHIRE_DELETE lm;
 	return 0;
 } 
+
+
+
+void TestSVertex()
+{
+	SVertex vs;
+	vs.setTexCoord(0, Vector2(0.15, 0.56));
+	LogManager::getSingletonPtr()->getDefaultLog()->logMessage("vs Test");
+	
+}

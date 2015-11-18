@@ -109,6 +109,7 @@ namespace Sapphire
 			return *this;
 		}
 
+
 		inline bool operator == (const Vector4& rkVector) const
 		{
 			return (x == rkVector.x &&

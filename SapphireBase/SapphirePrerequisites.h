@@ -197,15 +197,28 @@ namespace Sapphire
 	//静态堆对象分配
 #define SAPPHIRE_DEFINE_STATIC_LOCAL(type, name, arguments) static type& name = *new type arguments
 
-	typedef unsigned char uchar;
-	typedef unsigned short ushort;
-	typedef unsigned int uint;
-	typedef unsigned long ulong;
+	typedef unsigned char UCHAR;
+	typedef unsigned short USHORT;
+	typedef unsigned int UINT;
+	typedef unsigned long ULONG;
+	typedef int SINT;
+	typedef __int32 SINT32;
+	typedef __int64 SINT64;
+	typedef unsigned __int64 UINT64;
+	typedef unsigned __int32 UINT32;
+	
 
-	//多线程定义支持
+
+#if SAPPHIRE_WCHAR_T_STRINGS == 0
+	typedef char S_CHAR;
+#else
+	typedef wchar_t S_CHAR;
+#endif
+
+		//多线程定义支持
 #include "threads\SapphireThreadDefines.h"
 
-	////////////////////////预定义类////////////////////////////////
+////////////////////////预定义类////////////////////////////////
 	
 	class Math;
 	class Vector2;
@@ -222,6 +235,8 @@ namespace Sapphire
 	class Matrix3;
 	class Matrix4;
 	class AxisAlignedBox;
+	class Rectangle;
+	
 	
 	
 }

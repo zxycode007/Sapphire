@@ -255,6 +255,8 @@ namespace Sapphire
 	typedef GeometryAllocatedObject		VertexDataAlloc;
 	typedef RenderSysAllocatedObject	ViewportAlloc;
 	typedef SceneCtlAllocatedObject		LodAlloc;
+	typedef GeneralAllocatedObject		SceneAlloc;
+	typedef GeneralAllocatedObject		VertexAlloc;
 
 	// ÈÝÆ÷
 	// ÓÉtypedef STLAllocator<T, DefaultAllocPolicy, Category> TAlloc;¶¨Òå

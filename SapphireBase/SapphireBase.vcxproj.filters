@@ -40,6 +40,12 @@
     <Filter Include="源文件\scene">
       <UniqueIdentifier>{b9ccbc34-0bb5-48f2-8dc6-9bf1a7e3bba0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\core">
+      <UniqueIdentifier>{6a1aa86f-633d-4707-ae05-0907a076a37f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{db63cf6e-bdc2-4c4b-8b9d-4d9d4b5c71a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -153,19 +159,10 @@
     <ClInclude Include="SapphireCommon.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireMovableObject.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireAnimable.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireAny.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SapphireColorValue.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireShadowCaster.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SapphireUserObjectBinding.h">
@@ -173,6 +170,36 @@
     </ClInclude>
     <ClInclude Include="SapphireFactoryObj.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVertex.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMesh.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVertexBufferBase.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePrimitiveType.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireScenesManager.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireKeyMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireRectangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDimension2D.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePath.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireETerrianElements.h">
+      <Filter>头文件\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -234,9 +261,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SapphireColorValue.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SapphireAnimable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SapphireUserObjectBinding.cpp">

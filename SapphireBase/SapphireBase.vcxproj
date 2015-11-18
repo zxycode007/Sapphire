@@ -70,17 +70,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="SapphireAlignedAllocator.h" />
-    <ClInclude Include="SapphireAnimable.h" />
     <ClInclude Include="SapphireAny.h" />
     <ClInclude Include="SapphireAxisAlignedBox.h" />
     <ClInclude Include="SapphireBuildSets.h" />
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireDimension2D.h" />
+    <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
     <ClInclude Include="SapphireFactoryObj.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
+    <ClInclude Include="SapphireKeyMap.h" />
     <ClInclude Include="SapphireLog.h" />
     <ClInclude Include="SapphireLogManager.h" />
     <ClInclude Include="SapphireMath.h" />
@@ -91,15 +93,18 @@
     <ClInclude Include="SapphireMemoryStdAlloc.h" />
     <ClInclude Include="SapphireMemorySTLAllocator.h" />
     <ClInclude Include="SapphireMemoryTracker.h" />
-    <ClInclude Include="SapphireMovableObject.h" />
+    <ClInclude Include="SapphireMesh.h" />
+    <ClInclude Include="SapphirePath.h" />
     <ClInclude Include="SapphirePlane.h" />
     <ClInclude Include="SapphirePlaneBoundedVolume.h" />
     <ClInclude Include="SapphirePlatfrom.h" />
     <ClInclude Include="SapphirePrerequisites.h" />
+    <ClInclude Include="SapphirePrimitiveType.h" />
     <ClInclude Include="SapphireQMath.h" />
     <ClInclude Include="SapphireQuaternion.h" />
     <ClInclude Include="SapphireRay.h" />
-    <ClInclude Include="SapphireShadowCaster.h" />
+    <ClInclude Include="SapphireRectangle.h" />
+    <ClInclude Include="SapphireScenesManager.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
     <ClInclude Include="SapphireSphere.h" />
@@ -111,13 +116,14 @@
     <ClInclude Include="SapphireVector2.h" />
     <ClInclude Include="SapphireVector3.h" />
     <ClInclude Include="SapphireVector4.h" />
+    <ClInclude Include="SapphireVertex.h" />
+    <ClInclude Include="SapphireVertexBufferBase.h" />
     <ClInclude Include="threads\SapphireThreadDefines.h" />
     <ClInclude Include="threads\SapphireThreadDefinesNone.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
-    <ClCompile Include="SapphireAnimable.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />

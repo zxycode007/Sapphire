@@ -42,7 +42,10 @@
 #  define SAPPHIRE_MEMORY_TRACKER_RELEASE_MODE 0
 #endif
 
-
+//定义多重纹理能支持的最大纹理层数
+#ifndef SAPPHIRE_MAX_TEXTURE_LAYERS
+#define SAPPHIRE_MAX_TEXTURE_LAYERS  16
+#endif
 
 
 /**
