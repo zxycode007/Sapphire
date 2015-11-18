@@ -1,13 +1,17 @@
 #ifndef _SAPPHIRE_SCENE_
 #define _SAPPHIRE_SCENE_
+
+
+
 #include "SapphirePrerequisites.h"
 #include "SapphireMemoryAllocatorConfig.h"
 #include "SapphireColorValue.h"
 #include "SapphireVector3.h"
+#include "SapphireFont.h"
 #include "SapphirePath.h"
 #include "SapphireETerrianElements.h"
-#include "SapphireKeyMap.h"
-#include "SapphireDimension2D.h"
+
+
 
 namespace Sapphire
 {
@@ -52,6 +56,7 @@ namespace Sapphire
 	//文件加载
 	class IReadFile;
 	class ITextire;
+	class SMaterial;
 
 	//当动画的模型网格
 	class IAnimatedMesh;
@@ -85,14 +90,21 @@ namespace Sapphire
 	class IParticleSystemSceneNode;
 	//地形场景节点
 	class ITerrainSceneNode;
+	//假的变换节点
+	class IDummyTransformationSceneNode;
+	//文本场景节点
+	class ITextSceneNode;
+	//billboard文本场景节点
+	class IBillboardTextSceneNode;
 
 
 
 	/***
 	Sapphire 的场景管理器
 	*/
-	class _SapphireExport IScenesScenesManager: public SceneAlloc
+	class _SapphireExport IScenesScenesManager : public SceneAlloc
 	{
+	public:
 
 		//获取一个带动画的模型 网格的指针，如果没有加载，先从文件加载。
 		//如果失败，返回NULL，另外网格会被丢弃
@@ -173,7 +185,7 @@ namespace Sapphire
 
 		//! 添加可以渲染的一个动画网格模型的一个场景节点 
 		/** \param mesh: 这些要显示和已加载的动画网格模型
-	    \param parent: 场景节点的父节点，如果为0则没有父节点
+		\param parent: 场景节点的父节点，如果为0则没有父节点
 		\param id: 节点的ID
 		\param position: 相对于父节点的空间位置
 		\param rotation: 初始的旋转
@@ -192,13 +204,13 @@ namespace Sapphire
 		//! 添加用于渲染的静态网格的一个场景节点（长期保留的网格）
 		/** \param mesh: 要显示的静态网格的已加载的指针
 		 \param parent: 场景节点的父节点，如果为0则没有父节点
-		\param id: 节点的ID
-		\param position: 相对于父节点的空间位置
-		\param rotation: 初始的旋转
-		\param scale: 初始的缩放
-		\param alsoAddIfMeshPointerZero: 如果传递个空指针，也添加场景节点
-		\return 指向创建的测试节点的指针.
-		*/
+		 \param id: 节点的ID
+		 \param position: 相对于父节点的空间位置
+		 \param rotation: 初始的旋转
+		 \param scale: 初始的缩放
+		 \param alsoAddIfMeshPointerZero: 如果传递个空指针，也添加场景节点
+		 \return 指向创建的测试节点的指针.
+		 */
 		virtual IMeshSceneNode* addMeshSceneNode(IMesh* mesh, ISceneNode* parent = 0, SINT id = -1,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
@@ -211,8 +223,8 @@ namespace Sapphire
 		\param waveHeight: 水波的高度
 		\param waveSpeed: 水波的速度
 		\param waveLength: 水波的长度
-		\param mesh: 要显示的水波静态网格的已加载的指针 
-		 \param parent: 场景节点的父节点，如果为0则没有父节点
+		\param mesh: 要显示的水波静态网格的已加载的指针
+		\param parent: 场景节点的父节点，如果为0则没有父节点
 		\param id: 节点的ID
 		\param position: 相对于父节点的空间位置
 		\param rotation: 初始的旋转
@@ -270,7 +282,7 @@ namespace Sapphire
 
 
 		//! 添加一个maya类型的用户控制的相机场景节点到场景图
-		/** 
+		/**
 		这是一个使用animator提供类似在MAYA3d软件的鼠标控制的相机。在应用animator后setPositon不能再支持这个相机。
 		代替的是setTarget，去修正相机这个目标这个相机的盘旋。并且setDistance去设置这个目标的当前距离，（相机的盘旋轨道半径）
 		\param parent:相机节点的父节点. 可以为空.
@@ -288,7 +300,7 @@ namespace Sapphire
 
 		//! 
 		//添加一个用animator提供了鼠标和键盘操作的FPS相机节点
-		/** 
+		/**
 		这个FPS相机计划提供一个像典型FPS射击游戏的相机行为.它用于简单的demo和原型，但不能提供一个对于商业级游戏的完整解决方案
 		它绑定相机场景节点旋转到look-at target：@see ICameraSceneNode::bindTargetAndRotation()。用这个相机，你用鼠标观察，并且用游标键来行走、
 		如果你想要改变Key布局，可以去指定自己的keymap。例如使相机控制的游标键改为wsad
@@ -315,7 +327,7 @@ namespace Sapphire
 		keyMap[7].KeyCode = KEY_KEY_D;
 
 		camera = sceneManager->addCameraSceneNodeFPS(0, 100, 500, -1, keyMap, 8);
-		 
+
 		\param parent: 相机节点的父节点. 可以为空.
 		\param rotateSpeed: 摄像机旋转的角速度, 只针对鼠标
 		\param moveSpeed: 相机单位每秒移动速度，移动有游标键控制
@@ -324,7 +336,7 @@ namespace Sapphire
 		可以在数组中一次定义多个action来绑定多个键到同一个action
 		\param keyMapSize: keymap数组中条目数量
 		\param noVerticalMovement: 设置这个选项为true，使相机只在水平平面移动，关闭垂直移动。默认为false，
-		'false', 
+		'false',
 		\param jumpSpeed: 这个相机跳跃时的移动速度
 		\param invertMouse: 设置为true的话，鼠标移动和相机移动反向，默认为false
 		\param makeActive 设置该相机为活动的一个，确定同时只能有一个活动相机、
@@ -339,7 +351,7 @@ namespace Sapphire
 
 
 		//! 添加一个动态的光源场景节点到场景图中
-		/** 
+		/**
 		这个光源将施加动态光源在场景中所有其它的场景节点上。光照材质标志：MTF_LIGHTINGk开启（默认设置到绝大部分场景节点上）
 		\param parent: 光照节点的父节点，可随父节点移动，可以为空
 		\param position: 相对于父节点的空间位置
@@ -355,7 +367,7 @@ namespace Sapphire
 
 
 		//! 在场景图中添加一个billboard 场景节点
-		/** 
+		/**
 		一个billboard是一个3d精灵： 一个2d的元素，它经常对着相机。通常用于爆炸，火焰，光晕和类似的东西
 		\param parent 该节点的父节点，可随父节点移动，可以为空
 		\param size billboard的大小，这个是一个dimension，包含长宽
@@ -383,7 +395,7 @@ namespace Sapphire
 		\param parent: 天空盒子父节点，一个天空盒子通常没有父节点，所以应该为空. 注意：给天空盒子设置一个父节点，这个盒子在绘制时不会改变
 		\param id: 节点ID
 		\return  如果成功返回一个接口的指针 */
-		virtual ISceneNode* addSkyBoxSceneNode( ITexture* top, ITexture* bottom,
+		virtual ISceneNode* addSkyBoxSceneNode(ITexture* top, ITexture* bottom,
 			ITexture* left, ITexture* right, ITexture* front,
 			ITexture* back, ISceneNode* parent = 0, SINT32 id = -1) = 0;
 
@@ -392,15 +404,15 @@ namespace Sapphire
 		//! 在场景图中添加一个天穹节点
 		/** 一个天穹是一个在内部使用一个全景纹理的大型半球体并绘制在摄像机的周围
 		\param texture: 天穹体的纹理
-		\param horiRes: 球体的一个水平层的顶点数 
-		\param vertRes: 球体的一个垂直层的顶点数 
+		\param horiRes: 球体的一个水平层的顶点数
+		\param vertRes: 球体的一个垂直层的顶点数
 		\param texturePercentage: 纹理高度的使用比例，应该在0和1之间。
 		\param spherePercentage: 球体的绘制比例，值应该在0到2之间， 1是精确的半球并且2是完整球体
 		\param radius 球体的半径
 		\param parent: 天穹的父节点,一个天穹通常没有父节点，所以应该为空。注意如果父节点被设置，这个天穹绘制不会被改变
 		\param id: 节点ID
 		\return 如果成功返回一个接口的指针 */
-		virtual ISceneNode* addSkyDomeSceneNode( ITexture* texture,
+		virtual ISceneNode* addSkyDomeSceneNode(ITexture* texture,
 			UINT32 horiRes = 16, UINT32 vertRes = 8,
 			Real texturePercentage = 0.9, Real spherePercentage = 2.0, Real radius = 1000.f,
 			ISceneNode* parent = 0, Real id = -1) = 0;
@@ -408,7 +420,7 @@ namespace Sapphire
 
 
 		//! 添加一个粒子系统节点到场景图中
-		/** 
+		/**
 		\param withDefaultEmitter: 创建一个默认工作的粒子发射器。设为true在action中看到一个粒子系统.
 		如果设置为false，你通过IParticleSystemSceneNode::setEmitter()设置一个粒子发射器
 		\param parent: 父节点，可以为空
@@ -433,7 +445,7 @@ namespace Sapphire
 		地形Patch的大小必须为2^N+1 如i.e. 8+1(9), 16+1(17), etc.
 		MaxLOD 直接依赖地形patch的大小
 		LOD 0 对于一个Patch包含在最大细节下所有的三角形索引。
-		每个Lod上升1，创建的索引-2^lod, 所以对于LOD 1， 步进是2，对于LOD 2，步进是4, 
+		每个Lod上升1，创建的索引-2^lod, 所以对于LOD 1， 步进是2，对于LOD 2，步进是4,
 		LOD 3 -8.  这个步进不大于path的大小。所以LOD 8, 和一个大小为17的patch， 会请求2^8=256个顶点索引,一个patch不可能有17的大小。
 		所以maxLOD 5，一个patch大小17（2^4=16）,LOD 1（每2个顶点） LOD2 (每4个顶点)  LOD3(每8个顶点)  LOD4（每16个顶点）
 		\param heightMapFileName: 在磁盘文件名，读取顶点数据。这应该为一个灰度缩放位图
@@ -442,14 +454,14 @@ namespace Sapphire
 		\param position: 节点的绝对位置
 		\param rotation: 节点的绝对旋转值. （没有实现）
 		\param scale: 地形缩放因子，如果你用129*129的高程图，在游戏中地形为12900*12900个游戏单位，它用缩放一种vector3( 100.0f, 100.0f, 100.0f )
-	    如果你Y缩放因子为0，那么地形会扁平化
+		如果你Y缩放因子为0，那么地形会扁平化
 		\param vertexColor: 顶点默认颜色，如果没有指定这个场景节点的纹理，那么所有顶点都会是这个颜色。 默认为白色。
 		\param maxLOD: 节点的最大LOD,如果你知道在做什么再改变它，这可能会出现奇怪的情况
 		\param patchSize: 地形的patch大小，如果你知道在做什么再改变它，这可能会出现奇怪的情况
 		\param smoothFactor: 顶点平滑因子
 		\param addAlsoIfHeightmapEmpty: 可以通过空高度图添加地形节点
 		\return 创建的场景节点的指针，如果地形没能创建，可以为空。
-	  */
+		*/
 		virtual ITerrainSceneNode* addTerrainSceneNode(
 			const path& heightMapFileName,
 			ISceneNode* parent = 0, SINT32 id = -1,
@@ -468,7 +480,7 @@ namespace Sapphire
 		\param position: 节点的绝对位置
 		\param rotation: 节点的绝对旋转值. （没有实现）
 		\param scale: 地形缩放因子，如果你用129*129的高程图，在游戏中地形为12900*12900个游戏单位，它用缩放一种vector3( 100.0f, 100.0f, 100.0f )
-	    如果你Y缩放因子为0，那么地形会扁平化
+		如果你Y缩放因子为0，那么地形会扁平化
 		\param vertexColor: 顶点默认颜色，如果没有指定这个场景节点的纹理，那么所有顶点都会是这个颜色。 默认为白色。
 		\param maxLOD: 节点的最大LOD,如果你知道在做什么再改变它，这可能会出现奇怪的情况
 		\param patchSize: 地形的patch大小，如果你知道在做什么再改变它，这可能会出现奇怪的情况
@@ -485,11 +497,70 @@ namespace Sapphire
 			SINT32 maxLOD = 5, E_TERRAIN_PATCH_SIZE patchSize = ETPS_17, SINT32 smoothFactor = 0,
 			bool addAlsoIfHeightmapEmpty = false) = 0;
 
+
+		//! 添加一个空的场景节点到场景图中
+		/** 可以用在高级变换或者场景图结构
+		\return 返回节点指针 */
+		virtual ISceneNode* addEmptySceneNode(ISceneNode* parent = 0, SINT32 id = -1) = 0;
+
+
+		//! 添加一个假变换场景节点到场景图中
+		/** 这个场景节点不会被渲染， 也不能对set/getPosition，set/getRotation 和 set/getScale作出反应。它以一个矩阵作为类似变换。
+		\return 返回节点指针 */
+		virtual IDummyTransformationSceneNode* addDummyTransformationSceneNode(
+			ISceneNode* parent = 0, SINT32 id = -1) = 0;
+
+
+		//! 添加一个文本场景节点，它显示一个2d文本到3维空间的一个位置
+		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const String* text,
+			ColourValue color = ColourValue(100, 255, 255, 255),
+			ISceneNode* parent = 0, Vector3& position = Vector3(0, 0, 0),
+			SINT32 id = -1) = 0;
+
+
+
+		//! 添加一个使用billboard的文本场景节点。这个节点会有文字在上面， 通过距离进行缩放
+		/**
+		\param font 用在billboard上的字体， 传递0用GUI环境默认的字体
+		\param text 字符串文本
+		\param parent 父节点. 0是否root节点
+		\param size billboard的宽与高
+		\param position billboards相对父节点的位置
+		\param id: 节点ID
+		\param colorTop billboard顶点颜色的最高值（默认white）
+		\param colorBottom billboard顶点颜色的最低值（默认white)
+		\return 返回节点指针 */
+		virtual IBillboardTextSceneNode* addBillboardTextSceneNode(IGUIFont* font, const String* text,
+			ISceneNode* parent = 0,
+			const  dimension2d<Real>& size = dimension2d<Real>(10.0f, 10.0f),
+			const Vector3& position = Vector3(0, 0, 0), SINT32 id = -1,
+			ColourValue colorTop = ColourValue(0xFFFFFFFF), ColourValue colorBottom = ColourValue(0xFFFFFFFF)) = 0;
+
+
+		//! 添加一个山丘平面网格到这个网格池中
+		/** .它通常用于引擎的快速测试。你可以指定在平面上有多少山丘并且它们有多高。尽管你必须为它起个名字.
+	    ,由于这个网格添加到网格池中，并且可以通过ISceneManager::getMesh()取得
+		\param name: 网格的名字，为了可以由 ISceneManager::getMesh(),它必须被指定。
+		\param tileSize: 网格的tile大小 (10.0f, 10.0f)是一个不错的值
+		\param tileCount: 指定有多少tile。 如果你指定tile大小（10.0f,10.0f）并且tileCount(10,10)
+		那么你取得一个100个tile构成的100.0f*100.0f的矩形区域
+		\param material: 这个网格的材质
+		\param hillHeight: 山丘的高度。
+		\param countHills: 山丘在平面上的数量
+		\param textureRepeatCount: 定义在x和y方向纹理重复的次数
+		return 如果创建失败返回NULL。 这个原因由于无效参数造成*/
+		virtual IAnimatedMesh* addHillPlaneMesh(const  path& name,
+			const dimension2d<Real>& tileSize, const  dimension2d<UINT32>& tileCount,
+			SMaterial* material = 0, Real hillHeight = 0.0f,
+			const dimension2d<Real>& countHills = dimension2d<Real>(0.0f, 0.0f),
+			const dimension2d<Real>& textureRepeatCount = dimension2d<Real>(1.0f, 1.0f)) = 0;
+
 	};
 
-	
+
 
 }
+
 
 
 #endif

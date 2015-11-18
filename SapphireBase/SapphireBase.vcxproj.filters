@@ -46,6 +46,9 @@
     <Filter Include="resources">
       <UniqueIdentifier>{db63cf6e-bdc2-4c4b-8b9d-4d9d4b5c71a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\gui">
+      <UniqueIdentifier>{969751c0-2c0a-43cd-826c-f564ea006df8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="SapphireETerrianElements.h">
       <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireFont.h">
+      <Filter>头文件\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

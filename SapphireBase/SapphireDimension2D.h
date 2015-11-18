@@ -1,7 +1,7 @@
 #ifndef _SAPPHIRE_DIMENSION2D_
 #define _SAPPHIRE_DIMENSION2D_
 
-#include "SapphirePrerequisites.h"
+
 
 namespace Sapphire
 {

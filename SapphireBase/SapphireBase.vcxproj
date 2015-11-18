@@ -80,6 +80,7 @@
     <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
     <ClInclude Include="SapphireFactoryObj.h" />
+    <ClInclude Include="SapphireFont.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
     <ClInclude Include="SapphireKeyMap.h" />

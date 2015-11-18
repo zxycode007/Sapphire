@@ -243,6 +243,8 @@ namespace Sapphire
 
 //在所有配置设置号以后包含标准库文件
 #include "SapphireStdHeader.h"
+#include "SapphireKeyMap.h"
+#include "SapphireDimension2D.h"
 #include "SapphireMemoryAllocatorConfig.h"
 
 
