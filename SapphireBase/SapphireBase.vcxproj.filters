@@ -207,6 +207,12 @@
     <ClInclude Include="SapphireFont.h">
       <Filter>头文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireSceneNodeTypes.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDefines.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

@@ -196,7 +196,7 @@ namespace Sapphire
 
 	//静态堆对象分配
 #define SAPPHIRE_DEFINE_STATIC_LOCAL(type, name, arguments) static type& name = *new type arguments
-
+	//重定义数据类型
 	typedef unsigned char UCHAR;
 	typedef unsigned short USHORT;
 	typedef unsigned int UINT;
@@ -206,6 +206,8 @@ namespace Sapphire
 	typedef __int64 SINT64;
 	typedef unsigned __int64 UINT64;
 	typedef unsigned __int32 UINT32;
+	typedef unsigned __int8 UINT8;
+	typedef char c8;   //8位char
 	
 
 
@@ -245,6 +247,8 @@ namespace Sapphire
 #include "SapphireStdHeader.h"
 #include "SapphireKeyMap.h"
 #include "SapphireDimension2D.h"
+#include "SapphireDefines.h";
+#include "SapphireSceneNodeTypes.h"
 #include "SapphireMemoryAllocatorConfig.h"
 
 

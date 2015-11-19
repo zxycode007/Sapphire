@@ -121,15 +121,15 @@ namespace Sapphire {
 		/** 
 		分割一个完整限定文件名到一个基本文件名到基本文件名，还有路径，扩展名
 		*/
-		static void splitFullFilename(const Sapphire::String& qualifiedName,
-			Sapphire::String& outBasename, Sapphire::String& outExtention,
-			Sapphire::String& outPath);
+		static void splitFullFilename(const String& qualifiedName,
+			String& outBasename, String& outExtention,
+			String& outPath);
 
 		/** 
 		分割一个文件名到基础文件和扩展名
 		*/
-		static void splitBaseFilename(const Sapphire::String& fullName,
-			Sapphire::String& outBasename, Sapphire::String& outExtention);
+		static void splitBaseFilename(const String& fullName,
+			String& outBasename, String& outExtention);
 
 
 		/** 

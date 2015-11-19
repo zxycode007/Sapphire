@@ -76,6 +76,7 @@
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireDefines.h" />
     <ClInclude Include="SapphireDimension2D.h" />
     <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="SapphireQuaternion.h" />
     <ClInclude Include="SapphireRay.h" />
     <ClInclude Include="SapphireRectangle.h" />
+    <ClInclude Include="SapphireSceneNodeTypes.h" />
     <ClInclude Include="SapphireScenesManager.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />

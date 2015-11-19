@@ -10,13 +10,15 @@
 #include "SapphireFont.h"
 #include "SapphirePath.h"
 #include "SapphireETerrianElements.h"
+#include "SapphireDefines.h"
+#include "SapphireSceneNodeTypes.h"
 
 
 
 namespace Sapphire
 {
 	//  对于渲染的通道枚举
-	/** 一个参数传递到场景管理器的registerNodeForRendering()方法来在节点中相对于其它节点，你打算要渲染的节点
+	/** 一个参数传递到场景管理器的registerNodeForRendering()方法来指定在绘制时这个节点中相对于其它节点的关系
 	*/
 	enum E_SCENE_NODE_RENDER_PASS
 	{
@@ -56,7 +58,10 @@ namespace Sapphire
 	//文件加载
 	class IReadFile;
 	class ITextire;
+	class IImage;
 	class SMaterial;
+	//三角形选择器
+	class ITriangleSelector;
 
 	//当动画的模型网格
 	class IAnimatedMesh;
@@ -96,6 +101,11 @@ namespace Sapphire
 	class ITextSceneNode;
 	//billboard文本场景节点
 	class IBillboardTextSceneNode;
+	//场景节点的Animator
+	class ISceneNodeAnimator;
+	//碰撞反应的场景节点的Animator
+	class ISceneNodeAnimatorCollisionResponse;
+	
 
 
 
@@ -554,6 +564,272 @@ namespace Sapphire
 			SMaterial* material = 0, Real hillHeight = 0.0f,
 			const dimension2d<Real>& countHills = dimension2d<Real>(0.0f, 0.0f),
 			const dimension2d<Real>& textureRepeatCount = dimension2d<Real>(1.0f, 1.0f)) = 0;
+
+
+
+		//! 添加一个静态地形网格到网格池中
+		/** 这个网格由一个纹理文件和一个高度图文件在运行中创建. 两个文件都可以很巨大
+		(8000x8000 像素应该没问题)因为有必要的话，生成器会分割这个文件为更小的纹理。
+		你必须为这个网格指定一个名字，因为网格被添加的网格池中，可以由ISceneManager::getMesh()通过其名字做为参数取得
+		\param meshname: 这个网格的名字，ISceneManager::getMesh()可以取得
+		\param texture: 地形的纹理，请注意：这通常不是一个硬件级纹理（ITexture）,只作为一个IImage软件纹理，你可以加载由IVideoDriver::createImageFromFile()来加载这个纹理
+		\param heightmap: 一个灰度高度图像，就如同纹理，它可以由IVideoDriver::createImageFromFile()创建。创建的三角形的数量取决于这个纹理的大小，所以用小的高度图，
+		可以提供渲染速度。
+		\param stretchSize: 参数定义在高度图上的一个像素有多大
+		\param maxHeight: 定义一个白色像素在高度图上有多高
+		\param defaultVertexBlockSize: 默认顶点块大小，顶点间的初始尺寸
+		\return Null 如果创建失败，可能因为无效参数，或者这个网格名已经存在,或者纹理没有找到；如果成功，返回网格指针 */
+		virtual IAnimatedMesh* addTerrainMesh(const  path& meshname,
+			IImage* texture, IImage* heightmap,
+			const  dimension2d<Real>& stretchSize = dimension2d<Real>(10.0f, 10.0f),
+			Real maxHeight = 200.0f,
+			const  dimension2d<UINT32>& defaultVertexBlockSize = dimension2d<UINT32>(64, 64)) = 0;
+
+
+
+		//! 添加一个静态箭头网格到网格池
+		/** \param name 网格名
+		\param vtxColorCylinder 圆柱体的颜色
+		\param vtxColorCone 圆锥体的颜色
+		\param tesselationCylinder 组成圆柱体侧面的四边形数（圆柱体侧面展开是一个矩形）
+		\param tesselationCone 组成圆锥体顶部的三角形数
+		\param height 箭头的总高度  （箭头高度=圆锥高度+圆柱高度）
+		\param cylinderHeight 圆柱体的总高度，应该小于总高度
+		\param widthCylinder 圆柱体直径
+		\param widthCone 圆锥体的底座的直径， 应该小于圆锥体的直径
+		\return 如果成功返回箭头网格的指针，否则就是0
+	     */
+		virtual IAnimatedMesh* addArrowMesh(const path& name,
+			ColourValue vtxColorCylinder = ColourValue(0xFFFFFFFF),
+			ColourValue vtxColorCone = ColourValue(0xFFFFFFFF),
+			UINT32 tesselationCylinder = 4, UINT32 tesselationCone = 8,
+			Real height = 1.f, Real cylinderHeight = 0.6f,
+			Real widthCylinder = 0.05f, Real widthCone = 0.3f) = 0;
+
+
+
+		//! 添加一个静态球体网格到网格池
+		/** \param name 网格的名字
+		\param radius 球体的半径
+		\param polyCountX 球体水平tile的四边形数量
+		\param polyCountY 球体垂直tile的四边形数量
+		\return 如果成功，返回球体网格指针，否则返回0
+		 */
+		virtual IAnimatedMesh* addSphereMesh(const path& name,
+			Real radius = 5.f, UINT32 polyCountX = 16,
+			UINT32 polyCountY = 16) = 0;
+
+
+		//! 添加一个体积光网格到网格池
+		/** \param name 网格名
+		\param SubdivideU 水平细分数
+		\param SubdivideV 垂直细分数
+		\param FootColor 光的底部颜色
+		\param TailColor 光的顶部颜色
+		\return 如果失败返回0
+		*/
+		virtual IAnimatedMesh* addVolumeLightMesh(const path& name,
+			const UINT32 SubdivideU = 32, const UINT32 SubdivideV = 32,
+			const ColourValue FootColor = ColourValue(51, 0, 230, 180),
+			const ColourValue TailColor = ColourValue(0, 0, 0, 0)) = 0;
+
+
+
+		//! 获取ROOT场景节点
+		/** 这索引场景节点的root节点.这个场景根节点是一个特殊的场景节点,它的存在只用于管理所有的场景节点。
+		它不能从场景中移除。
+		\return 返回根节点指针
+		 */
+		virtual ISceneNode* getRootSceneNode() = 0;
+
+
+		//! 获取指定ID的第一个场景节点
+		/** \param id: 要搜索的id
+		\param start: 从这个场景节点开始，所有的只节点都会被搜索。如果NULL被指定，那么会从根节点开始
+		\return 指向这个id的首个场景节点，如果没有，返回空
+		*/
+		virtual ISceneNode* getSceneNodeFromId(SINT32 id, ISceneNode* start = 0) = 0;
+
+
+
+
+		//! 获取指定名字的第一个场景节点
+		/** \param name: 要搜索的名字
+		\param start: 从这个场景节点开始，所有的只节点都会被搜索。如果NULL被指定，那么会从根节点开始
+		\return 指向这个id的首个场景节点，如果没有，返回空 */
+		virtual ISceneNode* getSceneNodeFromName(const c8* name, ISceneNode* start = 0) = 0;
+
+
+
+		//! 获取指定类型的场景节点
+		/** \param type: 要搜索的场景节点
+		\param start: 从这个场景节点开始，所有的只节点都会被搜索。如果NULL被指定，那么会从根节点开始
+		\return 指向这个id的首个场景节点，如果没有，返回空 */
+		virtual ISceneNode* getSceneNodeFromType(ESCENE_NODE_TYPE type, ISceneNode* start = 0) = 0;
+
+
+
+		//! 获取指定类型的场景节点
+		/** \param type: 要查找的场景节点类型(ESNT_ANY 将返回所有孩子节点).
+		\param outNodes: 要填充的结果数组
+		\param start: 从这个场景节点开始，所有的只节点都会被搜索。如果NULL被指定，那么会从根节点开始 */
+		virtual void getSceneNodesFromType(ESCENE_NODE_TYPE type,
+			vector<ISceneNode*>& outNodes,
+			ISceneNode* start = 0) = 0;
+
+
+		//! 获取当前活动相机
+		/** \return 返回当前活动相机的指针,如果为NULL， 那么没有创建相机*/
+		virtual ICameraSceneNode* getActiveCamera() const = 0;
+
+
+
+		//! 设置当前活动的相机
+		/** 前一个活动相机会失活
+		\param camera: 这个新的被激活的相机节点 */
+		virtual void setActiveCamera(ICameraSceneNode* camera) = 0;
+
+
+
+		//! 通过场景管理器设置模板缓冲区阴影的颜色
+		virtual void setShadowColor(ColourValue color = ColourValue(150, 0, 0, 0)) = 0;
+
+		//! 获取当前阴影的颜色
+		virtual ColourValue getShadowColor() const = 0;
+
+		//! 为在一个特定的时候渲染它注册一个节点
+		/** 这个方法应该只被用在一个场景节点的ISceneNode::OnRegisterSceneNode()
+		\param node: 会绘制而注册的节点. 通常场景节点可以用设置'this'作为一个参数
+		\param pass:指定当节点要被绘制时与其它节点的关系。例如，如果节点是一个阴影，它通常是在其它所有节点绘制之后绘制，并且使用ESNRP_SHADOW.
+		看场景E_SCENE_NODE_RENDER_PASS的细节
+		\return 场景会被渲染（通道被剔除） */
+		virtual UINT32 registerNodeForRendering(ISceneNode* node,
+			E_SCENE_NODE_RENDER_PASS pass = ESNRP_AUTOMATIC) = 0;
+
+
+
+		//! 绘制所有的场景节点
+		/** 这只能在IVideoDriver::beginScene()和IVideoDriver::endScene()之间执行. 
+		请注意：当调用这个函数时，这个场景不仅在绘制，而且还激活场景中存在的场景节点的animator，
+		剔除，对场景节点的剔除
+		 */
+		virtual void drawAll() = 0;
+
+
+		//! 创建一个旋转的animator，它对自己的关联节点进行旋转
+		/** \param rotationSpeed 指定动画的旋转的速度 每10毫秒1度
+		\return 这个animator. 关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop()
+		*/
+		virtual ISceneNodeAnimator* createRotationAnimator(const Vector3& rotationSpeed) = 0;
+
+
+
+		//! 创建一个环绕飞行的animator， 它使得关联节点绕一个中心环绕飞行
+		/** \param center: 环绕的中心
+		\param radius: 环绕半径
+		\param speed: 环绕速度，每毫秒弧度
+		\param direction: 指定up向量，用于这个网格的对齐
+		\param startPosition: 这个animator开始环绕时的起始位置. 值是一个圆的倍数， 0.5是环绕路径的一半
+		\param radiusEllipsoid: 如果radiusEllipsoid != 0 那么radius2从一个椭圆开始。值是一个圆的倍数， 0.5是环绕路径的一半
+		\return  关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
+		virtual ISceneNodeAnimator* createFlyCircleAnimator(
+			const Vector3& center = Vector3(0.f, 0.f, 0.f),
+			Real radius = 100.f, Real speed = 0.001f,
+			const Vector3& direction = Vector3(0.f, 1.f, 0.f),
+			Real startPosition = 0.f,
+			Real radiusEllipsoid = 0.f) = 0;
+		
+
+
+		//! 创建一个直线飞行的animator， 它使一个关联的场景节点沿一条直线的两点间飞行移动
+		/** \param startPoint: 这条直线的开始点
+		\param endPoint: 这条直线的结束点
+		\param timeForWay:从起点飞行到终点需要的毫秒数
+		\param loop: 是否循环，如果为true，当飞行到结束点时，将重新从开始点开始
+		\param pingpong 标准设置这个animator是否从结束点返回起始点
+		\return 这个animator. 关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
+		virtual ISceneNodeAnimator* createFlyStraightAnimator(const Vector3& startPoint,
+			const Vector3& endPoint, UINT32 timeForWay, bool loop = false, bool pingpong = false) = 0;
+
+
+
+		//! 创建一个纹理animator， 它通过一个纹理列表切换目标场景节点的纹理
+		/** \param textures: 要使用的纹理的列表
+		\param timePerFrame: 每帧的毫秒数， 列表里的任意纹理能被显示的时间
+		\param loop: 如果为false，动画停止后，最后一个纹理会被设置。如果为true，动画会重新从第一个纹理开始。
+		\return 这个animator. 关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
+		virtual ISceneNodeAnimator* createTextureAnimator(const vector<ITexture*>& textures,
+			SINT32 timePerFrame, bool loop = true) = 0;
+
+
+		//! 创建一个场景节点animator，它会一定时间后自动删除这个场景节点
+		/** \param timeMs: 毫秒数，到时间后节点会被删除
+		\return 这个animator. 关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop()  */
+		virtual ISceneNodeAnimator* createDeleteAnimator(UINT32 timeMs) = 0;
+
+
+		//! 创建一个特殊的场景节点的animator，用于自动出来碰撞检测和反应
+		/** 见 ISceneNodeAnimatorCollisionResponse 细节
+		\param world: 三角形选择器保存世界中所有可能与这个场景节点发生碰撞的三角形。 
+		可以通过ISceneManager::createTriangleSelector()创建一个三角形选择器
+		\param sceneNode: 被操控的场景节点。之后你添加这个animator到这个场景节点，这个场景节点不会移动穿过墙面
+		并且受到重力影响。如果你需呀传输这个场景节点到一个新的位置而不用受到碰撞几何体影响，则调用call sceneNode->setPosition()；
+		animator->setTargetNode(sceneNode)
+		\param ellipsoidRadius: 碰撞检测和反应的椭圆半径。如果你取得一个场景节点，并且不确定应该设置多大的半径，你应该用下列代码
+		检测：
+		AxisAlignedBox& box = yourSceneNode->getBoundingBox();
+		Vector3 radius = box.MaxEdge - box.getCenter();
+		\
+		\param gravityPerSecond: 设置环境的重力，作为一个每秒每秒的单位加速度。
+		如果你的单位=米，那么Vector3(0,-10.0f,0)接近真实的重力。
+		\param ellipsoidTranslation: 默认情况下，这个碰撞检测的椭圆是以这个场景节点的中心为中心，
+		它意味着椭圆环绕着它。如果你不想这样， 你可以指定一个对于这个椭圆的调整
+		\param slidingValue: DOCUMENTATION NEEDED.
+		\return 这个animator,他会导致碰撞检测和反应。关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop()*/
+		virtual ISceneNodeAnimatorCollisionResponse* createCollisionResponseAnimator(
+			ITriangleSelector* world, ISceneNode* sceneNode,
+			const Vector3& ellipsoidRadius = Vector3(30, 60, 30),
+			const Vector3& gravityPerSecond = Vector3(0, -10.0f, 0),
+			const Vector3& ellipsoidTranslation = Vector3(0, 0, 0),
+			Real slidingValue = 0.0005f) = 0;
+
+
+
+		//! 创建一个样条线的animator
+		/** 这个animator根据hermit样条线改变关联节点的位置。它用Hermite样条线的一个子集：要么基样条(tightness != 0.5)要么catmull rom(tightness == 0.5)样条
+		这个animator在1/speed秒内从一个控制点移动到下一个。
+		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
+		virtual ISceneNodeAnimator* createFollowSplineAnimator(SINT32 startTime,
+			const vector< Vector3 >& points,
+			Real speed = 1.0f, Real tightness = 0.5f, bool loop = true, bool pingpong = false) = 0;
+
+
+		//! 创建一个简单ITriangleSelector, 基于一个网格
+		/** 三角形选择器
+		can be used for doing collision detection. Don't use this selector
+		for a huge amount of triangles like in Quake3 maps.
+		Instead, use for example ISceneManager::createOctreeTriangleSelector().
+		Please note that the created triangle selector is not automaticly attached
+		to the scene node. You will have to call ISceneNode::setTriangleSelector()
+		for this. To create and attach a triangle selector is done like this:
+		\code
+		ITriangleSelector* s = sceneManager->createTriangleSelector(yourMesh,
+		yourSceneNode);
+		yourSceneNode->setTriangleSelector(s);
+		s->drop();
+		\endcode
+		\param mesh: Mesh of which the triangles are taken.
+		\param node: Scene node of which visibility and transformation is used.
+		\return The selector, or null if not successful.
+		If you no longer need the selector, you should call ITriangleSelector::drop().
+		See IReferenceCounted::drop() for more information. */
+		virtual ITriangleSelector* createTriangleSelector(IMesh* mesh, ISceneNode* node) = 0;
 
 	};
 
