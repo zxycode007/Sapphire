@@ -1,17 +1,21 @@
 #ifndef _SAPPHIRE_SCENE_
 #define _SAPPHIRE_SCENE_
 
-
-
+#include "SapphireEMeshWriterEnums.h"
+#include "SapphireSceneNodeTypes.h"
+#include "SapphireESceneNodeAnimatorType.h"
+#include "SapphireUserDataSerializer.h"
+#include "SapphireETerrianElements.h"
+#include "SapphireDefines.h"
 #include "SapphirePrerequisites.h"
-#include "SapphireMemoryAllocatorConfig.h"
+//#include "SapphireMemoryAllocatorConfig.h"
 #include "SapphireColorValue.h"
 #include "SapphireVector3.h"
 #include "SapphireFont.h"
 #include "SapphirePath.h"
-#include "SapphireETerrianElements.h"
-#include "SapphireDefines.h"
-#include "SapphireSceneNodeTypes.h"
+
+
+
 
 
 
@@ -62,6 +66,7 @@ namespace Sapphire
 	class SMaterial;
 	//三角形选择器
 	class ITriangleSelector;
+	class IAttributes;
 
 	//当动画的模型网格
 	class IAnimatedMesh;
@@ -73,6 +78,8 @@ namespace Sapphire
 	class IGUIEnvironment;
 	//获取文件系统
 	class IFileSystem;
+	class IWriteFile;
+	class IXMLWriter;
 	//体积光场景节点
 	class IVolumeLightSceneNode;
 	//场景节点
@@ -105,14 +112,36 @@ namespace Sapphire
 	class ISceneNodeAnimator;
 	//碰撞反应的场景节点的Animator
 	class ISceneNodeAnimatorCollisionResponse;
-	
+	// 元信息三角形选择器
+	class IMetaTriangleSelector;
+	//网格加载器
+	class  IMeshLoader;
+	//场景碰撞管理器
+	class ISceneCollisionManager;
+	//网格操作器
+	class IMeshManipulator; 
+	//事件
+	class SEvent;
+	//场景节点工厂
+	class ISceneNodeFactory;
+	//场景节点动画工厂
+	class ISceneNodeAnimatorFactory;
+	//网格写入器
+	class IMeshWriter;
+	//蒙皮网格
+	class ISkinnedMesh;
+	//
+	class ILightManager; 
+	//几何体生成器
+	class IGeometryCreator;
+
 
 
 
 	/***
 	Sapphire 的场景管理器
 	*/
-	class _SapphireExport IScenesScenesManager : public SceneAlloc
+	class _SapphireExport ISceneManager : public SceneAlloc
 	{
 	public:
 
@@ -812,24 +841,272 @@ namespace Sapphire
 
 		//! 创建一个简单ITriangleSelector, 基于一个网格
 		/** 三角形选择器
-		can be used for doing collision detection. Don't use this selector
-		for a huge amount of triangles like in Quake3 maps.
-		Instead, use for example ISceneManager::createOctreeTriangleSelector().
-		Please note that the created triangle selector is not automaticly attached
-		to the scene node. You will have to call ISceneNode::setTriangleSelector()
-		for this. To create and attach a triangle selector is done like this:
-		\code
+		可以被用做碰撞剪裁。不要用这个选择器对海量三角形类似Quake3 map之类使用，而是用ISceneManager::createOctreeTriangleSelector()
+		请注意：创建三角形选择器不是自动关联到这个场景节点。你需要通过调用ISceneNode::setTriangleSelector()来关联。如下
 		ITriangleSelector* s = sceneManager->createTriangleSelector(yourMesh,
 		yourSceneNode);
 		yourSceneNode->setTriangleSelector(s);
 		s->drop();
-		\endcode
-		\param mesh: Mesh of which the triangles are taken.
-		\param node: Scene node of which visibility and transformation is used.
-		\return The selector, or null if not successful.
-		If you no longer need the selector, you should call ITriangleSelector::drop().
-		See IReferenceCounted::drop() for more information. */
+		\param mesh: 这个三角形的网格
+		\param node: 用于可见的和变换的场景节点
+		. */
 		virtual ITriangleSelector* createTriangleSelector(IMesh* mesh, ISceneNode* node) = 0;
+
+		//! 创建一个简单的ITriangleSelector, 基于一个可活动（animated）的场景节点
+		/** 与这个节点关联的网格的细节将由内部提取
+		调用ITriangleSelector::update() 让这个三角形选择器去更新这个动画网格场景节点的当前帧 
+		\param node 构建这个选择器的动画场景节点
+		*/
+		virtual ITriangleSelector* createTriangleSelector(IAnimatedMeshSceneNode* node) = 0;
+
+		//! 创建一个基于一个AABB的简单动态ITriangleSelector
+		/** 三角形选择器可以用在碰撞检测。每当三角形被查询到，这个三角形选择器获取这个节点的碰撞盒子，一个创建新的三角形。
+		这个方法适合动画场景节点。
+		\param node: 用于可见的和变换的场景节点
+		\return 这个选择器
+		 */
+		virtual ITriangleSelector* createTriangleSelectorFromBoundingBox(ISceneNode* node) = 0;
+
+
+		//!  创建通过八叉树优化的一个三角形选择器
+		/** Triangle selectors
+		可以被用做碰撞剪裁，这个三角形选择器用于海量三角形， 它由八叉树进行组织。
+		请注意：创建三角形选择器不是自动关联到这个场景节点。你需要通过调用ISceneNode::setTriangleSelector()来关联。如下
+		 
+		ITriangleSelector* s = sceneManager->createOctreeTriangleSelector(yourMesh,
+		yourSceneNode);
+		yourSceneNode->setTriangleSelector(s);
+		s->drop();
+		更多信息例子见SDK中的碰撞教程
+		\param mesh: 这个三角形的网格
+		\param node:用于可见的和变换的场景节点
+		\param minimalPolysPerNode: 指定一个八叉树节点包含最小的多边形数。
+		\return 这个选择器 */
+		virtual ITriangleSelector* createOctreeTriangleSelector(IMesh* mesh,
+			ISceneNode* node, SINT32 minimalPolysPerNode = 32) = 0;
+
+
+		//! 创建一个元信息三角形的选择器
+		/** 一个元信息三角形选择器只不过是为一个或多个三角形选择器的集合提供一个公共的三角形选择器的接口。
+		在这个方式，碰撞测试可以一次处理不同的的triangle soups。
+		\return 这个选择器
+	  */
+		virtual IMetaTriangleSelector* createMetaTriangleSelector() = 0;
+
+
+		//! 创建一个可以从地形场景节点选择三角形的三角形选择器
+		/** \param node: 创建的地形场景节点的指针
+		\param LOD: LOD，0是最高细节
+		\return 这个选择器 */
+		virtual ITriangleSelector* createTerrainTriangleSelector(
+			ITerrainSceneNode* node, SINT32 LOD = 0) = 0;
+
+
+		//! 添加一个对于新的文件格式的额外的网格加载器
+		/** 如果你想引擎扩展不能被支持的文件格式。需要在你的加载类中实现IMeshLoader接口并且通过这个方法添加它。
+		使用这个方法，他可能已经用更新后的不用引擎重新编译的版本重载了内建的网格加载器。
+		\param externalLoader: 一个新的网格加载器的实现 */
+		virtual void addExternalMeshLoader(IMeshLoader* externalLoader) = 0;
+
+		//! 返回此时支持的网格加载器的数量
+		virtual UINT32 getMeshLoaderCount() const = 0;
+
+		//! 返回给定的网格加载器
+		/** \param index 返回加载器的索引。这个参数是一个基于0数组的索引
+		\return 一个指定加载器的指针，如果索引不正确返回0 */
+		virtual IMeshLoader* getMeshLoader(UINT32 index) const = 0;
+
+
+		//! 获取场景碰撞管理器指针
+		/** \return 碰撞管理器指针
+		*/
+		virtual ISceneCollisionManager* getSceneCollisionManager() = 0;
+
+		//! 获取网格操作器的指针
+		/** \return 网格操作器的指针
+		*/
+		virtual IMeshManipulator* getMeshManipulator() = 0;
+
+		//! 添加一个场景节点到删除队列
+		/** 
+		当这个场景节点到了是安全的时候立即删除。 它意味着当这个场景节点不能执行animator和类似的。
+		这个方法用于通过它们的场景节点animator删除场景节点。在大多数情况下，调用 ISceneNode::remove()足够了。
+		用这个删除队列是不必要的。见 ISceneManager::createDeleteAnimator()细节
+		\param node: 要删除的节点. */
+		virtual void addToDeletionQueue(ISceneNode* node) = 0;
+
+
+		//! 发送一个输入事件到环境
+		/** 通常你不能使用此方法，它由内部引擎调用 */
+		virtual bool postEventFromUser(const SEvent& event) = 0;
+
+
+		//! 清理整个场景
+		/** 所有的节点都会被移除*/
+		virtual void clear() = 0;
+
+
+		//! 获取这个场景的参数接口
+		/** 字符串参数可用由插件和网格加载器使用。例如：CMS 和 LMTS 加载器需要一个名字叫'CSM_TexturePath'
+		和 'LMTS_TexturePath' 的参数来设置关联查找纹理的路径。见See
+		CSM_TEXTURE_PATH, LMTS_TEXTURE_PATH, MY3D_TEXTURE_PATH,
+		COLLADA_CREATE_SCENE_INSTANCES, DMF_TEXTURE_PATH 和 DMF_USE_MATERIALS_DIRS
+		*/
+		virtual  IAttributes* getParameters() = 0;
+
+		//! 获取当前的渲染通道
+		/** 所有的场景节点都在特定的顺序下被渲染。首先是光源，相机，天空盒子， 实体几何体，和透明物体。
+		在渲染过程中，场景节点可能要知道当前正在渲染的场景渲染管理器，因为例如：他们在渲染时会注册两次， 一次对于透明几何体和一次是固体。
+		当时要知道是哪一个当前渲染通道是激活他们能够渲染它们的几何体正确的那一部分
+		 */
+		virtual E_SCENE_NODE_RENDER_PASS getSceneNodeRenderPass() const = 0;
+
+		//! 获取默认的场景节点工厂，它可以创建所有内置的场景节点
+		/** \return 返回默认的场景节点工厂指针*/
+		virtual ISceneNodeFactory* getDefaultSceneNodeFactory() = 0;
+
+
+		//! 添加一个场景节点工厂到这个场景管理器
+		/** 用以通过新的场景节点类型来扩展场景管理，它应该自动创建， 例如当从xml文件加载数据 */
+		virtual void registerSceneNodeFactory(ISceneNodeFactory* factoryToAdd) = 0;
+
+		//! 获取注册的场景节点工厂的数量
+		virtual UINT32 getRegisteredSceneNodeFactoryCount() const = 0;
+
+
+		//! 通过索引获取一个场景节点工厂
+		/** \return 返回一个请求场景节点的指针 */
+		virtual ISceneNodeFactory* getSceneNodeFactory(UINT32 index) = 0;
+
+
+
+		//! 获取默认场景节点animator工厂，它用来创建所有内置场景节点的animator
+		/** \return 返回获取默认场景节点animator工厂的指针 */
+		virtual ISceneNodeAnimatorFactory* getDefaultSceneNodeAnimatorFactory() = 0;
+
+
+		//! 获取场景节点animator工厂的数量
+		virtual UINT32 getRegisteredSceneNodeAnimatorFactoryCount() const = 0;
+
+
+		//! 通过索引获取场景节点的animator工厂
+		/** \return 返回请求场景节点的animator工厂的指针*/
+		virtual ISceneNodeAnimatorFactory* getSceneNodeAnimatorFactory(UINT32 index) = 0;
+
+
+		//! 获取场景节点类型的类型名， 如果为null，则没找到
+		virtual const c8* getSceneNodeTypeName(ESCENE_NODE_TYPE type) = 0;
+
+		//! 获取场景节点animator类型的类型名， 如果为null，则没找到
+		virtual const c8* getAnimatorTypeName(ESCENE_NODE_ANIMATOR_TYPE type) = 0;
+
+
+		//! 通过名字来添加一个场景节点
+		/** \return 通过一个工厂指向添加的场景节点的指针 */
+		virtual ISceneNode* addSceneNode(const char* sceneNodeTypeName, ISceneNode* parent = 0) = 0;
+
+		//! 创建一个基于类型名的场景节点Animator 
+		/** \param typeName: 要添加的场景节点的Animator的类型名
+		\param target: 这个Animator的目标场景节点
+		\return 返回这个新Animator的场景节点的指针 */
+		virtual ISceneNodeAnimator* createSceneNodeAnimator(const char* typeName, ISceneNode* target = 0) = 0;
+		
+
+
+		//! 创建一个新场景管理器
+		/** 它能够更容易的进行绘制并且在同时保存两个独立场景。
+		网格缓冲区会由所有的存在的场景管理器共享，这意味着如果你在原场景管理器用比如getMesh()来加载网格。
+		这个网格将其它所有的场景管理器中同样有效，而不用加载。
+		这个源/主场景管理器将仍然由SapphireDevice::getSceneManager()访问。如果你需要在这个新场景管理器中输入事件，例如：FPS摄像机，你需要手动输入前进；
+		就通过实行IEventReceiver来进行调用
+		yourNewSceneManager->postEventFromUser()并且返回true，以便这个源场景管理器不能取得事件。 否则，所有输入将自动传到主场景管理器.
+	    */
+		virtual ISceneManager* createNewSceneManager(bool cloneContent = false) = 0;
+
+		//! 保存当前场景到一个文件
+		/** 用选项isDebugObject设置为true是无法保存场景节点的
+		。这个场景通常写入一个.irr文件， 一个基于XML格式文件，可以被Irrlicht引擎编辑器编辑。
+		要加载这个文件，见ISceneManager::loadScene()。
+		\param filename 文件名
+		\param userDataSerializer 如果你想要保存一些每个场景节点的用户数据到文件。需要实现ISceneUserDataSerializer接口
+		并在这儿将它作为参数。否则，简单指定0作为这个参数、
+		\param node 场景的顶部节点，这个节点和所有它后代都保存到场景文件中，传递0或这个管理器保存所有场景
+		\return 如果成功返回true. */
+		virtual bool saveScene(const  path& filename, ISceneUserDataSerializer* userDataSerializer = 0, ISceneNode* node = 0) = 0;
+
+
+		//! 保存当前场景到一个文件
+		/** 用选项isDebugObject设置为true是无法保存场景节点的
+		。这个场景通常写入一个.irr文件， 一个基于XML格式文件，可以被Irrlicht引擎编辑器编辑。
+		要加载这个文件，见ISceneManager::loadScene()。
+		\param filename 写入文件指针
+		\param userDataSerializer 如果你想要保存一些每个场景节点的用户数据到文件。需要实现ISceneUserDataSerializer接口
+		并在这儿将它作为参数。否则，简单指定0作为这个参数、
+		\param node 场景的顶部节点，这个节点和所有它后代都保存到场景文件中，传递0或这个管理器保存所有场景
+		\return 如果成功返回true. */
+		virtual bool saveScene(IWriteFile* file, ISceneUserDataSerializer* userDataSerializer = 0, ISceneNode* node = 0) = 0;
+
+		//! 保存当前场景到一个文件
+		/** 用选项isDebugObject设置为true是无法保存场景节点的
+		。这个场景通常写入一个.irr文件， 一个基于XML格式文件，可以被Irrlicht引擎编辑器编辑。
+		要加载这个文件，见ISceneManager::loadScene()。
+		\param writer 要保存的场景的XMLWriter
+		\param currentPath 当前路径
+		\param userDataSerializer 如果你想要保存一些每个场景节点的用户数据到文件。需要实现ISceneUserDataSerializer接口
+		并在这儿将它作为参数。否则，简单指定0作为这个参数、
+		\param node 场景的顶部节点，这个节点和所有它后代都保存到场景文件中，传递0或这个管理器保存所有场景
+		\return 如果成功返回true.*/
+		virtual bool saveScene(IXMLWriter* writer, const path& currentPath, ISceneUserDataSerializer* userDataSerializer = 0, ISceneNode* node = 0) = 0;
+
+
+		//! 加载一个场景。注意：当前存在的场景并不会被清除、
+		/** 这个场景通常由.irr文件读取， 一个基于XML格式文件，可以被Irrlicht引擎编辑器编辑。
+		但是可通过ISceneManager::addExternalSceneLoader给引擎添加别的场景类型。 irr文件可以被Irricht编辑器编辑
+		\param filename 文件名
+		\param userDataSerializer 如果你想要从文件中加载的相关节点的用户数据。需要实现ISceneUserDataSerializer接口
+		并在这儿将它作为参数。否则，简单指定0作为这个参数
+		\param rootNode 场景的根节点，传递0直接添加场景到场景管理器 
+		\return 如果成功返回true.*/
+		virtual bool loadScene(const path& filename, ISceneUserDataSerializer* userDataSerializer = 0, ISceneNode* rootNode = 0) = 0;
+
+		//! 加载一个场景。注意：当前存在的场景并不会被清除、
+		/** 这个场景通常由.irr文件读取， 一个基于XML格式文件，可以被Irrlicht引擎编辑器编辑。
+		但是可通过ISceneManager::addExternalSceneLoader给引擎添加别的场景类型。 irr文件可以被Irricht编辑器编辑
+		\param file 文件
+		\param userDataSerializer 如果你想要从文件中加载的相关节点的用户数据。需要实现ISceneUserDataSerializer接口
+		并在这儿将它作为参数。否则，简单指定0作为这个参数
+		\param rootNode 场景的根节点，传递0直接添加场景到场景管理器
+		\return 如果成功返回true.*/
+		virtual bool loadScene(IReadFile* file, ISceneUserDataSerializer* userDataSerializer = 0, ISceneNode* rootNode = 0) = 0;
+
+
+		//! 获取一个可用的网格写入器的实现
+		virtual IMeshWriter* createMeshWriter(EMESH_WRITER_TYPE type) = 0;
+
+		//! 获取一个蒙皮网格，*/
+		virtual ISkinnedMesh* createSkinnedMesh() = 0;
+
+
+		//! 设置环境光颜色
+		virtual void setAmbientLight(const  ColourValue &ambientColor) = 0;
+
+		//! 取得环境光颜色
+		virtual const ColourValue& getAmbientLight() const = 0;
+
+		//! 注册一个自定义的回调管理器，它在场景渲染是取得回调
+		/** \param[in] lightManager: 这个新回调管理器.你可以传递0，移除当前的回调管理器解恢复默认的行为*/
+		virtual void setLightManager(ILightManager* lightManager) = 0;
+
+		//! 获取一个几何体生成器的一个实例
+		/** 几何体生成器提供一些辅助方法来创建不同类型的基本几何体。这对自定义场景非常有用 */
+		virtual const IGeometryCreator* getGeometryCreator(void) const = 0;
+
+		//! 检测当前阶段是否被视锥体剔除掉
+		/** 请注意：依赖这个剔除方法是相当粗糙的，或者慢。
+		如果这个方法返回true，则节点不可见，如果这个节点返回false，这个节点可能仍然不可见
+		\param node 要剔除测试的场景节点
+		\return True 如果为true则节点不可见*/
+		virtual bool isCulled(const ISceneNode* node) const = 0;
 
 	};
 

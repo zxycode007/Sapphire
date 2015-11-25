@@ -191,7 +191,13 @@ int main()
 	ara[1] = 5;
 	ara[0] = 1;
 	printf(c);
+	if (SAPPHIRE_3D_API == SAPPHIRE_WITH_OPENGL)
+	{
+		cout << "\n SAPPHIRE_3D_API=" << SAPPHIRE_3D_API << endl;
+	}
+	
 	getchar();
+	
 	
 	
 	SAPPHIRE_DELETE lm;

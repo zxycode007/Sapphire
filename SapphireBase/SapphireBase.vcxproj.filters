@@ -213,6 +213,24 @@
     <ClInclude Include="SapphireDefines.h">
       <Filter>头文件\core</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireESceneNodeAnimatorType.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireUserDataSerializer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEMeshWriterEnums.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDevice.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEDriverTypes.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEDeviceTypes.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

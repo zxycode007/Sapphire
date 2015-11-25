@@ -77,7 +77,12 @@
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
     <ClInclude Include="SapphireDefines.h" />
+    <ClInclude Include="SapphireDevice.h" />
     <ClInclude Include="SapphireDimension2D.h" />
+    <ClInclude Include="SapphireEDeviceTypes.h" />
+    <ClInclude Include="SapphireEDriverTypes.h" />
+    <ClInclude Include="SapphireEMeshWriterEnums.h" />
+    <ClInclude Include="SapphireESceneNodeAnimatorType.h" />
     <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
     <ClInclude Include="SapphireFactoryObj.h" />
@@ -115,6 +120,7 @@
     <ClInclude Include="SapphireStdHeader.h" />
     <ClInclude Include="SapphireString.h" />
     <ClInclude Include="SapphireStringVector.h" />
+    <ClInclude Include="SapphireUserDataSerializer.h" />
     <ClInclude Include="SapphireUserObjectBinding.h" />
     <ClInclude Include="SapphireVector2.h" />
     <ClInclude Include="SapphireVector3.h" />
