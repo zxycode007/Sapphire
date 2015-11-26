@@ -231,6 +231,18 @@
     <ClInclude Include="SapphireEDeviceTypes.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireEDriverFeatures.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireVideoDriver.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSMaterial.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEMaterialTypes.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -295,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="SapphireUserObjectBinding.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireEMaterialFlags.h">
+      <Filter>头文件\renderSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

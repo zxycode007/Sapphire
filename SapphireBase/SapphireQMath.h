@@ -122,6 +122,49 @@
 
 
 
+/*
+float IEEE-754 bit 表示法
+0      0x00000000
+1.0    0x3f800000
+0.5    0x3f000000
+3      0x40400000
++inf   0x7f800000
+-inf   0xff800000
++NaN   0x7fc00000 or 0x7ff00000
+in 通用: number = (符号位 ? -1:1) * 2^(指数) * 1.(尾数位)
+*/
+
+typedef union { UINT32 u; SINT32 s; Real f; } inttofloat;
+
+
+//! 浮点数表示一个整形值
+#if (SAPPHIRE_FAST_MATH==0)
+#define FR(x)                           ((Real&)(x))
+#else
+inline Real FR(UINT32 x) { inttofloat tmp; tmp.u = x; return tmp.f; }
+inline Real FR(SINT32 x) { inttofloat tmp; tmp.s = x; return tmp.f; }
+#endif
+
+
+//! 整形表示为一个浮点型
+#if (SAPPHIRE_FAST_MATH==0)
+#define IR(x)                           ((Real&)(x))
+#else
+inline UINT32 IR(Real x) { inttofloat tmp; tmp.f = x; return tmp.u; }
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 存放0~369度的正弦和余弦表
 /**
 @brief 余弦表

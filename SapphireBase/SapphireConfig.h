@@ -10,6 +10,10 @@
    #define SAPPHIRE_WCHAR_T_STRINGS 0    //定义是否使用WCHAR
 #endif
 
+#ifndef SAPPHIRE_FAST_MATH
+#define SAPPHIRE_FAST_MATH 0  //是否使用快速计算
+#endif 
+
 // 定义要使用的内存分配器类型
 #define SAPPHIRE_MEMORY_ALLOCATOR_STD 1   //标准
 #define SAPPHIRE_MEMORY_ALLOCATOR_NED 2    //NED
@@ -44,7 +48,7 @@
 
 //定义多重纹理能支持的最大纹理层数
 #ifndef SAPPHIRE_MAX_TEXTURE_LAYERS
-#define SAPPHIRE_MAX_TEXTURE_LAYERS  16
+#define SAPPHIRE_MAX_TEXTURE_LAYERS  8
 #endif
 
 

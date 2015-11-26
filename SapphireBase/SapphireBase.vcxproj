@@ -80,7 +80,9 @@
     <ClInclude Include="SapphireDevice.h" />
     <ClInclude Include="SapphireDimension2D.h" />
     <ClInclude Include="SapphireEDeviceTypes.h" />
+    <ClInclude Include="SapphireEDriverFeatures.h" />
     <ClInclude Include="SapphireEDriverTypes.h" />
+    <ClInclude Include="SapphireEMaterialTypes.h" />
     <ClInclude Include="SapphireEMeshWriterEnums.h" />
     <ClInclude Include="SapphireESceneNodeAnimatorType.h" />
     <ClInclude Include="SapphireETerrianElements.h" />
@@ -115,6 +117,7 @@
     <ClInclude Include="SapphireScenesManager.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
+    <ClInclude Include="SapphireSMaterial.h" />
     <ClInclude Include="SapphireSphere.h" />
     <ClInclude Include="SapphireStableHeader.h" />
     <ClInclude Include="SapphireStdHeader.h" />
@@ -127,6 +130,7 @@
     <ClInclude Include="SapphireVector4.h" />
     <ClInclude Include="SapphireVertex.h" />
     <ClInclude Include="SapphireVertexBufferBase.h" />
+    <ClInclude Include="SapphireVideoDriver.h" />
     <ClInclude Include="threads\SapphireThreadDefines.h" />
     <ClInclude Include="threads\SapphireThreadDefinesNone.h" />
   </ItemGroup>
@@ -136,6 +140,7 @@
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
+    <ClCompile Include="SapphireEMaterialFlags.h" />
     <ClCompile Include="SapphireException.cpp" />
     <ClCompile Include="SapphireLog.cpp" />
     <ClCompile Include="SapphireLogManager.cpp" />
