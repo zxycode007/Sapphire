@@ -237,10 +237,16 @@
     <ClInclude Include="SapphireVideoDriver.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireSMaterial.h">
+    <ClInclude Include="SapphireEMaterialTypes.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireEMaterialTypes.h">
+    <ClInclude Include="SapphireITexture.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireMaterialLayer.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSMaterial.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
   </ItemGroup>

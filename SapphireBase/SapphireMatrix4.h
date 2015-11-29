@@ -86,6 +86,10 @@ namespace Sapphire
 			operator=(m3x3);
 		}
 
+		~Matrix4()
+		{
+			 
+		};
 
 		 
 		inline void swap(Matrix4& other)

@@ -134,7 +134,7 @@ float IEEE-754 bit 表示法
 in 通用: number = (符号位 ? -1:1) * 2^(指数) * 1.(尾数位)
 */
 
-typedef union { UINT32 u; SINT32 s; Real f; } inttofloat;
+typedef union{ unsigned int u; int s; float f; } inttofloat;
 
 
 //! 浮点数表示一个整形值

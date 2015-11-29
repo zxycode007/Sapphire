@@ -73,8 +73,7 @@ namespace Sapphire {
 					pRep = r.pRep;
 				pUseCount = r.pUseCount;
 				useFreeMethod = r.useFreeMethod;
-				// 
-				Handle zero pointer gracefully to manage STL containers
+				// Handle zero pointer gracefully to manage STL containers
 				if (pUseCount)
 				{
 					++(*pUseCount);

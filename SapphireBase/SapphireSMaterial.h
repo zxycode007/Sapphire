@@ -2,9 +2,11 @@
 #define _SAPPHIRE_SMATERIAL_
 
 #include "SapphireEMaterialTypes.h"
+#include "SapphireEMaterialFlags.h"
 #include "SapphirePrerequisites.h"
 #include "SapphireQMath.h"
 #include "SapphireColorValue.h"
+#include "SapphireMaterialLayer.h"
 
 namespace Sapphire
 {
@@ -231,21 +233,19 @@ namespace Sapphire
 			FogEnable(false), NormalizeNormals(false), UseMipMaps(true)
 		{ }
 
-		//! Copy constructor
-		/** \param other Material to copy from. */
+		 
 		SMaterial(const SMaterial& other)
 		{
-			// These pointers are checked during assignment
-			for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
-				TextureLayer[i].TextureMatrix = 0;
+			// 清空每一层材质的纹理矩阵
+			for (UINT32 i = 0; i < MATERIAL_MAX_TEXTURES; ++i)
+				TextureLayer[i].TextureMatrix->setNull();
 			*this = other;
 		}
 
-		//! Assignment operator
-		/** \param other Material to copy from. */
+		 
 		SMaterial& operator=(const SMaterial& other)
 		{
-			// Check for self-assignment!
+			 
 			if (this == &other)
 				return *this;
 
@@ -285,192 +285,179 @@ namespace Sapphire
 			return *this;
 		}
 
-		//! Texture layer array.
+		//! 本材质的纹理层数组
 		SMaterialLayer TextureLayer[MATERIAL_MAX_TEXTURES];
 
-		//! Type of the material. Specifies how everything is blended together
+		//! 材质类型，指定所有东西如何进行混合
 		E_MATERIAL_TYPE MaterialType;
 
-		//! How much ambient light (a global light) is reflected by this material.
-		/** The default is full white, meaning objects are completely
-		globally illuminated. Reduce this if you want to see diffuse
-		or specular light effects. */
+		//! 这个材质反射的环境光量
+		/** 默认全白，意味着对象是完全照明的。如果你想看漫反射或高光效果，降低这个*/
 		ColourValue AmbientColor;
 
-		//! How much diffuse light coming from a light source is reflected by this material.
-		/** The default is full white. */
+		//! 这个材质反射的漫反射光量
+		/** 默认全白. */
 		ColourValue DiffuseColor;
 
-		//! Light emitted by this material. Default is to emit no light.
+		//! 材质发射光，默认没有发射光
 		ColourValue EmissiveColor;
 
-		//! How much specular light (highlights from a light) is reflected.
-		/** The default is to reflect white specular light. See
-		SMaterial::Shininess on how to enable specular lights. */
+		//! 这个材质反射的镜面反射光量
+		/** 这个材质反射白色镜面光。看SMaterial::Shininess如何开启镜面反射光源
+		 */
 		ColourValue SpecularColor;
 
-		//! Value affecting the size of specular highlights.
-		/** A value of 20 is common. If set to 0, no specular
-		highlights are being used. To activate, simply set the
-		shininess of a material to a value in the range [0.5;128]:
-		\code
+		//! 镜面高光影响的大小值
+		/** 值一般为20，如果设为0，没有高光。
+		要激活，只需设置一个材质的shininess的值到范围[0.5,128]
+		
 		sceneNode->getMaterial(0).Shininess = 20.0f;
-		\endcode
-
-		You can change the color of the highlights using
-		\code
+		
+		你可以用下面代码，改变高光颜色
 		sceneNode->getMaterial(0).SpecularColor.set(255,255,255,255);
-		\endcode
+		
 
-		The specular color of the dynamic lights
-		(SLight::SpecularColor) will influence the the highlight color
-		too, but they are set to a useful value by default when
-		creating the light scene node. Here is a simple example on how
-		to use specular highlights:
-		\code
-		// load and display mesh
+		这个动态光源的高光颜色(SLight::SpecularColor)会很大程度影响高光颜色，
+		但是当创建光源场景节点时，默认情况下设置它们到一个有效值。
+		
+		// 加载和显示网格
 		scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(
 		smgr->getMesh("data/faerie.md2"));
-		node->setMaterialTexture(0, driver->getTexture("data/Faerie2.pcx")); // set diffuse texture
-		node->setMaterialFlag(video::EMF_LIGHTING, true); // enable dynamic lighting
-		node->getMaterial(0).Shininess = 20.0f; // set size of specular highlights
+		node->setMaterialTexture(0, driver->getTexture("data/Faerie2.pcx")); // 设置漫反射纹理
+		node->setMaterialFlag(video::EMF_LIGHTING, true); // 打开动态光照
+		node->getMaterial(0).Shininess = 20.0f; // 设置高光大小
 
-		// add white light
+		// 添加白色光源
 		scene::ILightSceneNode* light = smgr->addLightSceneNode(0,
-		core::vector3df(5,5,5), video::SColorf(1.0f, 1.0f, 1.0f));
-		\endcode */
+		core::vector3df(5,5,5), video::SColorf(1.0f, 1.0f, 1.0f));*/
 		Real Shininess;
 
-		//! Free parameter, dependent on the material type.
-		/** Mostly ignored, used for example in EMT_PARALLAX_MAP_SOLID
-		and EMT_TRANSPARENT_ALPHA_CHANNEL. */
+		//! 自由参数，依赖于材质类型
+		/** 多数情况无效，Mostly ignored, 用在EMT_PARALLAX_MAP_SOLID  EMT_TRANSPARENT_ALPHA_CHANNEL. */
 		Real MaterialTypeParam;
 
-		//! Second free parameter, dependent on the material type.
-		/** Mostly ignored. */
+		//! 第二个自由参数，依赖材质类型
+		/** 多数情况. */
 		Real MaterialTypeParam2;
 
-		//! Thickness of non-3dimensional elements such as lines and points.
+		//! 非3维元素如一个点和一条线的厚度
 		Real Thickness;
 
-		//! Is the ZBuffer enabled? Default: ECFN_LESSEQUAL
-		/** Values are from E_COMPARISON_FUNC. */
+		//! 是否开启Z缓冲区，默认ECFN_LESSEQUAL
+		/** 值来自于 E_COMPARISON_FUNC. */
 		UINT8 ZBuffer;
 
-		//! Sets the antialiasing mode
-		/** Values are chosen from E_ANTI_ALIASING_MODE. Default is
-		EAAM_SIMPLE|EAAM_LINE_SMOOTH, i.e. simple multi-sample
-		anti-aliasing and lime smoothing is enabled. */
+		//! 设置抗锯齿模式
+		/** 值选择于E_ANTI_ALIASING_MODE. 默认是
+		EAAM_SIMPLE|EAAM_LINE_SMOOTH, i.e. 简单msaa和线段平滑开启*/
 		UINT8 AntiAliasing;
 
-		//! Defines the enabled color planes
-		/** Values are defined as or'ed values of the E_COLOR_PLANE enum.
-		Only enabled color planes will be rendered to the current render
-		target. Typical use is to disable all colors when rendering only to
-		depth or stencil buffer, or using Red and Green for Stereo rendering. */
+		//! 定义打开颜色平面
+		/** 值定义作为E_COLOR_PLANE枚举类型可以'|'链接
+		只在打开颜色平面渲染到当前渲染目标。通常用于当渲染到深度或模板缓冲区时关闭所有颜色
+		，或对立体渲染用红和绿
+		  */
 		UINT8 ColorMask : 4;
 
-		//! Defines the interpretation of vertex color in the lighting equation
-		/** Values should be chosen from E_COLOR_MATERIAL.
-		When lighting is enabled, vertex color can be used instead of the
-		material values for light modulation. This allows to easily change e.g. the
-		diffuse light behavior of each face. The default, ECM_DIFFUSE, will result in
-		a very similar rendering as with lighting turned off, just with light shading. */
+		//! 定义在光照方程的顶点插值颜色
+		/** 值选择于E_COLOR_MATERIAL.
+		当光照开启，顶点颜色用材质值和光照调制替代。这使改变每个面的漫反射光的行为很简单。
+	    默认ECM_DIFFUSE */
 		UINT8 ColorMaterial : 3;
 
-		//! Store the blend operation of choice
-		/** Values to be chosen from E_BLEND_OPERATION. The actual way to use this value
-		is not yet determined, so ignore it for now. */
+		//! 保存混合操作的旋转
+		/** 值选择来自于E_BLEND_OPERATION. 使用此值的实际方法尚不确定，所以它现在忽略。 */
 		E_BLEND_OPERATION BlendOperation : 4;
 
-		//! Factor specifying how far the polygon offset should be made
-		/** Specifying 0 disables the polygon offset. The direction is specified spearately.
+		//! 指定多边形偏移多远的因子
+		/** 指定0关闭多边形偏移，这个方向的指定是分开的，这个因子从0到7
 		The factor can be from 0 to 7.*/
 		UINT8 PolygonOffsetFactor : 3;
 
-		//! Flag defining the direction the polygon offset is applied to.
-		/** Can be to front or to back, specififed by values from E_POLYGON_OFFSET. */
+		//! 定义多边形偏移方向的标志
+		/** 可以前或后，指定值可以用E_POLYGON_OFFSET. */
 		E_POLYGON_OFFSET PolygonOffsetDirection : 1;
 
-		//! Draw as wireframe or filled triangles? Default: false
-		/** The user can access a material flag using
-		\code material.Wireframe=true \endcode
-		or \code material.setFlag(EMF_WIREFRAME, true); \endcode */
+		//! 绘制一个线框或填充的三角形，默认false
+		/** 用户可以访问一个材质标志
+		material.Wireframe=true
+		或
+		material.setFlag(EMF_WIREFRAME, true); 
+		*/
 		bool Wireframe : 1;
 
-		//! Draw as point cloud or filled triangles? Default: false
+		//! 绘制点云或填充的三角形  默认false
 		bool PointCloud : 1;
 
-		//! Flat or Gouraud shading? Default: true
+		//! Flat或Gouraud 高络德着色? 默认: true
 		bool GouraudShading : 1;
 
-		//! Will this material be lighted? Default: true
+		//! 材质是否接受光照计算 默认: true
 		bool Lighting : 1;
 
-		//! Is the zbuffer writeable or is it read-only. Default: true.
-		/** This flag is forced to false if the MaterialType is a
-		transparent type and the scene parameter
-		ALLOW_ZWRITE_ON_TRANSPARENT is not set. */
+		//! z缓冲是否可写或者只读 默认true.
+		/** 如果材质类型MaterialType是一个透明类型或者场景参数没设置ALLOW_ZWRITE_ON_TRANSPARENT
+		  */
 		bool ZWriteEnable : 1;
 
-		//! Is backface culling enabled? Default: true
+		//! 是否背面剔除打开 默认 true
 		bool BackfaceCulling : 1;
 
-		//! Is frontface culling enabled? Default: false
+		//! 是否前面剔除  默认 false
 		bool FrontfaceCulling : 1;
 
-		//! Is fog enabled? Default: false
+		//! 是否开启雾化  默认 false
 		bool FogEnable : 1;
 
-		//! Should normals be normalized?
-		/** Always use this if the mesh lit and scaled. Default: false */
+		//! 是否标准化法线 
+		/** 默认false */
 		bool NormalizeNormals : 1;
 
-		//! Shall mipmaps be used if available
-		/** Sometimes, disabling mipmap usage can be useful. Default: true */
+		//! 如果mipmap可用，是否使用mipmap
+		/** 有时,关闭mipmap  默认true*/
 		bool UseMipMaps : 1;
 
-		//! Gets the texture transformation matrix for level i
-		/** \param i The desired level. Must not be larger than MATERIAL_MAX_TEXTURES.
-		\return Texture matrix for texture level i. */
-		 matrix4& getTextureMatrix(UINT32 i)
+		//! 获取第i层纹理变换矩阵
+		/** \param i  不能大于MATERIAL_MAX_TEXTURES
+		\return 第i层纹理的纹理矩阵*/
+		 Matrix4& getTextureMatrix(UINT32 i)
 		{
 			return TextureLayer[i].getTextureMatrix();
 		}
 
-		//! Gets the immutable texture transformation matrix for level i
-		/** \param i The desired level.
-		\return Texture matrix for texture level i, or identity matrix for levels larger than MATERIAL_MAX_TEXTURES. */
-		const core::matrix4& getTextureMatrix(UINT32 i) const
+		//! 获取一个不可修改的第i层纹理变换矩阵 
+		/** \param i  
+		\return 第i层纹理的纹理矩阵,或者i大于MATERIAL_MAX_TEXTURES则是单位矩阵*/
+		 const Matrix4& getTextureMatrix(UINT32 i) const
 		{
 			if (i<MATERIAL_MAX_TEXTURES)
 				return TextureLayer[i].getTextureMatrix();
 			else
-				return core::IdentityMatrix;
+				return Matrix4::IDENTITY;
 		}
 
-		//! Sets the i-th texture transformation matrix
-		/** \param i The desired level.
-		\param mat Texture matrix for texture level i. */
-		void setTextureMatrix(UINT32 i, const core::matrix4& mat)
+		//! 设置第i纹理变换矩阵
+		/** \param i 
+		\param mat 第i层纹理的纹理矩阵. */
+		 void setTextureMatrix(UINT32 i, const Matrix4& mat)
 		{
 			if (i >= MATERIAL_MAX_TEXTURES)
 				return;
 			TextureLayer[i].setTextureMatrix(mat);
 		}
 
-		//! Gets the i-th texture
-		/** \param i The desired level.
-		\return Texture for texture level i, if defined, else 0. */
+		//! 获取第i层纹理
+		/** \param i 
+		\return 如果定义了，返回第i层纹理，否则返回0 */
 		ITexture* getTexture(UINT32 i) const
 		{
 			return i < MATERIAL_MAX_TEXTURES ? TextureLayer[i].Texture : 0;
 		}
 
-		//! Sets the i-th texture
-		/** If i>=MATERIAL_MAX_TEXTURES this setting will be ignored.
-		\param i The desired level.
-		\param tex Texture for texture level i. */
+		//! 设置第i层纹理
+		/** 如果i>=MATERIAL_MAX_TEXTURES 这个设置效
+		\param i  
+		\param tex 纹理指针 */
 		void setTexture(UINT32 i, ITexture* tex)
 		{
 			if (i >= MATERIAL_MAX_TEXTURES)
@@ -478,9 +465,9 @@ namespace Sapphire
 			TextureLayer[i].Texture = tex;
 		}
 
-		//! Sets the Material flag to the given value
-		/** \param flag The flag to be set.
-		\param value The new value for the flag. */
+		//! 用给定的值设置材质标志
+		/** \param flag 要设置的标志
+		\param value 这个标志的值 */
 		void setFlag(E_MATERIAL_FLAG flag, bool value)
 		{
 			switch (flag)
@@ -555,9 +542,9 @@ namespace Sapphire
 			}
 		}
 
-		//! Gets the Material flag
-		/** \param flag The flag to query.
-		\return The current value of the flag. */
+		//! 获取材质的标志
+		/** \param flag 要查询的材质标志
+		\return 当前标志的值 */
 		bool getFlag(E_MATERIAL_FLAG flag) const
 		{
 			switch (flag)
@@ -614,9 +601,7 @@ namespace Sapphire
 			return false;
 		}
 
-		//! Inequality operator
-		/** \param b Material to compare to.
-		\return True if the materials differ, else false. */
+		 
 		inline bool operator!=(const SMaterial& b) const
 		{
 			bool different =
@@ -653,9 +638,7 @@ namespace Sapphire
 			return different;
 		}
 
-		//! Equality operator
-		/** \param b Material to compare to.
-		\return True if the materials are equal, else false. */
+		 
 		inline bool operator==(const SMaterial& b) const
 		{
 			return !(b != *this);
@@ -670,8 +653,8 @@ namespace Sapphire
 		}
 	};
 
-	//! global const identity Material
-	IRRLICHT_API extern SMaterial IdentityMaterial;
+	//! 全局常一致性材质
+	_SapphireExport extern SMaterial IdentityMaterial;
 
 }
 

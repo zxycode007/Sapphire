@@ -7,6 +7,8 @@
 #include "SapphireMath.h"
 #include "SapphireAny.h"
 #include "SapphireVertex.h"
+#include "SapphireSharedPtr.h"
+#include "SapphireMatrix4.h"
 
 
 using namespace Sapphire;
@@ -92,6 +94,18 @@ void TestSTL()
  
 }
 
+
+void TestSharedPtr()
+{
+	Matrix4* mat = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY);
+	SharedPtr<Matrix4>* sh = SAPPHIRE_NEW_T(SharedPtr<Matrix4>, MEMCATEGORY_GENERAL);
+	sh->bind(mat);
+	Matrix4* m = sh->get();
+
+	SAPPHIRE_DELETE_T(sh, SharedPtr<Matrix4>, MEMCATEGORY_GEOMETRY);
+}
+
+
 int main()
 {
 	TestSTL();
@@ -101,11 +115,11 @@ int main()
 	HashMap<std::string, int> map1;
 	std::string str1 = "miki";
 	map1.insert(std::pair<std::string, int>(str1,55));
-	HashMap<std::string, int>::iterator it =map1.find(str1);
+	HashMap<std::string, int>::iterator it =map1.find(str1); 
 	printf("MSVC version = %d", v);
 	Sapphire::Real r = 35.11;
 	const char* c = (char*)it->first.c_str();
-
+	 
 	Sapphire::String s = "wbcdegÎÒµÄ";
 	Sapphire::String s2 = "wmÉ¯À­";
 	Sapphire::String s3 = s + s2;
@@ -195,6 +209,9 @@ int main()
 	{
 		cout << "\n SAPPHIRE_3D_API=" << SAPPHIRE_3D_API << endl;
 	}
+
+
+	TestSharedPtr();
 	
 	getchar();
 	
@@ -213,3 +230,5 @@ void TestSVertex()
 	LogManager::getSingletonPtr()->getDefaultLog()->logMessage("vs Test");
 	
 }
+
+

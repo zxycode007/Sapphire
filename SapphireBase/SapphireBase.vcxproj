@@ -91,9 +91,11 @@
     <ClInclude Include="SapphireFont.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
+    <ClInclude Include="SapphireITexture.h" />
     <ClInclude Include="SapphireKeyMap.h" />
     <ClInclude Include="SapphireLog.h" />
     <ClInclude Include="SapphireLogManager.h" />
+    <ClInclude Include="SapphireMaterialLayer.h" />
     <ClInclude Include="SapphireMath.h" />
     <ClInclude Include="SapphireMatrix3.h" />
     <ClInclude Include="SapphireMatrix4.h" />

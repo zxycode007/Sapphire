@@ -3,6 +3,7 @@
 
 #include "SapphireEMaterialFlags.h"
 #include "SapphirePrerequisites.h"
+#include "SapphireSMaterial.h"
 
 namespace Sapphire
 {
@@ -105,20 +106,17 @@ namespace Sapphire
 		0
 	};
 
-
+	//覆盖材质设置
 	struct SOverrideMaterial
 	{
-		//! The Material values
+		//! 材质
 		SMaterial Material;
-		//! Which values are taken for override
-		/** OR'ed values from E_MATERIAL_FLAGS. */
+		//! 用于覆盖的E_MATERIAL_FLAGS值，可以用'|'链接多个
 		UINT32 EnableFlags;
-		//! Set in which render passes the material override is active.
-		/** OR'ed values from E_SCENE_NODE_RENDER_PASS. */
+		//! 设置渲染通道的材质覆盖处于激活状态，来源于E_SCENE_NODE_RENDER_PASS的值，可以用'|'链接多个
 		UINT32 EnablePasses;
-		//! Global enable flag, overwritten by the SceneManager in each pass
-		/** The Scenemanager uses the EnablePass array and sets Enabled to
-		true if the Override material is enabled in the current pass. */
+		//! 全局开启标志, 通过SceneManager覆写到每一个渲染通道
+		//如果覆盖材质在当前通道打开，场景管理器用EnablePass数组并且设置Enabled为true
 		bool Enabled;
 
 	 
@@ -167,6 +165,45 @@ namespace Sapphire
 			}
 		}
 
+	};
+	//渲染目标
+	//将一个渲染结果作为一个纹理，再用此纹理再进行渲染
+	struct IRenderTarget
+	{
+		IRenderTarget(ITexture* texture,
+			E_COLOR_PLANE colorMask = ECP_ALL,
+			E_BLEND_FACTOR blendFuncSrc = EBF_ONE,
+			E_BLEND_FACTOR blendFuncDst = EBF_ONE_MINUS_SRC_ALPHA,
+			E_BLEND_OPERATION blendOp = EBO_NONE) :
+			RenderTexture(texture),
+			TargetType(ERT_RENDER_TEXTURE), ColorMask(colorMask),
+			BlendFuncSrc(blendFuncSrc), BlendFuncDst(blendFuncDst),
+			BlendOp(blendOp) {}
+		IRenderTarget(E_RENDER_TARGET target,
+			E_COLOR_PLANE colorMask = ECP_ALL,
+			E_BLEND_FACTOR blendFuncSrc = EBF_ONE,
+			E_BLEND_FACTOR blendFuncDst = EBF_ONE_MINUS_SRC_ALPHA,
+			E_BLEND_OPERATION blendOp = EBO_NONE) :
+			RenderTexture(0),
+			TargetType(target), ColorMask(colorMask),
+			BlendFuncSrc(blendFuncSrc), BlendFuncDst(blendFuncDst),
+			BlendOp(blendOp) {}
+		bool operator!=(const IRenderTarget& other) const
+		{
+			return ((RenderTexture != other.RenderTexture) ||
+				(TargetType != other.TargetType) ||
+				(ColorMask != other.ColorMask) ||
+				(BlendFuncSrc != other.BlendFuncSrc) ||
+				(BlendFuncDst != other.BlendFuncDst) ||
+				(BlendOp != other.BlendOp));
+		}
+		//渲染纹理
+		ITexture* RenderTexture;
+		E_RENDER_TARGET TargetType : 8;
+		E_COLOR_PLANE ColorMask : 8;
+		E_BLEND_FACTOR BlendFuncSrc : 4;
+		E_BLEND_FACTOR BlendFuncDst : 4;
+		E_BLEND_OPERATION BlendOp : 4;
 	};
 
 }

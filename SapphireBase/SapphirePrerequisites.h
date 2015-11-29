@@ -208,6 +208,7 @@ namespace Sapphire
 	typedef unsigned __int32 UINT32;
 	typedef unsigned __int8 UINT8;
 	typedef char c8;   //8λchar
+	typedef char s8;
 	
 
 
