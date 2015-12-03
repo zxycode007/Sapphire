@@ -195,9 +195,6 @@
     <ClInclude Include="SapphireRectangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireDimension2D.h">
-      <Filter>头文件\core</Filter>
-    </ClInclude>
     <ClInclude Include="SapphirePath.h">
       <Filter>resources</Filter>
     </ClInclude>
@@ -234,9 +231,6 @@
     <ClInclude Include="SapphireEDriverFeatures.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireVideoDriver.h">
-      <Filter>头文件\renderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireEMaterialTypes.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
@@ -247,6 +241,48 @@
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
     <ClInclude Include="SapphireSMaterial.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireExposedVideoData.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAttributes.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEAttributes.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireLine3D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireTriangle3D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDimension2D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireLine2D.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIImageLoader.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIImageWriter.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIVideoDriver.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshBuffer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSVertex.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSVertexIndex.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEHardwareBufferFlags.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
   </ItemGroup>

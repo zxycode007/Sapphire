@@ -5,8 +5,8 @@
 
 namespace Sapphire
 {
-	template <class T>
-	class vector2d;
+	//template <class T>
+	//class vector2d;
 
 	 
 	template <class T>

@@ -10,6 +10,7 @@ namespace Sapphire {
 	const ColourValue ColourValue::Red = ColourValue(1.0, 0.0, 0.0);
 	const ColourValue ColourValue::Green = ColourValue(0.0, 1.0, 0.0);
 	const ColourValue ColourValue::Blue = ColourValue(0.0, 0.0, 1.0);
+	//const Real ColourValue::inv = 1.0f / 255.0f;
 
 	//---------------------------------------------------------------------
 #if SAPPHIRE_ENDIAN == SAPPHIRE_ENDIAN_BIG

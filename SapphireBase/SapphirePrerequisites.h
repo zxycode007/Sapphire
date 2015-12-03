@@ -206,6 +206,7 @@ namespace Sapphire
 	typedef __int64 SINT64;
 	typedef unsigned __int64 UINT64;
 	typedef unsigned __int32 UINT32;
+	typedef unsigned __int16 UINT16;
 	typedef unsigned __int8 UINT8;
 	typedef char c8;   //8位char
 	typedef char s8;
@@ -261,12 +262,14 @@ namespace Sapphire
 	typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, STLAllocator<wchar_t, GeneralAllocPolicy > >	_StringBase;   //定义字符串类基类
 #else
 	typedef std::basic_string<char, std::char_traits<char>, STLAllocator<char, GeneralAllocPolicy > >	_StringBase;
+	typedef std::basic_string<wchar_t, std::char_traits<wchar_t>, STLAllocator<wchar_t, GeneralAllocPolicy > >	_StringWBase;
 #endif
 
 #if SAPPHIRE_WCHAR_T_STRINGS
 	typedef std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, STLAllocator<wchar_t, GeneralAllocPolicy >> _StringStreamBase;   //定义字符串流的基类
 #else
 	typedef std::basic_stringstream<char, std::char_traits<char>, STLAllocator<char, GeneralAllocPolicy > > _StringStreamBase;
+	typedef std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, STLAllocator<wchar_t, GeneralAllocPolicy >> _StringWStreamBase;
 #endif
 
 	//使用自定义的内存分配器后和原STL：：String不再兼容, 用StdStringT（T）  来表示std::basic_string<T, std::char_traits<T>, std::allocator<T> >   T可以为char  wchar_t
@@ -377,19 +380,31 @@ namespace Sapphire
 	typedef std::wstring _StringBase;     //定义字符串基类
 #else 
 	typedef std::string _StringBase;
+	typedef std::wstring _StringWBase; 
 #endif
 
 #if SAPPHIRE_WCHAR_T_STRINGS
 	typedef std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > _StringStreamBase;        //定义字符串流基类
 #else
 	typedef std::basic_stringstream<char, std::char_traits<char>, std::allocator<char> > _StringStreamBase;
+	typedef std::basic_stringstream<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > _StringWStreamBase;
 #endif
 
 #endif
 
+#if SAPPHIRE_WCHAR_T_STRINGS
 	typedef _StringBase String;
 	typedef _StringStreamBase StringStream;
 	typedef StringStream stringstream;
+#else
+	typedef _StringBase String;
+	typedef _StringStreamBase StringStream;
+	typedef StringStream stringstream;
+	typedef _StringWBase StringW;
+	typedef _StringWStreamBase StringWStream;
+	typedef StringWStream stringWstream;
+#endif
+	
 
 }
 

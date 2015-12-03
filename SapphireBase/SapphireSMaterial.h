@@ -238,7 +238,8 @@ namespace Sapphire
 		{
 			// 清空每一层材质的纹理矩阵
 			for (UINT32 i = 0; i < MATERIAL_MAX_TEXTURES; ++i)
-				TextureLayer[i].TextureMatrix->setNull();
+				//先删除本纹理自身的纹理矩阵
+				TextureLayer[i].emptyTextureMatrix();
 			*this = other;
 		}
 

@@ -10,44 +10,174 @@ namespace Sapphire {
 	//! 一个纹理的颜色格式的枚举
 	enum ECOLOR_FORMAT
 	{
-		//! 16 bit color format used by the software driver.
-		/** It is thus preferred by all other irrlicht engine video drivers.
-		There are 5 bits for every color component, and a single bit is left
-		for alpha information. */
+		//! 16位色彩格式：用于软件驱动
+		/** 因此它可以为引擎所有其它视频驱动的首选
+		每个颜色分量有5位，alpha信息由单个位组成 */
 		ECF_A1R5G5B5 = 0,
 
-		//! Standard 16 bit color format.
+		//! 标准的16位颜色格式
 		ECF_R5G6B5,
 
-		//! 24 bit color, no alpha channel, but 8 bit for red, green and blue.
+		//! 标准的24位颜色格式，没有alpha通道，红绿蓝均8位
 		ECF_R8G8B8,
 
-		//! Default 32 bit color format. 8 bits are used for every component: red, green, blue and alpha.
+		//! 默认的32位颜色格式，每个分量均8位
 		ECF_A8R8G8B8,
 
-		/** Floating Point formats. The following formats may only be used for render target textures. */
+		/** 浮点格式。下列格式只能用于渲染目标纹理 */
 
-		//! 16 bit floating point format using 16 bits for the red channel.
+		//! 16位浮点格式，使用16位的红色通道
 		ECF_R16F,
 
-		//! 32 bit floating point format using 16 bits for the red channel and 16 bits for the green channel.
+		//! 32位浮点格式，用16位红色通道和16位绿色通道
 		ECF_G16R16F,
 
-		//! 64 bit floating point format 16 bits are used for the red, green, blue and alpha channels.
+		//! 64位浮点格式，用16位红，绿，蓝和alpha通道
 		ECF_A16B16G16R16F,
 
-		//! 32 bit floating point format using 32 bits for the red channel.
+		//! 32位浮点格式，用32位的红色通道
 		ECF_R32F,
 
-		//! 64 bit floating point format using 32 bits for the red channel and 32 bits for the green channel.
+		//! 64位浮点格式，用32位的红色和绿色通道
 		ECF_G32R32F,
 
-		//! 128 bit floating point format. 32 bits are used for the red, green, blue and alpha channels.
+		//! 128位浮点格式，用32位的红绿蓝和透明格式
 		ECF_A32B32G32R32F,
 
-		//! Unknown color format:
+		 
 		ECF_UNKNOWN
 	};
+
+
+	//! 创建一个16位的A1R5G5B5颜色
+	inline UINT16 RGBA16(UINT32 r, UINT32 g, UINT32 b, UINT32 a = 0xFF)
+	{
+		return (UINT16)((a & 0x80) << 8 |
+			(r & 0xF8) << 7 |
+			(g & 0xF8) << 2 |
+			(b & 0xF8) >> 3);
+	}
+
+
+	//! 创建一个16位的A1R5G5B5颜色 
+	inline UINT16 RGB16(UINT32 r, UINT32 g, UINT32 b)
+	{
+		return RGBA16(r, g, b);
+	}
+
+
+	//!  创建一个16位的A1R5G5B5颜色 ,基于16位输入值
+	inline UINT16 RGB16from16(UINT16 r, UINT16 g, UINT16 b)
+	{
+		return (0x8000 |
+			(r & 0x1F) << 10 |
+			(g & 0x1F) << 5 |
+			(b & 0x1F));
+	}
+
+
+	//! 转换一个32位(X8R8G8B8)颜色到16位的A1R5G5B5
+	inline UINT16 X8R8G8B8toA1R5G5B5(UINT32 color)
+	{
+		return (UINT16)(0x8000 |
+			(color & 0x00F80000) >> 9 |
+			(color & 0x0000F800) >> 6 |
+			(color & 0x000000F8) >> 3);
+	}
+
+
+	//! 转换一个32位(A8R8G8B8)颜色到16位的A1R5G5B5
+	inline UINT16 A8R8G8B8toA1R5G5B5(UINT32 color)
+	{
+		return (UINT16)((color & 0x80000000) >> 16 |
+			(color & 0x00F80000) >> 9 |
+			(color & 0x0000F800) >> 6 |
+			(color & 0x000000F8) >> 3);
+	}
+
+
+	//! 转换一个32位(A8R8G8B8) 颜色到16位的R5G6B5
+	inline UINT16 A8R8G8B8toR5G6B5(UINT32 color)
+	{
+		return (UINT16)((color & 0x00F80000) >> 8 |
+			(color & 0x0000FC00) >> 5 |
+			(color & 0x000000F8) >> 3);
+	}
+
+
+	//! 从A1R5G5B5转换到A8R8G8B8
+	inline UINT32 A1R5G5B5toA8R8G8B8(UINT16 color)
+	{
+		return (((-((SINT32)color & 0x00008000) >> (SINT32)31) & 0xFF000000) |
+			((color & 0x00007C00) << 9) | ((color & 0x00007000) << 4) |
+			((color & 0x000003E0) << 6) | ((color & 0x00000380) << 1) |
+			((color & 0x0000001F) << 3) | ((color & 0x0000001C) >> 2)
+			);
+	}
+
+
+	//! 返回R5G6B5的A8R8G8B8的颜色
+	inline UINT32 R5G6B5toA8R8G8B8(UINT16 color)
+	{
+		return 0xFF000000 |
+			((color & 0xF800) << 8) |
+			((color & 0x07E0) << 5) |
+			((color & 0x001F) << 3);
+	}
+
+
+	//! 返回从A1R5G5B5的R5G6B5的颜色 
+	inline UINT16 R5G6B5toA1R5G5B5(UINT16 color)
+	{
+		return 0x8000 | (((color & 0xFFC0) >> 1) | (color & 0x1F));
+	}
+
+
+	//! 返回A1R5G5B5到R5G6B5的颜色  
+	inline UINT16 A1R5G5B5toR5G6B5(UINT16 color)
+	{
+		return (((color & 0x7FE0) << 1) | (color & 0x1F));
+	}
+
+
+
+	//! 返回A1R5G5B5的alpha分量
+ 
+	inline UINT32 getAlpha(UINT16 color)
+	{
+		return ((color >> 15) & 0x1);
+	}
+
+
+	//! 返回A1R5G5B5的红色分量
+	/** Shift left by 3 to get 8 bit value. */
+	inline UINT32 getRed(UINT16 color)
+	{
+		return ((color >> 10) & 0x1F);
+	}
+
+
+	//! 返回A1R5G5B5的绿色分量
+	/** Shift left by 3 to get 8 bit value. */
+	inline UINT32 getGreen(UINT16 color)
+	{
+		return ((color >> 5) & 0x1F);
+	}
+
+
+	//! 返回A1R5G5B5的蓝色分量
+	/** Shift left by 3 to get 8 bit value. */
+	inline UINT32 getBlue(UINT16 color)
+	{
+		return (color & 0x1F);
+	}
+
+
+	//! 返回16位A1R5G5B5的平均值
+	inline SINT32 getAverage(SINT32 color)
+	{
+		return ((getRed(color) << 3) + (getGreen(color) << 3) + (getBlue(color) << 3)) / 3;
+	}
 	 
 	////32位RGBA
 	typedef uint32 RGBA; 
@@ -75,6 +205,7 @@ namespace Sapphire {
 		static const ColourValue Red;      //红
 		static const ColourValue Green;     //绿
 		static const ColourValue Blue;        //蓝
+		//static const Real inv;
 
 		explicit ColourValue(float red = 1.0f,
 			float green = 1.0f,
@@ -290,6 +421,8 @@ namespace Sapphire {
 			return *this;
 		}
 
+		bool operator<(const ColourValue& other) const { return (getAsARGB() < other.getAsARGB()); }
+
 		inline ColourValue& operator *= (const float fScalar)
 		{
 			r *= fScalar;
@@ -327,7 +460,91 @@ namespace Sapphire {
 		*/
 		void getHSB(Real* hue, Real* saturation, Real* brightness) const;
 
+		
 
+		//! 以指定的颜色格式写入一个颜色数据
+		/** \param data: 目标的颜色数据。必须包含足够大的内容一般接受指定格式的颜色数据
+		\param format: 告诉要用什么颜色数据
+		*/
+		void getData(void *data, ECOLOR_FORMAT format)
+		{
+			switch (format)
+			{
+			case ECF_A1R5G5B5:
+			{
+				UINT16 * dest = (UINT16*)data;
+				*dest =  A8R8G8B8toA1R5G5B5(getAsARGB());
+			}
+			break;
+
+			case ECF_R5G6B5:
+			{
+				UINT16 * dest = (UINT16*)data;
+				*dest = A8R8G8B8toR5G6B5(getAsARGB());
+			}
+			break;
+
+			case ECF_R8G8B8:
+			{
+				UINT8* dest = (UINT8*)data;
+				dest[0] = (UINT8)getRed(A8R8G8B8toA1R5G5B5(getAsARGB()));
+				dest[1] = (UINT8)getGreen(A8R8G8B8toA1R5G5B5(getAsARGB()));
+				dest[2] = (UINT8)getBlue(A8R8G8B8toA1R5G5B5(getAsARGB()));
+			}
+			break;
+
+			case ECF_A8R8G8B8:
+			{
+				UINT32 * dest = (UINT32*)data;
+				*dest = getAsARGB();
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+
+		//! 用Real插值这个颜色到另外一个颜色
+		/** \param other: 另外的颜色
+		\param d: 在0.0f 和 1.0f之间的值
+		\return Interpolated color. */
+		ColourValue getInterpolated(const ColourValue &other, Real d) const
+		{
+			d = Math::Clamp<Real>(d, 0.f, 1.f);
+			const Real inv = 1.0f - d;
+			return ColourValue(
+				 (other.r*inv + r*d),
+				 (other.g*inv + g*d),
+				 (other.b*inv + b*d),
+				 (other.a*inv + a*d)
+				 );
+		}
+
+		//! 返回插值的颜色（二次的） 
+		/** \param c1: 第一个要与之插值的颜色
+		\param c2: 第二个要与之插值的颜色
+		\param d: 在0.0f到1.0f之间的数 */
+		ColourValue getInterpolated_quadratic(const ColourValue& c1, const ColourValue& c2, Real d) const
+		{
+			// this*(1-d)*(1-d) + 2 * c1 * (1-d) + c2 * d * d;
+			d = Math::Clamp<Real>(d, 0.f, 1.f);
+			const Real inv = 1.f - d;
+			const Real mul0 = inv * inv;
+			const Real mul1 = 2.f * d * inv;
+			const Real mul2 = d * d;
+
+			return ColourValue(
+				Math::Clamp<Real>((
+				r   * mul0 + c1.r   * mul1 + c2.r   * mul2), 0.0, 1.0f),
+				Math::Clamp<Real>( (
+				g * mul0 + c1.g * mul1 + c2.g * mul2), 0.0, 1.0f),
+				Math::Clamp<Real>( (
+				b  * mul0 + c1.b  * mul1 + c2.b  * mul2), 0.0, 1.0f),
+				Math::Clamp<Real>((
+				a * mul0 + c1.a * mul1 + c2.a * mul2), 0.0, 1.0f)
+				);
+		}
 
 		/** 输出到一个流
 		*/

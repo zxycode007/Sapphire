@@ -55,14 +55,14 @@ namespace Sapphire
 			LODBias(0)
 			//TextureMatrix(0)
 		{
-			TextureMatrix = SAPPHIRE_NEW_T(SharedPtr<Matrix4>,MEMCATEGORY_GENERAL);
+			TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
 		}
 
 		//! 拷贝构造函数
 		/** \param 其它的材质层. */
 		SMaterialLayer(const SMaterialLayer& other)
 		{
-			TextureMatrix = SAPPHIRE_NEW_T(SharedPtr<Matrix4>, MEMCATEGORY_GENERAL);
+			TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
 			//TextureMatrix = 0;
 			*this = other;
 		}
@@ -72,7 +72,7 @@ namespace Sapphire
 		{
 			//MatrixAllocator.destruct(TextureMatrix);
 			//MatrixAllocator.deallocate(TextureMatrix);
-			SAPPHIRE_DELETE_T(TextureMatrix, SharedPtr<Matrix4>, MEMCATEGORY_GENERAL);
+			SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
 		}
 
 		//! 重载操作符
@@ -86,9 +86,9 @@ namespace Sapphire
 
 			Texture = other.Texture;
 			//如果纹理矩阵存在
-			if (!TextureMatrix->isNull())
+			if (TextureMatrix)
 			{
-				if (!other.TextureMatrix->isNull())
+				if (other.TextureMatrix)
 				{
 					 
 					*TextureMatrix = *(other.TextureMatrix);
@@ -98,16 +98,15 @@ namespace Sapphire
 					//MatrixAllocator.destruct(TextureMatrix);
 					//MatrixAllocator.deallocate(TextureMatrix);
 					
-					TextureMatrix->setNull();
+					SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
 				}
 			}
 			else
 			{
 				//对面纹理矩阵存在
-				if (!other.TextureMatrix->isNull())
+				if (other.TextureMatrix )
 				{
-					TextureMatrix->bind(new Matrix4());
-					*TextureMatrix = *(other.TextureMatrix);
+					TextureMatrix = SAPPHIRE_NEW_T(Matrix4(*(other.TextureMatrix)), MEMCATEGORY_GENERAL);
 					//TextureMatrix = MatrixAllocator.allocate(1);
 					//MatrixAllocator.construct(TextureMatrix, *other.TextureMatrix);
 				}
@@ -130,13 +129,13 @@ namespace Sapphire
 		//core::matrix4& getTextureMatrix()*/
 		Matrix4& getTextureMatrix()
 		{
-			if (TextureMatrix->isNull())
+			if (!TextureMatrix)
 			{
 				//TextureMatrix = MatrixAllocator.allocate(1);
 				//MatrixAllocator.construct(TextureMatrix, core::IdentityMatrix);
-				*TextureMatrix = SharedPtr<Matrix4>(&Matrix4::IDENTITY);
+				TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY);
 			}
-			return **TextureMatrix;
+			return *TextureMatrix;
 		}
 
 		//! 获取不可修改的纹理矩阵
@@ -145,8 +144,8 @@ namespace Sapphire
 		*/
 		const Matrix4& getTextureMatrix() const
 		{
-			if (!TextureMatrix->isNull())
-				return **TextureMatrix;
+			if (TextureMatrix)
+				return *TextureMatrix;
 			else
 				return  Matrix4::IDENTITY;
 		}
@@ -157,14 +156,26 @@ namespace Sapphire
 		*/
 		void setTextureMatrix(const Matrix4& mat)
 		{
-			if (!TextureMatrix->isNull())
+			if (TextureMatrix)
 			{
 				//TextureMatrix = MatrixAllocator.allocate(1);
 				//MatrixAllocator.construct(TextureMatrix, mat);
-				*TextureMatrix = SharedPtr<Matrix4>(&mat);
+				*TextureMatrix = mat;
 			}
 			else
-				*TextureMatrix = SharedPtr<Matrix4>(&mat);
+			{	 
+				TextureMatrix = SAPPHIRE_NEW_T(Matrix4(mat), MEMCATEGORY_GEOMETRY);;
+			}
+				
+		}
+		//清空纹理矩阵
+		void emptyTextureMatrix()
+		{
+			//如果纹理矩阵不为空
+			if (TextureMatrix)
+			{
+				SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+			}
 		}
 
 		 
@@ -225,7 +236,7 @@ namespace Sapphire
 
 		//! 纹理矩阵
 	
-		SharedPtr<Matrix4>* TextureMatrix;
+		Matrix4* TextureMatrix;
 	};
 }
 

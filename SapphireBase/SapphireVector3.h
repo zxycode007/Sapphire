@@ -611,12 +611,33 @@ namespace Sapphire
 
 		}
 
+		//! 创建一个在这个向量和另外一个向量之间插值的向量
+		/** \param other 要进行插值的另外一个向量
+		\param d 插值的值在0.0f（本向量）到1.0f之间（另外的一个向量）
+		注意：这是与getInterpolated_quadratic()插值方向相反
+		\return 一个插值的向量，本向量自身没有改动 */
+		Vector3 getInterpolated(const Vector3& other, Real d) const
+		{
+			const Real inv = 1.0 - d;
+			return Vector3(other.x*inv + x*d, other.y*inv + y*d, other.z*inv + z*d);
+		}
 		 
 		inline bool isNaN() const
 		{
 			return Math::isNaN(x) || Math::isNaN(y) || Math::isNaN(z);
 		}
 
+		//! 返回这个向量是否是在一条线段两点间线性插值的某个点
+		/** 假定这个点在线段两点之间
+		\param begin 起始向量
+		\param end 结束向量
+		\return 如果这个点在线段起始和结尾之间返回true，否则返回false */
+		inline bool isBetweenPoints(const Vector3& begin, const Vector3& end) const
+		{
+			const Real f = (end - begin).squaredLength();	
+			return squaredDistance(begin) <= f &&
+				squaredDistance(end) <= f;
+		}
 	 
 		inline Vector3 primaryAxis() const
 		{

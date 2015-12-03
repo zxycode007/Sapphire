@@ -2,6 +2,7 @@
 #define __SAPPHIRE_MATH__
 
 #include "SapphirePrerequisites.h"
+#include "SapphireQMath.h"
 
 
 
@@ -268,12 +269,21 @@ namespace Sapphire
 		static bool RealEqual(Real a, Real b,
 			Real tolerance = std::numeric_limits<Real>::epsilon());
 
+		/*
+		判断浮点数是否为0
+		*/
+		static inline bool iszero(const Real a, const Real tolerance = std::numeric_limits<Real>::epsilon())
+		{
+			return fabs(a) <= tolerance;
+		}
+
 		template <typename T>
 		static T Clamp(T val, T minval, T maxval)
 		{
 			assert(minval <= maxval && "Invalid clamp range");
 			return std::max(std::min(val, maxval), minval);
 		}
+
 
 		/** 
 		反余函数
@@ -568,6 +578,12 @@ namespace Sapphire
 
 		/** 从一个边界盒子取得边界半径值 */
 		static Real boundingRadiusFromAABB(const AxisAlignedBox& aabb);
+
+		//判断两个浮点数是否相等
+		static inline bool equals(const Real a, const Real b, const Real tolerance = EPSILON_E6)
+		{
+			return (a + tolerance >= b) && (a - tolerance <= b);
+		}
 
 	protected:
 		//////////////////不对外由API内部调用//////////////////////

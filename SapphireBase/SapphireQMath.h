@@ -59,6 +59,16 @@
 ε到小数点后6位的
 */
 #define EPSILON_E6 (float)(1E-6)
+/**
+@brief
+ε到小数点后7位的
+*/
+#define EPSILON_E7  (double)(1E-7)
+/**
+@brief
+ε到小数点后8位的
+*/
+#define EPSILON_E8  (double)(1E-8)
 
 //////////////////////////////////////////通用宏/////////////////////////////////////////
 //判断大小,去较大或较小值
@@ -286,6 +296,8 @@ int Fast_Distance_2D(int x, int y);
 void Build_Sin_Cos_Tables(void);
 
 void Build_Inverse_Cos_Table(float *invcos, int  range_scale = 360);
+
+
 
 
 

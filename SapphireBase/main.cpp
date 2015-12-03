@@ -98,11 +98,13 @@ void TestSTL()
 void TestSharedPtr()
 {
 	Matrix4* mat = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY);
-	SharedPtr<Matrix4>* sh = SAPPHIRE_NEW_T(SharedPtr<Matrix4>, MEMCATEGORY_GENERAL);
-	sh->bind(mat);
+	SharedPtr<Matrix4>* sh = SAPPHIRE_NEW_T(SharedPtr<Matrix4>(SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY)), MEMCATEGORY_GENERAL);
+//	sh->bind(mat);
 	Matrix4* m = sh->get();
-
+	cout << sh->isNull() << endl;
 	SAPPHIRE_DELETE_T(sh, SharedPtr<Matrix4>, MEMCATEGORY_GEOMETRY);
+	sh = SAPPHIRE_NEW_T(SharedPtr<Matrix4>(SAPPHIRE_NEW_T(Matrix4(Matrix4::ZEROAFFINE), MEMCATEGORY_GEOMETRY)), MEMCATEGORY_GENERAL);
+	getchar();
 }
 
 

@@ -483,7 +483,7 @@ namespace Sapphire
 			return Sapphire::Math::ACos(f);
 		}
 
-		/**	取得两个向量间的朝向角 Gets the oriented angle between 2 vectors.
+		/**	取得两个向量间的朝向角 
 		@remarks
 		向量可以不用单位长度，但是必须表示一个方向
 		角度在0~2PI
@@ -498,6 +498,57 @@ namespace Sapphire
 
 			return angle;
 		}
+
+
+		//! 返回这个向量是否是在一条线段两点间线性插值的某个点
+		/** 假定这个点在线段两点之间
+		\param begin 起始向量
+		\param end 结束向量
+		\return 如果这个点在线段起始和结尾之间返回true，否则返回false */
+		inline bool isBetweenPoints(const Vector2& begin, const Vector2& end) const
+		{
+			if (begin.x != end.x)
+			{
+				return ((begin.x <= x && x <= end.x) ||
+					(begin.x >= x && x >= end.x));
+			}
+			else
+			{
+				return ((begin.y <= y && y <= end.y) ||
+					(begin.y >= y && y >= end.y));
+			}
+		}
+
+
+		//! 创建一个在向量与另一个向量之间的插值向量
+		/** \param other 与其插值的另一个向量
+		\param d 插值的值（0.0f到1.0f之间） 注意：这是与getInterpolated_quadratic()的插值方向相反的
+		\return 一个插值的向量，并不修改本向量 */
+		Vector2 getInterpolated(const Vector2& other, Real d) const
+		{
+			Real inv = 1.0f - d;
+			return Vector2((other.x*inv + x*d),(other.y*inv + y*d));
+		}
+
+
+		//! 创建一个在向量与另一个向量之间的二次插值向量
+		/** \param v2 第二个参与插值向量
+		\param v3 第三个参与插值的向量 (maximum at 1.0f)
+		\param d 插值的值 由0.0f（所有向量）和1.0f（所有第三个向量）之间
+		注意:这是与getInterpolated()的插值方向相反的 
+		\return 一个插值的向量，并不修改本向量 */
+		Vector2 getInterpolated_quadratic(const Vector2& v2, const Vector2 & v3, Real d) const
+		{
+			// this*(1-d)*(1-d) + 2 * v2 * (1-d) + v3 * d * d;
+			const Real inv = 1.0f - d;
+			const Real mul0 = inv * inv;
+			const Real mul1 = 2.0f * d * inv;
+			const Real mul2 = d * d;
+
+			return Vector2( (x * mul0 + v2.x * mul1 + v3.x * mul2),
+				 (y * mul0 + v2.y * mul1 + v3.y * mul2));
+		}
+
 
 		// 特殊的点special points
 		static const Vector2 ZERO;
@@ -519,6 +570,6 @@ namespace Sapphire
 
 }
 
-
+#define Position2d Vector2
 
 #endif
