@@ -1,7 +1,8 @@
 #ifndef _SAPPHIRE_MEMORY_ALLOCATED_OBJECT_
 #define _SAPPHIRE_MEMORY_ALLOCATED_OBJECT_
 
-#include "SapphirePrerequisites.h"
+#include "SapphirePlatfrom.h"
+//#include "SapphirePrerequisites.h"
 
 //取消c++ 的new delete 内存分配和回收方式，用自定义的的new delete管理内存
 #ifdef new

@@ -5,28 +5,28 @@ namespace Sapphire
 {
 	enum E_HARDWARE_MAPPING
 	{
-		//! Don't store on the hardware
+		//! 不保存在硬件中
 		EHM_NEVER = 0,
 
-		//! Rarely changed, usually stored completely on the hardware
+		//! 很少改变，经常完整的保存在硬件中
 		EHM_STATIC,
 
-		//! Sometimes changed, driver optimized placement
+		//! 有时改变，驱动优化配置
 		EHM_DYNAMIC,
 
-		//! Always changed, cache optimizing on the GPU
+		//! 经常改变，在GPU中优化缓冲
 		EHM_STREAM
 	};
 
 	enum E_BUFFER_TYPE
 	{
-		//! Does not change anything
+		//!不改变任何东西
 		EBT_NONE = 0,
-		//! Change the vertex mapping
+		//! 改变顶点映射
 		EBT_VERTEX,
-		//! Change the index mapping
+		//! 改变所有映射
 		EBT_INDEX,
-		//! Change both vertex and index mapping to the same value
+		//! 同时改变顶点和索引映射到同一个值中
 		EBT_VERTEX_AND_INDEX
 	};
 }

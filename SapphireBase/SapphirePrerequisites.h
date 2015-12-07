@@ -53,6 +53,7 @@ extern "C" {
 #include "SapphirePlatfrom.h"
 
 //根据编译器类型GCC,MSVC，CLANG来选择不同的类型HashMap和HashSet
+
 #if (SAPPHIRE_COMPILER == SAPPHIRE_COMPILER_GNUC) && !defined(STLPORT)
 #   if SAPPHIRE_COMP_VER >= 430
 #       include <tr1/unordered_map>
@@ -194,6 +195,9 @@ namespace Sapphire
 #   endif
 #endif
 
+
+ 
+
 	//静态堆对象分配
 #define SAPPHIRE_DEFINE_STATIC_LOCAL(type, name, arguments) static type& name = *new type arguments
 	//重定义数据类型
@@ -202,6 +206,7 @@ namespace Sapphire
 	typedef unsigned int UINT;
 	typedef unsigned long ULONG;
 	typedef int SINT;
+	typedef __int16 SINT16;
 	typedef __int32 SINT32;
 	typedef __int64 SINT64;
 	typedef unsigned __int64 UINT64;
@@ -210,6 +215,7 @@ namespace Sapphire
 	typedef unsigned __int8 UINT8;
 	typedef char c8;   //8位char
 	typedef char s8;
+ 
 	
 
 
@@ -219,7 +225,7 @@ namespace Sapphire
 	typedef wchar_t S_CHAR;
 #endif
 
-		//多线程定义支持
+	//多线程定义支持
 #include "threads\SapphireThreadDefines.h"
 
 ////////////////////////预定义类////////////////////////////////
@@ -247,10 +253,10 @@ namespace Sapphire
 
 //在所有配置设置号以后包含标准库文件
 #include "SapphireStdHeader.h"
-#include "SapphireKeyMap.h"
-#include "SapphireDimension2D.h"
-#include "SapphireDefines.h";
-#include "SapphireSceneNodeTypes.h"
+//#include "SapphireKeyMap.h"
+//#include "SapphireDimension2D.h"
+//#include "SapphireDefines.h";
+//#include "SapphireSceneNodeTypes.h"
 #include "SapphireMemoryAllocatorConfig.h"
 
 

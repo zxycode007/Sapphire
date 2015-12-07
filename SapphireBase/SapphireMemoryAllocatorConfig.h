@@ -1,7 +1,7 @@
 #ifndef _SAPPHIRE_MEOMORY_ALLOCATOR_CONFIG_
 #define _SAPPHIRE_MEOMORY_ALLOCATOR_CONFIG_
 
-#include "SapphireMemoryAllocatedObject.h"
+
 
 
 /*
@@ -107,6 +107,7 @@ namespace Sapphire
 
 }
 
+#include "SapphireMemoryAllocatedObject.h"
 #include "SapphireMemorySTLAllocator.h"
 
 #if SAPPHIRE_MEMORY_ALLOCATOR == SAPPHIRE_MEMORY_ALLOCATOR_NEDPOOLING       //判断内存分配器采用的类型NEDPOOLING
@@ -132,8 +133,8 @@ namespace Sapphire
 //	// 配置基于这个选项默认的分配器
 //	// 注意我们在这里使用这个内存种类，但是仍然将它输入到你分配器中，你可以选择为不同内存用途选择不同的分配策略
 
-	// 配置种类，对于通用的分配内存
-	// 注意这里种类是无效的
+// 配置种类，对于通用的分配内存
+// 注意这里种类是无效的
 //	template <MemoryCategory Cat> class CategorisedAllocPolicy : public NedAllocPolicy{};  //创建内存种类分配策略 模板类 CategorisedAllocPolicy 继承至Ned策略NedAllocPolicy
 //	template <MemoryCategory Cat, size_t align = 0> class CategorisedAlignAllocPolicy : public NedAlignedAllocPolicy<align>{};
 //}

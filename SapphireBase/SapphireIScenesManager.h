@@ -1,18 +1,22 @@
 #ifndef _SAPPHIRE_SCENE_
 #define _SAPPHIRE_SCENE_
 
-#include "SapphireEMeshWriterEnums.h"
-#include "SapphireSceneNodeTypes.h"
-#include "SapphireESceneNodeAnimatorType.h"
-#include "SapphireUserDataSerializer.h"
-#include "SapphireETerrianElements.h"
-#include "SapphireDefines.h"
+
 #include "SapphirePrerequisites.h"
 //#include "SapphireMemoryAllocatorConfig.h"
-#include "SapphireColorValue.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphireVector3.h"
 #include "SapphireFont.h"
 #include "SapphirePath.h"
+#include "SapphireColorValue.h"
+#include "SapphireKeyMap.h"
+#include "SapphireDimension2D.h"
+#include "SapphireEMeshWriterEnums.h"
+#include "SapphireESceneNodeTypes.h"
+#include "SapphireESceneNodeAnimatorType.h"
+#include "SapphireIUserDataSerializer.h"
+#include "SapphireETerrianElements.h"
+#include "SapphireDefines.h"
 
 
 
@@ -141,7 +145,7 @@ namespace Sapphire
 	/***
 	Sapphire 的场景管理器
 	*/
-	class _SapphireExport ISceneManager : public SceneAlloc
+	class _SapphireExport  ISceneManager : public virtual IReferenceCounter
 	{
 	public:
 

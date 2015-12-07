@@ -269,6 +269,33 @@ namespace Sapphire
 			return false;
 		}
 
+		inline Matrix3&  setRotationRadians(const Vector3& rotation, bool useTable=false)
+		{
+			const Real cr = Math::Cos(rotation.x, useTable);
+			const Real sr = Math::Sin(rotation.x, useTable);
+			const Real cp = Math::Cos(rotation.y, useTable);
+			const Real sp = Math::Sin(rotation.y, useTable);
+			const Real cy = Math::Cos(rotation.z, useTable);
+			const Real sy = Math::Sin(rotation.z, useTable);
+
+			m[0][0] = (cp*cy);
+			m[1][0] = (cp*sy);
+			m[2][0] = (-sp);
+
+			const Real srsp = sr*sp;
+			const Real crsp = cr*sp;
+
+			m[0][1] = (srsp*cy - cr*sy);
+			m[1][1] = (srsp*sy + cr*cy);
+			m[2][1] = (sr*cp);
+
+			m[0][2] = (crsp*cy + sr*sy);
+			m[1][2] = (crsp*sy - sr*cy);
+			m[1][2] = (cr*cp);
+
+			return *this;
+		}
+
 		/** 
 		将该矩阵输出到流
 		*/

@@ -1,7 +1,7 @@
 #ifndef _SAPPHIRE_MEMORY_STL_ALLOCATOR_
 #define _SAPPHIRE_MEMORY_STL_ALLOCATOR_
 
-#include "SapphirePrerequisites.h"
+//#include "SapphirePrerequisites.h"
 
 namespace Sapphire
 {

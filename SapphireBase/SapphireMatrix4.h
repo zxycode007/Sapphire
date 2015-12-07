@@ -22,7 +22,7 @@ namespace Sapphire
 	当由不同的渲染系统内部操作时，SAPPHIRE只使用标准的数学转换。从右到左的矩阵乘法
 	（SAPPHIRE转换矩阵，传递给D3D去补偿）
 	@par
-	j矩阵M * V 它们战士了矩阵项目元素布局如下
+	j矩阵M * V 它们展示了矩阵项目元素布局如下
 	<pre>
 	[ m[0][0]  m[0][1]  m[0][2]  m[0][3] ]   {x}
 	| m[1][0]  m[1][1]  m[1][2]  m[1][3] | * {y}
@@ -431,6 +431,33 @@ namespace Sapphire
 			Matrix3 m3x3;
 			extract3x3Matrix(m3x3);
 			return Quaternion(m3x3);
+		}
+
+		inline Matrix4&  setRotationRadians(const Vector3& rotation, bool useTable=false)
+		{
+			const Real cr = Math::Cos(rotation.x,useTable);
+			const Real sr = Math::Sin(rotation.x, useTable);
+			const Real cp = Math::Cos(rotation.y, useTable);
+			const Real sp = Math::Sin(rotation.y, useTable);
+			const Real cy = Math::Cos(rotation.z, useTable);
+			const Real sy = Math::Sin(rotation.z, useTable);
+
+			m[0][0] =  (cp*cy);
+			m[1][0]=  (cp*sy);
+			m[2][0] =  (-sp);
+
+			const Real srsp = sr*sp;
+			const Real crsp = cr*sp;
+
+			m[0][1] =  (srsp*cy - cr*sy);
+			m[1][1] =  (srsp*sy + cr*cy);
+			m[2][1] =  (sr*cp);
+
+			m[0][2] =  (crsp*cy + sr*sy);
+			m[1][2] =  (crsp*sy - sr*cy);
+			m[1][2] = (cr*cp);
+
+			return *this;
 		}
 
 		//零矩阵

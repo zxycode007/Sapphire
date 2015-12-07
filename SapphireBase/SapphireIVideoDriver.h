@@ -11,6 +11,8 @@
 #include "SapphireIImageLoader.h"
 #include "SapphireIImageWriter.h"
 #include "SapphireIMeshBuffer.h"
+#include "SapphireIMesh.h"
+#include "SapphireISceneNode.h"
 
 namespace Sapphire
 {
@@ -381,10 +383,10 @@ namespace Sapphire
 		//! 创建occlusion query遮蔽查询
 		/** 用节点的辨识和网格遮蔽测试 */
 		virtual void addOcclusionQuery( ISceneNode* node,
-			const scene::IMesh* mesh = 0) = 0;
+			const  IMesh* mesh = 0) = 0;
 
 		//! Remove occlusion query.
-		virtual void removeOcclusionQuery(scene::ISceneNode* node) = 0;
+		virtual void removeOcclusionQuery(ISceneNode* node) = 0;
 
 		//! Remove all occlusion queries.
 		virtual void removeAllOcclusionQueries() = 0;
@@ -392,7 +394,7 @@ namespace Sapphire
 		//! Run occlusion query. Draws mesh stored in query.
 		/** If the mesh shall not be rendered visible, use
 		overrideMaterial to disable the color and depth buffer. */
-		virtual void runOcclusionQuery(scene::ISceneNode* node, bool visible = false) = 0;
+		virtual void runOcclusionQuery(ISceneNode* node, bool visible = false) = 0;
 
 		//! Run all occlusion queries. Draws all meshes stored in queries.
 		/** If the meshes shall not be rendered visible, use
@@ -402,7 +404,7 @@ namespace Sapphire
 		//! Update occlusion query. Retrieves results from GPU.
 		/** If the query shall not block, set the flag to false.
 		Update might not occur in this case, though */
-		virtual void updateOcclusionQuery(scene::ISceneNode* node, bool block = true) = 0;
+		virtual void updateOcclusionQuery(ISceneNode* node, bool block = true) = 0;
 
 		//! Update all occlusion queries. Retrieves results from GPU.
 		/** If the query shall not block, set the flag to false.

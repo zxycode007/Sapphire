@@ -177,22 +177,13 @@
     <ClInclude Include="SapphireVertex.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireMesh.h">
-      <Filter>头文件\renderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireVertexBufferBase.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
     <ClInclude Include="SapphirePrimitiveType.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireScenesManager.h">
-      <Filter>头文件\scene</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireKeyMap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireRectangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SapphirePath.h">
@@ -204,16 +195,10 @@
     <ClInclude Include="SapphireFont.h">
       <Filter>头文件\gui</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireSceneNodeTypes.h">
-      <Filter>头文件\scene</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireDefines.h">
       <Filter>头文件\core</Filter>
     </ClInclude>
     <ClInclude Include="SapphireESceneNodeAnimatorType.h">
-      <Filter>头文件\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireUserDataSerializer.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
     <ClInclude Include="SapphireEMeshWriterEnums.h">
@@ -283,6 +268,45 @@
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
     <ClInclude Include="SapphireEHardwareBufferFlags.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIScenesManager.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireESceneNodeTypes.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIUserDataSerializer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimator.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAttributeExchangingObject.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIEventRecevier.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireKeyCodes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireRectangle.h">
+      <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIReferenceCounter.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireITriangleSelector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireECullingTypes.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMesh.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
   </ItemGroup>
