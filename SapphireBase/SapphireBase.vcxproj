@@ -87,6 +87,7 @@
     <ClInclude Include="SapphireEHardwareBufferFlags.h" />
     <ClInclude Include="SapphireEMaterialTypes.h" />
     <ClInclude Include="SapphireEMeshWriterEnums.h" />
+    <ClInclude Include="SapphireEPrimitiveTypes.h" />
     <ClInclude Include="SapphireESceneNodeAnimatorType.h" />
     <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
@@ -98,8 +99,10 @@
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
+    <ClInclude Include="SapphireIGPUProgramServices.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
     <ClInclude Include="SapphireIImageWriter.h" />
+    <ClInclude Include="SapphireIMaterialRenderer.h" />
     <ClInclude Include="SapphireIMesh.h" />
     <ClInclude Include="SapphireIMeshBuffer.h" />
     <ClInclude Include="SapphireIReferenceCounter.h" />
@@ -136,6 +139,7 @@
     <ClInclude Include="SapphireIScenesManager.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
+    <ClInclude Include="SapphireSLight.h" />
     <ClInclude Include="SapphireSMaterial.h" />
     <ClInclude Include="SapphireSphere.h" />
     <ClInclude Include="SapphireStableHeader.h" />

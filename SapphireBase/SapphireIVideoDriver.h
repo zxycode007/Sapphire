@@ -1,11 +1,15 @@
 #ifndef _SAPPHIRE_VIDEO_DRVIER_
 #define _SAPPHIRE_VIDEO_DRVIER_
 
+
 #include "SapphireExposedVideoData.h"
 #include "SapphireEMaterialFlags.h"
 #include "SapphireEDriverFeatures.h"
+#include "SapphireEPrimitiveTypes.h"
 #include "SapphirePrerequisites.h"
+#include "SapphireSLight.h"
 #include "SapphireSMaterial.h"
+#include "SapphireIMaterialRenderer.h"
 #include "SapphireRectangle.h"
 #include "SapphireIAttributes.h"
 #include "SapphireIImageLoader.h"
@@ -13,6 +17,8 @@
 #include "SapphireIMeshBuffer.h"
 #include "SapphireIMesh.h"
 #include "SapphireISceneNode.h"
+
+
 
 namespace Sapphire
 {
@@ -385,994 +391,776 @@ namespace Sapphire
 		virtual void addOcclusionQuery( ISceneNode* node,
 			const  IMesh* mesh = 0) = 0;
 
-		//! Remove occlusion query.
+		//! 移除遮蔽查询
 		virtual void removeOcclusionQuery(ISceneNode* node) = 0;
 
-		//! Remove all occlusion queries.
+		//! 移除所有的遮蔽查询
 		virtual void removeAllOcclusionQueries() = 0;
 
-		//! Run occlusion query. Draws mesh stored in query.
-		/** If the mesh shall not be rendered visible, use
-		overrideMaterial to disable the color and depth buffer. */
+		//! 允许遮蔽查询。 绘制网格存放在查询中
+		/** 如果这个网格不应该被渲染可见，用覆盖材质关闭颜色和深度缓冲区*/
 		virtual void runOcclusionQuery(ISceneNode* node, bool visible = false) = 0;
 
-		//! Run all occlusion queries. Draws all meshes stored in queries.
-		/** If the meshes shall not be rendered visible, use
-		overrideMaterial to disable the color and depth buffer. */
+		//! 允许所有的遮蔽查询，绘制网格存放在查询中
+		/** 如果这个网格不应该被渲染可见，用覆盖材质关闭颜色和深度缓冲区 */
 		virtual void runAllOcclusionQueries(bool visible = false) = 0;
 
-		//! Update occlusion query. Retrieves results from GPU.
-		/** If the query shall not block, set the flag to false.
-		Update might not occur in this case, though */
+		//! 更新遮蔽查询， 从GPU返回查询结果
+		/** 如果查询被阻挡， 设置标志为false
+		这种情况下更新可能不会发生*/
 		virtual void updateOcclusionQuery(ISceneNode* node, bool block = true) = 0;
 
-		//! Update all occlusion queries. Retrieves results from GPU.
-		/** If the query shall not block, set the flag to false.
-		Update might not occur in this case, though */
+		//! 更新所有节点遮蔽查询， 从GPU返回查询结果
+		/** 如果查询被阻挡， 设置标志为false
+		这种情况下更新可能不会发生 */
 		virtual void updateAllOcclusionQueries(bool block = true) = 0;
 
-		//! Return query result.
-		/** Return value is the number of visible pixels/fragments.
-		The value is a safe approximation, i.e. can be larger than the
-		actual value of pixels. */
-		virtual UINT32 getOcclusionQueryResult(scene::ISceneNode* node) const = 0;
+		//! 返回查询结果
+		/** 返回值是可见的像素/片段的数量。这个值是一个安全的近似逼近，能够大于实际的像素值
+		  */
+		virtual UINT32 getOcclusionQueryResult(ISceneNode* node) const = 0;
 
-		//! Sets a boolean alpha channel on the texture based on a color key.
-		/** This makes the texture fully transparent at the texels where
-		this color key can be found when using for example draw2DImage
-		with useAlphachannel==true.  The alpha of other texels is not modified.
-		\param texture Texture whose alpha channel is modified.
-		\param color Color key color. Every texel with this color will
-		become fully transparent as described above. Please note that the
-		colors of a texture may be converted when loading it, so the
-		color values may not be exactly the same in the engine and for
-		example in picture edit programs. To avoid this problem, you
-		could use the makeColorKeyTexture method, which takes the
-		position of a pixel instead a color value.
-		\param zeroTexels \deprecated If set to true, then any texels that match
-		the color key will have their color, as well as their alpha, set to zero
-		(i.e. black). This behavior matches the legacy (buggy) behavior prior
-		to release 1.5 and is provided for backwards compatibility only.
-		This parameter may be removed by Irrlicht 1.9. */
-		virtual void makeColorKeyTexture(video::ITexture* texture,
-			video::ColourValue color,
+		//! 在纹理设置一个基于色键的布尔alpha通道
+		/** 这使纹理在色键的颜色的纹理像素完全透明，例如在draw2DImage使用useAlphachannel==true，
+		\param texture 要修改alpha通道的纹理
+		\param color 色键颜色，每个用这个颜色的纹理元素都会变得完全透明.请注意：这个纹理的颜色
+		在加载它的时候可能被覆盖，所以颜色值在引擎和图片编辑器程序中不一定精确的相同。为避免这个问题，你
+		可以使用makeColorKeyTexture方法，它使用一个像素的位置替代一个颜色的值
+		\param zeroTexels 如果设置为true，丢弃，那么任何纹理像素姜勇它们的颜色匹配这个色键，和它们的alpha一样，
+		这种为0黑色。  */
+		virtual void makeColorKeyTexture(ITexture* texture,
+			ColourValue color,
 			bool zeroTexels = false) const = 0;
 
-		//! Sets a boolean alpha channel on the texture based on the color at a position.
-		/** This makes the texture fully transparent at the texels where
-		the color key can be found when using for example draw2DImage
-		with useAlphachannel==true.  The alpha of other texels is not modified.
-		\param texture Texture whose alpha channel is modified.
-		\param colorKeyPixelPos Position of a pixel with the color key
-		color. Every texel with this color will become fully transparent as
-		described above.
-		\param zeroTexels \deprecated If set to true, then any texels that match
-		the color key will have their color, as well as their alpha, set to zero
-		(i.e. black). This behavior matches the legacy (buggy) behavior prior
-		to release 1.5 and is provided for backwards compatibility only.
-		This parameter may be removed by Irrlicht 1.9. */
-		virtual void makeColorKeyTexture(video::ITexture* texture,
-			core::position2d<SINT32> colorKeyPixelPos,
+		//! 在纹理上基于一个颜色的位置来设置一个布尔alpha通道
+		/**这使纹理在色键的颜色的纹理像素完全透明，例如在draw2DImage使用useAlphachannel==true，
+		其它纹理元素的alpha不会被修改
+		\param texture 要修改alpha通道的纹理
+		\param colorKeyPixelPos 要使用色键颜色的像素位置. 每个纹理像素的这个颜色将变的完全透明。
+		\param zeroTexels \如果设置为true，丢弃，那么任何纹理像素姜勇它们的颜色匹配这个色键，和它们的alpha一样，
+		这种为0黑色。 */
+		virtual void makeColorKeyTexture(ITexture* texture,
+			Vector2 colorKeyPixelPos,
 			bool zeroTexels = false) const = 0;
 
-		//! Creates a normal map from a height map texture.
-		/** If the target texture has 32 bit, the height value is
-		stored in the alpha component of the texture as addition. This
-		value is used by the video::EMT_PARALLAX_MAP_SOLID material and
-		similar materials.
-		\param texture Texture whose alpha channel is modified.
-		\param amplitude Constant value by which the height
-		information is multiplied.*/
-		virtual void makeNormalMapTexture(video::ITexture* texture, Real amplitude = 1.0f) const = 0;
+		//! 从一个高程图纹理创建一个法线贴图
+		/** 如果目标纹理32位， 高度值作为附加保存在纹理的alpha分量。这个值用于EMT_PARALLAX_MAP_SOLID材质和相似的纹理
+		\param texture 要修改alpha通道的纹理
+		\param amplitude 乘以高度信息的常数*/
+		virtual void makeNormalMapTexture(ITexture* texture, Real amplitude = 1.0f) const = 0;
 
-		//! Sets a new render target.
-		/** This will only work if the driver supports the
-		EVDF_RENDER_TO_TARGET feature, which can be queried with
-		queryFeature(). Usually, rendering to textures is done in this
-		way:
-		\code
-		// create render target
+		//! 设置一个新渲染目标
+		/** 
+		只有在驱动支持EVDF_RENDER_TO_TARGET特征才能工作， 它可以用queryFeature()查询。
+		通常，渲染到纹理是通过下面的方法。
+		// 创建渲染目标
 		ITexture* target = driver->addRenderTargetTexture(core::dimension2d<UINT32>(128,128), "rtt1");
 
 		// ...
 
-		driver->setRenderTarget(target); // set render target
-		// .. draw stuff here
-		driver->setRenderTarget(0); // set previous render target
-		\endcode
-		Please note that you cannot render 3D or 2D geometry with a
-		render target as texture on it when you are rendering the scene
-		into this render target at the same time. It is usually only
-		possible to render into a texture between the
-		IVideoDriver::beginScene() and endScene() method calls.
-		\param texture New render target. Must be a texture created with
-		IVideoDriver::addRenderTargetTexture(). If set to 0, it sets
-		the previous render target which was set before the last
-		setRenderTarget() call.
-		\param clearBackBuffer Clears the backbuffer of the render
-		target with the color parameter
-		\param clearZBuffer Clears the zBuffer of the rendertarget.
-		Note that because the frame buffer may share the zbuffer with
-		the rendertarget, its zbuffer might be partially cleared too
-		by this.
-		\param color The background color for the render target.
-		\return True if sucessful and false if not. */
-		virtual bool setRenderTarget(video::ITexture* texture,
-			bool clearBackBuffer = true, bool clearZBuffer = true,
-			ColourValue color = video::ColourValue(0, 0, 0, 0)) = 0;
+		driver->setRenderTarget(target); // 设置渲染目标
+		// .. 在这里绘制物体
+		driver->setRenderTarget(0); // 设置回之前的渲染目标
 
-		//! set or reset special render targets
-		/** This method enables access to special color buffers such as
-		stereoscopic buffers or auxiliary buffers.
-		\param target Enum value for the render target
-		\param clearTarget Clears the target buffer with the color
-		parameter
-		\param clearZBuffer Clears the zBuffer of the rendertarget.
-		Note that because the main frame buffer may share the zbuffer with
-		the rendertarget, its zbuffer might be partially cleared too
-		by this.
-		\param color The background color for the render target.
-		\return True if sucessful and false if not. */
+		请注意：你不能同时在渲染场景到这个渲染目标的同时，再渲染目标渲染3D或2D几何体作为纹理到这个渲染目标作为纹理。
+		它通常只可能在IVideoDriver::beginScene()和endScene()方法调用过程中渲染一个纹理。如果设置为0，它设置到最后
+		一次setRenderTarget()调用前的一个渲染目标。
+		\param clearBackBuffer 用这个颜色参数来清理这个渲染目标的后备缓冲区
+		\param clearZBuffer 清零这个渲染目标的Z缓冲区
+		注意：因为帧缓冲区和这个渲染目标共享Z缓冲区， 它的z缓冲区可能会因为这样被部分清除
+		\param color 这个渲染目标的后备缓冲区
+		\return 如果成功返回true，否则false*/
+		virtual bool setRenderTarget( ITexture* texture,
+			bool clearBackBuffer = true, bool clearZBuffer = true,
+			ColourValue color = ColourValue(0, 0, 0, 0)) = 0;
+
+		//! 设置或复位特定的渲染目标
+		/** 这个方法打开访问特定的颜色缓冲区，如立体缓冲区或辅助缓冲区
+		\param target 这个缓冲区的枚举值
+		\param clearTarget 是否用指定的颜色参数清除目标缓冲区
+		\param clearZBuffer 清零这个渲染目标的Z缓冲区
+		注意：因为帧缓冲区和这个渲染目标共享Z缓冲区， 它的z缓冲区可能会因为这样被部分清除
+		\param color 渲染目标的背景色
+		\return 如果成功返回true，否则false */
 		virtual bool setRenderTarget(E_RENDER_TARGET target, bool clearTarget = true,
 			bool clearZBuffer = true,
-			ColourValue color = video::ColourValue(0, 0, 0, 0)) = 0;
+			ColourValue color = ColourValue(0, 0, 0, 0)) = 0;
 
-		//! Sets new multiple render targets.
-		virtual bool setRenderTarget(const core::array<video::IRenderTarget>& texture,
+		//! 设置新的多渲染目标
+		virtual bool setRenderTarget(const vector<IRenderTarget>& texture,
 			bool clearBackBuffer = true, bool clearZBuffer = true,
-			ColourValue color = video::ColourValue(0, 0, 0, 0)) = 0;
+			ColourValue color = ColourValue(0, 0, 0, 0)) = 0;
 
-		//! Sets a new viewport.
-		/** Every rendering operation is done into this new area.
-		\param area: Rectangle defining the new area of rendering
-		operations. */
-		virtual void setViewPort(const core::rect<SINT32>& area) = 0;
+		//! 设置一个新的视口
+		/** 每一个渲染操作都会在一个新的区域内进行
+		\param area: 定义为渲染操作的新区域的矩形*/
+		virtual void setViewPort(const rect<SINT32>& area) = 0;
 
-		//! Gets the area of the current viewport.
-		/** \return Rectangle of the current viewport. */
+		//! 获取当前视口区域
+		/** \return 当前视口区域 */
 		virtual const rect<SINT32>& getViewPort() const = 0;
 
-		//! Draws a vertex primitive list
-		/** Note that, depending on the index type, some vertices might be not
-		accessible through the index list. The limit is at 65535 vertices for 16bit
-		indices. Please note that currently not all primitives are available for
-		all drivers, and some might be emulated via triangle renders.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices. These define the vertices used
-		for each primitive. Depending on the pType, indices are interpreted as single
-		objects (for point like primitives), pairs (for lines), triplets (for
-		triangles), or quads.
-		\param primCount Amount of Primitives
-		\param vType Vertex type, e.g. video::EVT_STANDARD for S3DVertex.
-		\param pType Primitive type, e.g. scene::EPT_TRIANGLE_FAN for a triangle fan.
-		\param iType Index type, e.g. video::EIT_16BIT for 16bit indices. */
+		//! 绘制一个顶点图元列表
+		/** 注意, 依赖索引类型，一些顶点可能不能通过索引列表访问到。这因为16位索引的限制65535个顶点
+		请注意：当前不是所有的图元对于所有的驱动都有效， 有效可能可能只能通过三角形渲染来模拟。
+		\param vertices 顶点数组的指针
+		\param vertexCount 数组里的顶点的数量
+		\param indexList 顶点索引数组的指针。它定义每个图元所用的哪一些顶点.
+		依赖pType图元类型，索引解释单个对象（点），一对（线段），三个（三角形），或四边形
+		\param primCount 图元数量
+		\param vType 顶点类型   对于S3DVertex EVT_STANDARD
+		\param pType 图元类型,  对于扇形三角形带 EPT_TRIANGLE_FAN
+		\param iType 索引类型,  对于16位索引 EIT_16BIT */
 		virtual void drawVertexPrimitiveList(const void* vertices, UINT32 vertexCount,
 			const void* indexList, UINT32 primCount,
 			E_VERTEX_TYPE vType = EVT_STANDARD,
-			scene::E_PRIMITIVE_TYPE pType = scene::EPT_TRIANGLES,
+			E_PRIMITIVE_TYPE pType = EPT_TRIANGLES,
 			E_INDEX_TYPE iType = EIT_16BIT) = 0;
 
-		//! Draws a vertex primitive list in 2d
-		/** Compared to the general (3d) version of this method, this
-		one sets up a 2d render mode, and uses only x and y of vectors.
-		Note that, depending on the index type, some vertices might be
-		not accessible through the index list. The limit is at 65535
-		vertices for 16bit indices. Please note that currently not all
-		primitives are available for all drivers, and some might be
-		emulated via triangle renders. This function is not available
-		for the sw drivers.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices. These define the
-		vertices used for each primitive. Depending on the pType,
-		indices are interpreted as single objects (for point like
-		primitives), pairs (for lines), triplets (for triangles), or
-		quads.
-		\param primCount Amount of Primitives
-		\param vType Vertex type, e.g. video::EVT_STANDARD for S3DVertex.
-		\param pType Primitive type, e.g. scene::EPT_TRIANGLE_FAN for a triangle fan.
-		\param iType Index type, e.g. video::EIT_16BIT for 16bit indices. */
+		//! 绘制一个2d的顶点图元列表
+		/** 和这个方法的通用3d版本相比较， 这一个设置为2d渲染器的模式，并且用只有向量的x和y部分。
+		依赖索引类型，一些顶点可能不能通过索引列表访问到。这因为16位索引的限制65535个顶点
+		请注意：当前不是所有的图元对于所有的驱动都有效， 有效可能可能只能通过三角形渲染来模拟。
+		\param vertices 顶点数组的指针
+		\param vertexCount 数组里的顶点的数量
+		\param indexList 顶点索引数组的指针。它定义每个图元所用的哪一些顶点.
+		依赖pType图元类型，索引解释单个对象（点），一对（线段），三个（三角形），或四边形
+		\param primCount 图元数量
+		\param vType 顶点类型   对于S3DVertex EVT_STANDARD
+		\param pType 图元类型,  对于扇形三角形带 EPT_TRIANGLE_FAN
+		\param iType 索引类型,  对于16位索引 EIT_16BIT*/
 		virtual void draw2DVertexPrimitiveList(const void* vertices, UINT32 vertexCount,
 			const void* indexList, UINT32 primCount,
 			E_VERTEX_TYPE vType = EVT_STANDARD,
-			scene::E_PRIMITIVE_TYPE pType = scene::EPT_TRIANGLES,
+			E_PRIMITIVE_TYPE pType = EPT_TRIANGLES,
 			E_INDEX_TYPE iType = EIT_16BIT) = 0;
 
-		//! Draws an indexed triangle list.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices / 3. */
+		//! 绘制一个索引化的三角形列表
+		/** 注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数/3*/
 		void drawIndexedTriangleList(const S3DVertex* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_STANDARD, scene::EPT_TRIANGLES, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_STANDARD, EPT_TRIANGLES, EIT_16BIT);
 		}
 
-		//! Draws an indexed triangle list.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices / 3. */
+		//! 绘制一个索引化的三角形列表
+		/** 注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数/3*/
 		void drawIndexedTriangleList(const S3DVertex2TCoords* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_2TCOORDS, scene::EPT_TRIANGLES, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_2TCOORDS, EPT_TRIANGLES, EIT_16BIT);
 		}
 
-		//! Draws an indexed triangle list.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices / 3. */
+		//!绘制一个索引化的三角形列表
+		/** 注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数/3 */
 		void drawIndexedTriangleList(const S3DVertexTangents* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_TANGENTS, scene::EPT_TRIANGLES, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_TANGENTS, EPT_TRIANGLES, EIT_16BIT);
 		}
 
-		//! Draws an indexed triangle fan.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices - 2. */
+		//! 绘制一个索引化的三角形扇型带
+		/**  注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数 - 2 */
 		void drawIndexedTriangleFan(const S3DVertex* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_STANDARD, scene::EPT_TRIANGLE_FAN, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_STANDARD, EPT_TRIANGLE_FAN, EIT_16BIT);
 		}
 
-		//! Draws an indexed triangle fan.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices - 2. */
+		//! 绘制一个索引化的三角形扇型带
+		/**  注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数 - 2 */
 		void drawIndexedTriangleFan(const S3DVertex2TCoords* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_2TCOORDS, scene::EPT_TRIANGLE_FAN, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_2TCOORDS, EPT_TRIANGLE_FAN, EIT_16BIT);
 		}
 
-		//! Draws an indexed triangle fan.
-		/** Note that there may be at maximum 65536 vertices, because
-		the index list is an array of 16 bit values each with a maximum
-		value of 65536. If there are more than 65536 vertices in the
-		list, results of this operation are not defined.
-		\param vertices Pointer to array of vertices.
-		\param vertexCount Amount of vertices in the array.
-		\param indexList Pointer to array of indices.
-		\param triangleCount Amount of Triangles. Usually amount of indices - 2. */
+		//! 绘制一个索引化的三角形扇型带
+		/**  注意：这最大支持65536个顶点，因为索引列表是一个16位数组每个最大值是65535.
+		如果大于65535个顶点在列表，导致操作未定义。
+		\param vertices 顶点数组指针
+		\param vertexCount 顶点数量
+		\param indexList 顶点索引数组指针
+		\param triangleCount 三角形数量，用索引数 - 2 */
 		void drawIndexedTriangleFan(const S3DVertexTangents* vertices,
 			UINT32 vertexCount, const UINT16* indexList, UINT32 triangleCount)
 		{
-			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_TANGENTS, scene::EPT_TRIANGLE_FAN, EIT_16BIT);
+			drawVertexPrimitiveList(vertices, vertexCount, indexList, triangleCount, EVT_TANGENTS,  EPT_TRIANGLE_FAN, EIT_16BIT);
 		}
 
-		//! Draws a 3d line.
-		/** For some implementations, this method simply calls
-		drawVertexPrimitiveList for some triangles.
-		Note that the line is drawn using the current transformation
-		matrix and material. So if you need to draw the 3D line
-		independently of the current transformation, use
-		\code
+		//! 绘制一条3d线段
+		/** 对于某些实现，这个方法对于一些三角形简单调用drawVertexPrimitiveList
+        注意：这条线段用当前变换矩阵和材质绘制。所以如果你需要绘制不依赖当前变换的3d线段
+		用下列代码：
+		 
 		driver->setMaterial(someMaterial);
 		driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-		\endcode
-		for some properly set up material before drawing the line.
-		Some drivers support line thickness set in the material.
-		\param start Start of the 3d line.
-		\param end End of the 3d line.
-		\param color Color of the line. */
-		virtual void draw3DLine(const core::vector3df& start,
-			const core::vector3df& end, ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+		 
+		在绘制这条线段前正常的设置材质，某些取得支持在这材质中设置线段厚度
+		\param start 3d线段的起始
+		\param end 3d线段结束
+		\param color 3d线段的颜色 */
+		virtual void draw3DLine(const Vector3& start,
+			const Vector3& end, ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
 
-		//! Draws a 3d triangle.
-		/** This method calls drawVertexPrimitiveList for some triangles.
-		This method works with all drivers because it simply calls
-		drawVertexPrimitiveList, but it is hence not very fast.
-		Note that the triangle is drawn using the current
-		transformation matrix and material. So if you need to draw it
-		independently of the current transformation, use
-		\code
+		//!绘制一条3d三角形
+		/** 这个方法对于某些三角形调用drawVertexPrimitiveList
+		这个方法能被所有驱动支持，因为它简单调用drawVertexPrimitiveList, 
+		但是它允许不是很快。
+    
+		注意：这个三角形用当前变换矩阵和材质绘制。所以如果你需要绘制不依赖当前变换的3d三角形
+		用下列代码：
+		 
 		driver->setMaterial(someMaterial);
 		driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-		\endcode
-		for some properly set up material before drawing the triangle.
-		\param triangle The triangle to draw.
-		\param color Color of the line. */
-		virtual void draw3DTriangle(const core::triangle3df& triangle,
+
+		在绘制这个三角形前正常的设置材质
+		\param triangle 要绘制的三角形.
+		\param color 三角形的颜色 */
+		virtual void draw3DTriangle(const triangle3df& triangle,
 			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
 
-		//! Draws a 3d axis aligned box.
-		/** This method simply calls draw3DLine for the edges of the
-		box. Note that the box is drawn using the current transformation
-		matrix and material. So if you need to draw it independently of
-		the current transformation, use
-		\code
+		//! 绘制一个3D AABB盒子
+		/** 这个方法对于盒子的边简单调用draw3DLine 
+		注意：这个盒子用当前变换矩阵和材质绘制。所以如果你需要绘制不依赖当前变换的盒子
+		用下列代码： 
 		driver->setMaterial(someMaterial);
 		driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-		\endcode
-		for some properly set up material before drawing the box.
-		\param box The axis aligned box to draw
-		\param color Color to use while drawing the box. */
-		virtual void draw3DBox(const core::aabbox3d<Real>& box,
+		 在绘制这个盒子前正常的设置材质
+		 
+		\param box 要绘制的AABB盒子
+		\param color AABB盒子的颜色 */
+		virtual void draw3DBox(const AxisAlignedBox& box,
 			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
 
-		//! Draws a 2d image without any special effects
-		/** \param texture Pointer to texture to use.
-		\param destPos Upper left 2d destination position where the
-		image will be drawn. */
-		virtual void draw2DImage(const video::ITexture* texture,
-			const core::position2d<SINT32>& destPos) = 0;
+		//! 绘制一个不用任何特殊效果的2d图像
+		/** \param texture 使用的纹理指针
+		\param destPos 要绘制的图像左上角所处的目标2d位置. */
+		virtual void draw2DImage(const  ITexture* texture,
+			const  Vector2& destPos) = 0;
 
-		//! Draws a 2d image using a color
-		/** (if color is other than
-		Color(255,255,255,255)) and the alpha channel of the texture.
-		\param texture Texture to be drawn.
-		\param destPos Upper left 2d destination position where the
-		image will be drawn.
-		\param sourceRect Source rectangle in the image.
-		\param clipRect Pointer to rectangle on the screen where the
-		image is clipped to.
-		If this pointer is NULL the image is not clipped.
-		\param color Color with which the image is drawn. If the color
-		equals Color(255,255,255,255) it is ignored. Note that the
-		alpha component is used: If alpha is other than 255, the image
-		will be transparent.
-		\param useAlphaChannelOfTexture: If true, the alpha channel of
-		the texture is used to draw the image.*/
-		virtual void draw2DImage(const video::ITexture* texture, const core::position2d<SINT32>& destPos,
-			const core::rect<SINT32>& sourceRect, const core::rect<SINT32>* clipRect = 0,
+		//! 用一种颜色绘制一个2D图像
+		/** 
+		如果颜色不是ColourValue(255,255,255,255)和纹理alpha通道相与
+		\param texture 使用的纹理指针
+		\param destPos 要绘制的图像左上角所处的目标2d位置
+		\param sourceRect 图像的源矩形
+		\param clipRect 指向在要剪裁到屏幕上的矩形
+		如果指针是空，这个图像不被剪裁
+		\param color 这个图像要绘制的颜色。如果这个颜色等于ColourValue(255,255,255,255)，它无效。
+		注意：这个alpha分量被使用；如果alpha不是255，这个图像会透明
+		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。*/
+		virtual void draw2DImage(const  ITexture* texture, const Vector2& destPos,
+			const  rect<SINT32>& sourceRect, const  rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue(255, 255, 255, 255), bool useAlphaChannelOfTexture = false) = 0;
 
-		//! Draws a set of 2d images, using a color and the alpha channel of the texture.
-		/** The images are drawn beginning at pos and concatenated in
-		one line. All drawings are clipped against clipRect (if != 0).
-		The subtextures are defined by the array of sourceRects and are
-		chosen by the indices given.
-		\param texture Texture to be drawn.
-		\param pos Upper left 2d destination position where the image
-		will be drawn.
-		\param sourceRects Source rectangles of the image.
-		\param indices List of indices which choose the actual
-		rectangle used each time.
-		\param kerningWidth Offset to Position on X
-		\param clipRect Pointer to rectangle on the screen where the
-		image is clipped to.
-		If this pointer is 0 then the image is not clipped.
-		\param color Color with which the image is drawn.
-		Note that the alpha component is used. If alpha is other than
-		255, the image will be transparent.
-		\param useAlphaChannelOfTexture: If true, the alpha channel of
-		the texture is used to draw the image. */
-		virtual void draw2DImageBatch(const video::ITexture* texture,
-			const core::position2d<SINT32>& pos,
-			const core::array<core::rect<SINT32> >& sourceRects,
-			const core::array<SINT32>& indices,
+		//! 绘制一个2d图像的集合，用这个纹理的一个颜色和alpha通道
+		/** 这个图像绘制在pos开始，并且接连绘制一条直线上。
+		所有绘制都会被clipRect剪裁（如果不为0的话）。这子纹理由sourceRects数组和通过给定的索引选择
+		\param texture 使用的纹理指针
+		\param pos 要绘制的图像左上角所处的目标2d位置
+		\param sourceRects 图像的源矩形
+		\param indices 索引列表，它选择每次实际使用的矩形
+		\param kerningWidth 位置X的偏移量
+		\param clipRect 指向在要剪裁到屏幕上的矩形
+		如果指针是空，这个图像不被剪裁
+		\param color 这个图像要绘制的颜色。如果这个颜色等于ColourValue(255,255,255,255)，它无效。
+		注意：这个alpha分量被使用；如果alpha不是255，这个图像会透明
+		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。 */
+		virtual void draw2DImageBatch(const ITexture* texture,
+			const Vector2& pos,
+			const vector<rect<SINT32> >& sourceRects,
+			const vector<SINT32>& indices,
 			SINT32 kerningWidth = 0,
-			const core::rect<SINT32>* clipRect = 0,
+			const  rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false) = 0;
 
-		//! Draws a set of 2d images, using a color and the alpha channel of the texture.
-		/** All drawings are clipped against clipRect (if != 0).
-		The subtextures are defined by the array of sourceRects and are
-		positioned using the array of positions.
-		\param texture Texture to be drawn.
-		\param positions Array of upper left 2d destinations where the
-		images will be drawn.
-		\param sourceRects Source rectangles of the image.
-		\param clipRect Pointer to rectangle on the screen where the
-		images are clipped to.
-		If this pointer is 0 then the image is not clipped.
-		\param color Color with which the image is drawn.
-		Note that the alpha component is used. If alpha is other than
-		255, the image will be transparent.
-		\param useAlphaChannelOfTexture: If true, the alpha channel of
-		the texture is used to draw the image. */
-		virtual void draw2DImageBatch(const video::ITexture* texture,
-			const core::array<core::position2d<SINT32> >& positions,
-			const core::array<core::rect<SINT32> >& sourceRects,
-			const core::rect<SINT32>* clipRect = 0,
+		//! 绘制一个2d图像的集合，用这个纹理的一个颜色和alpha通道
+		/** 全部都绘制都被剪裁到一个剪裁区域clipRect（如果不为0的话）
+		这个子纹理由sourceRects的数组和使用这个位置数组的位置定义
+		\param texture 使用的纹理指针
+		\param positions 要绘制的图像左上角所处的目标2d位置
+		\param sourceRects 图像的源矩形
+		\param clipRect 指向要显示在屏幕上的剪裁区域，图像会被此剪裁
+		如果为0，则图像不会被剪裁
+		\param color 这个图像要绘制的颜色。如果这个颜色等于ColourValue(255,255,255,255)，它无效。
+		注意：这个alpha分量被使用；如果alpha不是255，这个图像会透明
+		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。 */
+		virtual void draw2DImageBatch(const ITexture* texture,
+			const vector<Vector2 >& positions,
+			const vector<rect<SINT32> >& sourceRects,
+			const rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false) = 0;
 
-		//! Draws a part of the texture into the rectangle. Note that colors must be an array of 4 colors if used.
-		/** Suggested and first implemented by zola.
-		\param texture The texture to draw from
-		\param destRect The rectangle to draw into
-		\param sourceRect The rectangle denoting a part of the texture
-		\param clipRect Clips the destination rectangle (may be 0)
-		\param colors Array of 4 colors denoting the color values of
-		the corners of the destRect
-		\param useAlphaChannelOfTexture True if alpha channel will be
-		blended. */
-		virtual void draw2DImage(const video::ITexture* texture, const core::rect<SINT32>& destRect,
-			const core::rect<SINT32>& sourceRect, const core::rect<SINT32>* clipRect = 0,
-			const video::ColourValue * const colors = 0, bool useAlphaChannelOfTexture = false) = 0;
+		//! 绘制在这个纹理的一部分到这个矩形中。注意如果要使用颜色的话，必须是一个4个颜色的数组
+		/** 
+		\param texture 要绘制的纹理
+		\param destRect 图像要绘制入的矩形
+		\param sourceRect 这个矩形表示为纹理的一部分
+		\param clipRect 剪裁目标矩形(可以是0) 
+		\param colors 4个颜色的数组表示目标区域四个角的颜色值
+		\param useAlphaChannelOfTexture 如果为true，alpha通道将被混合 */
+		virtual void draw2DImage(const ITexture* texture, const rect<SINT32>& destRect,
+			const rect<SINT32>& sourceRect, const rect<SINT32>* clipRect = 0,
+			const ColourValue * const colors = 0, bool useAlphaChannelOfTexture = false) = 0;
 
-		//! Draws a 2d rectangle.
-		/** \param color Color of the rectangle to draw. The alpha
-		component will not be ignored and specifies how transparent the
-		rectangle will be.
-		\param pos Position of the rectangle.
-		\param clip Pointer to rectangle against which the rectangle
-		will be clipped. If the pointer is null, no clipping will be
-		performed. */
-		virtual void draw2DRectangle(ColourValue color, const core::rect<SINT32>& pos,
-			const core::rect<SINT32>* clip = 0) = 0;
+		//! 绘制一个2D 矩形
+		/** \param color 要绘制的矩形的颜色。这个alpha分量不会被丢弃并且指定这个矩形是否应该透明
+		\param pos 矩形的位置
+		\param clip 指向这个剪裁这个矩形的矩形，如果为NULL，将不会剪裁
+		 */
+		virtual void draw2DRectangle(ColourValue color, const rect<SINT32>& pos,
+			const rect<SINT32>* clip = 0) = 0;
 
-		//! Draws a 2d rectangle with a gradient.
-		/** \param colorLeftUp Color of the upper left corner to draw.
-		The alpha component will not be ignored and specifies how
-		transparent the rectangle will be.
-		\param colorRightUp Color of the upper right corner to draw.
-		The alpha component will not be ignored and specifies how
-		transparent the rectangle will be.
-		\param colorLeftDown Color of the lower left corner to draw.
-		The alpha component will not be ignored and specifies how
-		transparent the rectangle will be.
-		\param colorRightDown Color of the lower right corner to draw.
-		The alpha component will not be ignored and specifies how
-		transparent the rectangle will be.
-		\param pos Position of the rectangle.
-		\param clip Pointer to rectangle against which the rectangle
-		will be clipped. If the pointer is null, no clipping will be
-		performed. */
-		virtual void draw2DRectangle(const core::rect<SINT32>& pos,
+		//! 绘制一个渐变的2d矩形
+		/** \param colorLeftUp 左上角的颜色
+		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明
+		\param colorRightUp 右上角的颜色
+		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明
+		\param colorLeftDown 左下角的颜色
+		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明
+		\param colorRightDown 右下角的颜色
+		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明
+		\param pos 矩形的位置
+		\param clip 指向这个剪裁这个矩形的矩形，如果为NULL，将不会剪裁 */
+		virtual void draw2DRectangle(const rect<SINT32>& pos,
 			ColourValue colorLeftUp, ColourValue colorRightUp,
 			ColourValue colorLeftDown, ColourValue colorRightDown,
-			const core::rect<SINT32>* clip = 0) = 0;
+			const rect<SINT32>* clip = 0) = 0;
 
-		//! Draws the outline of a 2D rectangle.
-		/** \param pos Position of the rectangle.
-		\param color Color of the rectangle to draw. The alpha component
-		specifies how transparent the rectangle outline will be. */
-		virtual void draw2DRectangleOutline(const core::recti& pos,
+		//! 绘制一个离线的2d矩形
+		/** \param pos 矩形的位置
+		\param color 矩形的颜色
+		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明*/
+		virtual void draw2DRectangleOutline(const recti& pos,
 			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
 
-		//! Draws a 2d line. Both start and end will be included in coloring.
-		/** \param start Screen coordinates of the start of the line
-		in pixels.
-		\param end Screen coordinates of the start of the line in
-		pixels.
-		\param color Color of the line to draw. */
-		virtual void draw2DLine(const core::position2d<SINT32>& start,
-			const core::position2d<SINT32>& end,
+		//! 绘制一条2d线段
+		/** \param start 指向在屏幕的起始像素
+		\param end 直线在屏幕的结束像素
+		\param color 要绘制的颜色 */
+		virtual void draw2DLine(const Vector2& start,
+			const Vector2& end,
 			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
 
-		//! Draws a pixel.
-		/** \param x The x-position of the pixel.
-		\param y The y-position of the pixel.
-		\param color Color of the pixel to draw. */
+		//! 绘制一个像素
+		/** \param x 这个像素的X位置
+		\param y 这个像素的Y位置
+		\param color 这个像素的颜色 */
 		virtual void drawPixel(UINT32 x, UINT32 y, const ColourValue& color) = 0;
 
-		//! Draws a non filled concyclic regular 2d polyon.
-		/** This method can be used to draw circles, but also
-		triangles, tetragons, pentagons, hexagons, heptagons, octagons,
-		enneagons, decagons, hendecagons, dodecagon, triskaidecagons,
-		etc. I think you'll got it now. And all this by simply
-		specifying the vertex count. Welcome to the wonders of
-		geometry.
-		\param center Position of center of circle (pixels).
-		\param radius Radius of circle in pixels.
-		\param color Color of the circle.
-		\param vertexCount Amount of vertices of the polygon. Specify 2
-		to draw a line, 3 to draw a triangle, 4 for tetragons and a lot
-		(>10) for nearly a circle. */
-		virtual void draw2DPolygon(core::position2d<SINT32> center,
+		//! 绘制一个非填充的共圆规则的2d多边形
+		/** 这个方法用于绘制圆环，但是也能够绘制三角形，四角型，五角型
+		,6边形，7边形.... 
+		\param center 圆环的中心位置（像素）
+		\param radius 圆环像素半径
+		\param color 圆环的颜色
+		\param vertexCount 这个多边形的顶点数目，决定它的圆滑程度
+		*/
+		virtual void draw2DPolygon(Vector2 center,
 			Real radius,
-			video::ColourValue color = ColourValue(100, 255, 255, 255),
+			ColourValue color = ColourValue(100, 255, 255, 255),
 			SINT32 vertexCount = 10) = 0;
 
-		//! Draws a shadow volume into the stencil buffer.
-		/** To draw a stencil shadow, do this: First, draw all geometry.
-		Then use this method, to draw the shadow volume. Then, use
-		IVideoDriver::drawStencilShadow() to visualize the shadow.
-		Please note that the code for the opengl version of the method
-		is based on free code sent in by Philipp Dortmann, lots of
-		thanks go to him!
-		\param triangles Array of 3d vectors, specifying the shadow
-		volume.
-		\param zfail If set to true, zfail method is used, otherwise
-		zpass.
-		\param debugDataVisible The debug data that is enabled for this
-		shadow node
+		//! 绘制一个阴影容积到模板缓冲区
+		/** 绘制一个模板阴影，首先：绘制所有几何体，然后使用这个方法绘制阴影容积。
+		用IVideoDriver::drawStencilShadow()去可视化阴影。
+		请注意：这只对于openGL版本。
+		
+		\param triangles 3d向量数组，指定阴影容积
+		\param zfail如果设置为true，zfail的方法会被使用，否则使用zpass
+		\param debugDataVisible debug数据对于这个阴影节点的开启 
 		*/
-		virtual void drawStencilShadowVolume(const core::array<core::vector3df>& triangles, bool zfail = true, UINT32 debugDataVisible = 0) = 0;
+		virtual void drawStencilShadowVolume(const vector<Vector3>& triangles, bool zfail = true, UINT32 debugDataVisible = 0) = 0;
 
-		//! Fills the stencil shadow with color.
-		/** After the shadow volume has been drawn into the stencil
-		buffer using IVideoDriver::drawStencilShadowVolume(), use this
-		to draw the color of the shadow.
-		Please note that the code for the opengl version of the method
-		is based on free code sent in by Philipp Dortmann, lots of
-		thanks go to him!
-		\param clearStencilBuffer Set this to false, if you want to
-		draw every shadow with the same color, and only want to call
-		drawStencilShadow() once after all shadow volumes have been
-		drawn. Set this to true, if you want to paint every shadow with
-		its own color.
-		\param leftUpEdge Color of the shadow in the upper left corner
-		of screen.
-		\param rightUpEdge Color of the shadow in the upper right
-		corner of screen.
-		\param leftDownEdge Color of the shadow in the lower left
-		corner of screen.
-		\param rightDownEdge Color of the shadow in the lower right
-		corner of screen. */
+		//! 用颜色填充模板阴影
+		/** IVideoDriver::drawStencilShadowVolume()阴影容积已经被添加到模板缓冲区后，
+		用这个函数绘制阴影的颜色。
+		请注意：这只对于openGL版本。
+		\param clearStencilBuffer 设置为flase，如果你只用同一种颜色绘制每一种阴影，
+		那么只调用drawStencilShadow()后所有的阴影容积的都被绘制。如果你想每个阴影
+		都要有自己的颜色，设置这个位true，
+		\param leftUpEdge 阴影左上角的颜色
+		\param rightUpEdge 阴影右上角的颜色
+		\param leftDownEdge 阴影左下角的颜色
+		\param rightDownEdge 阴影右下角的颜色
+		 */
 		virtual void drawStencilShadow(bool clearStencilBuffer = false,
-			video::ColourValue leftUpEdge = video::ColourValue(255, 0, 0, 0),
-			video::ColourValue rightUpEdge = video::ColourValue(255, 0, 0, 0),
-			video::ColourValue leftDownEdge = video::ColourValue(255, 0, 0, 0),
-			video::ColourValue rightDownEdge = video::ColourValue(255, 0, 0, 0)) = 0;
+			ColourValue leftUpEdge = ColourValue(255, 0, 0, 0),
+			ColourValue rightUpEdge = ColourValue(255, 0, 0, 0),
+			ColourValue leftDownEdge = ColourValue(255, 0, 0, 0),
+			ColourValue rightDownEdge = ColourValue(255, 0, 0, 0)) = 0;
 
-		//! Draws a mesh buffer
-		/** \param mb Buffer to draw */
-		virtual void drawMeshBuffer(const scene::IMeshBuffer* mb) = 0;
+		//! 绘制一个网格缓冲区
+		/** \param mb 要回绘制的网格缓冲区 */
+		virtual void drawMeshBuffer(const IMeshBuffer* mb) = 0;
 
-		//! Draws normals of a mesh buffer
-		/** \param mb Buffer to draw the normals of
-		\param length length scale factor of the normals
-		\param color Color the normals are rendered with
+		//! 绘制一个网格的法线缓冲区
+		/** \param mb 法线的缓冲区
+		\param length 法线的长度缩放因子
+		\param color 用于渲染的法线颜色
 		*/
-		virtual void drawMeshBufferNormals(const scene::IMeshBuffer* mb, Real length = 10.f, ColourValue color = 0xffffffff) = 0;
+		virtual void drawMeshBufferNormals(const IMeshBuffer* mb, Real length = 10.f, ColourValue color = ColourValue(1.0,1.0,1.0,1.0)) = 0;
 
-		//! Sets the fog mode.
-		/** These are global values attached to each 3d object rendered,
-		which has the fog flag enabled in its material.
-		\param color Color of the fog
-		\param fogType Type of fog used
-		\param start Only used in linear fog mode (linearFog=true).
-		Specifies where fog starts.
-		\param end Only used in linear fog mode (linearFog=true).
-		Specifies where fog ends.
-		\param density Only used in exponential fog mode
-		(linearFog=false). Must be a value between 0 and 1.
-		\param pixelFog Set this to false for vertex fog, and true if
-		you want per-pixel fog.
-		\param rangeFog Set this to true to enable range-based vertex
-		fog. The distance from the viewer is used to compute the fog,
-		not the z-coordinate. This is better, but slower. This might not
-		be available with all drivers and fog settings. */
+		//! 设置雾化的模式
+		/** 这些是添加到每一个3d对象渲染全局值，将在它的材质里打开雾化标志
+		\param color 雾化颜色
+		\param fogType 雾化的类型
+		\param start 只能用于线性雾化模式 (linearFog=true).指定雾化开始	
+		\param end 只能用于线性雾化模式(linearFog=true).指定雾化的结束
+		\param density 只能用于指数雾化模式，必须在0与1之间
+		\param pixelFog 对于vertex fog顶点雾设置为false, 如果逐像素雾设置为true
+		\param rangeFog 设置这个为true打开基于范围顶点雾。这个距离是从观察者来计算雾，不用Z坐标。这样更好，但是会更慢。
+		这可能并非所有驱动都支持这个雾化设置
+		 */
 		virtual void setFog(ColourValue color = ColourValue(0, 255, 255, 255),
 			E_FOG_TYPE fogType = EFT_FOG_LINEAR,
 			Real start = 50.0f, Real end = 100.0f, Real density = 0.01f,
 			bool pixelFog = false, bool rangeFog = false) = 0;
 
-		//! Gets the fog mode.
+		//! 获取雾化模式
 		virtual void getFog(ColourValue& color, E_FOG_TYPE& fogType,
 			Real& start, Real& end, Real& density,
 			bool& pixelFog, bool& rangeFog) = 0;
 
-		//! Get the current color format of the color buffer
-		/** \return Color format of the color buffer. */
+		//! 获取当前颜色缓冲区的颜色模式
+		/** \return 颜色缓冲区的颜色模式 */
 		virtual ECOLOR_FORMAT getColorFormat() const = 0;
 
-		//! Get the size of the screen or render window.
-		/** \return Size of screen or render window. */
-		virtual const core::dimension2d<UINT32>& getScreenSize() const = 0;
+		//! 获取渲染窗口的面积
+		/** \return 返回渲染窗口的面积 */
+		virtual const dimension2d<UINT32>& getScreenSize() const = 0;
 
-		//! Get the size of the current render target
-		/** This method will return the screen size if the driver
-		doesn't support render to texture, or if the current render
-		target is the screen.
-		\return Size of render target or screen/window */
-		virtual const core::dimension2d<UINT32>& getCurrentRenderTargetSize() const = 0;
+		//! 获取当前渲染目标的大小
+		/** 如果驱动不支持渲染到纹理，或者当前渲染目标就是屏幕的话，这个方法会翻盘屏幕大小。
+		\return 渲染目标/屏幕/窗口的大小 */
+		virtual const dimension2d<UINT32>& getCurrentRenderTargetSize() const = 0;
 
-		//! Returns current frames per second value.
-		/** This value is updated approximately every 1.5 seconds and
-		is only intended to provide a rough guide to the average frame
-		rate. It is not suitable for use in performing timing
-		calculations or framerate independent movement.
-		\return Approximate amount of frames per second drawn. */
+		//! 获取当前每秒帧数值
+		/** 这个值是由每1.5秒更新一次的近似值并且只是提供一个粗略的平均帧数参考。
+		它不适用用于性能时间计算或依靠帧数率的移动
+		\return Approximate 近似的每秒帧数 */
 		virtual SINT32 getFPS() const = 0;
 
-		//! Returns amount of primitives (mostly triangles) which were drawn in the last frame.
-		/** Together with getFPS() very useful method for statistics.
-		\param mode Defines if the primitives drawn are accumulated or
-		counted per frame.
-		\return Amount of primitives drawn in the last frame. */
+		//! 返回最后一帧绘制的图元数量（一般是三角形）
+		/** 和getFPS（）一样非常有用的静态方法
+		\param mode 定义图元绘制是否被计算或在每一帧中计数
+		\return 在上一帧的绘制的图元数 */
 		virtual UINT32 getPrimitiveCountDrawn(UINT32 mode = 0) const = 0;
 
-		//! Deletes all dynamic lights which were previously added with addDynamicLight().
+		//! 删除所有之前被addDynamicLight（）添加的的动态光源 
 		virtual void deleteAllDynamicLights() = 0;
 
-		//! adds a dynamic light, returning an index to the light
-		//! \param light: the light data to use to create the light
-		//! \return An index to the light, or -1 if an error occurs
+		//! 添加一个动态光源，返回这个光源的索引
+		//! \param light: 用这个光源的数据创建这个光源
+		//! \return 一个光源的索引，或-1 发生错误
 		virtual SINT32 addDynamicLight(const SLight& light) = 0;
 
-		//! Returns the maximal amount of dynamic lights the device can handle
-		/** \return Maximal amount of dynamic lights. */
+		//! 返回设备能支持的最大的动态光源数量
+		/** \return 最大动态光源数目 */
 		virtual UINT32 getMaximalDynamicLightAmount() const = 0;
 
-		//! Returns amount of dynamic lights currently set
-		/** \return Amount of dynamic lights currently set */
+		//! 返回当前设置的动态光源数量
+		/** \return 当前设置的动态光源数量 */
 		virtual UINT32 getDynamicLightCount() const = 0;
 
-		//! Returns light data which was previously set by IVideoDriver::addDynamicLight().
-		/** \param idx Zero based index of the light. Must be 0 or
-		greater and smaller than IVideoDriver::getDynamicLightCount.
-		\return Light data. */
+		//! 返回之前IVideoDriver::addDynamicLight()设置的光源数据
+		/** \param idx 光源的索引基于0，必须在0或小于IVideoDriver::getDynamicLightCount.
+		\return 光源的数据. */
 		virtual const SLight& getDynamicLight(UINT32 idx) const = 0;
 
-		//! Turns a dynamic light on or off
-		//! \param lightIndex: the index returned by addDynamicLight
-		//! \param turnOn: true to turn the light on, false to turn it off
+		//! 打开一个动态光源或者关闭
+		//! \param lightIndex: addDynamicLight添加的光源索引
+		//! \param turnOn: 如果为true，光源打开，反之关闭
 		virtual void turnLightOn(SINT32 lightIndex, bool turnOn) = 0;
 
-		//! Gets name of this video driver.
-		/** \return Returns the name of the video driver, e.g. in case
-		of the Direct3D8 driver, it would return "Direct3D 8.1". */
+		//! 获取视频驱动名
+		/** \return 返回视频驱动名，例如Direct3D8，"Direct3D 8.1" */
 		virtual const wchar_t* getName() const = 0;
 
-		//! Adds an external image loader to the engine.
-		/** This is useful if the Irrlicht Engine should be able to load
-		textures of currently unsupported file formats (e.g. gif). The
-		IImageLoader only needs to be implemented for loading this file
-		format. A pointer to the implementation can be passed to the
-		engine using this method.
-		\param loader Pointer to the external loader created. */
+		//! 添加一个外部的图像加载器到这个引擎
+		/** 
+		这用于引擎加载当前不支持的纹理文件格式。只需实现对应文件的IImageLoader
+		一个指针指向新纹理格式的IImageLoader实现，传递给引擎。
+		\param loader 指向外部加载器的指针 */
 		virtual void addExternalImageLoader(IImageLoader* loader) = 0;
 
-		//! Adds an external image writer to the engine.
-		/** This is useful if the Irrlicht Engine should be able to
-		write textures of currently unsupported file formats (e.g
-		.gif). The IImageWriter only needs to be implemented for
-		writing this file format. A pointer to the implementation can
-		be passed to the engine using this method.
-		\param writer: Pointer to the external writer created. */
+		//! 添加一个外部图像写入器到这个引擎
+		/** 这用于引擎写入当前不支持的纹理文件格式。只需实现对应文件的IImageWriter
+		一个指针指向新纹理格式的IImageWriter实现，传递给引擎。
+		\param writer: 指向外部写入器的指针. */
 		virtual void addExternalImageWriter(IImageWriter* writer) = 0;
 
-		//! Returns the maximum amount of primitives
-		/** (mostly vertices) which the device is able to render with
-		one drawVertexPrimitiveList call.
-		\return Maximum amount of primitives. */
+		//! 返回图元的最大数量
+		/** (大多数顶点)这个设备可以通过调用一次drawVertexPrimitiveList进行渲染
+		\return 图元的最大数量 */
 		virtual UINT32 getMaximalPrimitiveCount() const = 0;
 
-		//! Enables or disables a texture creation flag.
-		/** These flags define how textures should be created. By
-		changing this value, you can influence for example the speed of
-		rendering a lot. But please note that the video drivers take
-		this value only as recommendation. It could happen that you
-		enable the ETCF_ALWAYS_16_BIT mode, but the driver still creates
-		32 bit textures.
-		\param flag Texture creation flag.
-		\param enabled Specifies if the given flag should be enabled or
-		disabled. */
+		//! 打开和关闭一各纹理创建标志
+		/** 这个标志定义纹理该如何创建，通过改变这个值，可以影响例如渲染速度。
+		但是要注意：视频驱动对这个值只做推荐，可能你打开ETCF_ALWAYS_16_BIT，但驱动
+		仍然创建32位纹理。
+		\param flag 纹理创建标志
+		\param enabled 指定给定的标志是否应该打开或关闭 */
 		virtual void setTextureCreationFlag(E_TEXTURE_CREATION_FLAG flag, bool enabled = true) = 0;
 
-		//! Returns if a texture creation flag is enabled or disabled.
-		/** You can change this value using setTextureCreationFlag().
-		\param flag Texture creation flag.
-		\return The current texture creation flag enabled mode. */
+		//! 驱动一个纹理标志的打开或关闭状态
+		/** 可以通过 setTextureCreationFlag().设置
+		\param flag 纹理创建标志
+		\return 当前纹理标志的打开状态 */
 		virtual bool getTextureCreationFlag(E_TEXTURE_CREATION_FLAG flag) const = 0;
 
-		//! Creates a software image from a file.
-		/** No hardware texture will be created for this image. This
-		method is useful for example if you want to read a heightmap
-		for a terrain renderer.
-		\param filename Name of the file from which the image is
-		created.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
-		virtual IImage* createImageFromFile(const io::path& filename) = 0;
+		//! 从一个文件创建一个软件图像
+		/** 没有硬件纹理需要从这个图像创建。这个方法用于例如读取地表渲染器的高程图
+		\param filename 创建这个图像的文件名
+		\return 创建的图像
+		 */
+		virtual IImage* createImageFromFile(const path& filename) = 0;
 
-		//! Creates a software image from a file.
-		/** No hardware texture will be created for this image. This
-		method is useful for example if you want to read a heightmap
-		for a terrain renderer.
-		\param file File from which the image is created.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
-		virtual IImage* createImageFromFile(io::IReadFile* file) = 0;
+		//! 从一个文件创建一个软件图像
+		/** 没有硬件纹理需要从这个图像创建。这个方法用于例如读取地表渲染器的高程图
+		\param file 创建这个图像的文件名
+		\return 创建的图像
+		 */
+		virtual IImage* createImageFromFile(IReadFile* file) = 0;
 
-		//! Writes the provided image to a file.
-		/** Requires that there is a suitable image writer registered
-		for writing the image.
-		\param image Image to write.
-		\param filename Name of the file to write.
-		\param param Control parameter for the backend (e.g. compression
-		level).
-		\return True on successful write. */
-		virtual bool writeImageToFile(IImage* image, const io::path& filename, UINT32 param = 0) = 0;
+		//! 写入图像到文件
+		/** 需要注册一个合适的图像写入器
+		\param image 写入的图像
+		\param filename 写入的文件名
+		\param param 后端的控制参数（压缩级别）
+		\return 如果写入成功返回true */
+		virtual bool writeImageToFile(IImage* image, const path& filename, UINT32 param = 0) = 0;
 
-		//! Writes the provided image to a file.
-		/** Requires that there is a suitable image writer registered
-		for writing the image.
-		\param image Image to write.
-		\param file  An already open io::IWriteFile object. The name
-		will be used to determine the appropriate image writer to use.
-		\param param Control parameter for the backend (e.g. compression
-		level).
-		\return True on successful write. */
-		virtual bool writeImageToFile(IImage* image, io::IWriteFile* file, UINT32 param = 0) = 0;
+		//! 写入图像到文件
+		/** 需要注册一个合适的图像写入器
+		\param image 写入的图像
+		\param file  一个已经打开的io::IWriteFile对象. 这个名字要合适使用的图像写入器
+		\param param 后端的控制参数（压缩级别）
+		\return 如果写入成功返回true. */
+		virtual bool writeImageToFile(IImage* image, IWriteFile* file, UINT32 param = 0) = 0;
 
-		//! Creates a software image from a byte array.
-		/** No hardware texture will be created for this image. This
-		method is useful for example if you want to read a heightmap
-		for a terrain renderer.
-		\param format Desired color format of the texture
-		\param size Desired size of the image
-		\param data A byte array with pixel color information
-		\param ownForeignMemory If true, the image will use the data
-		pointer directly and own it afterwards. If false, the memory
-		will by copied internally.
-		\param deleteMemory Whether the memory is deallocated upon
-		destruction.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
+		//! 从字节数组创建一个软件图像
+		/** 没有硬件纹理需要从这个图像创建。这个方法用于例如读取地表渲染器的高程图
+		\param format 描述纹理的颜色格式
+		\param size 描述图像的大小
+		\param data 一个像素颜色信息的字节数组
+		\param ownForeignMemory 如果为true， 这个图像之后将直接用这个数据指针，如果不为false，
+		内存将在内部拷贝一份
+		\param deleteMemory 是否内存由析构器释放
+		\return 创建图像
+		 */
 		virtual IImage* createImageFromData(ECOLOR_FORMAT format,
-			const core::dimension2d<UINT32>& size, void *data,
+			const dimension2d<UINT32>& size, void *data,
 			bool ownForeignMemory = false,
 			bool deleteMemory = true) = 0;
 
-		//! Creates an empty software image.
+		//! 创建一个空软件图像
 		/**
-		\param format Desired color format of the image.
-		\param size Size of the image to create.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
-		virtual IImage* createImage(ECOLOR_FORMAT format, const core::dimension2d<UINT32>& size) = 0;
+		\param format 描述颜色图像的格式
+		\param size 创建图像的大小 
+		\return 创建的图像
+		  */
+		virtual IImage* createImage(ECOLOR_FORMAT format, const dimension2d<UINT32>& size) = 0;
 
-		//! Creates a software image by converting it to given format from another image.
-		/** \deprecated Create an empty image and use copyTo(). This method may be removed by Irrlicht 1.9.
-		\param format Desired color format of the image.
-		\param imageToCopy Image to copy to the new image.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
-		_IRR_DEPRECATED_ virtual IImage* createImage(ECOLOR_FORMAT format, IImage *imageToCopy) = 0;
 
-		//! Creates a software image from a part of another image.
-		/** \deprecated Create an empty image and use copyTo(). This method may be removed by Irrlicht 1.9.
-		\param imageToCopy Image to copy to the new image in part.
-		\param pos Position of rectangle to copy.
-		\param size Extents of rectangle to copy.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
-		_IRR_DEPRECATED_ virtual IImage* createImage(IImage* imageToCopy,
-			const core::position2d<SINT32>& pos,
-			const core::dimension2d<UINT32>& size) = 0;
 
-		//! Creates a software image from a part of a texture.
+		//! 从一个纹理的一部分创建一个软件图像
 		/**
-		\param texture Texture to copy to the new image in part.
-		\param pos Position of rectangle to copy.
-		\param size Extents of rectangle to copy.
-		\return The created image.
-		If you no longer need the image, you should call IImage::drop().
-		See IReferenceCounted::drop() for more information. */
+		\param texture 要拷贝一部分到新图像的纹理
+		\param pos 要复制矩形位置
+		\param size 要复制的矩形扩展
+		\return 创建的图像
+		  */
 		virtual IImage* createImage(ITexture* texture,
-			const core::position2d<SINT32>& pos,
-			const core::dimension2d<UINT32>& size) = 0;
+			const  Vector2& pos,
+			const  dimension2d<UINT32>& size) = 0;
 
-		//! Event handler for resize events. Only used by the engine internally.
-		/** Used to notify the driver that the window was resized.
-		Usually, there is no need to call this method. */
-		virtual void OnResize(const core::dimension2d<UINT32>& size) = 0;
+		//! 重新改变大小事件的句柄。 只用于引擎内部。
+		/** 用于提醒驱动：窗口改变
+		通常，这不需要调用这个方法 */
+		virtual void OnResize(const  dimension2d<UINT32>& size) = 0;
 
-		//! Adds a new material renderer to the video device.
-		/** Use this method to extend the VideoDriver with new material
-		types. To extend the engine using this method do the following:
-		Derive a class from IMaterialRenderer and override the methods
-		you need. For setting the right renderstates, you can try to
-		get a pointer to the real rendering device using
-		IVideoDriver::getExposedVideoData(). Add your class with
-		IVideoDriver::addMaterialRenderer(). To use an object being
-		displayed with your new material, set the MaterialType member of
-		the SMaterial struct to the value returned by this method.
-		If you simply want to create a new material using vertex and/or
-		pixel shaders it would be easier to use the
-		video::IGPUProgrammingServices interface which you can get
-		using the getGPUProgrammingServices() method.
-		\param renderer A pointer to the new renderer.
-		\param name Optional name for the material renderer entry.
-		\return The number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if
-		an error occured. For example if you tried to add an material
-		renderer to the software renderer or the null device, which do
-		not accept material renderers. */
+		//! 添加一个新的材质渲染器到这个驱动
+		/** 使用这个方法用新材质类型扩展视频驱动。用这个方法扩展引擎按下面这样做：
+		从IMaterialRenderer派生一个类并且重写它你需要的方法。为了设置正确的渲染状态，
+		你可以用IVideoDriver::getExposedVideoData()获取一个指向实际渲染设备的指针，
+		用IVideoDriver::addMaterialRenderer()添加你的类。要使一个对象显示你的新材质，
+		设置这个方法的返回值给SMaterial结构内的材质类型成员的值。如果你只是想让新创建
+		材质用于Vertex Shader和Fragment Shader。使用IGPUProgrammingServices接口用调用
+		getGPUProgrammingServices()方法更加容易。
+		\param renderer 一个新渲染器的指针
+		\param name 材质渲染器入口的可选名
+		\return 材质类型号，它可以被设置为SMaterial::MaterialType用于渲染。返回-1则是
+		发生错误。如你要尝试添加一个材质渲染器到软件渲染器或者空设备，它们不会接受
+		 */
 		virtual SINT32 addMaterialRenderer(IMaterialRenderer* renderer, const c8* name = 0) = 0;
 
-		//! Get access to a material renderer by index.
-		/** \param idx Id of the material renderer. Can be a value of
-		the E_MATERIAL_TYPE enum or a value which was returned by
-		addMaterialRenderer().
-		\return Pointer to material renderer or null if not existing. */
+		//! 通过索引获取一个材质渲染器
+		/** \param idx 材质渲染器的ID。可以是E_MATERIAL_TYPE枚举值或者addMaterialRenderer()的返回值
+	 
+		\return 材质渲染器指针或是空*/
 		virtual IMaterialRenderer* getMaterialRenderer(UINT32 idx) = 0;
 
-		//! Get amount of currently available material renderers.
-		/** \return Amount of currently available material renderers. */
+		//! 获取当前可用的材质渲染器数量
+		/** \return 当前可用的材质渲染器数量*/
 		virtual UINT32 getMaterialRendererCount() const = 0;
 
-		//! Get name of a material renderer
-		/** This string can, e.g., be used to test if a specific
-		renderer already has been registered/created, or use this
-		string to store data about materials: This returned name will
-		be also used when serializing materials.
-		\param idx Id of the material renderer. Can be a value of the
-		E_MATERIAL_TYPE enum or a value which was returned by
-		addMaterialRenderer().
-		\return String with the name of the renderer, or 0 if not
-		exisiting */
+		//! 获取材质渲染器名
+		/**
+		这个字符串能够用于测试一个特定的渲染器是否已经被注册或创建，
+		或者使用这个字符串保存相关的材质的数据：这个返回的名字将在当
+		序列化材质时使用
+		\param idx 材质渲染器的ID， 可以是E_MATERIAL_TYPE枚举值或者addMaterialRenderer()的返回值
+		\return 这个渲染器的名字，如果是0则不存在 */
 		virtual const c8* getMaterialRendererName(UINT32 idx) const = 0;
 
-		//! Sets the name of a material renderer.
-		/** Will have no effect on built-in material renderers.
-		\param idx: Id of the material renderer. Can be a value of the
-		E_MATERIAL_TYPE enum or a value which was returned by
-		addMaterialRenderer().
-		\param name: New name of the material renderer. */
+		//! 设置一个材质渲染器的名字
+		/** 对引擎内建的材质类型没有影响
+		\param idx: 材质渲染器的ID， 可以是E_MATERIAL_TYPE枚举值或者addMaterialRenderer()的返回值.
+		\param name: 这个材质渲染器的新名字 */
 		virtual void setMaterialRendererName(SINT32 idx, const c8* name) = 0;
 
-		//! Creates material attributes list from a material
-		/** This method is useful for serialization and more.
-		Please note that the video driver will use the material
-		renderer names from getMaterialRendererName() to write out the
-		material type name, so they should be set before.
-		\param material The material to serialize.
-		\param options Additional options which might influence the
-		serialization.
-		\return The io::IAttributes container holding the material
-		properties. */
-		virtual io::IAttributes* createAttributesFromMaterial(const video::SMaterial& material,
-			io::SAttributeReadWriteOptions* options = 0) = 0;
+		//! 由一个材质创建材质属性列表
+		/** 这个方法用于序列化和其它
+		请注意：视频驱动会通过getMaterialRendererName()获取材质渲染器名来输出材质类型名，所以
+		应该先设置好它们
+		\param options 将影响序列化的附加选项
+		\return 保存材质选项的IAttributes容器
+	    */
+		virtual IAttributes* createAttributesFromMaterial(const SMaterial& material,
+			SAttributeReadWriteOptions* options = 0) = 0;
 
-		//! Fills an SMaterial structure from attributes.
-		/** Please note that for setting material types of the
-		material, the video driver will need to query the material
-		renderers for their names, so all non built-in materials must
-		have been created before calling this method.
-		\param outMaterial The material to set the properties for.
-		\param attributes The attributes to read from. */
-		virtual void fillMaterialStructureFromAttributes(video::SMaterial& outMaterial, io::IAttributes* attributes) = 0;
+		//! 由一个属性填充一个一个SMaterial结构
+		/** 请注意：对于这个材质的材质类型的设置，这个视频驱动将为材质名而查询材质渲染器。
+		所以，所以非内置材质必须在这个函数调用前被创建
+		\param outMaterial 要设置属性的材质
+		\param attributes 要读取的属性 */
+		virtual void fillMaterialStructureFromAttributes(SMaterial& outMaterial, IAttributes* attributes) = 0;
 
-		//! Returns driver and operating system specific data about the IVideoDriver.
-		/** This method should only be used if the engine should be
-		extended without having to modify the source of the engine.
-		\return Collection of device dependent pointers. */
+		//! 返回相关IVideoDriver的驱动和操作系统指定数据 
+		/** 如果引擎的扩展不修改引擎选代码，应该使用这个方法
+		\return 设备依赖指针的集合 */
 		virtual const SExposedVideoData& getExposedVideoData() = 0;
 
-		//! Get type of video driver
-		/** \return Type of driver. */
+		//! 获取视频驱动的类型
+		/** \return 驱动的类型 */
 		virtual E_DRIVER_TYPE getDriverType() const = 0;
 
-		//! Gets the IGPUProgrammingServices interface.
-		/** \return Pointer to the IGPUProgrammingServices. Returns 0
-		if the video driver does not support this. For example the
-		Software driver and the Null driver will always return 0. */
+		//! 获取IGPUProgrammingServices的接口
+		/** \return 返回 IGPUProgrammingServices的指针，如果视频驱动不支持返回0 */
 		virtual IGPUProgrammingServices* getGPUProgrammingServices() = 0;
 
-		//! Returns a pointer to the mesh manipulator.
-		virtual scene::IMeshManipulator* getMeshManipulator() = 0;
+		//! 返回一个指向网格操作器mesh manipulator的指针
+		virtual IMeshManipulator* getMeshManipulator() = 0;
 
-		//! Clears the ZBuffer.
-		/** Note that you usually need not to call this method, as it
-		is automatically done in IVideoDriver::beginScene() or
-		IVideoDriver::setRenderTarget() if you enable zBuffer. But if
-		you have to render some special things, you can clear the
-		zbuffer during the rendering process with this method any time.
+		//! 清除ZBuffer
+		/** 注意：你通常不需要调用这个方法，如果你打开Z缓冲，
+		它在IVideoDriver::beginScene()或IVideoDriver::setRenderTarget()
+		里自动调用。但是如果要渲染一些特别的东西，你可以在渲染过程中的任何
+		时候调用这个方法情况Z缓冲
 		*/
 		virtual void clearZBuffer() = 0;
 
-		//! Make a screenshot of the last rendered frame.
-		/** \return An image created from the last rendered frame. */
-		virtual IImage* createScreenShot(video::ECOLOR_FORMAT format = video::ECF_UNKNOWN, video::E_RENDER_TARGET target = video::ERT_FRAME_BUFFER) = 0;
+		//! 截上一个帧缓冲的截图
+		/** \return 返回一个上一次帧缓冲的图像*/
+		virtual IImage* createScreenShot(ECOLOR_FORMAT format = ECF_UNKNOWN, E_RENDER_TARGET target = ERT_FRAME_BUFFER) = 0;
 
-		//! Check if the image is already loaded.
-		/** Works similar to getTexture(), but does not load the texture
-		if it is not currently loaded.
-		\param filename Name of the texture.
-		\return Pointer to loaded texture, or 0 if not found. */
-		virtual video::ITexture* findTexture(const io::path& filename) = 0;
+		//! 检测图像已经是否被加载
+		/** 同getTexture()类型，但是如果纹理没加载的话，不会主动加载纹理
+		\param filename 纹理的文件名
+		\return 指向纹理的指针，0不存在 */
+		virtual ITexture* findTexture(const path& filename) = 0;
 
-		//! Set or unset a clipping plane.
-		/** There are at least 6 clipping planes available for the user
-		to set at will.
-		\param index The plane index. Must be between 0 and
-		MaxUserClipPlanes.
-		\param plane The plane itself.
-		\param enable If true, enable the clipping plane else disable
-		it.
-		\return True if the clipping plane is usable. */
-		virtual bool setClipPlane(UINT32 index, const core::plane3df& plane, bool enable = false) = 0;
+		//! 设置一个未设置的一个剪裁平面
+		/** 对用户这里至少要设置6个有效的剪裁平面
+		\param index 这个平面的索引，必须为0到MaxUserClipPlanes.
+		\param plane 这个剪裁平面自身
+		\param enable 如果为true，这个剪裁平面将被关闭
+		\return 如果这个剪裁平面被关闭返回true */
+		virtual bool setClipPlane(UINT32 index, const Plane& plane, bool enable = false) = 0;
 
-		//! Enable or disable a clipping plane.
-		/** There are at least 6 clipping planes available for the user
-		to set at will.
-		\param index The plane index. Must be between 0 and
-		MaxUserClipPlanes.
-		\param enable If true, enable the clipping plane else disable
-		it. */
+		//! 打开或关闭剪裁平面
+		/**对用户这里至少要设置6个有效的剪裁平面
+		\param index 这个平面的索引，必须为0到MaxUserClipPlanes.
+		\param enable 如果为true，这个剪裁平面将被关闭 */
 		virtual void enableClipPlane(UINT32 index, bool enable) = 0;
 
-		//! Set the minimum number of vertices for which a hw buffer will be created
-		/** \param count Number of vertices to set as minimum. */
+		//! 为将要创建的硬件缓冲区设置最小顶点数
+		/** \param count 顶点数量的最小指针 */
 		virtual void setMinHardwareBufferVertexCount(UINT32 count) = 0;
 
-		//! Get the global Material, which might override local materials.
-		/** Depending on the enable flags, values from this Material
-		are used to override those of local materials of some
-		meshbuffer being rendered.
-		\return Reference to the Override Material. */
+		//! 获取全局材质，它可以覆盖局部材质
+		/** 依赖打开标志，这个材质的值用于覆盖某些正在渲染的网格缓冲区的局部材质
+		\return 覆盖材质的应用 */
 		virtual SOverrideMaterial& getOverrideMaterial() = 0;
 
-		//! Get the 2d override material for altering its values
-		/** The 2d override materual allows to alter certain render
-		states of the 2d methods. Not all members of SMaterial are
-		honored, especially not MaterialType and Textures. Moreover,
-		the zbuffer is always ignored, and lighting is always off. All
-		other flags can be changed, though some might have to effect
-		in most cases.
-		Please note that you have to enable/disable this effect with
-		enableInitMaterial2D(). This effect is costly, as it increases
-		the number of state changes considerably. Always reset the
-		values when done.
-		\return Material reference which should be altered to reflect
-		the new settings.
+		//! 为了修改值，获取2d覆盖材质
+		/** 
+		这个2d覆盖材质允许修改2d方法的中心渲染状态。并不是所有的SMaterial成员都合适。
+		特别是材质类型和纹理。此外，zbuffer一直无效，并且光照一直处于关闭。所有其它的
+		标志都会改变，虽然在大多数情况下有些影响。
+		请注意：可以通过enableInitMaterial2D()打开/关闭这个效果。这个效果消耗比较大
+		它增加了考虑到的状态改变的数量。每次这么做的时候都要经常重置这个值。
+		\return 反映修改的新设置的材质引用 
 		*/
 		virtual SMaterial& getMaterial2D() = 0;
 
-		//! Enable the 2d override material
-		/** \param enable Flag which tells whether the material shall be
-		enabled or disabled. */
+		//! 打开2d覆盖材质
+		/** \param enable 标志告诉这个材质是否应该打开或关闭 */
 		virtual void enableMaterial2D(bool enable = true) = 0;
 
-		//! Get the graphics card vendor name.
-		virtual core::stringc getVendorInfo() = 0;
+		//! 获取显卡供应商名字
+		virtual String getVendorInfo() = 0;
 
-		//! Only used by the engine internally.
-		/** The ambient color is set in the scene manager, see
-		scene::ISceneManager::setAmbientLight().
-		\param color New color of the ambient light. */
-		virtual void setAmbientLight(const ColourValuef& color) = 0;
+		//! 只用于引擎内部
+		/** 在场景管理器中设置环境光颜色,见ISceneManager::setAmbientLight()
+		\param color 新的环境光颜色*/
+		virtual void setAmbientLight(const ColourValue& color) = 0;
 
-		//! Only used by the engine internally.
-		/** Passes the global material flag AllowZWriteOnTransparent.
-		Use the SceneManager attribute to set this value from your app.
-		\param flag Default behavior is to disable ZWrite, i.e. false. */
+		//! 只用于引擎内部
+		/** 传递全局材质标志AllowZWriteOnTransparent.
+		在你的应用中用场景管理器属性来设置这个值
+		\param flag 默认行为关闭ZWrite */
 		virtual void setAllowZWriteOnTransparent(bool flag) = 0;
 
-		//! Get the maximum texture size supported.
-		virtual core::dimension2du getMaxTextureSize() const = 0;
+		//! 获取支持的最大纹理大小
+		virtual dimension2du getMaxTextureSize() const = 0;
 
-		//! Color conversion convenience function
-		/** Convert an image (as array of pixels) from source to destination
-		array, thereby converting the color format. The pixel size is
-		determined by the color formats.
-		\param sP Pointer to source
-		\param sF Color format of source
-		\param sN Number of pixels to convert, both array must be large enough
-		\param dP Pointer to destination
-		\param dF Color format of destination
+		//! 颜色转换函数 
+		/** 转移一个图像的（像素数组）从源到目的，从而转换颜色格式。这个像素大小通过颜色格式决定
+		\param sP 源指针
+		\param sF 源颜色格式
+		\param sN 转换的像素数，两个数组必须足够大
+		\param dP 目的指针
+		\param dF 目的颜色格式
 		*/
 		virtual void convertColor(const void* sP, ECOLOR_FORMAT sF, SINT32 sN,
 			void* dP, ECOLOR_FORMAT dF) const = 0;

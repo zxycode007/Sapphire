@@ -309,6 +309,18 @@
     <ClInclude Include="SapphireIMesh.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireEPrimitiveTypes.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSLight.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMaterialRenderer.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGPUProgramServices.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
