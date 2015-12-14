@@ -16,6 +16,8 @@
 #include "SapphireIImageWriter.h"
 #include "SapphireIMeshBuffer.h"
 #include "SapphireIMesh.h"
+#include "SapphireIGPUProgramServices.h"
+#include "SapphireIMeshManipulator.h"
 #include "SapphireISceneNode.h"
 
 

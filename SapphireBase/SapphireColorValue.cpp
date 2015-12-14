@@ -243,6 +243,28 @@ namespace Sapphire {
 			b == rhs.b &&
 			a == rhs.a);
 	}
+
+	ColourValue& ColourValue::operator=(const UINT32& rhs) const
+	{
+		UINT32 val32 = rhs;
+
+		// 转换到32位模式
+		// (ABGR = 8888)
+
+		// Alpha
+		Real a = ((val32 >> 24) & 0xFF) / 255.0f;
+
+		// Red
+		Real r = ((val32 >> 16) & 0xFF) / 255.0f;
+
+		// Green
+		Real g = ((val32 >> 8) & 0xFF) / 255.0f;
+
+		// Blue
+		Real b = (val32 & 0xFF) / 255.0f;
+		return ColourValue(r,g,b,a);
+	}
+
 	//---------------------------------------------------------------------
 	bool ColourValue::operator!=(const ColourValue& rhs) const
 	{

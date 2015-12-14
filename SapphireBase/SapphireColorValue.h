@@ -2,6 +2,7 @@
 #define _SAPPHIRE_COLOURVALUE_H__
 
 #include "SapphirePrerequisites.h"
+#include "SapphireQMath.h"
 
 namespace Sapphire {
 
@@ -214,7 +215,10 @@ namespace Sapphire {
 		{ }
 
 		bool operator==(const ColourValue& rhs) const;
+		 
 		bool operator!=(const ColourValue& rhs) const;
+
+		ColourValue& operator=(const UINT32& rhs) const;
 
 		float r, g, b, a;
 
@@ -248,6 +252,63 @@ namespace Sapphire {
 		/** 设置 ABGR.
 		*/
 		void setAsABGR(const ABGR val);
+
+
+		void setAlpha(UINT32 alpha)
+		{
+			a = static_cast<Real>(alpha) / 255;
+		};
+
+		void setRed(UINT32 red)
+		{
+			r = static_cast<Real>(red) / 255;
+		};
+
+		void setGreen(UINT32 green)
+		{
+			static_cast<Real>(green) / 255;
+		}
+
+		void setBlue(UINT32 blue)
+		{
+			static_cast<Real>(blue) / 255;
+		};
+
+		UINT32 getAlpha()
+		{
+			return static_cast<UINT32>(a * 255);
+		}
+
+		UINT32 getRed()
+		{
+			return static_cast<UINT32>(r * 255);
+		}
+
+		UINT32 getGreen()
+		{
+			return static_cast<UINT32>(g * 255);
+		}
+
+		UINT32 getBlue()
+		{
+			return static_cast<UINT32>(b * 255);
+		}
+
+		UINT32 getAverage()
+		{
+			return (getRed()+ getGreen() + getBlue()) / 3;
+		}
+
+		//! 获取在颜色范围[0,255]中的光照值
+		Real getLightness() 
+		{
+			return 0.5f*(Math::_max<UINT32>(Math::_max<UINT32>(getRed(), getGreen()), getBlue()) + Math::_min<UINT32>(Math::_min<UINT32>(getRed(), getGreen()), getBlue()));
+		}
+		//获取亮度
+		Real getLuminance() 
+		{
+			return 0.3f*getRed() + 0.59f*getGreen() + 0.11f*getBlue();
+		}
 
 		/** 截断颜色值到范围[0,1]中
 		*/
@@ -461,6 +522,7 @@ namespace Sapphire {
 		void getHSB(Real* hue, Real* saturation, Real* brightness) const;
 
 		
+		
 
 		//! 以指定的颜色格式写入一个颜色数据
 		/** \param data: 目标的颜色数据。必须包含足够大的内容一般接受指定格式的颜色数据
@@ -487,9 +549,9 @@ namespace Sapphire {
 			case ECF_R8G8B8:
 			{
 				UINT8* dest = (UINT8*)data;
-				dest[0] = (UINT8)getRed(A8R8G8B8toA1R5G5B5(getAsARGB()));
-				dest[1] = (UINT8)getGreen(A8R8G8B8toA1R5G5B5(getAsARGB()));
-				dest[2] = (UINT8)getBlue(A8R8G8B8toA1R5G5B5(getAsARGB()));
+				dest[0] = (UINT8)getRed();
+				dest[1] = (UINT8)getGreen();
+				dest[2] = (UINT8)getBlue();
 			}
 			break;
 

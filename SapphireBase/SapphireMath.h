@@ -585,6 +585,24 @@ namespace Sapphire
 			return (a + tolerance >= b) && (a - tolerance <= b);
 		}
 
+		/**
+		四舍五入
+		*/
+		static SINT32 round2i(Real val)
+		{
+			return static_cast<SINT32>(val + 0.5);
+		}
+		template<class T>
+		static T _max(T a, T b)
+		{
+			return a > b ? a : b;
+		}
+		template<class T>
+		static T _min(T a, T b)
+		{
+			return a < b ? a : b;
+		}
+
 	protected:
 		//////////////////不对外由API内部调用//////////////////////
 		// 由API使用的角度单位类型

@@ -321,6 +321,18 @@
     <ClInclude Include="SapphireIGPUProgramServices.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireEShaderTypes.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshManipulator.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAnimatedMesh.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSVertexManipulator.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

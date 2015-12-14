@@ -2,6 +2,8 @@
 #define _SAPPHIRE_IGPU_PROGRAM_SERVICES_
 
 #include "SapphirePrerequisites.h"
+#include "SapphireEShaderTypes.h"
+#include "SapphireEPrimitiveTypes.h"
 #include "SapphireSMaterial.h"
 #include "SapphireSVertex.h"
 
@@ -11,66 +13,48 @@ namespace Sapphire
 	class IVideoDriver;
 	class IShaderConstantSetCallBack;
 
-	//! Enumeration for different types of shading languages
+	//! 枚举不同shader类型
 	enum E_GPU_SHADING_LANGUAGE
 	{
-		//! The default language, so HLSL for Direct3D and GLSL for OpenGL.
+		//! 默认的语义， 对于DX是HLSL，OGL是GLSL
 		EGSL_DEFAULT = 0,
 
-		//! Cg shading language.*/
+		//! CG语言.*/
 		EGSL_CG
 	};
 
-	//! Interface making it possible to create and use programs running on the GPU.
+	//! 可以创建和使用GPU程序的接口
 	class IGPUProgrammingServices
 	{
 	public:
 
-		//! Destructor
+		 
 		virtual ~IGPUProgrammingServices() {}
 
-		//! Adds a new high-level shading material renderer to the VideoDriver.
-		/** Currently only HLSL/D3D9 and GLSL/OpenGL are supported.
-		\param vertexShaderProgram String containing the source of the vertex
-		shader program. This can be 0 if no vertex program shall be used.
-		\param vertexShaderEntryPointName Name of the entry function of the
-		vertexShaderProgram (p.e. "main")
-		\param vsCompileTarget Vertex shader version the high level shader
-		shall be compiled to.
-		\param pixelShaderProgram String containing the source of the pixel
-		shader program. This can be 0 if no pixel shader shall be used.
-		\param pixelShaderEntryPointName Entry name of the function of the
-		pixelShaderProgram (p.e. "main")
-		\param psCompileTarget Pixel shader version the high level shader
-		shall be compiled to.
-		\param geometryShaderProgram String containing the source of the
-		geometry shader program. This can be 0 if no geometry shader shall be
-		used.
-		\param geometryShaderEntryPointName Entry name of the function of the
-		geometryShaderProgram (p.e. "main")
-		\param gsCompileTarget Geometry shader version the high level shader
-		shall be compiled to.
-		\param inType Type of vertices passed to geometry shader
-		\param outType Type of vertices created by geometry shader
-		\param verticesOut Maximal number of vertices created by geometry
-		shader. If 0, maximal number supported is assumed.
-		\param callback Pointer to an implementation of
-		IShaderConstantSetCallBack in which you can set the needed vertex,
-		pixel, and geometry shader program constants. Set this to 0 if you
-		don't need this.
-		\param baseMaterial Base material which renderstates will be used to
-		shade the material.
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\param shaderLang a type of shading language used in current shader.
-		\return Number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an error
-		occured, e.g. if a shader program could not be compiled or a compile
-		target is not reachable. The error strings are then printed to the
-		error log and can be catched with a custom event receiver. */
+		//! 添加一个新的高级着色材质渲染器给视频驱动
+		/** 当前只支持HLSL和GLSL
+		\param vertexShaderProgram 包含vertex shader 程序的源码的字符串。如果不使用顶点程序可以为0。
+		\param vertexShaderEntryPointName vertexShaderProgram的入口函数名
+		\param vsCompileTarget Vertex shader 应该被编译的版本
+		\param pixelShaderProgram 包含Fragment shader 程序的源码的字符串。如果不使用顶点程序可以为0。 
+		\param pixelShaderEntryPointName FragmentShaderProgram的入口函数名
+		\param psCompileTarget  FragmentShader 应该被编译的版本
+		\param geometryShaderProgram 包含geometry shader程序的源码的字符串。如果不使用顶点程序可以为0。
+		\param geometryShaderEntryPointName geometry shaderProgram的入口函数名
+		\param gsCompileTarget  geometry shader 应该被编译的版本
+		\param inType 传递给geometry shader的顶点类型 
+		\param outType 通过geometry shader输出的顶点类型
+		\param verticesOut geometry shader创建的最大顶点数,如果为0，以假设最大数目
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\param shaderLang 一个当前shader的着色语言的类型
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。
+		  */
 		virtual SINT32 addHighLevelShaderMaterial(
 			const c8* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName,
@@ -83,13 +67,13 @@ namespace Sapphire
 			E_GEOMETRY_SHADER_TYPE gsCompileTarget = EGST_GS_4_0,
 			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
 			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			u32 verticesOut = 0,
+			UINT32 verticesOut = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0,
 			E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT) = 0;
 
-		//! convenience function for use without geometry shaders
+		//! 不用geometry shader的方波函数
 		SINT32 addHighLevelShaderMaterial(
 			const c8* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName = "main",
@@ -111,9 +95,8 @@ namespace Sapphire
 				callback, baseMaterial, userData, shadingLang);
 		}
 
-		//! convenience function for use with many defaults, without geometry shader
-		/** All shader names are set to "main" and compile targets are shader
-		type 1.1.
+		//! 使用很多默认值的方便函数，不用geometry shader
+		/** 所有shader名都设置为main并且编译目标到shader type 1.1
 		*/
 		SINT32 addHighLevelShaderMaterial(
 			const c8* vertexShaderProgram,
@@ -131,9 +114,9 @@ namespace Sapphire
 				callback, baseMaterial, userData);
 		}
 
-		//! convenience function for use with many defaults, with geometry shader
-		/** All shader names are set to "main" and compile targets are shader
-		type 1.1 and geometry shader 4.0.
+		//! 使用很多默认值的方便函数，使用geometry shader 
+		/** 
+		所有shader名都设置为main并且编译目标到shader type 1.1和geometry shader4.0
 		*/
 		SINT32 addHighLevelShaderMaterial(
 			const c8* vertexShaderProgram,
@@ -141,7 +124,7 @@ namespace Sapphire
 			const c8* geometryShaderProgram = 0,
 			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
 			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			u32 verticesOut = 0,
+			UINT32 verticesOut = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0)
@@ -155,49 +138,30 @@ namespace Sapphire
 				callback, baseMaterial, userData);
 		}
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
-		/** \param vertexShaderProgramFileName Text file containing the source
-		of the vertex shader program. Set to empty string if no vertex shader
-		shall be created.
-		\param vertexShaderEntryPointName Name of the entry function of the
-		vertexShaderProgram  (p.e. "main")
-		\param vsCompileTarget Vertex shader version the high level shader
-		shall be compiled to.
-		\param pixelShaderProgramFileName Text file containing the source of
-		the pixel shader program. Set to empty string if no pixel shader shall
-		be created.
-		\param pixelShaderEntryPointName Entry name of the function of the
-		pixelShaderProgram (p.e. "main")
-		\param psCompileTarget Pixel shader version the high level shader
-		shall be compiled to.
-		\param geometryShaderProgramFileName Name of the source of
-		the geometry shader program. Set to empty string if no geometry shader
-		shall be created.
-		\param geometryShaderEntryPointName Entry name of the function of the
-		geometryShaderProgram (p.e. "main")
-		\param gsCompileTarget Geometry shader version the high level shader
-		shall be compiled to.
-		\param inType Type of vertices passed to geometry shader
-		\param outType Type of vertices created by geometry shader
-		\param verticesOut Maximal number of vertices created by geometry
-		shader. If 0, maximal number supported is assumed.
-		\param callback Pointer to an implementation of
-		IShaderConstantSetCallBack in which you can set the needed vertex,
-		pixel, and geometry shader program constants. Set this to 0 if you
-		don't need this.
-		\param baseMaterial Base material which renderstates will be used to
-		shade the material.
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\param shaderLang a type of shading language used in current shader.
-		\return Number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an error
-		occured, e.g. if a shader program could not be compiled or a compile
-		target is not reachable. The error strings are then printed to the
-		error log and can be catched with a custom event receiver. */
+		//! 类似于IGPUProgrammingServices::addShaderMaterial(), 但是不加载文件
+		/** 当前只支持HLSL和GLSL
+		\param vertexShaderProgram 包含vertex shader 程序的源码的文件名。如果不使用顶点程序可以为0。
+		\param vertexShaderEntryPointName vertexShaderProgram的入口函数名
+		\param vsCompileTarget Vertex shader 应该被编译的版本
+		\param pixelShaderProgram 包含Fragment shader 程序的源码的文件名。如果不使用顶点程序可以为0。
+		\param pixelShaderEntryPointName FragmentShaderProgram的入口函数名
+		\param psCompileTarget  FragmentShader 应该被编译的版本
+		\param geometryShaderProgram 包含geometry shader程序的源码的文件名。如果不使用顶点程序可以为0。
+		\param geometryShaderEntryPointName geometry shaderProgram的入口函数名
+		\param gsCompileTarget  geometry shader 应该被编译的版本
+		\param inType 传递给geometry shader的顶点类型
+		\param outType 通过geometry shader输出的顶点类型
+		\param verticesOut geometry shader创建的最大顶点数,如果为0，以假设最大数目
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\param shaderLang 一个当前shader的着色语言的类型
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。
+		*/
 		virtual SINT32 addHighLevelShaderMaterialFromFiles(
 			const path& vertexShaderProgramFileName,
 			const c8* vertexShaderEntryPointName,
@@ -210,13 +174,13 @@ namespace Sapphire
 			E_GEOMETRY_SHADER_TYPE gsCompileTarget = EGST_GS_4_0,
 			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
 			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			u32 verticesOut = 0,
+			UINT32 verticesOut = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0,
 			E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT) = 0;
 
-		//! convenience function for use without geometry shaders
+		//! 不用geometry shaders的方便函数
 		SINT32 addHighLevelShaderMaterialFromFiles(
 			const path& vertexShaderProgramFileName,
 			const c8* vertexShaderEntryPointName = "main",
@@ -238,9 +202,8 @@ namespace Sapphire
 				callback, baseMaterial, userData, shadingLang);
 		}
 
-		//! convenience function for use with many defaults, without geometry shader
-		/** All shader names are set to "main" and compile targets are shader
-		type 1.1.
+		//! 不使用geometry shaders， 使用很多默认值，方便使用的函数
+		/** 所有shader名都设置为main并且编译目标到shader type 1.1
 		*/
 		SINT32 addHighLevelShaderMaterialFromFiles(
 			const path& vertexShaderProgramFileName,
@@ -258,17 +221,18 @@ namespace Sapphire
 				callback, baseMaterial, userData);
 		}
 
-		//! convenience function for use with many defaults, with geometry shader
-		/** All shader names are set to "main" and compile targets are shader
-		type 1.1 and geometry shader 4.0.
+		///! 使用很多默认值的方便函数，使用geometry shader 
+		/**
+		所有shader名都设置为main并且编译目标到shader type 1.1和geometry shader4.0
 		*/
+		
 		SINT32 addHighLevelShaderMaterialFromFiles(
 			const path& vertexShaderProgramFileName,
 			const path& pixelShaderProgramFileName = "",
 			const path& geometryShaderProgramFileName = "",
 			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
 			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			u32 verticesOut = 0,
+			UINT32 verticesOut = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0)
@@ -282,47 +246,30 @@ namespace Sapphire
 				callback, baseMaterial, userData);
 		}
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
-		/** \param vertexShaderProgram Text file handle containing the source
-		of the vertex shader program. Set to 0 if no vertex shader shall be
-		created.
-		\param vertexShaderEntryPointName Name of the entry function of the
-		vertexShaderProgram
-		\param vsCompileTarget Vertex shader version the high level shader
-		shall be compiled to.
-		\param pixelShaderProgram Text file handle containing the source of
-		the pixel shader program. Set to 0 if no pixel shader shall be created.
-		\param pixelShaderEntryPointName Entry name of the function of the
-		pixelShaderProgram (p.e. "main")
-		\param psCompileTarget Pixel shader version the high level shader
-		shall be compiled to.
-		\param geometryShaderProgram Text file handle containing the source of
-		the geometry shader program. Set to 0 if no geometry shader shall be
-		created.
-		\param geometryShaderEntryPointName Entry name of the function of the
-		geometryShaderProgram (p.e. "main")
-		\param gsCompileTarget Geometry shader version the high level shader
-		shall be compiled to.
-		\param inType Type of vertices passed to geometry shader
-		\param outType Type of vertices created by geometry shader
-		\param verticesOut Maximal number of vertices created by geometry
-		shader. If 0, maximal number supported is assumed.
-		\param callback Pointer to an implementation of
-		IShaderConstantSetCallBack in which you can set the needed vertex and
-		pixel shader program constants. Set this to 0 if you don't need this.
-		\param baseMaterial Base material which renderstates will be used to
-		shade the material.
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\param shaderLang a type of shading language used in current shader.
-		\return Number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an
-		error occured, e.g. if a shader program could not be compiled or a
-		compile target is not reachable. The error strings are then printed to
-		the error log and can be catched with a custom event receiver. */
+		//! 类似 IGPUProgrammingServices::addShaderMaterial(), 但是加载文件
+		/** 
+		\param vertexShaderProgram 包含vertex shader 程序的源码的已加载文件对象。如果不使用顶点程序可以为0。
+		\param vertexShaderEntryPointName vertexShaderProgram的入口函数名
+		\param vsCompileTarget Vertex shader 应该被编译的版本
+		\param pixelShaderProgram 包含Fragment shader 程序的源码的已加载文件对象。如果不使用顶点程序可以为0。 
+		\param pixelShaderEntryPointName FragmentShaderProgram的入口函数名
+		\param psCompileTarget  FragmentShader 应该被编译的版本
+		\param geometryShaderProgram 包含geometry shader程序的源码的已加载文件对象。如果不使用顶点程序可以为0。
+		\param geometryShaderEntryPointName geometry shaderProgram的入口函数名
+		\param gsCompileTarget  geometry shader 应该被编译的版本
+		\param inType 传递给geometry shader的顶点类型 
+		\param outType 通过geometry shader输出的顶点类型
+		\param verticesOut geometry shader创建的最大顶点数,如果为0，以假设最大数目
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\param shaderLang 一个当前shader的着色语言的类型
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。
+		*/
 		virtual SINT32 addHighLevelShaderMaterialFromFiles(
 			IReadFile* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName,
@@ -335,13 +282,13 @@ namespace Sapphire
 			E_GEOMETRY_SHADER_TYPE gsCompileTarget = EGST_GS_4_0,
 			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
 			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			u32 verticesOut = 0,
+			UINT32 verticesOut = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0,
 			E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT) = 0;
 
-		//! convenience function for use without geometry shaders
+		//! 不用geometry shaders的方便函数
 		SINT32 addHighLevelShaderMaterialFromFiles(
 			IReadFile* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName = "main",
@@ -363,89 +310,60 @@ namespace Sapphire
 				callback, baseMaterial, userData, shadingLang);
 		}
 
-		//! Adds a new ASM shader material renderer to the VideoDriver
-		/** Note that it is a good idea to call IVideoDriver::queryFeature() in
-		advance to check if the IVideoDriver supports the vertex and/or pixel
-		shader version your are using.
+		//! 添加一个新的ASM Shader材质渲染器给视频驱动
+		/** 
+		注意：推荐调用IVideoDriver::queryFeature()来检测IVideoDriver能否支持你用的Shader
+	    这个材质是用IVideoDriver::addMaterialRenderer()添加到视频驱动
+		\param vertexShaderProgram 包含vertex shader 程序的字符串的已加载文件对象。如果不使用顶点程序可以为0。
 
-		The material is added to the VideoDriver like with
-		IVideoDriver::addMaterialRenderer() and can be used like it had been
-		added with that method.
-		\param vertexShaderProgram String containing the source of the vertex
-		shader program. This can be 0 if no vertex program shall be used.
-
-		For DX8 programs, the will always input registers look like this: v0:
+		对于DX8程序，如果有效的话，所有输入寄存器像这样：v0:
 		position, v1: normal, v2: color, v3: texture cooridnates, v4: texture
-		coordinates 2 if available.
-
-		For DX9 programs, you can manually set the registers using the dcl_
-		statements.
-		\param pixelShaderProgram String containing the source of the pixel
-		shader program. This can be 0 if you don't want to use a pixel shader.
-		\param callback Pointer to an implementation of
-		IShaderConstantSetCallBack in which you can set the needed vertex and
-		pixel shader program constants. Set this to 0 if you don't need this.
-		\param baseMaterial Base material which renderstates will be used to
-		shade the material.
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\return Returns the number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an
-		error occured. -1 is returned for example if a vertex or pixel shader
-		program could not be compiled, the error strings are then printed out
-		into the error log, and can be catched with a custom event receiver. */
+		coordinates 2 
+		 
+		对于DX9程序， 你可以用dcl_statements.手动设置这些寄存器
+		\param pixelShaderProgram 包含Fragment shader 程序的源码的已加载文件对象。如果不使用顶点程序可以为0。
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。 */
 		virtual SINT32 addShaderMaterial(const c8* vertexShaderProgram = 0,
 			const c8* pixelShaderProgram = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0) = 0;
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
-		/** \param vertexShaderProgram Text file containing the source of the
-		vertex shader program. Set to 0 if no shader shall be created.
-		\param pixelShaderProgram Text file containing the source of the pixel
-		shader program. Set to 0 if no shader shall be created.
-		\param callback Pointer to an IShaderConstantSetCallback object to
-		which the OnSetConstants function is called.
-		\param baseMaterial baseMaterial
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\return Returns the number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an
-		error occured. -1 is returned for example if a vertex or pixel shader
-		program could not be compiled, the error strings are then printed out
-		into the error log, and can be catched with a custom event receiver. */
+		//! 类似 IGPUProgrammingServices::addShaderMaterial(), 但是从文件加载
+		/** \param vertexShaderProgram包含vertex shader 程序的文本文件对象。如果不使用顶点程序可以为0。
+		\param pixelShaderProgram  包含Fragment shader 程序的文本文件对象。如果不使用顶点程序可以为0。
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。 */
 		virtual SINT32 addShaderMaterialFromFiles(IReadFile* vertexShaderProgram,
 			IReadFile* pixelShaderProgram,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0) = 0;
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
-		/** \param vertexShaderProgramFileName Text file name containing the
-		source of the vertex shader program. Set to 0 if no shader shall be
-		created.
-		\param pixelShaderProgramFileName Text file name containing the source
-		of the pixel shader program. Set to 0 if no shader shall be created.
-		\param callback Pointer to an IShaderConstantSetCallback object on
-		which the OnSetConstants function is called.
-		\param baseMaterial baseMaterial
-		\param userData a user data int. This int can be set to any value and
-		will be set as parameter in the callback method when calling
-		OnSetConstants(). In this way it is easily possible to use the same
-		callback method for multiple materials and distinguish between them
-		during the call.
-		\return Returns the number of the material type which can be set in
-		SMaterial::MaterialType to use the renderer. -1 is returned if an
-		error occured. -1 is returned for example if a vertex or pixel shader
-		program could not be compiled, the error strings are then printed out
-		into the error log, and can be catched with a custom event receiver. */
+		//! 类似 IGPUProgrammingServices::addShaderMaterial(), 但是从文件加载
+		/** \param vertexShaderProgram包含vertex shader 程序的文本文件。如果不使用顶点程序可以为0。
+		\param pixelShaderProgram  包含Fragment shader 程序的文本文件。如果不使用顶点程序可以为0。
+		\param callback 指向一个IShaderConstantSetCallBack的实现，这里面你可以设置需要的顶点，像素，和几何着色器程序。
+		设置为0表示你不需要这个
+		\param baseMaterial 基础材质，它的渲染状态用于着色材质
+		\param userData 一个用户的int数据，这个int能够设置任意值和在当调用OnSetConstants()时设置回调函数里的参数。
+		这个方法对于多材质和在调用时区分它们能够相对容易的使用相同的回调函数。
+		\return 返回这个材质类型数，它可以被用做设置带SMaterial::MaterialType用于渲染器。返回-1表示错误。
+		如果一个shader程序没有编译或编译目标不可到达。这个错误字符串会被输出的error.log并且能够被自定义
+		的事件接收器捕获。 */
 		virtual SINT32 addShaderMaterialFromFiles(const path& vertexShaderProgramFileName,
 			const path& pixelShaderProgramFileName,
 			IShaderConstantSetCallBack* callback = 0,
@@ -454,7 +372,6 @@ namespace Sapphire
 	};
 
 
-} // end namespace video
-}
+}  
 
 #endif

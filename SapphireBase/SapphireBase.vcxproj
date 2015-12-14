@@ -89,6 +89,7 @@
     <ClInclude Include="SapphireEMeshWriterEnums.h" />
     <ClInclude Include="SapphireEPrimitiveTypes.h" />
     <ClInclude Include="SapphireESceneNodeAnimatorType.h" />
+    <ClInclude Include="SapphireEShaderTypes.h" />
     <ClInclude Include="SapphireETerrianElements.h" />
     <ClInclude Include="SapphireException.h" />
     <ClInclude Include="SapphireExposedVideoData.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="SapphireFont.h" />
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
+    <ClInclude Include="SapphireIAnimatedMesh.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
@@ -105,6 +107,7 @@
     <ClInclude Include="SapphireIMaterialRenderer.h" />
     <ClInclude Include="SapphireIMesh.h" />
     <ClInclude Include="SapphireIMeshBuffer.h" />
+    <ClInclude Include="SapphireIMeshManipulator.h" />
     <ClInclude Include="SapphireIReferenceCounter.h" />
     <ClInclude Include="SapphireISceneNode.h" />
     <ClInclude Include="SapphireISceneNodeAnimator.h" />
@@ -148,6 +151,7 @@
     <ClInclude Include="SapphireStringVector.h" />
     <ClInclude Include="SapphireSVertex.h" />
     <ClInclude Include="SapphireSVertexIndex.h" />
+    <ClInclude Include="SapphireSVertexManipulator.h" />
     <ClInclude Include="SapphireTriangle3D.h" />
     <ClInclude Include="SapphireIUserDataSerializer.h" />
     <ClInclude Include="SapphireUserObjectBinding.h" />
