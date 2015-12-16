@@ -111,8 +111,10 @@
     <ClInclude Include="SapphireIReferenceCounter.h" />
     <ClInclude Include="SapphireISceneNode.h" />
     <ClInclude Include="SapphireISceneNodeAnimator.h" />
+    <ClInclude Include="SapphireIShaderConstantSetCallBack.h" />
     <ClInclude Include="SapphireITexture.h" />
     <ClInclude Include="SapphireITriangleSelector.h" />
+    <ClInclude Include="SapphireIVideoModeList.h" />
     <ClInclude Include="SapphireKeyCodes.h" />
     <ClInclude Include="SapphireKeyMap.h" />
     <ClInclude Include="SapphireLine2D.h" />
@@ -144,6 +146,7 @@
     <ClInclude Include="SapphireSingleton.h" />
     <ClInclude Include="SapphireSLight.h" />
     <ClInclude Include="SapphireSMaterial.h" />
+    <ClInclude Include="SapphireSMesh.h" />
     <ClInclude Include="SapphireSphere.h" />
     <ClInclude Include="SapphireStableHeader.h" />
     <ClInclude Include="SapphireStdHeader.h" />
@@ -152,6 +155,7 @@
     <ClInclude Include="SapphireSVertex.h" />
     <ClInclude Include="SapphireSVertexIndex.h" />
     <ClInclude Include="SapphireSVertexManipulator.h" />
+    <ClInclude Include="SapphireSViewFrustum.h" />
     <ClInclude Include="SapphireTriangle3D.h" />
     <ClInclude Include="SapphireIUserDataSerializer.h" />
     <ClInclude Include="SapphireUserObjectBinding.h" />

@@ -333,6 +333,18 @@
     <ClInclude Include="SapphireSVertexManipulator.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireIShaderConstantSetCallBack.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIVideoModeList.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSMesh.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSViewFrustum.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

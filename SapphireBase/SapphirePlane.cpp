@@ -2,6 +2,7 @@
 #include "SapphirePlane.h"
 #include "SapphireVector3.h"
 #include "SapphireMatrix3.h"
+#include "SapphireRay.h"
 #include "SapphireAxisAlignedBox.h"
 
 
@@ -136,6 +137,71 @@ namespace Sapphire {
 		}
 
 		return fLength;
+	}
+	//-----------------------------------------------------------------------
+	void Plane::transformPlane(const Matrix4& matrix)
+	{
+		Vector3 newP;
+		normal.normalise();
+		//d是平面到原点的距离， 平面到原点的向量是法线的负方向，所以，-d*normal = 原点到平面的向量
+		newP = -d * normal;
+		newP = matrix * newP;
+		Vector3 _normal = normal;
+		_normal = matrix.inverse() * _normal;
+		redefine(_normal, newP);
+
+	}
+	//-----------------------------------------------------------------------
+	bool Plane::getIntersectionWithPlane(const Plane& other,
+		Vector3& outLinePoint,
+		Vector3& outLineVect) const
+	{
+		//求出当前平面的法线长度
+		const Real fn00 = normal.length();
+		//求出当前平面与另外一平面的点积
+		const Real fn01 = normal.dotProduct(other.normal);
+		//另外一平面法线长度
+		const Real fn11 = other.normal.length();
+		//用克拉默法则解线性方程组
+		const Real det = fn00*fn11 - fn01*fn01;
+
+		if (fabs(det) <= std::numeric_limits<Real>::epsilon())
+			return false;
+
+		const Real invdet = 1.0 / det;
+		const Real fc0 = (fn11*-d + fn01*other.d) * invdet;
+		const Real fc1 = (fn00*-other.d + fn01*d) * invdet;
+
+		//两个法向量相乘，得到相交直线的方向向量
+		outLineVect = normal.crossProduct(other.normal);
+		outLinePoint = normal*fc0 + other.normal*fc1;
+		return true;
+	}
+	//-----------------------------------------------------------------------
+	//! 如果有的话，获取与另外两个平面的交点
+	bool Plane::getIntersectionWithPlanes(const Plane& o1,
+		const Plane& o2, Vector3& outPoint) const 
+	{
+		Vector3 linePoint, lineVect;
+		//获取本平面与o1平面交线
+		if (getIntersectionWithPlane(o1, linePoint, lineVect))
+		{
+			Ray ray = Ray(linePoint, lineVect);
+			Plane plane = *this;
+			std::pair<bool, Real> t = Math::intersects(ray, plane);
+			//如果first 为true，相交，false 平行
+			if (t.first)
+			{
+				//判断o2平面与之前ray的交点
+				t = Math::intersects(ray, o2);
+				//求出交点
+				outPoint = ray.getPoint(t.second);
+				return t.first;
+			}
+			return false;
+			//return o2.getIntersectionWithLine(linePoint, lineVect, outPoint);
+		}
+		return false;
 	}
 	//-----------------------------------------------------------------------
 	std::ostream& operator<< (std::ostream& o, const Plane& p)

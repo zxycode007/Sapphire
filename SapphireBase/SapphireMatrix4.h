@@ -112,12 +112,18 @@ namespace Sapphire
 			std::swap(m[3][3], other.m[3][3]);
 		}
 
+		
+
+		inline Real operator [] (SINT32 iIndex)
+		{
+			assert(iIndex < 16);
+			return _m[iIndex];
+		}
 		inline Real* operator [] (size_t iRow)
 		{
 			assert(iRow < 4);
 			return m[iRow];
 		}
-
 		inline const Real *operator [] (size_t iRow) const
 		{
 			assert(iRow < 4);
@@ -278,7 +284,7 @@ namespace Sapphire
 			m[1][0] = mat3.m[1][0]; m[1][1] = mat3.m[1][1]; m[1][2] = mat3.m[1][2];
 			m[2][0] = mat3.m[2][0]; m[2][1] = mat3.m[2][1]; m[2][2] = mat3.m[2][2];
 		}
-
+		//返回转置矩阵 （本引擎是列优先矩阵，转置后可成行优先矩阵）
 		inline Matrix4 transpose(void) const
 		{
 			return Matrix4(m[0][0], m[1][0], m[2][0], m[3][0],
@@ -592,6 +598,8 @@ namespace Sapphire
 			);
 	}
 	 
+	
+
 }
 
 #endif

@@ -23,7 +23,7 @@ namespace Sapphire
 	自网格缓冲区被用于绘制，并且因此在面对驱动，会有很高几率在某处被grab（）。
 	因此它需要动态分配网格缓冲区，传递到一个视频驱动并且仅在丢弃这个缓冲区时，它不在当前代码块使用
 	*/
-	class IMeshBuffer //: public virtual IReferenceCounted
+	class IMeshBuffer : public virtual IReferenceCounter
 	{
 	public:
 

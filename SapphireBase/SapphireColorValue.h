@@ -3,6 +3,7 @@
 
 #include "SapphirePrerequisites.h"
 #include "SapphireQMath.h"
+#include "SapphireMath.h"
 
 namespace Sapphire {
 

@@ -13,8 +13,6 @@ namespace Sapphire {
 	无论如何，通常情况下，你不需要直接使用这个类，Sapphire内部将尽可能使用SIMD和cache优化。
 	这些并非一步完成，有许多潜在的工作要做、如果你不知道你要怎样去进行，那么可以跳过这个类
 	
-	注意：这个类仅仅提供给转移用户
-	This class intended to use by advanced user only.
 	*/
 	class _SapphireExport AlignedMemory
 	{

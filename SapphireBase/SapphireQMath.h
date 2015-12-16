@@ -257,6 +257,27 @@ int Fast_Distance_2D(int x, int y);
  */
  float Q_rsqrt(float number);
 
+ //快速求平方根倒数（INTEL硬件版）
+ FORCEINLINE float Q_rsqrtHW(const float f)
+ {
+#if defined(_MSC_VER)
+	 // SSE 平方根倒数估算法 精确到有符号的12位尾数
+	 float recsqrt;
+	 __asm rsqrtss xmm0, f           // xmm0 = rsqrtss(f)
+	 __asm movss recsqrt, xmm0       // return xmm0
+	 return recsqrt;
+
+	 /*
+	 //来自于Nvidia
+	 u32 tmp = (u32(IEEE_1_0 << 1) + IEEE_1_0 - *(u32*)&x) >> 1;
+	 f32 y = *(f32*)&tmp;
+	 return y * (1.47f - 0.47f * x * y * y);
+	 */
+#else
+	 return 1.f / sqrtf(f);
+#endif
+ }
+
 
  // 内联函数 //////////////////////////////////////////
 

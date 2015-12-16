@@ -1,7 +1,7 @@
 #ifndef _SAPPHIRE_SCENE_NODE_TYPES_
 #define _SAPPHIRE_SCENE_NODE_TYPES_
 
-
+#include "SapphireDefines.h"
 
 namespace Sapphire
 {

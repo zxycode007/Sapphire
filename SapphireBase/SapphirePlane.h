@@ -4,10 +4,19 @@
 #include "SapphirePrerequisites.h"
 #include "SapphireVector3.h"
 
+
 namespace Sapphire
 {
 
-	
+	//! 3d对象相交关系枚举
+	enum EIntersectionRelation3D
+	{
+		ISREL3D_FRONT = 0,
+		ISREL3D_BACK,
+		ISREL3D_PLANAR,
+		ISREL3D_SPANNING,
+		ISREL3D_CLIPPED
+	};
 	/** 
 	定义了一个3d空间的一个平面
 	@remarks
@@ -98,6 +107,56 @@ namespace Sapphire
 		bool operator!=(const Plane& rhs) const
 		{
 			return (rhs.d != d || rhs.normal != normal);
+		}
+
+		//! 通过矩阵变换一个平面
+		void transformPlane(const Matrix4& matrix);
+		
+		
+		//! 求这个平面和另一平面的相交性
+		/** \param other 另外一平面
+		\param outLinePoint 相交直线的基点
+		\param outLineVect 相交直线的向量
+		\return 如果相交，返回true，否则返回false*/
+		bool getIntersectionWithPlane(const Plane& other,
+			Vector3& outLinePoint,
+			Vector3& outLineVect) const;
+		
+		//! 如果有的话，获取两个平面的交点
+		bool getIntersectionWithPlanes(const Plane& o1,
+			const Plane& o2, Vector3& outPoint) const;
+		
+
+		//! 判定点与这个平面的关系
+		/** \param point 点
+		\return ISREL3D_FRONT 如果点在平面正前面
+		ISREL3D_BACK  如果点在平面后面, 
+		ISREL3D_PLANAR 如果点在平面上 */
+		EIntersectionRelation3D classifyPointRelation(const Vector3& point) const
+		{
+			const Real d = normal.dotProduct(point) + d;
+
+			if (d < -std::numeric_limits<Real>::epsilon())
+				return ISREL3D_BACK;
+
+			if (d > std::numeric_limits<Real>::epsilon())
+				return ISREL3D_FRONT;
+
+			return ISREL3D_PLANAR;
+		}
+
+		//! 获取平面相交的线段分割比例
+		/** 只用于有相交发生的情况
+		\param linePoint1 线段的1个点
+		\param linePoint2 线段的另1个点
+		\return 当相交在线段的两点之间的比例，例如：0.5是两点间的中点
+		*/
+		Real getKnownIntersectionWithLine(const  Vector3& linePoint1,
+			const Vector3& linePoint2) const
+		{
+			Vector3 vect = linePoint2 - linePoint1;
+			Real t2 = (Real)normal.dotProduct(vect);
+			return (Real)-((normal.dotProduct(linePoint1) + d) / t2);
 		}
 
 		_SapphireExport friend std::ostream& operator<< (std::ostream& o, const Plane& p);

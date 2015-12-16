@@ -385,6 +385,14 @@ namespace Sapphire
 
 			assert(false && "Never reached");
 		}
+       
+		/**
+		重置
+		*/
+		inline void reset(const Vector3& point)
+		{
+			setExtents(point, point);
+		}
 
 		/** 
 		通过矩阵对盒子进行变换

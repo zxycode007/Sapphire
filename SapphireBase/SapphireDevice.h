@@ -5,7 +5,7 @@
 #include "SapphireEDriverTypes.h"
 #include "SapphireEDeviceTypes.h"
 #include "SapphireIEventRecevier.h"
-
+#include "SapphireColorValue.h"
 
 
 
@@ -149,10 +149,10 @@ namespace Sapphire
 
 		//! 获取这个窗口的当前颜色格式
 		/** \return 窗口的颜色格式 */
-		//virtual ECOLOR_FORMAT getColorFormat() const = 0;
+		virtual ECOLOR_FORMAT getColorFormat() const = 0;
 
 		//! 通知设备它应该关闭它自己
-		/** IrrlichtDevice::run() 在 closeDevice()调用后会返回false . */
+		/**Device::run() 在 closeDevice()调用后会返回false . */
 		virtual void closeDevice() = 0;
 
 		//! 获取引擎版本信息
@@ -181,8 +181,7 @@ namespace Sapphire
 		virtual void setInputReceivingSceneManager(ISceneManager* sceneManager) = 0;
 
 		//! 设置是否能够窗口被在窗口模式被调整大小
-		/** The default is false. This method only works in windowed
-		mode.
+		/** 默认是false，这个方法只能工作在窗口模式
 		 */
 		virtual void setResizable(bool resize = false) = 0;
 
