@@ -345,6 +345,39 @@
     <ClInclude Include="SapphireSViewFrustum.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireSceneParameters.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshCache.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshLoader.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEDebugSceneTypes.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshWriter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSParticle.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleAffector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMetaTriangleSelector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimatorFactory.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireINodeFactory.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

@@ -3,6 +3,7 @@
 
 
 #include "SapphirePrerequisites.h"
+#include "SapphireEDebugSceneTypes.h"
 #include "SapphireIReferenceCounter.h"
 #include "SapphireVector3.h"
 #include "SapphireAxisAlignedBox.h"
@@ -49,6 +50,22 @@ namespace Sapphire
 	class ISceneNode : public SceneAlloc, public virtual IReferenceCounter
 	{
 	public:
+
+		 
+		ISceneNode(ISceneNode* parent, ISceneManager* mgr, SINT32 id = -1,
+			const Vector3& position = Vector3(0, 0, 0),
+			const Vector3& rotation = Vector3(0, 0, 0),
+			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f))
+			: RelativeTranslation(position), RelativeRotation(rotation), RelativeScale(scale),
+			Parent(0), SceneManager(mgr), TriangleSelector(0), ID(id),
+			AutomaticCullingState(EAC_BOX), DebugDataVisible(EDS_OFF),
+			IsVisible(true), IsDebugObject(false)
+		{
+			if (parent)
+				parent->addChild(this);
+
+			updateAbsolutePosition();
+		}
 
 		~ISceneNode()
 		{
