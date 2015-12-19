@@ -30,6 +30,8 @@ namespace Sapphire {
 
 		return r;
 	}
+
+	typedef Vector2 position2d;
 	
 	//! 矩形模板
 	/** 主要用于绘制2D GUI元素和2D绘制方法
@@ -48,23 +50,23 @@ namespace Sapphire {
 			: UpperLeftCorner(x, y), LowerRightCorner(x2, y2) {}
 
 		 
-		rect(const position2d<T>& upperLeft, const position2d<T>& lowerRight)
+		rect(const position2d& upperLeft, const position2d& lowerRight)
 			: UpperLeftCorner(upperLeft), LowerRightCorner(lowerRight) {}
 
 	 
 		template <class U>
-		rect(const position2d<T>& pos, const dimension2d<U>& size)
-			: UpperLeftCorner(pos), LowerRightCorner(pos.X + size.Width, pos.Y + size.Height) {}
+		rect(const position2d& pos, const dimension2d<U>& size)
+			: UpperLeftCorner(pos), LowerRightCorner(pos.x + size.Width, pos.y + size.Height) {}
 
 		//! 向右移动给定的量
-		rect<T> operator+(const position2d<T>& pos) const
+		rect<T> operator+(const position2d& pos) const
 		{
 			rect<T> ret(*this);
 			return ret += pos;
 		}
 
 		//! 向右移动给定的量
-		rect<T>& operator+=(const position2d<T>& pos)
+		rect<T>& operator+=(const position2d& pos)
 		{
 			UpperLeftCorner += pos;
 			LowerRightCorner += pos;
@@ -72,14 +74,14 @@ namespace Sapphire {
 		}
 
 		//! 向左移动给定的量
-		rect<T> operator-(const position2d<T>& pos) const
+		rect<T> operator-(const position2d& pos) const
 		{
 			rect<T> ret(*this);
 			return ret -= pos;
 		}
 
 		//! 向左移动给定的量
-		rect<T>& operator-=(const position2d<T>& pos)
+		rect<T>& operator-=(const position2d& pos)
 		{
 			UpperLeftCorner -= pos;
 			LowerRightCorner -= pos;
@@ -115,12 +117,12 @@ namespace Sapphire {
 		//! 返回一个2d的点是否在这个矩形中
 		/** \param pos 测试点
 		\return True 如果在返回true，否则false */
-		bool isPointInside(const position2d<T>& pos) const
+		bool isPointInside(const position2d& pos) const
 		{
-			return (UpperLeftCorner.X <= pos.X &&
-				UpperLeftCorner.Y <= pos.Y &&
-				LowerRightCorner.X >= pos.X &&
-				LowerRightCorner.Y >= pos.Y);
+			return (UpperLeftCorner.x <= pos.x &&
+				UpperLeftCorner.y <= pos.y &&
+				LowerRightCorner.x >= pos.x &&
+				LowerRightCorner.y >= pos.y);
 		}
 
 		//! 测试如果矩形是否和另外一个矩形发生碰撞
@@ -128,31 +130,31 @@ namespace Sapphire {
 		\return 如果发生碰撞，返回true. */
 		bool isRectCollided(const rect<T>& other) const
 		{
-			return (LowerRightCorner.Y > other.UpperLeftCorner.Y &&
-				UpperLeftCorner.Y < other.LowerRightCorner.Y &&
-				LowerRightCorner.X > other.UpperLeftCorner.X &&
-				UpperLeftCorner.X < other.LowerRightCorner.X);
+			return (LowerRightCorner.y > other.UpperLeftCorner.y &&
+				UpperLeftCorner.y < other.LowerRightCorner.y &&
+				LowerRightCorner.x > other.UpperLeftCorner.x &&
+				UpperLeftCorner.x < other.LowerRightCorner.x);
 		}
 
 		//! 用另外一个矩形对这个矩形进行剪裁
 		/** \param other 另一个矩形 */
 		void clipAgainst(const rect<T>& other)
 		{
-			if (other.LowerRightCorner.X < LowerRightCorner.X)
-				LowerRightCorner.X = other.LowerRightCorner.X;
-			if (other.LowerRightCorner.Y < LowerRightCorner.Y)
-				LowerRightCorner.Y = other.LowerRightCorner.Y;
+			if (other.LowerRightCorner.x < LowerRightCorner.x)
+				LowerRightCorner.x = other.LowerRightCorner.x;
+			if (other.LowerRightCorner.y < LowerRightCorner.y)
+				LowerRightCorner.y = other.LowerRightCorner.y;
 
-			if (other.UpperLeftCorner.X > UpperLeftCorner.X)
-				UpperLeftCorner.X = other.UpperLeftCorner.X;
-			if (other.UpperLeftCorner.Y > UpperLeftCorner.Y)
-				UpperLeftCorner.Y = other.UpperLeftCorner.Y;
+			if (other.UpperLeftCorner.x > UpperLeftCorner.x)
+				UpperLeftCorner.x = other.UpperLeftCorner.x;
+			if (other.UpperLeftCorner.y > UpperLeftCorner.y)
+				UpperLeftCorner.y = other.UpperLeftCorner.y;
 
 			// correct possible invalid rect resulting from clipping
-			if (UpperLeftCorner.Y > LowerRightCorner.Y)
-				UpperLeftCorner.Y = LowerRightCorner.Y;
-			if (UpperLeftCorner.X > LowerRightCorner.X)
-				UpperLeftCorner.X = LowerRightCorner.X;
+			if (UpperLeftCorner.y > LowerRightCorner.y)
+				UpperLeftCorner.y = LowerRightCorner.y;
+			if (UpperLeftCorner.x > LowerRightCorner.x)
+				UpperLeftCorner.x = LowerRightCorner.x;
 		}
 
 		//! 判断矩形是否在另外一个内部
@@ -162,32 +164,32 @@ namespace Sapphire {
 			if (other.getWidth() < getWidth() || other.getHeight() < getHeight())
 				return false;
 
-			T diff = other.LowerRightCorner.X - LowerRightCorner.X;
+			T diff = other.LowerRightCorner.x - LowerRightCorner.x;
 			if (diff < 0)
 			{
-				LowerRightCorner.X += diff;
-				UpperLeftCorner.X += diff;
+				LowerRightCorner.x += diff;
+				UpperLeftCorner.x += diff;
 			}
 
-			diff = other.LowerRightCorner.Y - LowerRightCorner.Y;
+			diff = other.LowerRightCorner.y - LowerRightCorner.y;
 			if (diff < 0)
 			{
-				LowerRightCorner.Y += diff;
-				UpperLeftCorner.Y += diff;
+				LowerRightCorner.y += diff;
+				UpperLeftCorner.y += diff;
 			}
 
-			diff = UpperLeftCorner.X - other.UpperLeftCorner.X;
+			diff = UpperLeftCorner.x - other.UpperLeftCorner.x;
 			if (diff < 0)
 			{
-				UpperLeftCorner.X -= diff;
-				LowerRightCorner.X -= diff;
+				UpperLeftCorner.x -= diff;
+				LowerRightCorner.x -= diff;
 			}
 
-			diff = UpperLeftCorner.Y - other.UpperLeftCorner.Y;
+			diff = UpperLeftCorner.y - other.UpperLeftCorner.y;
 			if (diff < 0)
 			{
-				UpperLeftCorner.Y -= diff;
-				LowerRightCorner.Y -= diff;
+				UpperLeftCorner.y -= diff;
+				LowerRightCorner.y -= diff;
 			}
 
 			return true;
@@ -196,30 +198,30 @@ namespace Sapphire {
 		//! 获取矩形宽度
 		T getWidth() const
 		{
-			return LowerRightCorner.X - UpperLeftCorner.X;
+			return LowerRightCorner.x - UpperLeftCorner.x;
 		}
 
 		//! 获取矩形高度
 		T getHeight() const
 		{
-			return LowerRightCorner.Y - UpperLeftCorner.Y;
+			return LowerRightCorner.y - UpperLeftCorner.y;
 		}
 
 		//! 如果矩形右下角小于左上角，交换这两个点
 		void repair()
 		{
-			if (LowerRightCorner.X < UpperLeftCorner.X)
+			if (LowerRightCorner.x < UpperLeftCorner.x)
 			{
-				T t = LowerRightCorner.X;
-				LowerRightCorner.X = UpperLeftCorner.X;
-				UpperLeftCorner.X = t;
+				T t = LowerRightCorner.x;
+				LowerRightCorner.x = UpperLeftCorner.x;
+				UpperLeftCorner.x = t;
 			}
 
-			if (LowerRightCorner.Y < UpperLeftCorner.Y)
+			if (LowerRightCorner.y < UpperLeftCorner.y)
 			{
-				T t = LowerRightCorner.Y;
-				LowerRightCorner.Y = UpperLeftCorner.Y;
-				UpperLeftCorner.Y = t;
+				T t = LowerRightCorner.y;
+				LowerRightCorner.y = UpperLeftCorner.y;
+				UpperLeftCorner.y = t;
 			}
 		}
 
@@ -227,16 +229,16 @@ namespace Sapphire {
 		/** 如果左上角是否比右下角更靠右或更靠左  */
 		bool isValid() const
 		{
-			return ((LowerRightCorner.X >= UpperLeftCorner.X) &&
-				(LowerRightCorner.Y >= UpperLeftCorner.Y));
+			return ((LowerRightCorner.x >= UpperLeftCorner.x) &&
+				(LowerRightCorner.y >= UpperLeftCorner.y));
 		}
 
 		//! 获取矩形的中心
-		position2d<T> getCenter() const
+		position2d getCenter() const
 		{
-			return position2d<T>(
-				(UpperLeftCorner.X + LowerRightCorner.X) / 2,
-				(UpperLeftCorner.Y + LowerRightCorner.Y) / 2);
+			return position2d(
+				(UpperLeftCorner.x + LowerRightCorner.x) / 2,
+				(UpperLeftCorner.y + LowerRightCorner.y) / 2);
 		}
 
 		//! 获取矩形的外观尺寸
@@ -249,32 +251,32 @@ namespace Sapphire {
 		//! 添加一个点到矩形
 		/** 如果这个点在盒子外，会导致这个矩形增大
 		\param p 添加到盒子里的点 */
-		void addInternalPoint(const position2d<T>& p)
+		void addInternalPoint(const position2d& p)
 		{
-			addInternalPoint(p.X, p.Y);
+			addInternalPoint(p.x, p.y);
 		}
 
 		//! 添加一个点到范围化矩形
 		/**如果这个点在盒子外，会导致这个矩形增大
 		\param x 添加到这个盒子的点的x坐标
-		\param y 添加到这个盒子的点的Y坐标 */
+		\param y 添加到这个盒子的点的y坐标 */
 		void addInternalPoint(T x, T y)
 		{
-			if (x>LowerRightCorner.X)
-				LowerRightCorner.X = x;
-			if (y>LowerRightCorner.Y)
-				LowerRightCorner.Y = y;
+			if (x>LowerRightCorner.x)
+				LowerRightCorner.x = x;
+			if (y>LowerRightCorner.y)
+				LowerRightCorner.y = y;
 
-			if (x<UpperLeftCorner.X)
-				UpperLeftCorner.X = x;
-			if (y<UpperLeftCorner.Y)
-				UpperLeftCorner.Y = y;
+			if (x<UpperLeftCorner.x)
+				UpperLeftCorner.x = x;
+			if (y<UpperLeftCorner.y)
+				UpperLeftCorner.y = y;
 		}
 
 		//! 矩形左上角
-		position2d<T> UpperLeftCorner;
+		position2d UpperLeftCorner;
 		//! 矩形右下角
-		position2d<T> LowerRightCorner;
+		position2d LowerRightCorner;
 	};
 
 	//! 浮点矩形

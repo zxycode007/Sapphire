@@ -364,6 +364,30 @@ namespace Sapphire
 
 		}
 
+		//! 添加一个点到这个包围盒子
+		/** 如果这个点在盒子外面，这个盒子会变大
+		\param p: 添加到这个盒子的点 */
+		void addInternalPoint(const Vector3& p)
+		{
+			addInternalPoint(p.x, p.y, p.z);
+		}
+
+		//! 添加一个点到这个包围盒子
+		/** 如果这个点在盒子外面，这个盒子会变大
+		\param x 要添加到这个盒子的点的x坐标
+		\param y 要添加到这个盒子的点的y坐标
+		\param z 要添加到这个盒子的点的z坐标 */
+		void addInternalPoint(Real x, Real y, Real z)
+		{
+			if (x>mMaximum.x) mMaximum.x = x;
+			if (y>mMaximum.y) mMaximum.y = y;
+			if (z>mMaximum.z) mMaximum.z = z;
+
+			if (x<mMinimum.x) mMinimum.x = x;
+			if (y<mMinimum.y) mMinimum.y = y;
+			if (z<mMinimum.z) mMinimum.z = z;
+		}
+
 		/** 扩展这个盒子到指定的点
 		*/
 		inline void merge(const Vector3& point)

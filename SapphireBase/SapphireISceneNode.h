@@ -23,6 +23,7 @@
 
 
 
+
 namespace Sapphire
 {
 	//class ISceneNodeAnimator;
@@ -47,7 +48,7 @@ namespace Sapphire
 	
 
 
-	class ISceneNode : public SceneAlloc, public virtual IReferenceCounter
+	class ISceneNode : public SceneAlloc, virtual public  IReferenceCounter
 	{
 	public:
 
@@ -137,7 +138,7 @@ namespace Sapphire
 		{
 			if (IsVisible)
 			{
-				// 激活这个节点所以的动画器animator
+				// 激活这个节点所有的动画器animator
 
 				ISceneNodeAnimatorList::iterator ait = Animators.begin();
 				while (ait != Animators.end())

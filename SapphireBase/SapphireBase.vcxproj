@@ -99,8 +99,10 @@
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
     <ClInclude Include="SapphireIAnimatedMesh.h" />
+    <ClInclude Include="SapphireIAnimatedMeshSceneNode.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
+    <ClInclude Include="SapphireIBoneSceneNode.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
     <ClInclude Include="SapphireIGPUProgramServices.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
@@ -114,13 +116,16 @@
     <ClInclude Include="SapphireIMeshSceneNode.h" />
     <ClInclude Include="SapphireIMeshWriter.h" />
     <ClInclude Include="SapphireIMetaTriangleSelector.h" />
-    <ClInclude Include="SapphireINodeFactory.h" />
+    <ClInclude Include="SapphireISceneNodeFactory.h" />
+    <ClInclude Include="SapphireIPacticleEmitter.h" />
     <ClInclude Include="SapphireIParticleAffector.h" />
+    <ClInclude Include="SapphireIParticleAnimatedMeshSceneNodeEmitter.h" />
     <ClInclude Include="SapphireIReferenceCounter.h" />
     <ClInclude Include="SapphireISceneNode.h" />
     <ClInclude Include="SapphireISceneNodeAnimator.h" />
     <ClInclude Include="SapphireISceneNodeAnimatorFactory.h" />
     <ClInclude Include="SapphireIShaderConstantSetCallBack.h" />
+    <ClInclude Include="SapphireISkinnedMesh.h" />
     <ClInclude Include="SapphireITexture.h" />
     <ClInclude Include="SapphireITriangleSelector.h" />
     <ClInclude Include="SapphireIVideoModeList.h" />
@@ -159,6 +164,7 @@
     <ClInclude Include="SapphireSMesh.h" />
     <ClInclude Include="SapphireSParticle.h" />
     <ClInclude Include="SapphireSphere.h" />
+    <ClInclude Include="SapphireSSkinMeshBuffer.h" />
     <ClInclude Include="SapphireStableHeader.h" />
     <ClInclude Include="SapphireStdHeader.h" />
     <ClInclude Include="SapphireString.h" />
@@ -187,6 +193,7 @@
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireEMaterialFlags.h" />
     <ClCompile Include="SapphireException.cpp" />
+    <ClCompile Include="SapphireIAnimatedMeshMD2.h" />
     <ClCompile Include="SapphireLog.cpp" />
     <ClCompile Include="SapphireLogManager.cpp" />
     <ClCompile Include="SapphireMath.cpp" />

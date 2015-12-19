@@ -324,12 +324,6 @@
     <ClInclude Include="SapphireEShaderTypes.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireIMeshManipulator.h">
-      <Filter>头文件\renderSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireIAnimatedMesh.h">
-      <Filter>头文件\renderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireSVertexManipulator.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
@@ -375,7 +369,31 @@
     <ClInclude Include="SapphireISceneNodeAnimatorFactory.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireINodeFactory.h">
+    <ClInclude Include="SapphireIPacticleEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleAnimatedMeshSceneNodeEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAnimatedMeshSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIBoneSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISkinnedMesh.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeFactory.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSSkinMeshBuffer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAnimatedMesh.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIMeshManipulator.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
   </ItemGroup>
@@ -445,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="SapphireEMaterialFlags.h">
       <Filter>头文件\renderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireIAnimatedMeshMD2.h">
+      <Filter>头文件\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

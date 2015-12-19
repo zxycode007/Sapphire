@@ -1,11 +1,12 @@
 #ifndef _SAPPHIRE_ISCENE_NODE_ANIMATOR_
 #define _SAPPHIRE_ISCENE_NODE_ANIMATOR_
 
-#include "SapphireIAttributeExchangingObject.h"
+#include "SapphireESceneNodeAnimatorType.h"
 #include "SapphirePrerequisites.h"
+#include "SapphireIAttributeExchangingObject.h"
 #include "SapphireIReferenceCounter.h"
 #include "SapphireIEventRecevier.h"
-#include "SapphireESceneNodeAnimatorType.h"
+
 
 namespace Sapphire
 {
@@ -16,7 +17,7 @@ namespace Sapphire
 	/** 一个场景节点animator能够使一个场景节点非常简单的方式活动起来。它能够改变它的位置，旋转，缩放和材质。有很多animator可供选择。
 	你可以用ISceneManager接口创建创建节点animator
 	*/
-	class ISceneNodeAnimator : public SceneAlloc, public IAttributeExchangingObject, public IEventReceiver, public IReferenceCounter
+	class ISceneNodeAnimator : public SceneAlloc, public  IAttributeExchangingObject, public  IEventReceiver
 	{
 	public:
 		//! 激活一个场景节点

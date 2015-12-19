@@ -3,6 +3,7 @@
 
 #include "SapphirePrerequisites.h"
 
+
 /**
 
   c的数学计算函数库
@@ -317,6 +318,8 @@ int Fast_Distance_2D(int x, int y);
 void Build_Sin_Cos_Tables(void);
 
 void Build_Inverse_Cos_Table(float *invcos, int  range_scale = 360);
+
+
 
 
 

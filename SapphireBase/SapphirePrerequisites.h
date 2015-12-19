@@ -446,6 +446,7 @@ namespace Sapphire
 		typedef typename std::vector<T> type;
 		typedef typename std::vector<T>::iterator iterator;
 		typedef typename std::vector<T>::const_iterator const_iterator;
+		 
 #endif
 	};
 

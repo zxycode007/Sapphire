@@ -2,6 +2,7 @@
 #define _SAPPHIRE_IATTRIBUTE_EXCHANGING_OBJECT_
 
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 
 namespace Sapphire
 {
@@ -37,7 +38,7 @@ namespace Sapphire
 	};
 
 	//! 一个要序列化和反序列化它的属性到一个属性对象的对象
-	class IAttributeExchangingObject //: virtual public IReferenceCounted
+	class IAttributeExchangingObject : virtual public IReferenceCounter
 	{
 	public:
 

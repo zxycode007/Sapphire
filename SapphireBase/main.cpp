@@ -87,10 +87,13 @@ void TestSTL()
 	v.push_back(u1);
 	v.push_back(u1);
 	v.push_back(u1);
+	
 	std::vector<UserData>::iterator it = v.begin()+3;
+	
 	UserData u2 = v.at(0);
 	std::cout << u2.name << std::endl;
 	std::cout << "TEST STL"<<v.size() << std::endl;
+	
  
 }
 

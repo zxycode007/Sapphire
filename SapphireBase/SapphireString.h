@@ -152,8 +152,325 @@ namespace Sapphire {
 
 		/// 空字符串
 		static const String BLANK;
+
+
+
+		
 	};
 
+	//! 用来在fast_atof统计小数点的字符的选择
+
+	_SapphireExport extern String LOCALE_DECIMAL_POINTS;
+
+	const float fast_atof_table[17] = {
+		0.f,
+		0.1f,
+		0.01f,
+		0.001f,
+		0.0001f,
+		0.00001f,
+		0.000001f,
+		0.0000001f,
+		0.00000001f,
+		0.000000001f,
+		0.0000000001f,
+		0.00000000001f,
+		0.000000000001f,
+		0.0000000000001f,
+		0.00000000000001f,
+		0.000000000000001f,
+		0.0000000000000001f
+	};
+
+	//! 转换一个简单的基于10进制的字符串到一个32位unsigned int
+	/** \param[in] in: 要转换的字符串。不允许前导字符， 只有数位0到9。 解析到第一个非数字时停止
+	\param[out] out: 可选， 如果提供，它会设置指针指向第一个字符，而不能用于计算
+	\return 这个unsigned int值。如果字符串在一个UINT32指定太多的数位，它将返回INT_MAX
+	*/
+	inline UINT32 strtoul10(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0;
+		}
+
+		bool overflow = false;
+		UINT32 unsignedValue = 0;
+		while ((*in >= '0') && (*in <= '9'))
+		{
+			const UINT32 tmp = (unsignedValue * 10) + (*in - '0');
+			if (tmp<unsignedValue)
+			{
+				unsignedValue = (UINT32)0xffffffff;
+				overflow = true;
+			}
+			if (!overflow)
+				unsignedValue = tmp;
+			++in;
+		}
+
+		if (out)
+			*out = in;
+
+		return unsignedValue;
+	}
+
+	//!转换一个简单的基于10进制的字符串到一个32位 int
+	/** \param[in] in: 要转换的字符串。只能以-,+开头，然后接着数字0到9，解析到第一个非数字时停止
+	\param[out] out: 可选， 如果提供，它会设置指针指向第一个字符，而不能用于计算
+	\return 这个SINT的数位值，如果字符串在一个SINT32指定太多的数位，它将返回+INT_MAX或-INT_MAX
+	*/
+	inline SINT32 strtol10(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0;
+		}
+
+		const bool negative = ('-' == *in);
+		if (negative || ('+' == *in))
+			++in;
+
+		const UINT32 unsignedValue = strtoul10(in, out);
+		if (unsignedValue > (UINT32)INT_MAX)
+		{
+			if (negative)
+				return (SINT32)INT_MIN;
+			else
+				return (SINT32)INT_MAX;
+		}
+		else
+		{
+			if (negative)
+				return -((SINT32)unsignedValue);
+			else
+				return (SINT32)unsignedValue;
+		}
+	}
+
+	//! 转换一个16进制编码的字符串到一个unsigned int
+	/** \param[in] in 要转换的数字。 只能是0到9和字符A到F和a到f
+	\return 这个unsigned int的数字。 如果输入不是16进制，返回0xffffffff
+	*/
+	inline UINT32 ctoul16(char in)
+	{
+		if (in >= '0' && in <= '9')
+			return in - '0';
+		else if (in >= 'a' && in <= 'f')
+			return 10u + in - 'a';
+		else if (in >= 'A' && in <= 'F')
+			return 10u + in - 'A';
+		else
+			return 0xffffffff;
+	}
+
+	//! 转换一个基于16进制的字符串到一个32位unsigned int
+	/** \param[in] in: 要转换的字符串 只允许0到9和A到F(a到f)。解析到第一个无效字符停止
+	\param[out] out: 可选， 如果提供，它会设置指针指向第一个字符，而不能用于计算
+	\return 这个unsigned int数字。 如果字符串指定太多位，返回INT_MAX
+	*/
+	inline UINT32 strtoul16(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0;
+		}
+
+		bool overflow = false;
+		UINT32 unsignedValue = 0;
+		while (true)
+		{
+			UINT32 tmp = 0;
+			if ((*in >= '0') && (*in <= '9'))
+				tmp = (unsignedValue << 4u) + (*in - '0');
+			else if ((*in >= 'A') && (*in <= 'F'))
+				tmp = (unsignedValue << 4u) + (*in - 'A') + 10;
+			else if ((*in >= 'a') && (*in <= 'f'))
+				tmp = (unsignedValue << 4u) + (*in - 'a') + 10;
+			else
+				break;
+			if (tmp<unsignedValue)
+			{
+				unsignedValue = (UINT32)INT_MAX;
+				overflow = true;
+			}
+			if (!overflow)
+				unsignedValue = tmp;
+			++in;
+		}
+
+		if (out)
+			*out = in;
+
+		return unsignedValue;
+	}
+
+	//! 转换一个简单8位数字的字符串到一个32位unsigned int
+	/** \param[in] 要转换的字符串 只允许0到7。解析到第一个无效字符停止
+	\param[out] out 可选， 如果提供，它会设置指针指向第一个字符，而不能用于计算
+	\return 这个unsigned int数字。 如果字符串指定太多位，返回INT_MAX
+	*/
+	inline UINT32 strtoul8(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0;
+		}
+
+		bool overflow = false;
+		UINT32 unsignedValue = 0;
+		while (true)
+		{
+			UINT32 tmp = 0;
+			if ((*in >= '0') && (*in <= '7'))
+				tmp = (unsignedValue << 3u) + (*in - '0');
+			else
+				break;
+			if (tmp<unsignedValue)
+			{
+				unsignedValue = (UINT32)INT_MAX;
+				overflow = true;
+			}
+			if (!overflow)
+				unsignedValue = tmp;
+			++in;
+		}
+
+		if (out)
+			*out = in;
+
+		return unsignedValue;
+	}
+
+	//! 转换C类型字符串数值（16，8，10位整数）到一个32位unsigned int 
+	/** \param[in]  要转换的字符串,如果字符串以0x开始，使用16进制解析器。
+	如果0开始，使用8进制解析器，其它用10进制解析器，解析到第一个无效字符停止。
+	\param[out] 可选， 如果提供，它会设置指针指向第一个字符，而不能用于计算
+	\return 这个unsigned int数字。 如果字符串指定太多位，返回INT_MAX
+	*/
+	inline UINT32 strtoul_prefix(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0;
+		}
+		if ('0' == in[0])
+			return ('x' == in[1] ? strtoul16(in + 2, out) : strtoul8(in + 1, out));
+		return strtoul10(in, out);
+	}
+
+	//! 转换一个数字序列到一个正浮点数
+	/** 只能够解析数字0到9，在解析到任何其它数字停止，包括符合字符或小数点
+	\param in: 要转换的数字序列
+	\param out: (可选) 将设置指向第一个没转换字符的指针
+	\return 这个数字序列表示的整个正浮点数
+	*/
+	inline Real strtof10(const char* in, const char** out = 0)
+	{
+		if (!in)
+		{
+			if (out)
+				*out = in;
+			return 0.f;
+		}
+
+		const UINT32 MAX_SAFE_U32_VALUE = UINT_MAX / 10 - 10;
+		UINT32 intValue = 0;
+
+
+		while ((*in >= '0') && (*in <= '9'))
+		{
+			// 注意溢出
+			if (intValue >= MAX_SAFE_U32_VALUE)
+				break;
+
+			intValue = (intValue * 10) + (*in - '0');
+			++in;
+		}
+
+		Real floatValue = (Real)intValue;
+
+
+		while ((*in >= '0') && (*in <= '9'))
+		{
+			floatValue = (floatValue * 10.f) + (Real)(*in - '0');
+			++in;
+			if (floatValue > FLT_MAX)
+				break;
+		}
+
+		if (out)
+			*out = in;
+
+		return floatValue;
+	}
+
+	//! 提供一个快速转换一个字符串到一个浮点型的函数
+	/** 这不能保证比atof()精确，但是快6到8倍
+	\param[in] in 要转换的字符串.
+	\param[out] 结果的浮点写入到这里
+	\return 指向字符串首个字符的指针，不是用来创建浮点值的
+	*/
+	inline const char* fast_atof_move(const char* in, Real& result)
+	{
+
+		//当这个函数进行任何修改时，请运行回归测试。
+
+		result = 0.f;
+		if (!in)
+			return 0;
+
+		const bool negative = ('-' == *in);
+		if (negative || ('+' == *in))
+			++in;
+
+		Real value = strtof10(in, &in);
+
+		if (LOCALE_DECIMAL_POINTS.find(*in) >= 0)
+		{
+			const char* afterDecimal = ++in;
+			const Real decimal = strtof10(in, &afterDecimal);
+			value += decimal * fast_atof_table[afterDecimal - in];
+			in = afterDecimal;
+		}
+
+		if ('e' == *in || 'E' == *in)
+		{
+			++in;
+			// 假设指数是一个完整的数
+			// strtol10()会处理+和-号
+			// 但是计算float 要防止FLT_MAX溢出
+			value *= powf(10.f, (Real)strtol10(in, &in));
+		}
+
+		result = negative ? -value : value;
+		return in;
+	}
+
+	//! 转换一个字符串到一个浮点数
+	/** \param floatAsString 这个要转换的字符串
+	\param out(可选) 将设置指向第一个没转换字符的指针
+	\result 输入字符串的浮点值
+	*/
+	inline float fast_atof(const char* floatAsString, const char** out = 0)
+	{
+		Real ret;
+		if (out)
+			*out = fast_atof_move(floatAsString, ret);
+		else
+			fast_atof_move(floatAsString, ret);
+		return ret;
+	}
 
 #if SAPPHIRE_COMPILER == SAPPHIRE_COMPILER_GNUC && SAPPHIRE_COMP_VER >= 310 && !defined(STLPORT)
 #   if SAPPHIRE_COMP_VER < 430
