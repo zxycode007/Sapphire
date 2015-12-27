@@ -96,6 +96,13 @@ TBB库线程
 #endif
 
 
+// 声明调用习惯
+#if defined(_STDCALL_SUPPORTED)
+#define SAPPHIRE_CALLCONV __stdcall
+#else
+#define SAPPHIRE_CALLCONV __cdecl
+#endif // STDCALL_SUPPORTED
+
 namespace Sapphire
 {
 

@@ -15,6 +15,14 @@ namespace Sapphire {
 			: w(1), x(0), y(0), z(0)
 		{
 		}
+		//! 构造器转换一个欧拉角到一个四元数
+		inline Quaternion(Real fx,Real fy, Real fz)
+			:x(fx), y(fy), z(fz)
+		{
+		}
+		//! 构造器转换一个欧拉角(弧度)到一个四元数
+		inline Quaternion(const Vector3& vec) : x(vec.x), y(vec.y), z(vec.z)
+		{}
 		/// 用明确的值构造四元数
 		inline Quaternion(
 			Real fW,
@@ -90,6 +98,10 @@ namespace Sapphire {
 		void FromRotationMatrix(const Matrix3& kRot);
 		void ToRotationMatrix(Matrix3& kRot) const;
 		/** 
+		由四元数创建一个矩阵
+		*/
+		void getMatrix(Matrix4 &dest, const Vector3 &translation = Vector3()) const;
+		/** 
 		用支持的向量设置四元数，通过指定角度来“roll”向量
 		*/
 		void FromAngleAxis(const Radian& rfAngle, const Vector3& rkAxis);
@@ -104,10 +116,12 @@ namespace Sapphire {
 		@看 FromAxes
 		*/
 		void FromAxes(const Vector3* akAxis);
+		//void FromAxes(const Vector3& akAxis) const;
 		void FromAxes(const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis);
 		/** 取回3个正交化的轴定义这个四元数 
 		@看 FromAxes */
 		void ToAxes(Vector3* akAxis) const;
+		
 		void ToAxes(Vector3& xAxis, Vector3& yAxis, Vector3& zAxis) const;
 
 		/** 

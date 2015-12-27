@@ -2,6 +2,7 @@
 #include "SapphireMath.h"
 #include "SapphireQuaternion.h"
 #include "SapphireMatrix3.h"
+#include "SapphireMatrix4.h"
 
 namespace Sapphire
 {
@@ -129,6 +130,8 @@ namespace Sapphire
 
 		FromRotationMatrix(kRot);
 	}
+	 
+
 	//-----------------------------------------------------------------------
 	void Quaternion::FromAxes(const Vector3& xaxis, const Vector3& yaxis, const Vector3& zaxis)
 	{
@@ -566,5 +569,15 @@ namespace Sapphire
 		}
 		result.normalise();
 		return result;
+	}
+
+
+	void Quaternion::getMatrix(Matrix4 &dest, const Vector3 &translation = Vector3()) const
+	{
+		Matrix3 mat3;
+		ToRotationMatrix(mat3);
+		dest = Matrix4(mat3);
+		dest.setTrans(translation);
+
 	}
 }

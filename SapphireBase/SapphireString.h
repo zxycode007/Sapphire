@@ -2,6 +2,7 @@
 #define _SAPPHIRE_String__
 
 #include "SapphirePrerequisites.h"
+#include <string.h>
 
 // 如果使用GCC 3.1 标准库
 #if SAPPHIRE_COMPILER == SAPPHIRE_COMPILER_GNUC && SAPPHIRE_COMP_VER >= 310 && !defined(STLPORT)
@@ -150,13 +151,30 @@ namespace Sapphire {
 		*/
 		static const String replaceAll(const String& source, const String& replaceWhat, const String& replaceWithWhat);
 
+		/**
+		比较两个字符串是否相同
+		@param  源字符串
+		@param  目的字符串
+		@param  是否区分大小写（默认区分）
+		*/
+		static const bool equals(const String& source, const String& other, bool caseSensitive = true);
+		
+
+		//! 比较源字符串的子串忽略大小写
+		/** \param other: 另外一个要比较的字符串
+		\param sourcePos: 源字符串要比较起始地址
+		\param caseSensitive: 是否区分大小 (默认区分)
+		\return 如果字符串比较成功返回TRUE */
+		static const bool equalsSubString(const String&source, const String&other, const SINT32 sourceStartPos = 0, bool caseSensitive = true);
+		
+
 		/// 空字符串
 		static const String BLANK;
-
-
-
 		
 	};
+
+
+	
 
 	//! 用来在fast_atof统计小数点的字符的选择
 

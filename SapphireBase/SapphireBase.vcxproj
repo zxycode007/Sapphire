@@ -45,7 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <BrowseInformation>true</BrowseInformation>
-      <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,6 +76,7 @@
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireCoreUtil.h" />
     <ClInclude Include="SapphireDefines.h" />
     <ClInclude Include="SapphireDevice.h" />
     <ClInclude Include="SapphireDimension2D.h" />
@@ -99,12 +100,17 @@
     <ClInclude Include="SapphireHeaderPrefix.h" />
     <ClInclude Include="SapphireHeaderSuffix.h" />
     <ClInclude Include="SapphireIAnimatedMesh.h" />
+    <ClInclude Include="SapphireIAnimatedMeshMD3.h" />
     <ClInclude Include="SapphireIAnimatedMeshSceneNode.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
     <ClInclude Include="SapphireIBoneSceneNode.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
+    <ClInclude Include="SapphireIFileArchive.h" />
+    <ClInclude Include="SapphireIFileList.h" />
+    <ClInclude Include="SapphireIFileSystem.h" />
     <ClInclude Include="SapphireIGPUProgramServices.h" />
+    <ClInclude Include="SapphireIImage.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
     <ClInclude Include="SapphireIImageWriter.h" />
     <ClInclude Include="SapphireIMaterialRenderer.h" />
@@ -116,6 +122,10 @@
     <ClInclude Include="SapphireIMeshSceneNode.h" />
     <ClInclude Include="SapphireIMeshWriter.h" />
     <ClInclude Include="SapphireIMetaTriangleSelector.h" />
+    <ClInclude Include="SapphireIQ3LevelMesh.h" />
+    <ClInclude Include="SapphireIQ3Shader.h" />
+    <ClInclude Include="SapphireIReadFile.h" />
+    <ClInclude Include="SapphireISceneLoader.h" />
     <ClInclude Include="SapphireISceneNodeFactory.h" />
     <ClInclude Include="SapphireIPacticleEmitter.h" />
     <ClInclude Include="SapphireIParticleAffector.h" />
@@ -129,6 +139,10 @@
     <ClInclude Include="SapphireITexture.h" />
     <ClInclude Include="SapphireITriangleSelector.h" />
     <ClInclude Include="SapphireIVideoModeList.h" />
+    <ClInclude Include="SapphireIWriteFile.h" />
+    <ClInclude Include="SapphireIXML.h" />
+    <ClInclude Include="SapphireIXMLReader.h" />
+    <ClInclude Include="SapphireIXMLWriter.h" />
     <ClInclude Include="SapphireKeyCodes.h" />
     <ClInclude Include="SapphireKeyMap.h" />
     <ClInclude Include="SapphireLine2D.h" />
@@ -144,6 +158,7 @@
     <ClInclude Include="SapphireMemoryStdAlloc.h" />
     <ClInclude Include="SapphireMemorySTLAllocator.h" />
     <ClInclude Include="SapphireMemoryTracker.h" />
+    <ClInclude Include="SapphirePack.h" />
     <ClInclude Include="SapphirePath.h" />
     <ClInclude Include="SapphirePlane.h" />
     <ClInclude Include="SapphirePlaneBoundedVolume.h" />
@@ -175,6 +190,7 @@
     <ClInclude Include="SapphireSViewFrustum.h" />
     <ClInclude Include="SapphireTriangle3D.h" />
     <ClInclude Include="SapphireIUserDataSerializer.h" />
+    <ClInclude Include="SapphireUnPack.h" />
     <ClInclude Include="SapphireUserObjectBinding.h" />
     <ClInclude Include="SapphireVector2.h" />
     <ClInclude Include="SapphireVector3.h" />

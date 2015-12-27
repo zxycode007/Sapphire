@@ -280,6 +280,11 @@ int Fast_Distance_2D(int x, int y);
  }
 
 
+ inline float fract(float x)
+ {
+	 return x - floorf(x);
+ }
+
  // ÄÚÁªº¯Êı //////////////////////////////////////////
 
  inline void Mem_Set_WORD(void *dest, unsigned short data, int count)

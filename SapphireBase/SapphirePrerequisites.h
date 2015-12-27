@@ -7,7 +7,7 @@
 #define __SAPPHIRE_PREREQUISITES__
 
 #include <string>
-
+#include <string.h>
 //#include <string>
 #include <cassert>
 #include <cstdio>
@@ -124,6 +124,7 @@ extern "C" {
 #		define SAPPHIRE_MEMORY_TRACKER 0
 #	endif
 #endif
+
 
 
 #define SAPPHIRE_SIMD_ALIGNMENT 16

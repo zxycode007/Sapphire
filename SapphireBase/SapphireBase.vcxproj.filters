@@ -49,6 +49,9 @@
     <Filter Include="头文件\gui">
       <UniqueIdentifier>{969751c0-2c0a-43cd-826c-f564ea006df8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\IO">
+      <UniqueIdentifier>{6661a7f3-b28d-4516-880b-9fb4bdf4ed6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -231,12 +234,6 @@
     <ClInclude Include="SapphireExposedVideoData.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireIAttributes.h">
-      <Filter>头文件\core</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireEAttributes.h">
-      <Filter>头文件\core</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireLine3D.h">
       <Filter>头文件\math</Filter>
     </ClInclude>
@@ -284,9 +281,6 @@
     </ClInclude>
     <ClInclude Include="SapphireISceneNodeAnimator.h">
       <Filter>头文件\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireIAttributeExchangingObject.h">
-      <Filter>头文件\core</Filter>
     </ClInclude>
     <ClInclude Include="SapphireIEventRecevier.h">
       <Filter>头文件\core</Filter>
@@ -394,6 +388,63 @@
       <Filter>头文件\scene</Filter>
     </ClInclude>
     <ClInclude Include="SapphireIMeshManipulator.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCoreUtil.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIFileSystem.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIFileArchive.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIReadFile.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIFileList.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIWriteFile.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEAttributes.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAttributeExchangingObject.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAttributes.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIXML.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIXMLReader.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIXMLWriter.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIQ3Shader.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIImage.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIQ3LevelMesh.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIAnimatedMeshMD3.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePack.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireUnPack.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneLoader.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
   </ItemGroup>

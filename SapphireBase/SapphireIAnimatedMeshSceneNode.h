@@ -8,6 +8,7 @@
 #include "SapphireISceneNode.h"
 #include "SapphireIBoneSceneNode.h"
 #include "SapphireIAnimatedMeshMD2.h"
+#include "SapphireIAnimatedMeshMD3.h"
 
 
 

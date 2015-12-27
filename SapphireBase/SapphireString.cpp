@@ -434,4 +434,36 @@ namespace Sapphire {
 		return result;
 	}
 
+
+	const bool StringUtil::equalsSubString(const String&source, const String&other, const SINT32 sourceStartPos = 0, bool caseSensitive = true) 
+	{
+		//起始位置超过源字符串最大长度，比较失败返回
+		if ((UINT32)sourceStartPos >= source.size())
+			return false;
+
+		UINT32 i;
+		String _s1 = source;
+		String _s2 = other;
+		//toLowerCase(_s1);
+		//toLowerCase(_s2);
+
+
+		return equals(_s1, _s2, caseSensitive);
+	}
+
+	const bool StringUtil::equals(const String& source, const String& other, bool caseSensitive = true)
+	{
+		if (caseSensitive)
+		{
+			return source == other;
+		}
+#if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_WIN32
+		return stricmp(source.c_str(), other.c_str()) == 0;
+#else
+#include <strings.h>
+		return strncasecmp(source.c_str(), other.c_str()) == 0;
+#endif
+		return false;
+	}
+
 }
