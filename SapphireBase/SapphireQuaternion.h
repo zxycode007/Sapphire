@@ -21,10 +21,10 @@ namespace Sapphire {
 		{
 		}
 		//! 构造器转换一个欧拉角(弧度)到一个四元数
-		inline Quaternion(const Vector3& vec) : x(vec.x), y(vec.y), z(vec.z)
-		{}
+		Quaternion(const Vector3& vec);
+		
 		/// 用明确的值构造四元数
-		inline Quaternion(
+	    inline Quaternion(
 			Real fW,
 			Real fX, Real fY, Real fZ)
 			: w(fW), x(fX), y(fY), z(fZ)
@@ -100,7 +100,7 @@ namespace Sapphire {
 		/** 
 		由四元数创建一个矩阵
 		*/
-		void getMatrix(Matrix4 &dest, const Vector3 &translation = Vector3()) const;
+		void getMatrix(Matrix4 &dest, const Vector3 &translation) const;
 		/** 
 		用支持的向量设置四元数，通过指定角度来“roll”向量
 		*/

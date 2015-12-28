@@ -435,7 +435,7 @@ namespace Sapphire {
 	}
 
 
-	const bool StringUtil::equalsSubString(const String&source, const String&other, const SINT32 sourceStartPos = 0, bool caseSensitive = true) 
+	const bool StringUtil::equalsSubString(const String&source, const String&other, const SINT32 sourceStartPos, bool caseSensitive) 
 	{
 		//起始位置超过源字符串最大长度，比较失败返回
 		if ((UINT32)sourceStartPos >= source.size())
@@ -451,7 +451,7 @@ namespace Sapphire {
 		return equals(_s1, _s2, caseSensitive);
 	}
 
-	const bool StringUtil::equals(const String& source, const String& other, bool caseSensitive = true)
+	const bool StringUtil::equals(const String& source, const String& other, bool caseSensitive)
 	{
 		if (caseSensitive)
 		{

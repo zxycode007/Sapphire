@@ -447,6 +447,21 @@
     <ClInclude Include="SapphireISceneLoader.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireIVolumeLightSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireILightSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIBillboardSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireICameraSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIDummyTransformationSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

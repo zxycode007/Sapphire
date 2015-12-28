@@ -1,6 +1,7 @@
 #include "SapphirePrerequisites.h"
 #include "SapphireMath.h"
 #include "SapphireQuaternion.h"
+#include "SapphireVector3.h"
 #include "SapphireMatrix3.h"
 #include "SapphireMatrix4.h"
 
@@ -11,6 +12,13 @@ namespace Sapphire
 	const Quaternion Quaternion::IDENTITY(1, 0, 0, 0);
 
 	//-----------------------------------------------------------------------
+
+	Quaternion::Quaternion(const Vector3& vec) 		 
+	{
+		x = vec.x;
+		y = vec.y;
+		z = vec.z;
+	}
 	void Quaternion::FromRotationMatrix(const Matrix3& kRot)
 	{
 		// Ken Shoemake 1987 在SIGGRAPH 的算法：四元数积分和快速动画
@@ -572,7 +580,7 @@ namespace Sapphire
 	}
 
 
-	void Quaternion::getMatrix(Matrix4 &dest, const Vector3 &translation = Vector3()) const
+	void Quaternion::getMatrix(Matrix4 &dest, const Vector3 &translation) const
 	{
 		Matrix3 mat3;
 		ToRotationMatrix(mat3);

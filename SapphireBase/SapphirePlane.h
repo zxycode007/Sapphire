@@ -134,7 +134,7 @@ namespace Sapphire
 		ISREL3D_PLANAR 如果点在平面上 */
 		EIntersectionRelation3D classifyPointRelation(const Vector3& point) const
 		{
-			const Real d = normal.dotProduct(point) + d;
+			const Real d = normal.dotProduct(point) + this->d;
 
 			if (d < -std::numeric_limits<Real>::epsilon())
 				return ISREL3D_BACK;

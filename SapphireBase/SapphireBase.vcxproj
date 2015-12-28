@@ -104,7 +104,10 @@
     <ClInclude Include="SapphireIAnimatedMeshSceneNode.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
+    <ClInclude Include="SapphireIBillboardSceneNode.h" />
     <ClInclude Include="SapphireIBoneSceneNode.h" />
+    <ClInclude Include="SapphireICameraSceneNode.h" />
+    <ClInclude Include="SapphireIDummyTransformationSceneNode.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
     <ClInclude Include="SapphireIFileArchive.h" />
     <ClInclude Include="SapphireIFileList.h" />
@@ -113,6 +116,7 @@
     <ClInclude Include="SapphireIImage.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
     <ClInclude Include="SapphireIImageWriter.h" />
+    <ClInclude Include="SapphireILightSceneNode.h" />
     <ClInclude Include="SapphireIMaterialRenderer.h" />
     <ClInclude Include="SapphireIMesh.h" />
     <ClInclude Include="SapphireIMeshBuffer.h" />
@@ -139,6 +143,7 @@
     <ClInclude Include="SapphireITexture.h" />
     <ClInclude Include="SapphireITriangleSelector.h" />
     <ClInclude Include="SapphireIVideoModeList.h" />
+    <ClInclude Include="SapphireIVolumeLightSceneNode.h" />
     <ClInclude Include="SapphireIWriteFile.h" />
     <ClInclude Include="SapphireIXML.h" />
     <ClInclude Include="SapphireIXMLReader.h" />

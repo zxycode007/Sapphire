@@ -905,9 +905,10 @@ namespace Sapphire
 		// 构建最终矩阵
 		viewMatrix = Matrix4::IDENTITY;
 		viewMatrix = rotT; // 填充上三角3X3矩阵
-		viewMatrix[0][3] = trans.x;
-		viewMatrix[1][3] = trans.y;
-		viewMatrix[2][3] = trans.z;
+		viewMatrix.setTrans(trans);
+		//viewMatrix[0][3] = trans.x;
+		//viewMatrix[1][3] = trans.y;
+		//viewMatrix[2][3] = trans.z;
 
 		// 处理反射矩阵
 		if (reflectMatrix)
