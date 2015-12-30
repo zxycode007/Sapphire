@@ -2,7 +2,7 @@
 #define _SAPPHIRE_IPARTICLE_ANIMATED_MESH_SCENE_NODE_EMITTER_
 
 #include "SapphirePrerequisites.h"
-#include "SapphireIPacticleEmitter.h"
+#include "SapphireIParticleEmitter.h"
 #include "SapphireIAnimatedMeshSceneNode.h"
 
 

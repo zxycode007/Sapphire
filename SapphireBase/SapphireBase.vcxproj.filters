@@ -363,9 +363,6 @@
     <ClInclude Include="SapphireISceneNodeAnimatorFactory.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireIPacticleEmitter.h">
-      <Filter>头文件\scene</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireIParticleAnimatedMeshSceneNodeEmitter.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
@@ -460,6 +457,39 @@
       <Filter>头文件\scene</Filter>
     </ClInclude>
     <ClInclude Include="SapphireIDummyTransformationSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleAttractionAffector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleBoxEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleCylinderEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleFadeOutAffector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleGravityAffector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleMeshEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleRingEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleSphereEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleRotationAffector.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleEmitter.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIParticleSysetmSceneNode.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
   </ItemGroup>
