@@ -215,6 +215,25 @@ namespace Sapphire {
 			float alpha = 1.0f) : r(red), g(green), b(blue), a(alpha)
 		{ }
 
+		static ColourValue getColourValue(UINT32 alpha, UINT32 red, UINT32 green, UINT32 blue)
+		{
+			ColourValue c;
+			c.setAlpha(alpha);
+			c.setRed(red);
+			c.setGreen(green);
+			c.setBlue(blue);
+			return c;
+		}
+		
+
+		/* ColourValue(UINT32 alpha=255, UINT32 red=255, UINT32 green=255, UINT32 blue=255, bool ignore=true)
+		{
+			setAlpha(alpha);
+			setRed(red);
+			setGreen(green);
+			setBlue(blue);
+		}
+		*/
 		bool operator==(const ColourValue& rhs) const;
 		 
 		bool operator!=(const ColourValue& rhs) const;
@@ -299,6 +318,11 @@ namespace Sapphire {
 		{
 			return (getRed()+ getGreen() + getBlue()) / 3;
 		}
+
+
+		//----------------------------------------------------------
+		
+
 
 		//! 获取在颜色范围[0,255]中的光照值
 		Real getLightness() 

@@ -1,6 +1,7 @@
 
 
 #include "SapphirePrerequisites.h"
+#include "SapphireString.h"
 #include "SapphireSingleton.h"
 #include "SapphireLogManager.h"
 #include "SapphireQMath.h"
@@ -11,7 +12,10 @@
 #include "SapphireMatrix4.h"
 
 
+
 using namespace Sapphire;
+
+
 class UserData : public AllocatedObj<GeneralAllocPolicy>
 {
 public:

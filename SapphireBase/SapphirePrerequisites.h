@@ -214,6 +214,8 @@ namespace Sapphire
 	typedef unsigned __int32 UINT32;
 	typedef unsigned __int16 UINT16;
 	typedef unsigned __int8 UINT8;
+	typedef float FLOAT32;
+	typedef double FLOAT64;
 	typedef char c8;   //8λchar
 	typedef char s8;
  
@@ -508,7 +510,7 @@ namespace Sapphire
 	};
 
 
-
+	
 
 }
 

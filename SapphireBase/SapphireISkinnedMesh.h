@@ -4,87 +4,84 @@
 #include "SapphirePrerequisites.h"
 #include "SapphireVector3.h"
 #include "SapphireIAnimatedMesh.h"
+#include "SapphireSSkinMeshBuffer.h"
 
 namespace Sapphire
 {
 	enum E_INTERPOLATION_MODE
 	{
-		// constant does use the current key-values without interpolation
+		// 使用常量，不插值 
 		EIM_CONSTANT = 0,
 
-		// linear interpolation
+		// 线性插值
 		EIM_LINEAR,
 
-		//! count of all available interpolation modes
+		
 		EIM_COUNT
 	};
 
 
-	//! Interface for using some special functions of Skinned meshes
+	//! 蒙皮网格的一些特殊函数的接口
 	class ISkinnedMesh : public IAnimatedMesh
 	{
 	public:
 
-		//! Gets joint count.
-		/** \return Amount of joints in the skeletal animated mesh. */
+		//! 获取joint数量
+		/** \return 骨骼动画网格的joint数量*/
 		virtual UINT32 getJointCount() const = 0;
 
-		//! Gets the name of a joint.
-		/** \param number: Zero based index of joint. The last joint
-		has the number getJointCount()-1;
-		\return Name of joint and null if an error happened. */
+		//! 获取一个joint的名字
+		/** \param number: joint索引 （基于0开始），小于 getJointCount()
+		\return joint的名字，如果发生错误，返回空*/
 		virtual const c8* getJointName(UINT32 number) const = 0;
 
-		//! Gets a joint number from its name
-		/** \param name: Name of the joint.
-		\return Number of the joint or -1 if not found. */
+		//! 通过joint名字获取的它的号数
+		/** \param name: joint的名字
+		\return 返回joint的号数，如果没找到返回-1 */
 		virtual SINT32 getJointNumber(const c8* name) const = 0;
 
-		//! Use animation from another mesh
-		/** The animation is linked (not copied) based on joint names
-		so make sure they are unique.
-		\return True if all joints in this mesh were
-		matched up (empty names will not be matched, and it's case
-		sensitive). Unmatched joints will not be animated. */
+		//! 从别的网格使用动画
+		/** 这个动画基于joint名字链接（不是拷贝）
+		所以确定它们是唯一的
+		\return 如果这个网格所有joint都能匹配上，返回true,不能匹配的joint不会被动画
+	    */
 		virtual bool useAnimationFrom(const ISkinnedMesh *mesh) = 0;
 
-		//! Update Normals when Animating
-		/** \param on If false don't animate, which is faster.
-		Else update normals, which allows for proper lighting of
-		animated meshes. */
+		//! 当进行动画时更新法线
+		/** \param on 是否更新法线 */
 		virtual void updateNormalsWhenAnimating(bool on) = 0;
 
-		//! Sets Interpolation Mode
+		//! 设置插值模式
 		virtual void setInterpolationMode(E_INTERPOLATION_MODE mode) = 0;
 
-		//! Animates this mesh's joints based on frame input
+		//! 基于输入帧来播放这个网格joint的动画
 		virtual void animateMesh(Real frame, Real blend) = 0;
 
-		//! Preforms a software skin on this mesh based of joint positions
+		//! 基于joint位置应用一个软件皮肤到这个网格上
 		virtual void skinMesh() = 0;
 
-		//! converts the vertex type of all meshbuffers to tangents.
-		/** E.g. used for bump mapping. */
+		//! 转换所有网格缓冲区的顶点类型到EVT_TANGENTS
+		/** 用于凹凸映射. */
 		virtual void convertMeshToTangents() = 0;
 
-		//! Allows to enable hardware skinning.
-		/* This feature is not implementated in Irrlicht yet */
+		//! 允许打开硬件皮肤
+		/* 这个特征还没有实现*/
 		virtual bool setHardwareSkinning(bool on) = 0;
 
-		//! A vertex weight
+		//! 顶点权重
 		struct SWeight
 		{
-			//! Index of the mesh buffer
-			UINT32 buffer_id; //I doubt 32bits is needed
+			//! 顶点缓冲区的索引
+			UINT32 buffer_id; 
 
-			//! Index of the vertex
-			UINT32 vertex_id; //Store global ID here
+			//! 顶点的索引
+			UINT32 vertex_id; //这儿保存为全局ID
 
-			//! Weight Strength/Percentage (0-1)
+			//! 权重   强度/百分比 （0-1）
 			Real strength;
 
 		private:
-			//! Internal members used by CSkinnedMesh
+			//!  用于CSkinnedMesh的内部变量
 			friend class CSkinnedMesh;
 			bool *Moved;
 			Vector3 StaticPos;
@@ -92,21 +89,21 @@ namespace Sapphire
 		};
 
 
-		//! Animation keyframe which describes a new position
+		//! 描述一个新位置的动画关键帧
 		struct SPositionKey
 		{
 			Real frame;
 			Vector3 position;
 		};
 
-		//! Animation keyframe which describes a new scale
+		//! 描述一个新缩放的动画关键帧
 		struct SScaleKey
 		{
 			Real frame;
 			Vector3 scale;
 		};
 
-		//! Animation keyframe which describes a new rotation
+		//! 描述一个新旋转的动画关键帧
 		struct SRotationKey
 		{
 			Real frame;
@@ -121,31 +118,31 @@ namespace Sapphire
 			{
 			}
 
-			//! The name of this joint
+			//! 这个Joint的名字
 			String Name;
 
-			//! Local matrix of this joint
+			//! 这个joint的本地矩阵
 			Matrix4 LocalMatrix;
 
-			//! List of child joints
+			//! 子joint列表
 			vector<SJoint*> Children;
 
-			//! List of attached meshes
+			//! 附加网格列表
 			vector<UINT32> AttachedMeshes;
 
-			//! Animation keys causing translation change
+			//! 造成位置改变的关键帧
 			vector<SPositionKey> PositionKeys;
 
-			//! Animation keys causing scale change
+			//! 造成缩放改变的关键字帧
 			vector<SScaleKey> ScaleKeys;
 
-			//! Animation keys causing rotation change
+			//! 造成旋转改变的关键字
 			vector<SRotationKey> RotationKeys;
 
-			//! Skin weights
+			//! 皮肤权重
 			vector<SWeight> Weights;
 
-			//! Unnecessary for loaders, will be overwritten on finalize
+			//! 对于加载器不是必须的，最终会被重新写
 			Matrix4 GlobalMatrix;
 			Matrix4 GlobalAnimatedMatrix;
 			Matrix4 LocalAnimatedMatrix;
@@ -153,10 +150,10 @@ namespace Sapphire
 			Vector3 Animatedscale;
 			Quaternion Animatedrotation;
 
-			Matrix4 GlobalInversedMatrix; //the x format pre-calculates this
+			Matrix4 GlobalInversedMatrix;  
 
 		private:
-			//! Internal members used by CSkinnedMesh
+			//! CSkinnedMesh 内部使用
 			friend class CSkinnedMesh;
 
 			SJoint *UseAnimationFrom;
@@ -168,39 +165,37 @@ namespace Sapphire
 		};
 
 
-		//Interface for the mesh loaders (finalize should lock these functions, and they should have some prefix like loader_
+	 
 
-		//these functions will use the needed arrays, set values, etc to help the loaders
-
-		//! exposed for loaders: to add mesh buffers
+		//! 暴光给加载器：添加网格缓冲区
 		virtual vector<SSkinMeshBuffer*>& getMeshBuffers() = 0;
 
-		//! exposed for loaders: joints list
+		//! 暴光给加载器： joints列表
 		virtual vector<SJoint*>& getAllJoints() = 0;
 
-		//! exposed for loaders: joints list
+		//! 暴光给加载器： joints 列表
 		virtual const vector<SJoint*>& getAllJoints() const = 0;
 
-		//! loaders should call this after populating the mesh
+		//! 加载器会填充网格之后调用
 		virtual void finalize() = 0;
 
-		//! Adds a new meshbuffer to the mesh, access it as last one
+		//! 添加一个新网格缓冲区给这个网格，作为最后一个访问它
 		virtual SSkinMeshBuffer* addMeshBuffer() = 0;
 
-		//! Adds a new joint to the mesh, access it as last one
+		//! 添加一个新joint给这个网格，作为最后一个访问它
 		virtual SJoint* addJoint(SJoint *parent = 0) = 0;
 
-		//! Adds a new weight to the mesh, access it as last one
+		//! 添加一个新权重给这个网格，作为最后一个访问它
 		virtual SWeight* addWeight(SJoint *joint) = 0;
 
-		//! Adds a new position key to the mesh, access it as last one
+		//! 添加一个新位置键给这个网格，作为最后一个访问它 
 		virtual SPositionKey* addPositionKey(SJoint *joint) = 0;
-		//! Adds a new scale key to the mesh, access it as last one
+		//! 添加一个新缩放键给这个网格，作为最后一个访问它
 		virtual SScaleKey* addScaleKey(SJoint *joint) = 0;
-		//! Adds a new rotation key to the mesh, access it as last one
+		//! 添加一个新旋转键给这个网格，作为最后一个访问它
 		virtual SRotationKey* addRotationKey(SJoint *joint) = 0;
 
-		//! Check if the mesh is non-animated
+		//! 检测这个网格是否有动画
 		virtual bool isStatic() = 0;
 	};
 }

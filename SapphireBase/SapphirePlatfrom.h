@@ -25,6 +25,8 @@ namespace Sapphire
 #define SAPPHIRE_PLATFORM_APPLE 3
 #define SAPPHIRE_PLATFORM_APPLE_IOS 4
 #define SAPPHIRE_PLATFORM_ANDROID 5
+#define SAPPHIRE_PLATFORM_SDL 6
+#define SAPPHIRE_PLATFORM_X11 7
 
 
 	//各个编译器定义
@@ -194,6 +196,8 @@ namespace Sapphire
 	typedef int int32;
 	typedef short int16;
 	typedef char int8;
+	typedef float float32;
+	typedef double float64;
 	//定义64位整形
 #if SAPPHIRE_COMPILER == SAPPHIRE_COMPILER_MSVC
 	typedef unsigned __int64 uint64;

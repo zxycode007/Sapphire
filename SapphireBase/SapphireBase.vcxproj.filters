@@ -52,6 +52,18 @@
     <Filter Include="头文件\IO">
       <UniqueIdentifier>{6661a7f3-b28d-4516-880b-9fb4bdf4ed6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\rendersystem\OpenGL">
+      <UniqueIdentifier>{697136b4-8c77-4eed-9228-7027a48ab1eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\os">
+      <UniqueIdentifier>{0e393899-f7c5-4723-a39a-088fa509b1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\rendersystem\Null">
+      <UniqueIdentifier>{8921733e-7185-49f1-9b04-93ce9dba3622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\rendersystem\SoftDriver">
+      <UniqueIdentifier>{c438623e-42f3-4ede-b752-d98c55301a77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -492,6 +504,66 @@
     <ClInclude Include="SapphireIParticleSysetmSceneNode.h">
       <Filter>头文件\scene</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireITextSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIShadowVolumeSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireITerrianSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIDynamicMeshBuffer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIVertexBuffer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIIndexBuffer.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneCollisionManager.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLExtensionHandler.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="wglext.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="glext.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireOS.h">
+      <Filter>源文件\os</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireITimer.h">
+      <Filter>源文件\os</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTimer.h">
+      <Filter>源文件\os</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCNullDriver.h">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCFPSCounter.h">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImage.h">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCColourConverter.h">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSoftDriverHelper.h">
+      <Filter>源文件\rendersystem\SoftDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCBlit.h">
+      <Filter>源文件\rendersystem\SoftDriver</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIImagePresenter.h">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -562,6 +634,24 @@
     </ClCompile>
     <ClCompile Include="SapphireIAnimatedMeshMD2.h">
       <Filter>头文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireOS.cpp">
+      <Filter>源文件\os</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCTimer.cpp">
+      <Filter>源文件\os</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImage.cpp">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCColourConverter.cpp">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCFPSCounter.cpp">
+      <Filter>源文件\rendersystem\Null</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

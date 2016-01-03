@@ -166,10 +166,20 @@ namespace Sapphire {
 		\param caseSensitive: 是否区分大小 (默认区分)
 		\return 如果字符串比较成功返回TRUE */
 		static const bool equalsSubString(const String&source, const String&other, const SINT32 sourceStartPos = 0, bool caseSensitive = true);
-		
+
+		template<class T>
+		static String toString(T val)
+		{
+			StringUtil::StrStreamType ss;
+			ss << val;
+			return ss.str();
+
+		}
 
 		/// 空字符串
 		static const String BLANK;
+
+		
 		
 	};
 

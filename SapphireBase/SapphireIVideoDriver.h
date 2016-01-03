@@ -239,7 +239,7 @@ namespace Sapphire
 		\param sourceRect 指向一个作为要显示的源矩形区域的指针。设置为空展示所有东西。注意:不是所有设备都支持
 		\return 如果失败返回false */
 		virtual bool beginScene(bool backBuffer = true, bool zBuffer = true,
-			ColourValue color = ColourValue(255, 0, 0, 0),
+			ColourValue color = ColourValue::getColourValue(255, 0, 0, 0),
 			const SExposedVideoData& videoData = SExposedVideoData(),
 			rect<SINT32>* sourceRect = 0) = 0;
 
@@ -628,7 +628,7 @@ namespace Sapphire
 		\param end 3d线段结束
 		\param color 3d线段的颜色 */
 		virtual void draw3DLine(const Vector3& start,
-			const Vector3& end, ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+			const Vector3& end, ColourValue color = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 		//!绘制一条3d三角形
 		/** 这个方法对于某些三角形调用drawVertexPrimitiveList
@@ -645,7 +645,7 @@ namespace Sapphire
 		\param triangle 要绘制的三角形.
 		\param color 三角形的颜色 */
 		virtual void draw3DTriangle(const triangle3df& triangle,
-			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 		//! 绘制一个3D AABB盒子
 		/** 这个方法对于盒子的边简单调用draw3DLine 
@@ -658,7 +658,7 @@ namespace Sapphire
 		\param box 要绘制的AABB盒子
 		\param color AABB盒子的颜色 */
 		virtual void draw3DBox(const AxisAlignedBox& box,
-			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 		//! 绘制一个不用任何特殊效果的2d图像
 		/** \param texture 使用的纹理指针
@@ -679,7 +679,7 @@ namespace Sapphire
 		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。*/
 		virtual void draw2DImage(const  ITexture* texture, const Vector2& destPos,
 			const  rect<SINT32>& sourceRect, const  rect<SINT32>* clipRect = 0,
-			ColourValue color = ColourValue(255, 255, 255, 255), bool useAlphaChannelOfTexture = false) = 0;
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255), bool useAlphaChannelOfTexture = false) = 0;
 
 		//! 绘制一个2d图像的集合，用这个纹理的一个颜色和alpha通道
 		/** 这个图像绘制在pos开始，并且接连绘制一条直线上。
@@ -700,7 +700,7 @@ namespace Sapphire
 			const vector<SINT32>& indices,
 			SINT32 kerningWidth = 0,
 			const  rect<SINT32>* clipRect = 0,
-			ColourValue color = ColourValue(255, 255, 255, 255),
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false) = 0;
 
 		//! 绘制一个2d图像的集合，用这个纹理的一个颜色和alpha通道
@@ -718,7 +718,7 @@ namespace Sapphire
 			const vector<Vector2 >& positions,
 			const vector<rect<SINT32> >& sourceRects,
 			const rect<SINT32>* clipRect = 0,
-			ColourValue color = ColourValue(255, 255, 255, 255),
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false) = 0;
 
 		//! 绘制在这个纹理的一部分到这个矩形中。注意如果要使用颜色的话，必须是一个4个颜色的数组
@@ -762,7 +762,7 @@ namespace Sapphire
 		\param color 矩形的颜色
 		这个alpha分量不会被丢弃并且指定这个矩形是否应该透明*/
 		virtual void draw2DRectangleOutline(const recti& pos,
-			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 		//! 绘制一条2d线段
 		/** \param start 指向在屏幕的起始像素
@@ -770,7 +770,7 @@ namespace Sapphire
 		\param color 要绘制的颜色 */
 		virtual void draw2DLine(const Vector2& start,
 			const Vector2& end,
-			ColourValue color = ColourValue(255, 255, 255, 255)) = 0;
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 		//! 绘制一个像素
 		/** \param x 这个像素的X位置
@@ -788,7 +788,7 @@ namespace Sapphire
 		*/
 		virtual void draw2DPolygon(Vector2 center,
 			Real radius,
-			ColourValue color = ColourValue(100, 255, 255, 255),
+			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			SINT32 vertexCount = 10) = 0;
 
 		//! 绘制一个阴影容积到模板缓冲区
@@ -815,10 +815,10 @@ namespace Sapphire
 		\param rightDownEdge 阴影右下角的颜色
 		 */
 		virtual void drawStencilShadow(bool clearStencilBuffer = false,
-			ColourValue leftUpEdge = ColourValue(255, 0, 0, 0),
-			ColourValue rightUpEdge = ColourValue(255, 0, 0, 0),
-			ColourValue leftDownEdge = ColourValue(255, 0, 0, 0),
-			ColourValue rightDownEdge = ColourValue(255, 0, 0, 0)) = 0;
+			ColourValue leftUpEdge = ColourValue::getColourValue(255, 0, 0, 0),
+			ColourValue rightUpEdge = ColourValue::getColourValue(255, 0, 0, 0),
+			ColourValue leftDownEdge = ColourValue::getColourValue(255, 0, 0, 0),
+			ColourValue rightDownEdge = ColourValue::getColourValue(255, 0, 0, 0)) = 0;
 
 		//! 绘制一个网格缓冲区
 		/** \param mb 要回绘制的网格缓冲区 */
@@ -842,7 +842,7 @@ namespace Sapphire
 		\param rangeFog 设置这个为true打开基于范围顶点雾。这个距离是从观察者来计算雾，不用Z坐标。这样更好，但是会更慢。
 		这可能并非所有驱动都支持这个雾化设置
 		 */
-		virtual void setFog(ColourValue color = ColourValue(0, 255, 255, 255),
+		virtual void setFog(ColourValue color = ColourValue::getColourValue(0, 255, 255, 255),
 			E_FOG_TYPE fogType = EFT_FOG_LINEAR,
 			Real start = 50.0f, Real end = 100.0f, Real density = 0.01f,
 			bool pixelFog = false, bool rangeFog = false) = 0;

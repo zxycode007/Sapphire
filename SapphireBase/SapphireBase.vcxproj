@@ -69,14 +69,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="glext.h" />
     <ClInclude Include="SapphireAlignedAllocator.h" />
     <ClInclude Include="SapphireAny.h" />
     <ClInclude Include="SapphireAxisAlignedBox.h" />
     <ClInclude Include="SapphireBuildSets.h" />
+    <ClInclude Include="SapphireCBlit.h" />
+    <ClInclude Include="SapphireCColourConverter.h" />
+    <ClInclude Include="SapphireCFPSCounter.h" />
+    <ClInclude Include="SapphireCImage.h" />
+    <ClInclude Include="SapphireCNullDriver.h" />
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireCOpenGLExtensionHandler.h" />
     <ClInclude Include="SapphireCoreUtil.h" />
+    <ClInclude Include="SapphireCTimer.h" />
     <ClInclude Include="SapphireDefines.h" />
     <ClInclude Include="SapphireDevice.h" />
     <ClInclude Include="SapphireDimension2D.h" />
@@ -108,6 +116,7 @@
     <ClInclude Include="SapphireIBoneSceneNode.h" />
     <ClInclude Include="SapphireICameraSceneNode.h" />
     <ClInclude Include="SapphireIDummyTransformationSceneNode.h" />
+    <ClInclude Include="SapphireIDynamicMeshBuffer.h" />
     <ClInclude Include="SapphireIEventRecevier.h" />
     <ClInclude Include="SapphireIFileArchive.h" />
     <ClInclude Include="SapphireIFileList.h" />
@@ -115,7 +124,9 @@
     <ClInclude Include="SapphireIGPUProgramServices.h" />
     <ClInclude Include="SapphireIImage.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
+    <ClInclude Include="SapphireIImagePresenter.h" />
     <ClInclude Include="SapphireIImageWriter.h" />
+    <ClInclude Include="SapphireIIndexBuffer.h" />
     <ClInclude Include="SapphireILightSceneNode.h" />
     <ClInclude Include="SapphireIMaterialRenderer.h" />
     <ClInclude Include="SapphireIMesh.h" />
@@ -139,6 +150,7 @@
     <ClInclude Include="SapphireIQ3LevelMesh.h" />
     <ClInclude Include="SapphireIQ3Shader.h" />
     <ClInclude Include="SapphireIReadFile.h" />
+    <ClInclude Include="SapphireISceneCollisionManager.h" />
     <ClInclude Include="SapphireISceneLoader.h" />
     <ClInclude Include="SapphireISceneNodeFactory.h" />
     <ClInclude Include="SapphireIParticleEmitter.h" />
@@ -149,9 +161,14 @@
     <ClInclude Include="SapphireISceneNodeAnimator.h" />
     <ClInclude Include="SapphireISceneNodeAnimatorFactory.h" />
     <ClInclude Include="SapphireIShaderConstantSetCallBack.h" />
+    <ClInclude Include="SapphireIShadowVolumeSceneNode.h" />
     <ClInclude Include="SapphireISkinnedMesh.h" />
+    <ClInclude Include="SapphireITerrianSceneNode.h" />
+    <ClInclude Include="SapphireITextSceneNode.h" />
     <ClInclude Include="SapphireITexture.h" />
+    <ClInclude Include="SapphireITimer.h" />
     <ClInclude Include="SapphireITriangleSelector.h" />
+    <ClInclude Include="SapphireIVertexBuffer.h" />
     <ClInclude Include="SapphireIVideoModeList.h" />
     <ClInclude Include="SapphireIVolumeLightSceneNode.h" />
     <ClInclude Include="SapphireIWriteFile.h" />
@@ -173,6 +190,7 @@
     <ClInclude Include="SapphireMemoryStdAlloc.h" />
     <ClInclude Include="SapphireMemorySTLAllocator.h" />
     <ClInclude Include="SapphireMemoryTracker.h" />
+    <ClInclude Include="SapphireOS.h" />
     <ClInclude Include="SapphirePack.h" />
     <ClInclude Include="SapphirePath.h" />
     <ClInclude Include="SapphirePlane.h" />
@@ -192,6 +210,7 @@
     <ClInclude Include="SapphireSLight.h" />
     <ClInclude Include="SapphireSMaterial.h" />
     <ClInclude Include="SapphireSMesh.h" />
+    <ClInclude Include="SapphireSoftDriverHelper.h" />
     <ClInclude Include="SapphireSParticle.h" />
     <ClInclude Include="SapphireSphere.h" />
     <ClInclude Include="SapphireSSkinMeshBuffer.h" />
@@ -215,13 +234,19 @@
     <ClInclude Include="SapphireIVideoDriver.h" />
     <ClInclude Include="threads\SapphireThreadDefines.h" />
     <ClInclude Include="threads\SapphireThreadDefinesNone.h" />
+    <ClInclude Include="wglext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
+    <ClCompile Include="SapphireCColourConverter.cpp" />
+    <ClCompile Include="SapphireCFPSCounter.cpp" />
+    <ClCompile Include="SapphireCImage.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
+    <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
+    <ClCompile Include="SapphireCTimer.cpp" />
     <ClCompile Include="SapphireEMaterialFlags.h" />
     <ClCompile Include="SapphireException.cpp" />
     <ClCompile Include="SapphireIAnimatedMeshMD2.h" />
@@ -232,6 +257,7 @@
     <ClCompile Include="SapphireMatrix4.cpp" />
     <ClCompile Include="SapphireMemoryAllocatedObject.cpp" />
     <ClCompile Include="SapphireMemoryTracker.cpp" />
+    <ClCompile Include="SapphireOS.cpp" />
     <ClCompile Include="SapphirePlane.cpp" />
     <ClCompile Include="SapphireQMath.cpp" />
     <ClCompile Include="SapphireQuaternion.cpp" />

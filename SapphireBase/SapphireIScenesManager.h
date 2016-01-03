@@ -187,7 +187,7 @@ namespace Sapphire
 		*/
 		virtual IVolumeLightSceneNode* addVolumeLightSceneNode(ISceneNode* parent = 0, SINT32 id = -1,
 			const UINT32 subdivU = 32, const UINT32 subdivV = 32,
-			const ColourValue foot = ColourValue(51, 0, 230, 180),
+			const ColourValue foot = ColourValue::getColourValue(51, 0, 230, 180),
 			const ColourValue tail = ColourValue(0, 0, 0, 0),
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
@@ -422,7 +422,7 @@ namespace Sapphire
 		virtual IBillboardSceneNode* addBillboardSceneNode(ISceneNode* parent = 0,
 			const dimension2d<Real>& size = dimension2d<Real>(10.0f, 10.0f),
 			const Vector3& position = Vector3(0, 0, 0), SINT32 id = -1,
-			ColourValue colorTop = ColourValue(0xFFFFFFFF), ColourValue colorBottom = ColourValue(0xFFFFFFFF)) = 0;
+			ColourValue colorTop = ColourValue::getColourValue(255, 255, 255, 255), ColourValue colorBottom = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 
 
@@ -511,7 +511,7 @@ namespace Sapphire
 			const Vector3& position = Vector3(0.0f, 0.0f, 0.0f),
 			const Vector3& rotation = Vector3(0.0f, 0.0f, 0.0f),
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f),
-			ColourValue vertexColor = ColourValue(255, 255, 255, 255),
+			ColourValue vertexColor = ColourValue::getColourValue(255, 255, 255, 255),
 			SINT32 maxLOD = 5, E_TERRAIN_PATCH_SIZE patchSize = ETPS_17, SINT32 smoothFactor = 0,
 			bool addAlsoIfHeightmapEmpty = false) = 0;
 
@@ -536,7 +536,7 @@ namespace Sapphire
 			const Vector3& position = Vector3(0.0f, 0.0f, 0.0f),
 			const Vector3& rotation = Vector3(0.0f, 0.0f, 0.0f),
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f),
-			ColourValue vertexColor = ColourValue(255, 255, 255, 255),
+			ColourValue vertexColor = ColourValue::getColourValue(255, 255, 255, 255),
 			SINT32 maxLOD = 5, E_TERRAIN_PATCH_SIZE patchSize = ETPS_17, SINT32 smoothFactor = 0,
 			bool addAlsoIfHeightmapEmpty = false) = 0;
 
@@ -556,7 +556,7 @@ namespace Sapphire
 
 		//! 添加一个文本场景节点，它显示一个2d文本到3维空间的一个位置
 		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const String* text,
-			ColourValue color = ColourValue(100, 255, 255, 255),
+			ColourValue color = ColourValue::getColourValue(100, 255, 255, 255),
 			ISceneNode* parent = 0, Vector3& position = Vector3(0, 0, 0),
 			SINT32 id = -1) = 0;
 
@@ -577,7 +577,7 @@ namespace Sapphire
 			ISceneNode* parent = 0,
 			const  dimension2d<Real>& size = dimension2d<Real>(10.0f, 10.0f),
 			const Vector3& position = Vector3(0, 0, 0), SINT32 id = -1,
-			ColourValue colorTop = ColourValue(0xFFFFFFFF), ColourValue colorBottom = ColourValue(0xFFFFFFFF)) = 0;
+			ColourValue colorTop = ColourValue::getColourValue(255, 255, 255, 255), ColourValue colorBottom = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
 
 		//! 添加一个山丘平面网格到这个网格池中
@@ -633,8 +633,8 @@ namespace Sapphire
 		\return 如果成功返回箭头网格的指针，否则就是0
 	     */
 		virtual IAnimatedMesh* addArrowMesh(const path& name,
-			ColourValue vtxColorCylinder = ColourValue(0xFFFFFFFF),
-			ColourValue vtxColorCone = ColourValue(0xFFFFFFFF),
+			ColourValue vtxColorCylinder = ColourValue::getColourValue(255, 255, 255, 255),
+			ColourValue vtxColorCone = ColourValue::getColourValue(255, 255, 255, 255),
 			UINT32 tesselationCylinder = 4, UINT32 tesselationCone = 8,
 			Real height = 1.f, Real cylinderHeight = 0.6f,
 			Real widthCylinder = 0.05f, Real widthCone = 0.3f) = 0;
@@ -663,7 +663,7 @@ namespace Sapphire
 		*/
 		virtual IAnimatedMesh* addVolumeLightMesh(const path& name,
 			const UINT32 SubdivideU = 32, const UINT32 SubdivideV = 32,
-			const ColourValue FootColor = ColourValue(51, 0, 230, 180),
+			const ColourValue FootColor = ColourValue::getColourValue(51, 0, 230, 180),
 			const ColourValue TailColor = ColourValue(0, 0, 0, 0)) = 0;
 
 
@@ -725,7 +725,7 @@ namespace Sapphire
 
 
 		//! 通过场景管理器设置模板缓冲区阴影的颜色
-		virtual void setShadowColor(ColourValue color = ColourValue(150, 0, 0, 0)) = 0;
+		virtual void setShadowColor(ColourValue color = ColourValue::getColourValue(150, 0, 0, 0)) = 0;
 
 		//! 获取当前阴影的颜色
 		virtual ColourValue getShadowColor() const = 0;

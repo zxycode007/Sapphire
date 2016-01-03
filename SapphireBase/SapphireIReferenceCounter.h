@@ -34,9 +34,20 @@ namespace Sapphire
 		{
 			return ReferenceCounter;
 		}
+	protected:
+		 
+		void setDebugName(const c8* newName)
+		{
+			DebugName = newName;
+		}
 	private:
 		mutable int ReferenceCounter;
+		 
+		const c8* DebugName;
+
+
 	};
+
 }
 
 #endif

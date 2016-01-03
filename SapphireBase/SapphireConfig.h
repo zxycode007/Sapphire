@@ -14,6 +14,11 @@
 #define SAPPHIRE_FAST_MATH 0  //是否使用快速计算
 #endif 
 
+#define SAPPHIRE_SINT64_SUPPORT    //定义SINT64支持
+#ifndef SAPPHIRE_SINT64_SUPPORT  
+#define SAPPHIRE_SINT64_NO_SUPPORT
+#endif
+
 // 定义要使用的内存分配器类型
 #define SAPPHIRE_MEMORY_ALLOCATOR_STD 1   //标准
 #define SAPPHIRE_MEMORY_ALLOCATOR_NED 2    //NED
@@ -94,6 +99,13 @@ TBB库线程
 #ifndef SAPPHIRE_3D_API
 #define SAPPHIRE_3D_API  SAPPHIRE_WITH_OPENGL	
 #endif
+
+//! 定义SAPPHIRE_OPENGL_USE_EXTPOINTER  如果需要OpenGL 渲染器器通过函数指针使用OpenGL 扩展
+/** 某些系统不支持通过函数指针动态扩展OpenGL */
+#if !defined(SAPPHIRE_PLATFORM_APPLE) && !defined(SAPPHIRE_PLATFORM_SOLARIS)
+#define SAPPHIRE_OPENGL_USE_EXTPOINTER
+#endif
+
 
 
 // 声明调用习惯

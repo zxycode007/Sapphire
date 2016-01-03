@@ -1,6 +1,7 @@
 #ifndef __SAPPHIRE_MATH__
 #define __SAPPHIRE_MATH__
 
+
 #include "SapphirePrerequisites.h"
 #include "SapphireQMath.h"
 
@@ -281,7 +282,7 @@ namespace Sapphire
 		static T Clamp(T val, T minval, T maxval)
 		{
 			assert(minval <= maxval && "Invalid clamp range");
-			return std::max(std::min(val, maxval), minval);
+			return max(min(val, maxval), minval);
 		}
 
 

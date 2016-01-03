@@ -1,7 +1,7 @@
 #ifndef _SAPPHIRE_DIMENSION2D_
 #define _SAPPHIRE_DIMENSION2D_
 
-
+#include "SapphireQMath.h"
 
 namespace Sapphire
 {
@@ -38,8 +38,8 @@ namespace Sapphire
 	
 		bool operator==(const dimension2d<T>& other) const
 		{
-			return core::equals(Width, other.Width) &&
-				core::equals(Height, other.Height);
+			return equals(Width, other.Width) &&
+				equals(Height, other.Height);
 		}
 
 	 
