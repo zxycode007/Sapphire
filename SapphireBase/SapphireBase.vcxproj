@@ -129,6 +129,7 @@
     <ClInclude Include="SapphireIIndexBuffer.h" />
     <ClInclude Include="SapphireILightSceneNode.h" />
     <ClInclude Include="SapphireIMaterialRenderer.h" />
+    <ClInclude Include="SapphireIMaterialRendererServices.h" />
     <ClInclude Include="SapphireIMesh.h" />
     <ClInclude Include="SapphireIMeshBuffer.h" />
     <ClInclude Include="SapphireIMeshCache.h" />

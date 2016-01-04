@@ -5,7 +5,7 @@
 
 namespace Sapphire
 {
-	String LOCALE_DECIMAL_POINTS = ".";
+	
 
 	COpenGLExtensionHandler::COpenGLExtensionHandler() :
 		StencilBuffer(false), MultiTextureExtension(false),

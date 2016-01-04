@@ -564,6 +564,9 @@
     <ClInclude Include="SapphireIImagePresenter.h">
       <Filter>源文件\rendersystem\Null</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireIMaterialRendererServices.h">
+      <Filter>头文件\renderSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

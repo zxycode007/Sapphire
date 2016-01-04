@@ -12,8 +12,13 @@
 #include "SapphireMatrix4.h"
 
 
+namespace Sapphire
+{
+	String LOCALE_DECIMAL_POINTS = ".";
+}
 
 using namespace Sapphire;
+
 
 
 class UserData : public AllocatedObj<GeneralAllocPolicy>

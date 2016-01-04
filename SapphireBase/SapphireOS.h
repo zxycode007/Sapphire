@@ -19,7 +19,7 @@ namespace Sapphire
 		static UINT32 byteswap(UINT32 num);
 		static SINT32 byteswap(SINT32 num);
 		static Real byteswap(Real num);
-		// prevent accidental swapping of chars
+		// 避免交换字符出现意外
 		static UINT8  byteswap(UINT8  num);
 		static c8  byteswap(c8  num);
 	};

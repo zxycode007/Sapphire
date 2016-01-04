@@ -6,94 +6,91 @@
 
 namespace Sapphire
 {
-	// !IImage implementation with a lot of special image operations for
-		//! 16 bit A1R5G5B5/32 Bit A8R8G8B8 images, which are used by the SoftwareDevice.
+	// !IImage实现了许多对16位A1R5G5B5/32位A8R8G8B8图像的特殊操作，它用于软件设备
 	class CImage : public IImage
 	{
 	public:
 
-		//! constructor from raw image data
-		/** \param useForeignMemory: If true, the image will use the data pointer
-		directly and own it from now on, which means it will also try to delete [] the
-		data when the image will be destructed. If false, the memory will by copied. */
+		//! 从原始图像数据构造
+		/** \param useForeignMemory: 如果为true，这个图像将直接使用数据指针，意味着当图像数据析构时，它可以通过delete[]。如果false，创建一份内存拷贝*/
 		CImage(ECOLOR_FORMAT format, const dimension2d<UINT32>& size,
 			void* data, bool ownForeignMemory = true, bool deleteMemory = true);
 
-		//! constructor for empty image
+		//! 从空数据构造
 		CImage(ECOLOR_FORMAT format, const dimension2d<UINT32>& size);
 
-		//! destructor
+		//! 析构
 		virtual ~CImage();
 
-		//! Lock function.
+		//! 锁定函数
 		virtual void* lock()
 		{
 			return Data;
 		}
 
-		//! Unlock function.
+		//!解锁函数
 		virtual void unlock() {}
 
-		//! Returns width and height of image data.
+		//! 返回这个图像的高度和宽度
 		virtual const dimension2d<UINT32>& getDimension() const;
 
-		//! Returns bits per pixel.
+		//! 返回每个像素的位深
 		virtual UINT32 getBitsPerPixel() const;
 
-		//! Returns bytes per pixel
+		//! 返回每个像素的字节
 		virtual UINT32 getBytesPerPixel() const;
 
-		//! Returns image data size in bytes
+		//! 返回图像数据字节数
 		virtual UINT32 getImageDataSizeInBytes() const;
 
-		//! Returns image data size in pixels
+		//! 返回图像的像素大小
 		virtual UINT32 getImageDataSizeInPixels() const;
 
-		//! returns mask for red value of a pixel
+		//! 返回每个像素红色的掩码
 		virtual UINT32 getRedMask() const;
 
-		//! returns mask for green value of a pixel
+		//! 返回每个像素绿色的掩码
 		virtual UINT32 getGreenMask() const;
 
-		//! returns mask for blue value of a pixel
+		//! 返回每个像素蓝色的掩码
 		virtual UINT32 getBlueMask() const;
 
-		//! returns mask for alpha value of a pixel
+		//! 返回每个像素alpha的掩码
 		virtual UINT32 getAlphaMask() const;
 
-		//! returns a pixel
+		//! 返回一个像素
 		virtual ColourValue getPixel(UINT32 x, UINT32 y) const;
 
-		//! sets a pixel
+		//! 设置一个像素
 		virtual void setPixel(UINT32 x, UINT32 y, const ColourValue &color, bool blend = false);
 
-		//! returns the color format
+		//! 返回一个颜色格式
 		virtual ECOLOR_FORMAT getColorFormat() const;
 
-		//! returns pitch of image
+		//! 设置图像内存跨距
 		virtual UINT32 getPitch() const { return Pitch; }
 
-		//! copies this surface into another, scaling it to fit.
+		//! 复制这个表面到另外一个，并缩放它修正
 		virtual void copyToScaling(void* target, UINT32 width, UINT32 height, ECOLOR_FORMAT format, UINT32 pitch = 0);
 
-		//! copies this surface into another, scaling it to fit.
+		//! 复制这个表面到另外一个，并缩放它修正
 		virtual void copyToScaling(IImage* target);
 
-		//! copies this surface into another
+		//! 复制这个表面到另外一个
 		virtual void copyTo(IImage* target, const Vector2& pos = Vector2(0, 0));
 
-		//! copies this surface into another
+		//! 复制这个表面到另外一个
 		virtual void copyTo(IImage* target, const Vector2& pos, const rect<SINT32>& sourceRect, const rect<SINT32>* clipRect = 0);
 
-		//! copies this surface into another, using the alpha mask, an cliprect and a color to add with
+		//! 复制这个表面到另外一个， 用alpha掩码，一个剪裁区和一个色彩来添加
 		virtual void copyToWithAlpha(IImage* target, const Vector2& pos,
 			const rect<SINT32>& sourceRect, const ColourValue &color,
 			const rect<SINT32>* clipRect = 0);
 
-		//! copies this surface into another, scaling it to fit, appyling a box filter
+		//! 复制这个表面到另外一个,缩放它修正，应用box滤波器
 		virtual void copyToScalingBoxFilter(IImage* target, SINT32 bias = 0, bool blend = false);
 
-		//! fills the surface with given color
+		//! 用给定的颜色填充表面
 		virtual void fill(const ColourValue &color);
 
 	private:

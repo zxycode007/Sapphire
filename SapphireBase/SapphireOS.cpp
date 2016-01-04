@@ -131,29 +131,25 @@ namespace Sapphire
 #include <time.h>
 #include <sys/time.h>
 
-namespace irr
+namespace Sapphire
 {
-	namespace os
+	//! prints a debuginfo string
+	void Printer::print(const c8* message)
 	{
+		printf("%s\n", message);
+	}
 
-		//! prints a debuginfo string
-		void Printer::print(const c8* message)
-		{
-			printf("%s\n", message);
-		}
+	void Timer::initTimer(bool usePerformanceTimer)
+	{
+		initVirtualTimer();
+	}
 
-		void Timer::initTimer(bool usePerformanceTimer)
-		{
-			initVirtualTimer();
-		}
-
-		UINT32 Timer::getRealTime()
-		{
-			timeval tv;
-			gettimeofday(&tv, 0);
-			return (UINT32)(tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-		}
-	} // end namespace os
+	UINT32 Timer::getRealTime()
+	{
+		timeval tv;
+		gettimeofday(&tv, 0);
+		return (UINT32)(tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	}
 
 #endif // end linux / windows
 

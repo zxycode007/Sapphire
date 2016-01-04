@@ -428,11 +428,10 @@ namespace Sapphire
 	// 计算: 1 / x
 	FORCEINLINE float32 reciprocal(const float32 f)
 	{
-#if （SAPPHIRE_FAST_MATH）
+#if (SAPPHIRE_FAST_MATH)
 
-		// SSE Newton-Raphson reciprocal estimate, accurate to 23 significant
-		// bi ts of the mantissa
-		// One Newtown-Raphson Iteration:
+		// SSE Newton-Raphson 倒数估算法, 精确到尾数23位
+		// 一个Newtown-Raphson 迭代:
 		// f(i+1) = 2 * rcpss(f) - f * rcpss(f) * rcpss(f)
 		float32 rec;
 		__asm rcpss xmm0, f               // xmm0 = rcpss(f)
@@ -446,11 +445,10 @@ namespace Sapphire
 		return rec;
 
 
-		//! i do not divide through 0.. (fpu expection)
-		// instead set f to a high value to get a return value near zero..
-		// -1000000000000.f.. is use minus to stay negative..
-		// must test's here (plane.normal dot anything ) checks on <= 0.f
-		//u32 x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
+		//! 不能够除0.. (fpu 异常)
+		// 代替设置f到一个高值取获取一个接近0的返回值
+		// 这儿必须测试（平面法线与其它的点积）<0.f
+		//UINT32  x = (-(AIR(f) != 0 ) >> 31 ) & ( IR(f) ^ 0xd368d4a5 ) ^ 0xd368d4a5;
 		//return 1.f / FR ( x );
 
 #else  
@@ -498,32 +496,32 @@ namespace Sapphire
 
 
 #if 0
-	//! returns if a equals b, not using any rounding tolerance
-	inline bool equals(const s32 a, const s32 b)
+	//! 返回a是否等于b， 不使用任何进位误差
+	inline bool equals(const SINT32 a, const SINT32 b)
 	{
 		return (a == b);
 	}
 
-	//! returns if a equals b, not using any rounding tolerance
-	inline bool equals(const u32 a, const u32 b)
+	//! 返回a是否等于b， 不使用任何进位误差
+	inline bool equals(const UINT32 a, const UINT32 b)
 	{
 		return (a == b);
 	}
 #endif
-	//! returns if a equals b, taking an explicit rounding tolerance into account
+	//! 返回a是否等于b, 使用显示的进位误差
 	inline bool equals(const SINT32 a, const SINT32 b, const SINT32 tolerance = std::numeric_limits<SINT32>::epsilon())
 	{
 		return (a + tolerance >= b) && (a - tolerance <= b);
 	}
 
-	//! returns if a equals b, taking an explicit rounding tolerance into account
+	//! 返回a是否等于b, 使用显示的进位误差
 	inline bool equals(const UINT32 a, const UINT32 b, const UINT32 tolerance = std::numeric_limits<UINT32>::epsilon())
 	{
 		return (a + tolerance >= b) && (a - tolerance <= b);
 	}
 
 #ifdef SAPPHIRE_SINT64_SUPPORT
-	//! returns if a equals b, taking an explicit rounding tolerance into account
+	//! 返回a是否等于b, 使用显示的进位误差
 	inline bool equals(const SINT64 a, const SINT64 b, const SINT64 tolerance = std::numeric_limits<SINT64>::epsilon())
 	{
 		return (a + tolerance >= b) && (a - tolerance <= b);
@@ -531,11 +529,12 @@ namespace Sapphire
 #endif
 
 	/*
-	use biased loop counter
-	--> 0 byte copy is forbidden
+	使用偏差运河计数(地址偏差1字节)
+	不允许拷贝0字节
 	*/
 	FORCEINLINE void memcpy32_small(void * dest, const void *source, UINT32 bytesize)
 	{
+		//计算出多少个32位双字
 		UINT32 c = bytesize >> 2;
 
 		do
@@ -545,15 +544,15 @@ namespace Sapphire
 
 	}
 
-	//! a more useful memset for pixel
-	// (standard memset only works with 8-bit values)
+	//! 基于字的内存设置
+	//  
 	inline void memset16(void * dest, const UINT16 value, UINT32 bytesize)
 	{
 		UINT16 * d = (UINT16*)dest;
 
 		UINT32 i;
 
-		// loops unrolled to reduce the number of increments by factor ~8.
+		// 一次复制8*2=16个字节
 		i = bytesize >> (1 + 3);
 		while (i)
 		{

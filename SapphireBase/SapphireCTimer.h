@@ -7,7 +7,7 @@
 
 namespace Sapphire
 {
-	//! Device independent implementation of the timer
+	//! Device所需要的timer的实现
 	class CTimer : public ITimer
 	{
 	public:
@@ -17,81 +17,75 @@ namespace Sapphire
 			Timer::initTimer(usePerformanceTimer);
 		}
 
-		//! Returns current real time in milliseconds of the system.
-		/** This value does not start with 0 when the application starts.
-		For example in one implementation the value returned could be the
-		amount of milliseconds which have elapsed since the system was started. */
+		//! 返回一个系统真实时间的毫秒数
+		/** 这个值在程序开始运行时不是以0开始。 例如：在一个实现里，这个值返回的是
+		自系统开始以来的毫秒数
+		*/
 		virtual UINT32 getRealTime() const
 		{
 			return Timer::getRealTime();
 		}
 
-		//! Get current time and date in calendar form
+		//! 获取当前时间和日期
 		virtual RealTimeDate getRealTimeAndDate() const
 		{
 			return Timer::getRealTimeAndDate();
 		}
 
-		//! Returns current virtual time in milliseconds.
-		/** This value starts with 0 and can be manipulated using setTime(), stopTimer(),
-		startTimer(), etc. This value depends on the set speed of the timer if the timer
-		is stopped, etc. If you need the system time, use getRealTime() */
+		//! 返回当前虚拟时间的毫秒数
+		/** 这个值是从0开始并且可以通过setTime(),stopTimer(), startTimer()控制。如果timer停止，这个值依赖timer设置的速度，
+		如果你需要系统时间，用getRealTime()
+	    */
 		virtual UINT32 getTime() const
 		{
 			return Timer::getTime();
 		}
 
-		//! sets current virtual time
+		//! 设置当前虚拟时间
 		virtual void setTime(UINT32 time)
 		{
 			Timer::setTime(time);
 		}
 
-		//! Stops the game timer.
-		/** The timer is reference counted, which means everything which calls
-		stopTimer() will also have to call startTimer(), otherwise the timer may not start/stop
-		corretly again. */
+		//! 停止游戏timer
+		/**  每次停止前，必须先开启，不然会出错 */
 		virtual void stop()
 		{
 			Timer::stopTimer();
 		}
 
-		//! Starts the game timer.
-		/** The timer is reference counted, which means everything which calls
-		stopTimer() will also have to call startTimer(), otherwise the timer may not start/stop
-		corretly again. */
+		//! 开启游戏timer
+		/** 每次停止前，必须先开启，不然会出错 */
 		virtual void start()
 		{
 			Timer::startTimer();
 		}
 
-		//! Sets the speed of the timer
-		/** The speed is the factor with which the time is running faster or slower then the
-		real system time. */
+		//! 设置timer速度
+		/** 这个速度是时间运行的与真实系统时间更快或更慢的因子*/
 		virtual void setSpeed(Real speed = 1.0f)
 		{
 			Timer::setSpeed(speed);
 		}
 
-		//! Returns current speed of the timer
-		/** The speed is the factor with which the time is running faster or slower then the
-		real system time. */
+		//! 返回当前的时间速度因子
+		/** 这个速度是时间运行的与真实系统时间更快或更慢的因子 */
 		virtual Real getSpeed() const
 		{
 			return Timer::getSpeed();
 		}
 
-		//! Returns if game timer is currently stopped
+		//! 返回游戏timer是否停止
 		virtual bool isStopped() const
 		{
 			bool ret = Timer::isStopped();
 			return ret;
 		}
 
-		//! Advances the virtual time
-		/** Makes the virtual timer update the time value based on the real time. This is
-		called automaticly when calling IrrlichtDevice::run(), but you can call it manually
-		if you don't use this method. */
+		//! 高级虚拟时间
+		/** 将使虚拟timer在基于真实时间基础上更新时间值。这是当Device::run()调用时自动调用的，但是如果你
+		不想用这个方法，也可以手动调用
+		  */
 		virtual void tick()
 		{
 			Timer::tick();
