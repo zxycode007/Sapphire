@@ -176,6 +176,32 @@ namespace Sapphire {
 
 		}
 
+		static StringW  StringToStringW(const String& src)
+		{
+			const char* cstr = src.c_str();
+			size_t cstr_len = src.length();
+			wchar_t* wstr = SAPPHIRE_ALLOC_T(wchar_t, cstr_len*sizeof(wchar_t), MEMCATEGORY_GENERAL);
+			mbstowcs(wstr, cstr, cstr_len);
+			StringW ret = wstr;
+			SAPPHIRE_FREE(wstr, MEMCATEGORY_GENERAL);
+			return ret;
+		}
+
+		static String StringWToString(const StringW& src)
+		{
+			const wchar_t* cwstr = src.c_str();
+			size_t cwstr_len = src.length()*2;
+			char* str = SAPPHIRE_ALLOC_T(char, cwstr_len*sizeof(char), MEMCATEGORY_GENERAL);
+			char* old_local = _strdup(setlocale(LC_ALL, NULL));   //备份原来的设置
+			setlocale(LC_ALL, SAPPHIRE_LOCATION_SET);
+			wcstombs(str, cwstr, cwstr_len);
+			String ret = str;
+			setlocale(LC_ALL, old_local);
+			SAPPHIRE_FREE(str, MEMCATEGORY_GENERAL);
+			free(old_local);
+			return ret;
+		}
+
 		/// 空字符串
 		static const String BLANK;
 
@@ -449,7 +475,7 @@ namespace Sapphire {
 	\param[out] 结果的浮点写入到这里
 	\return 指向字符串首个字符的指针，不是用来创建浮点值的
 	*/
-	inline const char* fast_atof_move(const char* in, Real& result)
+	inline const char* fast_atof_move(const char* in, FLOAT32& result)
 	{
 
 		//当这个函数进行任何修改时，请运行回归测试。
@@ -462,12 +488,12 @@ namespace Sapphire {
 		if (negative || ('+' == *in))
 			++in;
 
-		Real value = strtof10(in, &in);
+		FLOAT32 value = strtof10(in, &in);
 
 		if (LOCALE_DECIMAL_POINTS.find(*in) >= 0)
 		{
 			const char* afterDecimal = ++in;
-			const Real decimal = strtof10(in, &afterDecimal);
+			const FLOAT32 decimal = strtof10(in, &afterDecimal);
 			value += decimal * fast_atof_table[afterDecimal - in];
 			in = afterDecimal;
 		}
@@ -478,7 +504,7 @@ namespace Sapphire {
 			// 假设指数是一个完整的数
 			// strtol10()会处理+和-号
 			// 但是计算float 要防止FLT_MAX溢出
-			value *= powf(10.f, (Real)strtol10(in, &in));
+			value *= powf(10.f, (FLOAT32)strtol10(in, &in));
 		}
 
 		result = negative ? -value : value;
@@ -492,13 +518,15 @@ namespace Sapphire {
 	*/
 	inline float fast_atof(const char* floatAsString, const char** out = 0)
 	{
-		Real ret;
+		FLOAT32 ret;
 		if (out)
 			*out = fast_atof_move(floatAsString, ret);
 		else
 			fast_atof_move(floatAsString, ret);
 		return ret;
 	}
+
+	
 
 #if SAPPHIRE_COMPILER == SAPPHIRE_COMPILER_GNUC && SAPPHIRE_COMP_VER >= 310 && !defined(STLPORT)
 #   if SAPPHIRE_COMP_VER < 430

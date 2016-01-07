@@ -224,7 +224,7 @@ namespace Sapphire
 	};
 
 
-	class IVideoDriver //: public virtual IReferenceCounted
+	class IVideoDriver : public virtual IReferenceCounter
 	{
 	public:
 

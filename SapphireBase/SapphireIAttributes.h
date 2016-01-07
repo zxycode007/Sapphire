@@ -22,7 +22,7 @@ namespace Sapphire
 	 class IXMLReader;
 
 	 //! 提供属性和他们的值并且可以序列化它们的通用接口
-	 class IAttributes //: public virtual IReferenceCounted
+	 class IAttributes : public virtual IReferenceCounter
 	 {
 	 public:
 
@@ -43,11 +43,11 @@ namespace Sapphire
 
 		 //! 返回属性类型的字符串
 		 //! \param attributeName: 属性类型的名字
-		 virtual const String getAttributeTypeString(const c8* attributeName) = 0;
+		 virtual const StringW getAttributeTypeString(const c8* attributeName) = 0;
 
 		 //! 通过属性索引返回属性类型的字符串
 		 //! \param index: 索引值, 可以到0 和 getAttributeCount()-1之间.
-		 virtual const String getAttributeTypeString(SINT32 index) = 0;
+		 virtual const StringW getAttributeTypeString(SINT32 index) = 0;
 
 		 //! 一个属性是否存在
 		 virtual bool existsAttribute(const c8* attributeName) = 0;
@@ -166,7 +166,7 @@ namespace Sapphire
 		 //! 获取这个字符串属性
 		 //! \param attributeName: 属性名
 		 //! \return 返回之前设置的属性值，如果没设置返回0
-		 virtual wchar_t* getAttributeAsStringW(const c8* attributeName) = 0;
+		 virtual StringW getAttributeAsStringW(const c8* attributeName) = 0;
 
 		 //! 获取一个字符串属性名
 		 //! \param attributeName 要获取的属性名
@@ -175,7 +175,7 @@ namespace Sapphire
 
 		 //! 返回指定索引的字符串属性值
 		 //! \param index 索引值, 可以到0 和 getAttributeCount()-1之间.
-		 virtual wchar_t* getAttributeAsStringW(SINT32 index) = 0;
+		 virtual StringW getAttributeAsStringW(SINT32 index) = 0;
 
 		 //! 设置一个指定锁定的字符串的值
 		 //! \param index 索引值, 可以到0 和 getAttributeCount()-1之间.

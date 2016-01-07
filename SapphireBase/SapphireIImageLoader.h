@@ -14,7 +14,7 @@ namespace Sapphire
 	如果你想要引擎可以加载不能支持的文件类型（如gif），
 	那么实现这个接口和你用添加IVideoDriver::addExternalImageLoader()添加到引擎的新的表面加载器。
     */
-	class IImageLoader  
+	class IImageLoader  :public virtual IReferenceCounter
 	{
 	public:
 

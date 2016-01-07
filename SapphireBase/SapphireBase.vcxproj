@@ -74,13 +74,16 @@
     <ClInclude Include="SapphireAny.h" />
     <ClInclude Include="SapphireAxisAlignedBox.h" />
     <ClInclude Include="SapphireBuildSets.h" />
+    <ClInclude Include="SapphireCAtrributes.h" />
     <ClInclude Include="SapphireCBlit.h" />
     <ClInclude Include="SapphireCColourConverter.h" />
     <ClInclude Include="SapphireCFPSCounter.h" />
     <ClInclude Include="SapphireCImage.h" />
+    <ClInclude Include="SapphireCMeshManipulator.h" />
     <ClInclude Include="SapphireCNullDriver.h" />
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
+    <ClInclude Include="SapphireCompileConifg.h" />
     <ClInclude Include="SapphireConfig.h" />
     <ClInclude Include="SapphireCOpenGLExtensionHandler.h" />
     <ClInclude Include="SapphireCoreUtil.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="SapphireIAnimatedMesh.h" />
     <ClInclude Include="SapphireIAnimatedMeshMD3.h" />
     <ClInclude Include="SapphireIAnimatedMeshSceneNode.h" />
+    <ClInclude Include="SapphireIAttribute.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
     <ClInclude Include="SapphireIBillboardSceneNode.h" />
@@ -241,9 +245,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
+    <ClCompile Include="SapphireCAttributeImpl.h" />
+    <ClCompile Include="SapphireCAttributes.cpp" />
     <ClCompile Include="SapphireCColourConverter.cpp" />
     <ClCompile Include="SapphireCFPSCounter.cpp" />
     <ClCompile Include="SapphireCImage.cpp" />
+    <ClCompile Include="SapphireCNullDriver.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />

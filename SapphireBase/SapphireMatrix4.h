@@ -114,11 +114,11 @@ namespace Sapphire
 
 		
 
-		inline Real operator [] (SINT32 iIndex)
-		{
-			assert(iIndex < 16);
-			return _m[iIndex];
-		}
+		//inline Real operator [] (SINT32 iIndex)
+		//{
+		//	assert(iIndex < 16);
+		//	return _m[iIndex];
+		//}
 		inline Real* operator [] (size_t iRow)
 		{
 			assert(iRow < 4);

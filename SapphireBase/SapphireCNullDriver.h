@@ -93,7 +93,7 @@ namespace Sapphire
 			bool clearZBuffer, ColourValue color);
 
 		//! 设置多个渲染目标
-		virtual bool setRenderTarget(const vector<IRenderTarget>& texture,
+		virtual bool setRenderTarget(const vector<IRenderTarget>::type& texture,
 			bool clearBackBuffer = true, bool clearZBuffer = true, ColourValue color = ColourValue(0, 0, 0, 0));
 
 		//! 设置一个视口
@@ -128,22 +128,17 @@ namespace Sapphire
 		virtual void draw2DImage(const ITexture* texture, const Vector2& destPos);
 
 		//! 绘制一个2d图像的集合， 使用一个颜色和一个alpha
-		/** 如果需要一个纹理通道。这个图像是channel of the texture if desired. The images are drawn
-		beginning at pos and concatenated in one line. All drawings
-		are clipped against clipRect (if != 0).
-		The subtextures are defined by the vector of sourceRects
-		and are chosen by the indices given.
-		\param texture: Texture to be drawn.
-		\param pos: Upper left 2d destination position where the image will be drawn.
-		\param sourceRects: Source rectangles of the image.
-		\param indices: List of indices which choose the actual rectangle used each time.
-		\param kerningWidth: offset on position
-		\param clipRect: Pointer to rectangle on the screen where the image is clipped to.
-		This pointer can be 0. Then the image is not clipped.
-		\param color: Color with which the image is colored.
-		Note that the alpha component is used: If alpha is other than 255, the image will be transparent.
-		\param useAlphaChannelOfTexture: If true, the alpha channel of the texture is
-		used to draw the image. */
+		/** 如果需要一个纹理通道。这个图像是被绘制在pos位置，并连续绘制在一条直线上.
+		所有绘制都要通过clipRect进行剪裁。子纹理由sourceRects数组定义并通过索引进行
+		选择
+		\param texture: 要绘制的纹理
+		\param pos: 要绘制图像的左上角2d目标位置
+		\param sourceRects: 图元源矩形区域
+		\param indices: 用于每次选择实际矩形的索引列表
+		\param kerningWidth: 在位置的偏移量
+		\param clipRect: 指向屏幕矩形区域的指针，图像会被剪裁到里面去，如果pointer=0，那么图像不会被剪裁
+		\param color: 在这个图像中的的这个颜色。注意：这是由alpha分量使用的；如果alpha值不少255，那么这个图像会被透明化。
+		\param useAlphaChannelOfTexture: 如果为true，这个纹理的alpha通道会被使用来绘制这个图像*/
 		virtual void draw2DImageBatch(const ITexture* texture,
 			const Vector2& pos,
 			const vector<rect<SINT32> >& sourceRects,
@@ -153,22 +148,16 @@ namespace Sapphire
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false);
 
-		//! Draws a set of 2d images, using a color and the alpha channel of the texture.
-		/** All drawings are clipped against clipRect (if != 0).
-		The subtextures are defined by the vector of sourceRects and are
-		positioned using the vector of positions.
-		\param texture Texture to be drawn.
-		\param pos Array of upper left 2d destinations where the images
-		will be drawn.
-		\param sourceRects Source rectangles of the image.
-		\param clipRect Pointer to rectangle on the screen where the
-		images are clipped to.
-		If this pointer is 0 then the image is not clipped.
-		\param color Color with which the image is drawn.
-		Note that the alpha component is used. If alpha is other than
-		255, the image will be transparent.
-		\param useAlphaChannelOfTexture: If true, the alpha channel of
-		the texture is used to draw the image. */
+		//! 绘制一个2d图像的集合，使用一个颜色和一个纹理的alpha通道
+		/** 如果需要一个纹理通道。这个图像是被绘制在pos位置，并连续绘制在一条直线上.
+		所有绘制都要通过clipRect进行剪裁。子纹理由sourceRects数组定义并通过索引进行
+		选择
+		\param texture: 要绘制的纹理
+		\param pos: 要绘制图像的左上角2d目标位置
+		\param sourceRects 图元源矩形区域
+		\param clipRect 指向屏幕矩形区域的指针，图像会被剪裁到里面去，如果pointer=0，那么图像不会被剪裁
+		\param color 在这个图像中的的这个颜色。注意：这是由alpha分量使用的；如果alpha值不少255，那么这个图像会被透明化。
+		\param useAlphaChannelOfTexture: 如果为true，这个纹理的alpha通道会被使用来绘制这个图像 */
 		virtual void draw2DImageBatch(const ITexture* texture,
 			const vector<Vector2>& positions,
 			const vector<rect<SINT32> >& sourceRects,
@@ -176,36 +165,36 @@ namespace Sapphire
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false);
 
-		//! Draws a 2d image, using a color (if color is other then Color(255,255,255,255)) and the alpha channel of the texture if wanted.
+		//! 用一个颜色和纹理的alphat通道（如果需要）绘制一个2d图像
 		virtual void draw2DImage(const ITexture* texture, const Vector2& destPos,
 			const rect<SINT32>& sourceRect, const rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255), bool useAlphaChannelOfTexture = false);
 
-		//! Draws a part of the texture into the rectangle.
+		//! 在一个矩形中绘制纹理的一部分
 		virtual void draw2DImage(const ITexture* texture, const rect<SINT32>& destRect,
 			const rect<SINT32>& sourceRect, const rect<SINT32>* clipRect = 0,
 			const ColourValue* const colors = 0, bool useAlphaChannelOfTexture = false);
 
-		//! Draws a 2d rectangle
+		//! 绘制一个2d矩形
 		virtual void draw2DRectangle(ColourValue color, const rect<SINT32>& pos, const rect<SINT32>* clip = 0);
 
-		//! Draws a 2d rectangle with a gradient.
+		//! 绘制一个渐变的矩形
 		virtual void draw2DRectangle(const rect<SINT32>& pos,
 			ColourValue colorLeftUp, ColourValue colorRightUp, ColourValue colorLeftDown, ColourValue colorRightDown,
 			const rect<SINT32>* clip = 0);
 
-		//! Draws the outline of a 2d rectangle
+		//! 绘制一个离线的2d矩形
 		virtual void draw2DRectangleOutline(const recti& pos, ColourValue color = ColourValue::getColourValue(255, 255, 255, 255));
 
-		//! Draws a 2d line.
+		//! 绘制一个2的线段
 		virtual void draw2DLine(const Vector2& start,
 			const Vector2& end,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255));
 
-		//! Draws a pixel
+		//! 绘制一个像素
 		virtual void drawPixel(UINT32 x, UINT32 y, const ColourValue & color);
 
-		//! Draws a non filled concyclic reqular 2d polyon.
+		//! 绘制一个非填充的共圆的正规2d多边形
 		virtual void draw2DPolygon(Vector2 center,
 			Real radius, ColourValue Color, SINT32 vertexCount);
 
@@ -218,148 +207,139 @@ namespace Sapphire
 			Real& start, Real& end, Real& density,
 			bool& pixelFog, bool& rangeFog);
 
-		//! get color format of the current color buffer
+		//! 获取当前颜色缓冲区中的颜色格式
 		virtual ECOLOR_FORMAT getColorFormat() const;
 
-		//! get screen size
+		//! 获取屏幕大小
 		virtual const dimension2d<UINT32>& getScreenSize() const;
 
-		//! get render target size
+		//! 获取渲染目标大小
 		virtual const dimension2d<UINT32>& getCurrentRenderTargetSize() const;
 
-		// get current frames per second value
+		// 获取当前FPS数
 		virtual SINT32 getFPS() const;
 
-		//! returns amount of primitives (mostly triangles) were drawn in the last frame.
-		//! very useful method for statistics.
+		//! 返回在上一帧中绘制的图元数量（大多是三角形）
 		virtual UINT32 getPrimitiveCountDrawn(UINT32 param = 0) const;
 
-		//! deletes all dynamic lights there are
+		//! 删除所有动态光源
 		virtual void deleteAllDynamicLights();
 
-		//! adds a dynamic light, returning an index to the light
-		//! \param light: the light data to use to create the light
-		//! \return An index to the light, or -1 if an error occurs
+		//! 添加一个动态光源，返回这个光源的索引
+		//! \param light: 要创建光源的光源数据
+		//! \return 这个光源的索引，-1是发生错误
 		virtual SINT32 addDynamicLight(const SLight& light);
 
-		//! Turns a dynamic light on or off
-		//! \param lightIndex: the index returned by addDynamicLight
-		//! \param turnOn: true to turn the light on, false to turn it off
+		//! 打开或关闭一个动态光源
+		//! \param lightIndex: addDynamicLight所返回的索引
+		//! \param turnOn: true为打开，false为关闭
 		virtual void turnLightOn(SINT32 lightIndex, bool turnOn);
 
-		//! returns the maximal amount of dynamic lights the device can handle
+		//! 返回这个设备能够支持的动态光源的最大数量
 		virtual UINT32 getMaximalDynamicLightAmount() const;
 
-		//! \return Returns the name of the video driver. Example: In case of the DIRECT3D8
-		//! driver, it would return "Direct3D8.1".
+		//! \return 返回视频驱动名: 例如DIRECT3D8驱动，返回“Direct3D8.1”
 		virtual const wchar_t* getName() const;
 
-		//! Sets the dynamic ambient light color. The default color is
-		//! (0,0,0,0) which means it is dark.
-		//! \param color: New color of the ambient light.
+		//! 设置动态环境光颜色。这个默认值是（0，0，0，0）黑色
+		//! \param color: 新设置的环境光颜色
 		virtual void setAmbientLight(const ColourValue& color);
 
-		//! Adds an external image loader to the engine.
+		//! 添加一个额外的图像加载器给引擎
 		virtual void addExternalImageLoader(IImageLoader* loader);
 
-		//! Adds an external image writer to the engine.
+		//! 添加一个额外的图像写入器给引擎
 		virtual void addExternalImageWriter(IImageWriter* writer);
 
-		//! Draws a shadow volume into the stencil buffer. To draw a stencil shadow, do
-		//! this: Frist, draw all geometry. Then use this method, to draw the shadow
-		//! volume. Then, use IVideoDriver::drawStencilShadow() to visualize the shadow.
-		virtual void drawStencilShadowVolume(const vector<Vector3>& triangles, bool zfail = true, UINT32 debugDataVisible = 0);
+		//! 绘制一个阴影容积到模板缓冲区中。要绘制一个模板阴影：首先,会所有几何体。再用这个方法，去绘制阴影容积。
+		//然后，用IVideoDriver::drawStencilShadow()去可视化阴影
+		virtual void drawStencilShadowVolume(const vector<Vector3>::type& triangles, bool zfail = true, UINT32 debugDataVisible = 0);
 
-		//! Fills the stencil shadow with color. After the shadow volume has been drawn
-		//! into the stencil buffer using IVideoDriver::drawStencilShadowVolume(), use this
-		//! to draw the color of the shadow.
+		//! 在用IVideoDriver::drawStencilShadowVolume()阴影容积绘制到模板缓冲区后，用颜色填充模板阴影。
+		//! 这个方法绘制阴影的颜色
 		virtual void drawStencilShadow(bool clearStencilBuffer = false,
 			ColourValue leftUpEdge = ColourValue(0, 0, 0, 0),
 			ColourValue rightUpEdge = ColourValue(0, 0, 0, 0),
 			ColourValue leftDownEdge = ColourValue(0, 0, 0, 0),
 			ColourValue rightDownEdge = ColourValue(0, 0, 0, 0));
 
-		//! Returns current amount of dynamic lights set
-		//! \return Current amount of dynamic lights set
+		//! 返回当前设置的动态光源数量
+		//! \return 当前设置的动态光源数量
 		virtual UINT32 getDynamicLightCount() const;
 
-		//! Returns light data which was previously set with IVideDriver::addDynamicLight().
-		//! \param idx: Zero based index of the light. Must be greater than 0 and smaller
-		//! than IVideoDriver()::getDynamicLightCount.
-		//! \return Light data.
+		//! 返回之前通过IVideDriver::addDynamicLight()设置的光源数据
+		//! \param idx: 索引从0开始，小于IVideoDriver()::getDynamicLightCount
+		//! \return 光源数据SLight
 		virtual const SLight& getDynamicLight(UINT32 idx) const;
 
-		//! Removes a texture from the texture cache and deletes it, freeing lot of
-		//! memory.
+		//! 从纹理缓冲区移除纹理并且删除它，释放大量内存
 		virtual void removeTexture(ITexture* texture);
 
-		//! Removes all texture from the texture cache and deletes them, freeing lot of
-		//! memory.
+		//!  从纹理缓冲区移除所有纹理并且删除它们，释放大量内存
 		virtual void removeAllTextures();
 
-		//! Creates a render target texture.
+		//! 创建一个渲染目标纹理
 		virtual ITexture* addRenderTargetTexture(const dimension2d<UINT32>& size,
 			const path& name, const ECOLOR_FORMAT format = ECF_UNKNOWN);
 
-		//! Creates an 1bit alpha channel of the texture based of an color key.
+		//! 创建一个1位的基于一个色键的纹理alpha通道
 		virtual void makeColorKeyTexture(ITexture* texture, ColourValue color, bool zeroTexels) const;
 
-		//! Creates an 1bit alpha channel of the texture based of an color key position.
+		//! 创建一个1位的基于一个色键位置的纹理alpha通道
 		virtual void makeColorKeyTexture(ITexture* texture, Vector2 colorKeyPixelPos, bool zeroTexels) const;
 
-		//! Creates a normal map from a height map texture.
-		//! \param amplitude: Constant value by which the height information is multiplied.
+		//! 高程纹理图创建一个法线贴图
+		//! \param amplitude: 高度信息的增幅常量值
 		virtual void makeNormalMapTexture(ITexture* texture, Real amplitude = 1.0f) const;
 
-		//! Returns the maximum amount of primitives (mostly vertices) which
-		//! the device is able to render with one drawIndexedTriangleList
-		//! call.
+		//! 返回设备所能够用drawIndexedTriangleList渲染的图元的最大数量 
 		virtual UINT32 getMaximalPrimitiveCount() const;
 
-		//! Enables or disables a texture creation flag.
+		//! 打开或关闭一个纹理创建标准
 		virtual void setTextureCreationFlag(E_TEXTURE_CREATION_FLAG flag, bool enabled);
 
-		//! Returns if a texture creation flag is enabled or disabled.
+		//! 返回一个纹理创建标志是否打开或关闭
 		virtual bool getTextureCreationFlag(E_TEXTURE_CREATION_FLAG flag) const;
 
-		//! Creates a software image from a file.
+		//! 从一个文件创建一个软图像
 		virtual IImage* createImageFromFile(const path& filename);
 
-		//! Creates a software image from a file.
+		//! 从一个文件创建一个软图像
 		virtual IImage* createImageFromFile(IReadFile* file);
 
-		//! Creates a software image from a byte vector.
-		/** \param useForeignMemory: If true, the image will use the data pointer
-		directly and own it from now on, which means it will also try to delete [] the
-		data when the image will be destructed. If false, the memory will by copied. */
+		//! 从一个字节数组创建一个软图像
+		/** \param useForeignMemory: 如果为true，这个图像将直接使用原始图像数据指针，这样可以通过delete[]来销毁图像数据。
+		如果为false，图像将被复制一份。
+		 */
 		virtual IImage* createImageFromData(ECOLOR_FORMAT format,
 			const dimension2d<UINT32>& size, void *data,
 			bool ownForeignMemory = true, bool deleteForeignMemory = true);
 
-		//! Creates an empty software image.
+		//! 创建一个空的软件图像
 		virtual IImage* createImage(ECOLOR_FORMAT format, const dimension2d<UINT32>& size);
 
 
-		//! Creates a software image from another image.
+		//! 从另外图像创建一个软件图像
 		virtual IImage* createImage(ECOLOR_FORMAT format, IImage *imageToCopy);
 
-		//! Creates a software image from part of another image.
+		//!从另外图像的一部分创建一个软件图像 Creates a software image from part of another image.
 		virtual IImage* createImage(IImage* imageToCopy,
 			const Vector2& pos,
 			const dimension2d<UINT32>& size);
 
-		//! Creates a software image from part of a texture.
+		//! 从另外图像创建一个软件图像
 		virtual IImage* createImage(ITexture* texture,
 			const Vector2& pos,
 			const dimension2d<UINT32>& size);
 
-		//! Draws a mesh buffer
+		//! 绘制一个网格缓冲区
 		virtual void drawMeshBuffer(const IMeshBuffer* mb);
 
-		//! Draws the normals of a mesh buffer
+		//! 绘制一个网格缓冲区的法线
 		virtual void drawMeshBufferNormals(const IMeshBuffer* mb, Real length = 10.f, ColourValue color = ColourValue::getColourValue(255, 255, 255, 255));
 
 	protected:
+		//硬件缓冲区链接
 		struct SHWBufferLink
 		{
 			SHWBufferLink(const IMeshBuffer *_MeshBuffer)
@@ -385,126 +365,117 @@ namespace Sapphire
 			E_HARDWARE_MAPPING Mapped_Index;
 		};
 
-		//! Gets hardware buffer link from a meshbuffer (may create or update buffer)
+		//! 从一个网格缓冲区获取硬件缓冲区链接(用于创建或更新缓冲区)
 		virtual SHWBufferLink *getBufferLink(const IMeshBuffer* mb);
 
-		//! updates hardware buffer if needed  (only some drivers can)
+		//! 如果需要更新硬件缓冲区(只对某些驱动有效)
 		virtual bool updateHardwareBuffer(SHWBufferLink *HWBuffer) { return false; }
 
-		//! Draw hardware buffer (only some drivers can)
+		//! 绘制硬件缓冲区(只对某些驱动有效)
 		virtual void drawHardwareBuffer(SHWBufferLink *HWBuffer) {}
 
-		//! Delete hardware buffer
+		//! 删除硬件缓冲区
 		virtual void deleteHardwareBuffer(SHWBufferLink *HWBuffer);
 
-		//! Create hardware buffer from mesh (only some drivers can)
+		//! 从网格创建硬件缓冲区(只对某些驱动有效)
 		virtual SHWBufferLink *createHardwareBuffer(const IMeshBuffer* mb) { return 0; }
 
 	public:
-		//! Update all hardware buffers, remove unused ones
+		//! 更新索引硬件缓冲区，移除不用的
 		virtual void updateAllHardwareBuffers();
 
-		//! Remove hardware buffer
+		//! 移除硬件缓冲区
 		virtual void removeHardwareBuffer(const IMeshBuffer* mb);
 
-		//! Remove all hardware buffers
+		//! 移除所有硬件缓冲区
 		virtual void removeAllHardwareBuffers();
 
-		//! is vbo recommended on this mesh?
+		//! 这个网格是否推荐使用VBO
 		virtual bool isHardwareBufferRecommend(const IMeshBuffer* mb);
 
-		//! Create occlusion query.
-		/** Use node for identification and mesh for occlusion test. */
+		//! 创建添加遮蔽查询
+		/**  用来确认和遮蔽测试的节点*/
 		virtual void addOcclusionQuery(ISceneNode* node,
 			const IMesh* mesh = 0);
 
-		//! Remove occlusion query.
+		//! 移除遮蔽查询
 		virtual void removeOcclusionQuery(ISceneNode* node);
 
-		//! Remove all occlusion queries.
+		//! 移除遮蔽查询
 		virtual void removeAllOcclusionQueries();
 
-		//! Run occlusion query. Draws mesh stored in query.
-		/** If the mesh shall not be rendered visible, use
-		overrideMaterial to disable the color and depth buffer. */
+		//! 运行遮蔽查询。绘制存放在查询中的网格
+		/** 如果网格不被渲染为可见的，用overrideMaterial来关闭颜色和深度缓冲 */
 		virtual void runOcclusionQuery(ISceneNode* node, bool visible = false);
 
-		//! Run all occlusion queries. Draws all meshes stored in queries.
-		/** If the meshes shall not be rendered visible, use
-		overrideMaterial to disable the color and depth buffer. */
+		//! 允许所有的遮蔽查询。绘制所有存放在查询中的网格
+		/** 如果网格不被渲染为可见的，用overrideMaterial来关闭颜色和深度缓冲 */
 		virtual void runAllOcclusionQueries(bool visible = false);
 
-		//! Update occlusion query. Retrieves results from GPU.
-		/** If the query shall not block, set the flag to false.
-		Update might not occur in this case, though */
+		//! 更新遮蔽查询。从GPU返回结果
+		/** 如果查询不被阻塞，设置标志为false 。更新在这里不会发生 */
 		virtual void updateOcclusionQuery(ISceneNode* node, bool block = true);
 
-		//! Update all occlusion queries. Retrieves results from GPU.
-		/** If the query shall not block, set the flag to false.
-		Update might not occur in this case, though */
+		//! 更新所有的遮蔽查询。从GPU返回结果
+		/**如果查询不被阻塞，设置标志为false 。更新在这里不会发生 */
 		virtual void updateAllOcclusionQueries(bool block = true);
 
-		//! Return query result.
-		/** Return value is the number of visible pixels/fragments.
-		The value is a safe approximation, i.e. can be larger than the
-		actual value of pixels. */
+		//! 返回查询结果
+		/** 返回值是可见的像素/片段的数量。这个值是一个安全的近似值，能够大于实际像素值
+		*/
 		virtual UINT32 getOcclusionQueryResult(ISceneNode* node) const;
 
-		//! Only used by the engine internally.
-		/** Used to notify the driver that the window was resized. */
+		//! 只背引擎内部使用
+		/**用于提醒驱动：窗口大小已经改变 */
 		virtual void OnResize(const dimension2d<UINT32>& size);
 
-		//! Adds a new material renderer to the video device.
+		//! 添加一个新材质渲染器到视频设备
 		virtual SINT32 addMaterialRenderer(IMaterialRenderer* renderer,
 			const char* name = 0);
 
-		//! Returns driver and operating system specific data about the IVideoDriver.
+		//! 返回驱动和操作系统关于IVideoDriver的指定数据
 		virtual const SExposedVideoData& getExposedVideoData();
 
-		//! Returns type of video driver
+		//! 返回视频驱动类型
 		virtual E_DRIVER_TYPE getDriverType() const;
 
-		//! Returns the transformation set by setTransform
+		//! 返回通过setTransform设置的变换矩阵
 		virtual const Matrix4& getTransform(E_TRANSFORMATION_STATE state) const;
 
-		//! Returns pointer to the IGPUProgrammingServices interface.
+		//! 返回指向IGPUProgrammingServices接口的指针
 		virtual IGPUProgrammingServices* getGPUProgrammingServices();
 
-		//! Adds a new material renderer to the VideoDriver, using pixel and/or
-		//! vertex shaders to render geometry.
+		//! 添加一个新的材质渲染器到视频驱动，用vertex shader或pixel shader来渲染几何体
 		virtual SINT32 addShaderMaterial(const c8* vertexShaderProgram = 0,
 			const c8* pixelShaderProgram = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0);
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but tries to load the
-		//! programs from files.
+		//! 像IGPUProgrammingServices::addShaderMaterial(), 但是尝试从文件中加载程序
 		virtual SINT32 addShaderMaterialFromFiles(IReadFile* vertexShaderProgram = 0,
 			IReadFile* pixelShaderProgram = 0,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0);
 
-		//! Like IGPUProgrammingServices::addShaderMaterial(), but tries to load the
-		//! programs from files.
+		//! 像IGPUProgrammingServices::addShaderMaterial(), 但是尝试从文件中加载程序
 		virtual SINT32 addShaderMaterialFromFiles(const path& vertexShaderProgramFileName,
 			const path& pixelShaderProgramFileName,
 			IShaderConstantSetCallBack* callback = 0,
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0);
 
-		//! Returns pointer to material renderer or null
+		//! 返回指向材质渲染器或NULL的指针
 		virtual IMaterialRenderer* getMaterialRenderer(UINT32 idx);
 
-		//! Returns amount of currently available material renderers.
+		//! 返回当前可用的材质渲染器的数量
 		virtual UINT32 getMaterialRendererCount() const;
 
-		//! Returns name of the material renderer
+		//! 返回材质渲染器的名字
 		virtual const char* getMaterialRendererName(UINT32 idx) const;
 
-		//! Adds a new material renderer to the VideoDriver, based on a high level shading
-		//! language. Currently only HLSL in D3D9 is supported.
+		//! 添加一个新的材质渲染器到视频驱动，基于HLSL，当前只在D3D9支持
 		virtual SINT32 addHighLevelShaderMaterial(
 			const c8* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName = 0,
@@ -522,8 +493,8 @@ namespace Sapphire
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0, E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT);
 
-		//! Like IGPUProgrammingServices::addShaderMaterial() (look there for a detailed description),
-		//! but tries to load the programs from files.
+		//! 类似IGPUProgrammingServices::addShaderMaterial()  
+		//! 但尝试从文件里加载程序
 		virtual SINT32 addHighLevelShaderMaterialFromFiles(
 			const path& vertexShaderProgramFile,
 			const c8* vertexShaderEntryPointName = "main",
@@ -541,8 +512,8 @@ namespace Sapphire
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0, E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT);
 
-		//! Like IGPUProgrammingServices::addShaderMaterial() (look there for a detailed description),
-		//! but tries to load the programs from files.
+		//! 类似IGPUProgrammingServices::addShaderMaterial()  
+		//! 但尝试从文件里加载程序
 		virtual SINT32 addHighLevelShaderMaterialFromFiles(
 			IReadFile* vertexShaderProgram,
 			const c8* vertexShaderEntryPointName = "main",
@@ -560,124 +531,121 @@ namespace Sapphire
 			E_MATERIAL_TYPE baseMaterial = EMT_SOLID,
 			SINT32 userData = 0, E_GPU_SHADING_LANGUAGE shadingLang = EGSL_DEFAULT);
 
-		//! Returns a pointer to the mesh manipulator.
+		//! 返回一个指向mesh manipulator.的指针
 		virtual IMeshManipulator* getMeshManipulator();
 
-		//! Clears the ZBuffer.
+		//! 清空ZBuffer.
 		virtual void clearZBuffer();
 
-		//! Returns an image created from the last rendered frame.
+		//! 返回一个上一帧创建的图像
 		virtual IImage* createScreenShot(ECOLOR_FORMAT format = ECF_UNKNOWN, E_RENDER_TARGET target = ERT_FRAME_BUFFER);
 
-		//! Writes the provided image to disk file
+		//! 写入提供的图像到磁盘文件
 		virtual bool writeImageToFile(IImage* image, const path& filename, UINT32 param = 0);
 
-		//! Writes the provided image to a file.
+		//! 写入提供的图像到磁盘文件
 		virtual bool writeImageToFile(IImage* image, IWriteFile * file, UINT32 param = 0);
 
-		//! Sets the name of a material renderer.
+		//! 设置一个材质渲染器的名字
 		virtual void setMaterialRendererName(SINT32 idx, const char* name);
 
-		//! Creates material attributes list from a material, usable for serialization and more.
+		//! 从一个材质创建材质属性列表
 		virtual IAttributes* createAttributesFromMaterial(const SMaterial& material,
 			SAttributeReadWriteOptions* options = 0);
 
-		//! Fills an SMaterial structure from attributes.
+		//! 用attributes填充一个结构
 		virtual void fillMaterialStructureFromAttributes(SMaterial& outMaterial, IAttributes* attributes);
 
-		//! looks if the image is already loaded
+		//! 看看图像是否已经被加载
 		virtual ITexture* findTexture(const path& filename);
 
-		//! Set/unset a clipping plane.
-		//! There are at least 6 clipping planes available for the user to set at will.
-		//! \param index: The plane index. Must be between 0 and MaxUserClipPlanes.
-		//! \param plane: The plane itself.
-		//! \param enable: If true, enable the clipping plane else disable it.
+		//! 设置/取消设置 一个剪裁平面
+		//! 有最少6个剪裁平面用户可以设置
+		//! \param index: 平面的索引。必须在0到MaxUserClipPlanes.
+		//! \param plane: 平面自身
+		//! \param enable: 如果为true，打开剪裁平面，否则关闭它
 		virtual bool setClipPlane(UINT32 index, const Plane& plane, bool enable = false);
 
-		//! Enable/disable a clipping plane.
-		//! There are at least 6 clipping planes available for the user to set at will.
-		//! \param index: The plane index. Must be between 0 and MaxUserClipPlanes.
-		//! \param enable: If true, enable the clipping plane else disable it.
+		//! 打开/关闭一个剪裁平面
+		//! 有最少6个剪裁平面用户可以设置
+		//! \param plane: 平面自身
+		//! \param enable: 如果为true，打开剪裁平面，否则关闭它
 		virtual void enableClipPlane(UINT32 index, bool enable);
 
-		//! Returns the graphics card vendor name.
+		//! 返回显卡供应商名称
 		virtual String getVendorInfo() { return "Not available on this driver."; }
 
-		//! Set the minimum number of vertices for which a hw buffer will be created
-		/** \param count Number of vertices to set as minimum. */
+		//! 设置一个硬件缓冲区所创建的最小顶点数
+		/** \param count 顶点数目的最小值 */
 		virtual void setMinHardwareBufferVertexCount(UINT32 count);
 
-		//! Get the global Material, which might override local materials.
-		/** Depending on the enable flags, values from this Material
-		are used to override those of local materials of some
-		meshbuffer being rendered. */
+		//! 获取全局材质，它可以覆盖本地材质
+		/** 依赖enable标志， 这个材质的值用于覆盖某些在渲染的网格缓冲区的一些本地材质*/
 		virtual SOverrideMaterial& getOverrideMaterial();
 
-		//! Get the 2d override material for altering its values
+		//! 为了修改它的值获取Get the 2d override material for altering its values
 		virtual SMaterial& getMaterial2D();
 
-		//! Enable the 2d override material
+		//! 打开2d覆盖材质
 		virtual void enableMaterial2D(bool enable = true);
 
-		//! Only used by the engine internally.
+		//! 只用于引擎内部
 		virtual void setAllowZWriteOnTransparent(bool flag)
 		{
 			AllowZWriteOnTransparent = flag;
 		}
 
-		//! Returns the maximum texture size supported.
+		//! 返回所支持的最大纹理大小
 		virtual dimension2du getMaxTextureSize() const;
 
-		//! Color conversion convenience function
-		/** Convert an image (as vector of pixels) from source to destination
-		vector, thereby converting the color format. The pixel size is
-		determined by the color formats.
-		\param sP Pointer to source
-		\param sF Color format of source
-		\param sN Number of pixels to convert, both vector must be large enough
-		\param dP Pointer to destination
-		\param dF Color format of destination
+		//! 颜色转换函数
+		/** 将一个图像（一个像素数组）转换到目的格式的图像（像素数组）.
+		像素大小由颜色格式决定
+		\param sP 源图像指针
+		\param sF 源图像颜色格式
+		\param sN 转换的像素格式，两个数组必须一样大小
+		\param dP 目的图像制作
+		\param dF 目的图像格式
 		*/
 		virtual void convertColor(const void* sP, ECOLOR_FORMAT sF, SINT32 sN,
 			void* dP, ECOLOR_FORMAT dF) const;
 
-		//! deprecated method
+		 
 		virtual ITexture* createRenderTargetTexture(const dimension2d<UINT32>& size,
 			const c8* name = 0);
 
 		virtual bool checkDriverReset() { return false; }
 	protected:
 
-		//! deletes all textures
+		//! 删除所有纹理
 		void deleteAllTextures();
 
-		//! opens the file and loads it into the surface
+		//! 打开文件并且加载它到表面
 		ITexture* loadTextureFromFile(IReadFile* file, const path& hashName = "");
 
-		//! adds a surface, not loaded or created by the Irrlicht Engine
+		//! 添加一个表面，不被引擎加载或创建
 		void addTexture(ITexture* surface);
 
-		//! Creates a texture from a loaded IImage.
+		//! 从一个已加载图像创建纹理
 		virtual ITexture* addTexture(const path& name, IImage* image, void* mipmapData = 0);
 
-		//! returns a device dependent texture from a software surface (IImage)
-		//! THIS METHOD HAS TO BE OVERRIDDEN BY DERIVED DRIVERS WITH OWN TEXTURES
+		//! 由一个软件表面（IImage）返回一个设备依赖的纹理
+		//! 这个方法将由设备驱动使用自己的纹理所覆盖
 		virtual ITexture* createDeviceDependentTexture(IImage* surface, const path& name, void* mipmapData = 0);
 
-		//! checks triangle count and print warning if wrong
+		//! 检测三角形数量并且如果错误输出警告
 		bool checkPrimitiveCount(UINT32 prmcnt) const;
 
-		// adds a material renderer and drops it afterwards. To be used for internal creation
+		// 添加一个材质渲染器并且之后丢弃它。用于内部操作
 		SINT32 addAndDropMaterialRenderer(IMaterialRenderer* m);
 
-		//! deletes all material renderers
+		//! 删除所有材质渲染器
 		void deleteMaterialRenders();
 
-		// prints renderer version
+		// 输出渲染器版本
 		void printVersion();
 
-		//! normal map lookup 32 bit version
+		//! 法线图查询32位版本
 		inline Real nml32(int x, int y, int pitch, int height, SINT32 *p) const
 		{
 			if (x < 0) x = pitch - 1; if (x >= pitch) x = 0;
@@ -685,7 +653,7 @@ namespace Sapphire
 			return (Real)(((p[(y * pitch) + x]) >> 16) & 0xff);
 		}
 
-		//! normal map lookup 16 bit version
+		//!  法线图查询16位版本
 		inline Real nml16(int x, int y, int pitch, int height, SINT16 *p) const
 		{
 			if (x < 0) x = pitch - 1; if (x >= pitch) x = 0;
@@ -724,7 +692,7 @@ namespace Sapphire
 			virtual void regenerateMipMapLevels(void* mipmapData = 0) {};
 			dimension2d<UINT32> size;
 		};
-		vector<SSurface> Textures;
+		vector<SSurface>::type Textures;
 
 		struct SOccQuery
 		{
@@ -781,15 +749,15 @@ namespace Sapphire
 			UINT32 Result;
 			UINT32 Run;
 		};
-		vector<SOccQuery> OcclusionQueries;
+		vector<SOccQuery>::type OcclusionQueries;
 
-		vector<IImageLoader*> SurfaceLoader;
-		vector<IImageWriter*> SurfaceWriter;
-		vector<SLight> Lights;
-		vector<SMaterialRenderer> MaterialRenderers;
+		vector<IImageLoader*>::type SurfaceLoader;
+		vector<IImageWriter*>::type SurfaceWriter;
+		vector<SLight>::type Lights;
+		vector<SMaterialRenderer>::type MaterialRenderers;
 
 		//vector<SHWBufferLink*> HWBufferLinks;
-		map< const IMeshBuffer*, SHWBufferLink* > HWBufferMap;
+		map< const IMeshBuffer*, SHWBufferLink* >::type HWBufferMap;
 
 		IFileSystem* FileSystem;
 

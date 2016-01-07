@@ -95,7 +95,7 @@ namespace Sapphire
 
 	private:
 
-		//! assumes format and size has been set and creates the rest
+		//! 假设格式和大小以及被设置并且剩余部分已经被创建
 		void initData();
 
 		inline ColourValue getPixelBox(SINT32 x, SINT32 y, SINT32 fx, SINT32 fy, SINT32 bias) const;

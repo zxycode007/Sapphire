@@ -1,4 +1,4 @@
-#ifndef _SAPPHIRE_ITEXTURE_
+ #ifndef _SAPPHIRE_ITEXTURE_
 #define _SAPPHIRE_ITEXTURE_
 
 #include "SapphireEDriverTypes.h"
@@ -76,7 +76,7 @@ namespace Sapphire
 	如果你尝试使用一个设备与一个其它设备创建的纹理，这个设备会拒绝这样做并且输出一个警告或错误信息到输出缓冲区。
 	*/
 	//class ITexture : public virtual IReferenceCounted
-	class ITexture 
+	class ITexture : public virtual IReferenceCounter
 	{
 	public:
 
@@ -175,6 +175,11 @@ namespace Sapphire
 
 		SNamedPath NamedPath;
 	};
+
+	bool ITextureCMP(const ITexture& a, const ITexture& b)
+	{
+		return (a.getSize().getArea() < b.getSize().getArea());
+	}
 }
 
 #endif

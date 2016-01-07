@@ -140,6 +140,7 @@ namespace Sapphire
 #define SAPPHIRE_VERSION_PATCH 1
 #define SAPPHIRE_VERSION_SUFFIX ""
 #define SAPPHIRE_VERSION_NAME "Sapphire"
+#define SAPPHIRE_LOCATION_SET "chs"
 
 #define SAPPHIRE_VERSION    ((SAPPHIRE_VERSION_MAJOR << 16) | (SAPPHIRE_VERSION_MINOR << 8) | SAPPHIRE_VERSION_PATCH)
 
@@ -445,10 +446,12 @@ namespace Sapphire
 		typedef typename std::vector<T, A> type;
 		typedef typename std::vector<T, A>::iterator iterator;
 		typedef typename std::vector<T, A>::const_iterator const_iterator;
+		 
 #else
 		typedef typename std::vector<T> type;
 		typedef typename std::vector<T>::iterator iterator;
 		typedef typename std::vector<T>::const_iterator const_iterator;
+	 
 		 
 #endif
 	};

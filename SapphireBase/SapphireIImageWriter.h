@@ -10,7 +10,7 @@ namespace Sapphire
 	class IImage;
 
 	//! 写入软件图像数据的接口
-	class IImageWriter 
+	class IImageWriter : public virtual IReferenceCounter
 	{
 	public:
 		//! 通过一个给定扩展名检查Writer能否写入一个文件

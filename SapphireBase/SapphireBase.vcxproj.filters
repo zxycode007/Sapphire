@@ -64,6 +64,12 @@
     <Filter Include="源文件\rendersystem\SoftDriver">
       <UniqueIdentifier>{c438623e-42f3-4ede-b752-d98c55301a77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\IO">
+      <UniqueIdentifier>{0c997ba9-93b6-4956-9725-5e4a339338cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\NewFilter1">
+      <UniqueIdentifier>{69e39824-6c98-4578-98aa-5a6d0f57984b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -567,6 +573,18 @@
     <ClInclude Include="SapphireIMaterialRendererServices.h">
       <Filter>头文件\renderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireIAttribute.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCAtrributes.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCompileConifg.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMeshManipulator.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -655,6 +673,15 @@
     </ClCompile>
     <ClCompile Include="SapphireCFPSCounter.cpp">
       <Filter>源文件\rendersystem\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCNullDriver.cpp">
+      <Filter>源文件\rendersystem\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCAttributes.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCAttributeImpl.h">
+      <Filter>源文件\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

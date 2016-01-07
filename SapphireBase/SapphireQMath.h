@@ -494,6 +494,22 @@ namespace Sapphire
 		return s32_log2_f32((float32)x);
 	}
 
+	FORCEINLINE void clearFPUException()
+	{
+#if (SAPPHIRE_FAST_MATH)
+		return;
+#ifdef feclearexcept
+		feclearexcept(FE_ALL_EXCEPT);
+#elif defined(_MSC_VER)
+		__asm fnclex;
+#elif defined(__GNUC__) && defined(__x86__)
+		__asm__ __volatile__ ("fclex \n\t");
+#else
+		#  warn clearFPUException not supported.
+#endif
+#endif
+	}
+
 
 #if 0
 	//! 返回a是否等于b， 不使用任何进位误差

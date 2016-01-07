@@ -26,7 +26,9 @@ namespace Sapphire {
 	{
 		LML_TRIVIAL = 1,
 		LML_NORMAL = 2,
-		LML_CRITICAL = 3
+		LML_CRITICAL = 3,
+		LML_WARNING = 4,
+		LML_ERROR = 5
 	};
 
 	/** @remarks 纯抽象类，导出这个类注册到日志并监听日志信息 */

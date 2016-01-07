@@ -103,6 +103,7 @@ void TestSTL()
 	std::cout << u2.name << std::endl;
 	std::cout << "TEST STL"<<v.size() << std::endl;
 	
+	
  
 }
 
@@ -142,6 +143,9 @@ int main()
 	ud->name = s3;
 	ud->age = 14;
 	SAPPHIRE_DELETE_T(ud, UserData, MEMCATEGORY_GENERAL);
+
+	
+	 
 
 	UserData* ud2 = SAPPHIRE_NEW UserData();
 	ud->name = s3;
@@ -227,6 +231,8 @@ int main()
 
 	TestSharedPtr();
 	
+	
+
 	getchar();
 	
 	
@@ -236,6 +242,14 @@ int main()
 } 
 
 
+void testSTLVECTOR()
+{
+	std::vector<int, STLAllocator<int, GeneralAllocPolicy>> v;
+	v.push_back(5);
+	Sapphire::vector<int>::type m;
+	
+	
+}
 
 void TestSVertex()
 {
