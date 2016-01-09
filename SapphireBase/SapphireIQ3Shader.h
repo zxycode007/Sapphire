@@ -96,11 +96,11 @@ namespace Sapphire
 			return -2;
 		}
 		//！ 将字符串转换为浮点数
-		inline Real getAsFloat(const String &string, UINT32 &pos)
+		inline FLOAT32 getAsFloat(const String &string, UINT32 &pos)
 		{
 			const char * in = string.c_str() + pos;
 
-			Real value = 0.f;
+			FLOAT32 value = 0.f;
 			pos += (UINT32)(fast_atof_move(in, value) - in) + 1;
 			return value;
 		}

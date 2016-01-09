@@ -449,7 +449,7 @@ namespace Sapphire
 		/** 如果目标纹理32位， 高度值作为附加保存在纹理的alpha分量。这个值用于EMT_PARALLAX_MAP_SOLID材质和相似的纹理
 		\param texture 要修改alpha通道的纹理
 		\param amplitude 乘以高度信息的常数*/
-		virtual void makeNormalMapTexture(ITexture* texture, Real amplitude = 1.0f) const = 0;
+		virtual void makeNormalMapTexture(ITexture* texture, FLOAT32 amplitude = 1.0f) const = 0;
 
 		//! 设置一个新渲染目标
 		/** 
@@ -489,7 +489,7 @@ namespace Sapphire
 			ColourValue color = ColourValue(0, 0, 0, 0)) = 0;
 
 		//! 设置新的多渲染目标
-		virtual bool setRenderTarget(const vector<IRenderTarget>& texture,
+		virtual bool setRenderTarget(const vector<IRenderTarget>::type& texture,
 			bool clearBackBuffer = true, bool clearZBuffer = true,
 			ColourValue color = ColourValue(0, 0, 0, 0)) = 0;
 
@@ -696,8 +696,8 @@ namespace Sapphire
 		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。 */
 		virtual void draw2DImageBatch(const ITexture* texture,
 			const Vector2& pos,
-			const vector<rect<SINT32> >& sourceRects,
-			const vector<SINT32>& indices,
+			const vector<rect<SINT32> >::type& sourceRects,
+			const vector<SINT32>::type& indices,
 			SINT32 kerningWidth = 0,
 			const  rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
@@ -715,8 +715,8 @@ namespace Sapphire
 		注意：这个alpha分量被使用；如果alpha不是255，这个图像会透明
 		\param useAlphaChannelOfTexture: 如果为true，使用这个纹理的alpha通道绘制这个纹理。 */
 		virtual void draw2DImageBatch(const ITexture* texture,
-			const vector<Vector2 >& positions,
-			const vector<rect<SINT32> >& sourceRects,
+			const vector<Vector2 >::type& positions,
+			const vector<rect<SINT32> >::type& sourceRects,
 			const rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false) = 0;
@@ -800,7 +800,7 @@ namespace Sapphire
 		\param zfail如果设置为true，zfail的方法会被使用，否则使用zpass
 		\param debugDataVisible debug数据对于这个阴影节点的开启 
 		*/
-		virtual void drawStencilShadowVolume(const vector<Vector3>& triangles, bool zfail = true, UINT32 debugDataVisible = 0) = 0;
+		virtual void drawStencilShadowVolume(const vector<Vector3>::type &triangles, bool zfail = true, UINT32 debugDataVisible = 0) = 0;
 
 		//! 用颜色填充模板阴影
 		/** IVideoDriver::drawStencilShadowVolume()阴影容积已经被添加到模板缓冲区后，

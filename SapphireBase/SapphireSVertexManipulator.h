@@ -248,7 +248,8 @@ namespace Sapphire
 		template <typename VType>
 		void operator()(VType& vertex) const
 		{
-			Transformation.transformVect(vertex.Pos);
+			//Transformation.transformVect(vertex.Pos);
+			Transformation.transformAffine(vertex.Pos);
 		}
 	private:
 		Matrix4 Transformation;

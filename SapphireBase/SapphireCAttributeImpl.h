@@ -1000,7 +1000,7 @@ namespace Sapphire
 				if (Count > 1) ValueI[1] = (SINT32)v.y;
 			}
 		}
-
+		/*
 		virtual void setVector2d(Vector2 v)
 		{
 			reset();
@@ -1015,7 +1015,7 @@ namespace Sapphire
 				if (Count > 1) ValueI[1] = v.y;
 			}
 		}
-
+		*/
 		virtual void setLine2d(line2di v)
 		{
 			reset();
@@ -1194,7 +1194,7 @@ namespace Sapphire
 
 		CColorAttribute(const char* name, const ColourValue& value) : CNumbersAttribute(name, value) {}
 
-		CColorAttribute(const char* name, const ColourValue& value) : CNumbersAttribute(name, value) {}
+//		CColorAttribute(const char* name, const ColourValue& value) : CNumbersAttribute(name, value) {}
 
 		virtual SINT32 getInt()
 		{

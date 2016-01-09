@@ -298,6 +298,18 @@ namespace Sapphire
 			return x * x + y * y;
 		}
 
+		inline SINT32 getXi() const
+		{
+			return (SINT32)(x + 0.5);
+		}
+
+		inline SINT32 getYi() const
+		{
+			 
+			return (SINT32)(y+0.5);
+		}
+
+
 		/** 
 		
 		返回与另一个向量的距离

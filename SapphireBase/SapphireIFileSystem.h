@@ -13,6 +13,7 @@ namespace Sapphire
 	class IReadFile;
 	class IWriteFile;
 	class IFileList;
+	//class IXMLReader;
 	class IXMLWriter;
 	class IAttributes;
 
@@ -239,7 +240,7 @@ namespace Sapphire
 		//! flatten a path and file name for example: "/you/me/../." becomes "/you"
 		virtual path& flattenFilename(path& directory, const path& root = "/") const = 0;
 
-		//! Get the relative filename, relative to the given directory
+		//! 获取相对文件名，相对于给定的目录
 		virtual path getRelativeFilename(const path& filename, const path& directory) const = 0;
 
 		//! Creates a list of files and directories in the current working directory and returns it.

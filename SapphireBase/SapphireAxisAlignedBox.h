@@ -372,6 +372,15 @@ namespace Sapphire
 			addInternalPoint(p.x, p.y, p.z);
 		}
 
+		//! 添加一个另外的AABB盒子
+		/** 这个盒子会成长更多，如果这个新盒子在这个盒子外面的话
+		\param b: 要添加到这个盒子的另一个包围盒子*/
+		void addInternalBox(const AxisAlignedBox& b)
+		{
+			addInternalPoint(b.getMaximum());
+			addInternalPoint(b.getMinimum());
+		}
+
 		//! 添加一个点到这个包围盒子
 		/** 如果这个点在盒子外面，这个盒子会变大
 		\param x 要添加到这个盒子的点的x坐标
@@ -416,6 +425,13 @@ namespace Sapphire
 		inline void reset(const Vector3& point)
 		{
 			setExtents(point, point);
+		}
+
+		//! 重设这个AABB盒子
+		/** \param initValue 要设置新盒子的对象*/
+		void reset(const AxisAlignedBox& initValue)
+		{
+			*this = initValue;
 		}
 
 		/** 

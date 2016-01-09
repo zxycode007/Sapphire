@@ -265,7 +265,7 @@ delete xml;
 See \ref irrxmlexample for a more detailed example.
 */
 template<class char_type, class super_class>
-class IIrrXMLReader : public super_class
+class IIrrXMLReader : public virtual super_class
 {
 public:
 

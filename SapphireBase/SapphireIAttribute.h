@@ -62,7 +62,7 @@ namespace Sapphire
 		virtual void setString(const wchar_t* text){ setString(StringW(text).c_str()); };
 		virtual void setArray(const vector<StringW>& arr)	{};
 		virtual void setColor(ColourValue color)	{};
-		virtual void setColor(ColourValue color)	{};
+		//virtual void setColor(ColourValue color)	{};
 		virtual void setBool(bool boolValue)		{};
 		virtual void setBinary(void* data, SINT32 maxLenght) {};
 		virtual void setVector(Vector3 v)	{};
@@ -72,7 +72,7 @@ namespace Sapphire
 		virtual void setMatrix(Matrix4 v) {};
 		virtual void setTriangle(triangle3df v) {};
 		virtual void setVector2d(Vector2 v) {};
-		virtual void setVector2d(Vector2 v) {};
+//		virtual void setVector2d(Vector2 v) {};
 		virtual void setLine2d(line2df v) {};
 		virtual void setLine2d(line2di v) {};
 		virtual void setLine3d(line3df v) {};

@@ -9,6 +9,7 @@
 
 namespace Sapphire
 {
+	class IFileList;
 	//! FileSystemType: which Filesystem should be used for e.g. browsing
 	enum EFileSystemType
 	{

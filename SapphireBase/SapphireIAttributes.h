@@ -3,6 +3,7 @@
 
 #include "SapphireEAttributes.h"
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphireColorValue.h"
 #include "SapphireVector3.h"
 #include "SapphireVector2.h"
@@ -14,6 +15,7 @@
 #include "SapphireTriangle3D.h"
 #include "SapphireLine2D.h"
 #include "SapphireLine3D.h"
+#include "SapphireITexture.h"
 
 namespace Sapphire
 {

@@ -2,6 +2,8 @@
 #define _SAPPHIRE_RECTANGLE__
 
 #include "SapphirePrerequisites.h"
+#include "SapphireVector2.h"
+#include "SapphireDimension2D.h"
 
 namespace Sapphire {
 
@@ -53,8 +55,7 @@ namespace Sapphire {
 		rect(const position2d& upperLeft, const position2d& lowerRight)
 			: UpperLeftCorner(upperLeft), LowerRightCorner(lowerRight) {}
 
-	 
-		template <class U>
+	    template<class U>
 		rect(const position2d& pos, const dimension2d<U>& size)
 			: UpperLeftCorner(pos), LowerRightCorner(pos.x + size.Width, pos.y + size.Height) {}
 
@@ -274,9 +275,9 @@ namespace Sapphire {
 		}
 
 		//! 矩形左上角
-		position2d UpperLeftCorner;
+		Position2d UpperLeftCorner;
 		//! 矩形右下角
-		position2d LowerRightCorner;
+		Position2d LowerRightCorner;
 	};
 
 	//! 浮点矩形

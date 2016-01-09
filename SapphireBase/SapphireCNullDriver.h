@@ -141,8 +141,8 @@ namespace Sapphire
 		\param useAlphaChannelOfTexture: 如果为true，这个纹理的alpha通道会被使用来绘制这个图像*/
 		virtual void draw2DImageBatch(const ITexture* texture,
 			const Vector2& pos,
-			const vector<rect<SINT32> >& sourceRects,
-			const vector<SINT32>& indices,
+			const vector<rect<SINT32> >::type& sourceRects,
+			const vector<SINT32>::type& indices,
 			SINT32 kerningWidth = 0,
 			const rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
@@ -159,8 +159,8 @@ namespace Sapphire
 		\param color 在这个图像中的的这个颜色。注意：这是由alpha分量使用的；如果alpha值不少255，那么这个图像会被透明化。
 		\param useAlphaChannelOfTexture: 如果为true，这个纹理的alpha通道会被使用来绘制这个图像 */
 		virtual void draw2DImageBatch(const ITexture* texture,
-			const vector<Vector2>& positions,
-			const vector<rect<SINT32> >& sourceRects,
+			const vector<Vector2>::type& positions,
+			const vector<rect<SINT32> >::type& sourceRects,
 			const rect<SINT32>* clipRect = 0,
 			ColourValue color = ColourValue::getColourValue(255, 255, 255, 255),
 			bool useAlphaChannelOfTexture = false);
@@ -290,7 +290,7 @@ namespace Sapphire
 
 		//! 高程纹理图创建一个法线贴图
 		//! \param amplitude: 高度信息的增幅常量值
-		virtual void makeNormalMapTexture(ITexture* texture, Real amplitude = 1.0f) const;
+		virtual void makeNormalMapTexture(ITexture* texture, FLOAT32 amplitude = 1.0f) const;
 
 		//! 返回设备所能够用drawIndexedTriangleList渲染的图元的最大数量 
 		virtual UINT32 getMaximalPrimitiveCount() const;
@@ -356,7 +356,7 @@ namespace Sapphire
 				if (MeshBuffer)
 					MeshBuffer->drop();
 			}
-
+			//网格缓冲区指针
 			const IMeshBuffer *MeshBuffer;
 			UINT32 ChangedID_Vertex;
 			UINT32 ChangedID_Index;
@@ -583,7 +583,7 @@ namespace Sapphire
 		/** 依赖enable标志， 这个材质的值用于覆盖某些在渲染的网格缓冲区的一些本地材质*/
 		virtual SOverrideMaterial& getOverrideMaterial();
 
-		//! 为了修改它的值获取Get the 2d override material for altering its values
+		//! 为了修改它的值获取2d覆盖材质
 		virtual SMaterial& getMaterial2D();
 
 		//! 打开2d覆盖材质
@@ -670,7 +670,17 @@ namespace Sapphire
 			{
 				return Surface->getName() < other.Surface->getName();
 			}
+
+			bool operator==(const SSurface& other) const
+			{
+				return other.Surface == Surface;
+			}
 		};
+
+		bool ITextureCMP(const SSurface& a, const SSurface& b)
+		{
+			return (a.Surface->getSize().getArea() < b.Surface->getSize().getArea());
+		}
 
 		struct SMaterialRenderer
 		{
@@ -749,14 +759,18 @@ namespace Sapphire
 			UINT32 Result;
 			UINT32 Run;
 		};
+		//遮蔽查询数组
 		vector<SOccQuery>::type OcclusionQueries;
-
+		//表面加载器数组
 		vector<IImageLoader*>::type SurfaceLoader;
+		//表面写入器数组
 		vector<IImageWriter*>::type SurfaceWriter;
+		//光源数组
 		vector<SLight>::type Lights;
 		vector<SMaterialRenderer>::type MaterialRenderers;
 
 		//vector<SHWBufferLink*> HWBufferLinks;
+		//!硬件缓冲区HashMap容器
 		map< const IMeshBuffer*, SHWBufferLink* >::type HWBufferMap;
 
 		IFileSystem* FileSystem;

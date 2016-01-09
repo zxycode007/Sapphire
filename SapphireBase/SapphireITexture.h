@@ -3,6 +3,7 @@
 
 #include "SapphireEDriverTypes.h"
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphireDimension2D.h"
 #include "SapphirePath.h"
 #include "SapphireColorValue.h"
@@ -176,10 +177,7 @@ namespace Sapphire
 		SNamedPath NamedPath;
 	};
 
-	bool ITextureCMP(const ITexture& a, const ITexture& b)
-	{
-		return (a.getSize().getArea() < b.getSize().getArea());
-	}
+	
 }
 
 #endif

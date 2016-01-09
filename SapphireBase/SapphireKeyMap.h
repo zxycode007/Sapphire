@@ -1,6 +1,8 @@
 #ifndef _SAPPHIRE_KEYMAPS_
 #define _SAPPHIRE_KEYMAPS_
 
+#include "SapphireKeyCodes.h"
+
 namespace Sapphire
 {
 	//! 键盘动作的枚举，用于FPS相机
@@ -18,7 +20,7 @@ namespace Sapphire
 		EKA_FORCE_32BIT = 0x7fffffff
 	};
 	
-	enum EKEY_CODE
+	/*enum EKEY_CODE
 	{
 		KEY_LBUTTON = 0x01,  // Left mouse button
 		KEY_RBUTTON = 0x02,  // Right mouse button
@@ -176,6 +178,7 @@ namespace Sapphire
 
 		KEY_KEY_CODES_COUNT = 0xFF // 这不是键位，只是用于统计Keycodes数量
 	};
+	*/
 
 	//!保存这个动作的键位的结构体.
 	struct SKeyMap

@@ -202,6 +202,27 @@ namespace Sapphire {
 			return ret;
 		}
 
+
+		static String floatToString(FLOAT32 f)
+		{
+			StringUtil::StrStreamType ss;
+			ss << f;
+			return ss.str();
+		}
+
+		static String int32ToString(SINT32 s)
+		{
+			StringUtil::StrStreamType ss;
+			ss << s;
+			return ss.str();
+		}
+		static String uint32ToString(UINT32 u)
+		{
+			StringUtil::StrStreamType ss;
+			ss << u;
+			return ss.str();
+		}
+
 		/// ¿Õ×Ö·û´®
 		static const String BLANK;
 
