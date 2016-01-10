@@ -2,6 +2,7 @@
 #define _SAPPHIRE_IIMAGELOADER_
 
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphirePath.h"
 
 namespace Sapphire

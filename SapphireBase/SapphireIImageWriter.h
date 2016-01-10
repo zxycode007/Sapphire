@@ -2,6 +2,7 @@
 #define _SAPPHIRE_IIWRITER_
 
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphirePath.h"
 
 namespace Sapphire

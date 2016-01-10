@@ -1,6 +1,40 @@
 #ifndef _SAPPHIRE_COMPILE_CONFIG_
 #define _SAPPHIRE_COMPILE_CONFIG_
 
+
+//! Define SAPPHIRE_COMPILE_WITH_LIBPNG_ to enable compiling the engine using libpng.
+/** This enables the engine to read png images. If you comment this out,
+the engine will no longer read .png images. */
+#define SAPPHIRE_COMPILE_WITH_LIBPNG_
+#ifdef NOSAPPHIRE_COMPILE_WITH_LIBPNG_
+#undef SAPPHIRE_COMPILE_WITH_LIBPNG_
+#endif
+
+//! Define SAPPHIRE_USE_NON_SYSTEM_LIBPNG_ to let irrlicht use the libpng which comes with irrlicht.
+/** If this is commented out, Irrlicht will try to compile using the libpng installed in the system.
+This is only used when SAPPHIRE_COMPILE_WITH_LIBPNG_ is defined. */
+#define SAPPHIRE_USE_NON_SYSTEM_LIB_PNG_
+#ifdef NOSAPPHIRE_USE_NON_SYSTEM_LIB_PNG_
+#undef SAPPHIRE_USE_NON_SYSTEM_LIB_PNG_
+#endif
+
+
+//! Define SAPPHIRE_COMPILE_WITH_JPEGLIB_ to enable compiling the engine using libjpeg.
+/** This enables the engine to read jpeg images. If you comment this out,
+the engine will no longer read .jpeg images. */
+#define SAPPHIRE_COMPILE_WITH_LIBJPEG_
+#ifdef NOSAPPHIRE_COMPILE_WITH_LIBJPEG_
+#undef SAPPHIRE_COMPILE_WITH_LIBJPEG_
+#endif
+
+//! Define SAPPHIRE_USE_NON_SYSTEM_JPEG_LIB_ to let irrlicht use the jpeglib which comes with irrlicht.
+/** If this is commented out, Irrlicht will try to compile using the jpeg lib installed in the system.
+This is only used when SAPPHIRE_COMPILE_WITH_LIBJPEG_ is defined. */
+#define SAPPHIRE_USE_NON_SYSTEM_JPEG_LIB_
+#ifdef NOSAPPHIRE_USE_NON_SYSTEM_JPEG_LIB_
+#undef SAPPHIRE_USE_NON_SYSTEM_JPEG_LIB_
+#endif
+
 //! Define SAPPHIRE_COMPILE_WITHSAPPHIRE_SCENE_LOADER_ if you want to be able to load
 /** .irr scenes using ISceneManager::loadScene */
 #define SAPPHIRE_COMPILE_WITHSAPPHIRE_SCENE_LOADER_

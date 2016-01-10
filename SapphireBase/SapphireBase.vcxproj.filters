@@ -67,8 +67,11 @@
     <Filter Include="源文件\IO">
       <UniqueIdentifier>{0c997ba9-93b6-4956-9725-5e4a339338cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\NewFilter1">
-      <UniqueIdentifier>{69e39824-6c98-4578-98aa-5a6d0f57984b}</UniqueIdentifier>
+    <Filter Include="源文件\rendersystem\Null\Loader">
+      <UniqueIdentifier>{6582d8ea-9197-4d4a-9cc1-7d033749775a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\rendersystem\Null\Writer">
+      <UniqueIdentifier>{7271fdff-ab6a-4376-98d8-b291130a07ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -585,6 +588,33 @@
     <ClInclude Include="SapphireCMeshManipulator.h">
       <Filter>源文件\scene</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCImageLoaderBMP.h">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageLoaderTGA.h">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageLoaderPNG.h">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageLoaderJPEG.h">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageWirterBMP.h">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageWriterTGA.h">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageWriterPNG.h">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCImageWriterJPEG.h">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCVideoModelList.h">
+      <Filter>源文件\rendersystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -682,6 +712,33 @@
     </ClCompile>
     <ClCompile Include="SapphireCAttributeImpl.h">
       <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageLoaderBMP.cpp">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageLoaderTGA.cpp">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageLoaderPNG.cpp">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageLoaderJPEG.cpp">
+      <Filter>源文件\rendersystem\Null\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageWriterTGA.cpp">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageWriterBMP.cpp">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageWriterPNG.cpp">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCImageWriterJPEG.cpp">
+      <Filter>源文件\rendersystem\Null\Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCVideoModelList.cpp">
+      <Filter>源文件\rendersystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

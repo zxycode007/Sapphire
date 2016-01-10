@@ -211,6 +211,7 @@ namespace Sapphire
 	typedef __int16 SINT16;
 	typedef __int32 SINT32;
 	typedef __int64 SINT64;
+	typedef __int8 SINT8;
 	typedef unsigned __int64 UINT64;
 	typedef unsigned __int32 UINT32;
 	typedef unsigned __int16 UINT16;
