@@ -73,6 +73,9 @@
     <Filter Include="源文件\rendersystem\Null\Writer">
       <UniqueIdentifier>{7271fdff-ab6a-4376-98d8-b291130a07ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\device">
+      <UniqueIdentifier>{41605f13-7ada-4805-af4b-594e093d1ed1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -614,6 +617,21 @@
     </ClInclude>
     <ClInclude Include="SapphireCVideoModelList.h">
       <Filter>源文件\rendersystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDeviceStub.h">
+      <Filter>源文件\device</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSCreationParameters.h">
+      <Filter>源文件\device</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEGUIAlignment.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIEnvironment.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUISkin.h">
+      <Filter>头文件\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

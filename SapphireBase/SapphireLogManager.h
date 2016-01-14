@@ -115,7 +115,8 @@ namespace Sapphire
 
 	};
 
-
+	//将LogManager重定义为ILogger
+	typedef LogManager* ILogger;
 	 
 }
 

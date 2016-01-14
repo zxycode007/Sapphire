@@ -1,8 +1,6 @@
-#ifndef _SAPPHIRE_SCENE_
-#define _SAPPHIRE_SCENE_
+#ifndef _SAPPHIRE_SCENE_MANAGER_
+#define _SAPPHIRE_SCENE_MANAGER_
 
-
-#include "SapphirePrerequisites.h"
 //#include "SapphireMemoryAllocatorConfig.h"
 #include "SapphireIReferenceCounter.h"
 #include "SapphireVector3.h"

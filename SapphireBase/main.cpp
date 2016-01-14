@@ -10,6 +10,8 @@
 #include "SapphireVertex.h"
 #include "SapphireSharedPtr.h"
 #include "SapphireMatrix4.h"
+#include "SapphireCNullDriver.h"
+
 
 
 namespace Sapphire

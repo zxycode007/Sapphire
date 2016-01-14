@@ -20,6 +20,7 @@ namespace Sapphire
 
 		//! patch 大小129, 这个patch大小用8层LOD细节
 		ETPS_129 = 129
+	};
 }
 
 #endif

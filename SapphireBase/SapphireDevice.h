@@ -6,6 +6,7 @@
 #include "SapphireEDeviceTypes.h"
 #include "SapphireIEventRecevier.h"
 #include "SapphireColorValue.h"
+#include "SapphireLogManager.h"
 
 
 
@@ -17,7 +18,7 @@ namespace Sapphire
 	class IFileSystem;
 	class IGUIEnvironment;
 	class ICursorControl;
-	class ILogger;
+	//class ILogger;
 	class IVideoModeList;
 	class IOSOperator;
 	class ITimer;
@@ -25,6 +26,8 @@ namespace Sapphire
 	class IEventReceiver;
 	class SJoystickInfo;
 	class ISceneManager;
+
+	
 
 	//! 设备. 你可以通过函数createDevice() 或 createDeviceEx()创建设备
 	/** 这是引擎最重要的类。如果你有一个这个类的实例指针，你就可以访问引擎的所有东西。这个类在任何时刻只能有一个实例。
@@ -267,6 +270,7 @@ namespace Sapphire
 		}
 	};
 
+	
 }
 
 #endif

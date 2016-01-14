@@ -99,6 +99,7 @@
     <ClInclude Include="SapphireCVideoModelList.h" />
     <ClInclude Include="SapphireDefines.h" />
     <ClInclude Include="SapphireDevice.h" />
+    <ClInclude Include="SapphireDeviceStub.h" />
     <ClInclude Include="SapphireDimension2D.h" />
     <ClInclude Include="SapphireEAttributes.h" />
     <ClInclude Include="SapphireECullingTypes.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="SapphireEDeviceTypes.h" />
     <ClInclude Include="SapphireEDriverFeatures.h" />
     <ClInclude Include="SapphireEDriverTypes.h" />
+    <ClInclude Include="SapphireEGUIAlignment.h" />
     <ClInclude Include="SapphireEHardwareBufferFlags.h" />
     <ClInclude Include="SapphireEMaterialTypes.h" />
     <ClInclude Include="SapphireEMeshWriterEnums.h" />
@@ -135,6 +137,8 @@
     <ClInclude Include="SapphireIFileList.h" />
     <ClInclude Include="SapphireIFileSystem.h" />
     <ClInclude Include="SapphireIGPUProgramServices.h" />
+    <ClInclude Include="SapphireIGUIEnvironment.h" />
+    <ClInclude Include="SapphireIGUISkin.h" />
     <ClInclude Include="SapphireIImage.h" />
     <ClInclude Include="SapphireIImageLoader.h" />
     <ClInclude Include="SapphireIImagePresenter.h" />
@@ -219,6 +223,7 @@
     <ClInclude Include="SapphireESceneNodeTypes.h" />
     <ClInclude Include="SapphireIScenesManager.h" />
     <ClInclude Include="SapphireSceneParameters.h" />
+    <ClInclude Include="SapphireSCreationParameters.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
     <ClInclude Include="SapphireSLight.h" />
