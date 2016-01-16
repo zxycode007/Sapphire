@@ -29,15 +29,21 @@ namespace Sapphire
 	public: 
 		 
 		Plane();
+		
 		Plane(const Plane& rhs);
 		/** 通过一个法线和一个一个沿着法线在平面上移动的距离*/
 		Plane(const Vector3& rkNormal, Real fConstant);
 		/** 用四个常量直接构造一个平面 **/
 		Plane(Real a, Real b, Real c, Real d);
 		Plane(const Vector3& rkNormal, const Vector3& rkPoint);
+		
 		Plane(const Vector3& rkPoint0, const Vector3& rkPoint1,
 			const Vector3& rkPoint2);
 
+		Plane(SINT32 px, SINT32 py, SINT32 pz, SINT32 nx, SINT32 ny, SINT32 nz)
+		{
+			redefine(Vector3(nx, ny, nz), Vector3(px, py, pz));
+		};
 		/** 
 		平面的正面是平面法线所指向的半空间，负面这另外一个半空间
 		*/

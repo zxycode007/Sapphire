@@ -33,7 +33,7 @@ namespace Sapphire
 		virtual ColourValue getColor()		{ return ColourValue::getColourValue(255, 255, 255, 255); }
 		virtual String getString()		{ return String(getString().c_str()); }
 		virtual StringW getStringW()		{ return StringW(); }
-		virtual vector<StringW> getArray()	{ return vector<StringW>(); };
+		virtual vector<StringW>::type getArray()	{ return vector<StringW>::type(); };
 		virtual bool getBool()				{ return false; }
 		virtual void getBinary(void* outdata, SINT32 maxLength) {};
 		virtual Vector3 getVector()		{ return Vector3(); }
@@ -60,7 +60,7 @@ namespace Sapphire
 		virtual void setFloat(FLOAT32 floatValue)		{};
 		virtual void setString(const char* text)	{};
 		virtual void setString(const wchar_t* text){ setString(StringW(text).c_str()); };
-		virtual void setArray(const vector<StringW>& arr)	{};
+		virtual void setArray(const vector<StringW>::type& arr)	{};
 		virtual void setColor(ColourValue color)	{};
 		//virtual void setColor(ColourValue color)	{};
 		virtual void setBool(bool boolValue)		{};

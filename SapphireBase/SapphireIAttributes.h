@@ -16,12 +16,13 @@
 #include "SapphireLine2D.h"
 #include "SapphireLine3D.h"
 #include "SapphireITexture.h"
+#include "SapphireIXMLReader.h"
 
 namespace Sapphire
 {
 	 class ITexture;
 	 class IXMLWriter;
-	 class IXMLReader;
+	 //class IXMLReader;
 
 	 //! 提供属性和他们的值并且可以序列化它们的通用接口
 	 class IAttributes : public virtual IReferenceCounter
@@ -219,24 +220,24 @@ namespace Sapphire
 		 */
 
 		 //! 添加一个宽字符串数组的属性
-		 virtual void addArray(const c8* attributeName, const vector<StringW>& value) = 0;
+		 virtual void addArray(const c8* attributeName, const vector<StringW>::type& value) = 0;
 
 		 //! 设置一个宽字符串数组的属性
 		 //! \param attributeName: 属性名
 		 //! \param value: 属性的值， 设置为0会删除这个属性
-		 virtual void setAttribute(const c8* attributeName, const vector<StringW>& value) = 0;
+		 virtual void setAttribute(const c8* attributeName, const vector<StringW>::type& value) = 0;
 
 		 //! 获取一个宽字符串属性
 		 //! \param attributeName: 属性名
 		 //! \return 返回之前设置的属性值，如果没设置返回0
-		 virtual vector<StringW> getAttributeAsArray(const c8* attributeName) = 0;
+		 virtual vector<StringW>::type getAttributeAsArray(const c8* attributeName) = 0;
 
 		 //! 通过索引返回一个宽字符串属性
 		 //! \param index: 索引值, 可以到0 和 getAttributeCount()-1之间.
-		 virtual vector<StringW> getAttributeAsArray(SINT32 index) = 0;
+		 virtual vector<StringW>::type getAttributeAsArray(SINT32 index) = 0;
 
 		 //! 通过索引设置一个宽字符串的属性
-		 virtual void setAttribute(SINT32 index, const vector<StringW>& value) = 0;
+		 virtual void setAttribute(SINT32 index, const vector<StringW>::type& value) = 0;
 
 
 		 /*
@@ -306,12 +307,12 @@ namespace Sapphire
 		 //! 获取一个枚举属性的枚举文本列表
 		 //! \param attributeName 属性名
 		 //! \param outLiterals 枚举名的字符串集合
-		 virtual void getAttributeEnumerationLiteralsOfEnumeration(const c8* attributeName,  vector<String>& outLiterals) = 0;
+		 virtual void getAttributeEnumerationLiteralsOfEnumeration(const c8* attributeName,  vector<String>::type& outLiterals) = 0;
 
 		 //! 获取一个枚举属性的枚举文本列表
 		 //! \param index: 索引值, 可以到0 和 getAttributeCount()-1之间.
 		 //! \param outLiterals 枚举名的字符串集合
-		 virtual void getAttributeEnumerationLiteralsOfEnumeration(SINT32 index, vector<String>& outLiterals) = 0;
+		 virtual void getAttributeEnumerationLiteralsOfEnumeration(SINT32 index, vector<String>::type& outLiterals) = 0;
 
 		 //! 设置一个枚举属性
 		 virtual void setAttribute(SINT32 index, const c8* enumValue, const c8* const* enumerationLiterals) = 0;

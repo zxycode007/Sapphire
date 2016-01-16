@@ -513,7 +513,17 @@ namespace Sapphire
 #endif
 	};
 
+	namespace io
+	{
+		template<typename char_type>
+		struct String
+		{
+			typedef typename std::basic_string<char_type, std::char_traits<char_type>, STLAllocator<char_type, GeneralAllocPolicy > >	type;
+			typedef typename std::basic_stringstream<char_type, std::char_traits<char_type>, STLAllocator<char_type, GeneralAllocPolicy > > stream;
+		};
+	}
 
+	 
 	
 
 }

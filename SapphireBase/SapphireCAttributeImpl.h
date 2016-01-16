@@ -1936,18 +1936,18 @@ namespace Sapphire
 	{
 	public:
 
-		CStringWArrayAttribute(const char* name, const vector<StringW>& value)
+		CStringWArrayAttribute(const char* name, const vector<StringW>::type& value)
 		{
 			Name = name;
 			setArray(value);
 		}
 
-		virtual vector<StringW> getArray()
+		virtual vector<StringW>::type getArray()
 		{
 			return Value;
 		}
 
-		virtual void setArray(const vector<StringW>& value)
+		virtual void setArray(const vector<StringW>::type& value)
 		{
 			Value = value;
 		}
@@ -1962,7 +1962,7 @@ namespace Sapphire
 			return L"stringwvector";
 		}
 
-		vector<StringW> Value;
+		vector<StringW>::type Value;
 	};
 
 

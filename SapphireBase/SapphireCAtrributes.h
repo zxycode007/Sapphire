@@ -212,24 +212,24 @@ namespace Sapphire
 		*/
 
 		//! 添加一个宽字符串数组的属性
-		virtual void addArray(const c8* attributeName, const vector<StringW>& value);
+		virtual void addArray(const c8* attributeName, const vector<StringW>::type& value);
 
 		//! 设置一个宽字符串数组的属性
 		//! \param attributeName: 属性名
 		//! \param value: 属性的值， 设置为0会删除这个属性
-		virtual void setAttribute(const c8* attributeName, const vector<StringW>& value);
+		virtual void setAttribute(const c8* attributeName, const vector<StringW>::type& value);
 
 		//! 获取一个宽字符串属性
 		//! \param attributeName: 属性名
 		//! \return 返回之前设置的属性值，如果没设置返回0
-		virtual vector<StringW> getAttributeAsArray(const c8* attributeName);
+		virtual vector<StringW>::type getAttributeAsArray(const c8* attributeName);
 
 		//! 通过索引返回一个宽字符串属性
 		//! \param index: 索引值, 可以到0 和 getAttributeCount()-1之间.
-		virtual vector<StringW> getAttributeAsArray(SINT32 index);
+		virtual vector<StringW>::type getAttributeAsArray(SINT32 index);
 
 		//! 通过索引设置一个宽字符串的属性
-		virtual void setAttribute(SINT32 index, const vector<StringW>& value);
+		virtual void setAttribute(SINT32 index, const vector<StringW>::type& value);
 
 		/*
 
@@ -298,12 +298,12 @@ namespace Sapphire
 		//! 获取一个枚举属性的枚举文本列表
 		//! \param attributeName 属性名
 		//! \param outLiterals 枚举名的字符串集合
-		virtual void getAttributeEnumerationLiteralsOfEnumeration(const c8* attributeName, vector<String>& outLiterals);
+		virtual void getAttributeEnumerationLiteralsOfEnumeration(const c8* attributeName, vector<String>::type& outLiterals);
 
 		//! 获取一个枚举属性的枚举文本列表
 		//! \param index: 索引值, 可以到0 和 getAttributeCount()-1之间.
 		//! \param outLiterals 枚举名的字符串集合
-		virtual void getAttributeEnumerationLiteralsOfEnumeration(SINT32 index, vector<String>& outLiterals);
+		virtual void getAttributeEnumerationLiteralsOfEnumeration(SINT32 index, vector<String>::type& outLiterals);
 
 		//! 设置一个枚举属性
 		virtual void setAttribute(SINT32 index, const c8* enumValue, const c8* const* enumerationLiterals);
@@ -408,30 +408,30 @@ namespace Sapphire
 		virtual void setAttribute(SINT32 index, Vector2 v);
 
 
-		/*
+		
 
-		Position2d Attribute
+		//Position2d Attribute
 
 		
 
 		//! Adds an attribute as 2d position
-		virtual void addPosition2d(const c8* attributeName, Position2d value);
+	//	virtual void addPosition2d(const c8* attributeName, Position2d value);
 
 		//! Sets a attribute as 2d position
-		virtual void setAttribute(const c8* attributeName, Position2d v);
+		//virtual void setAttribute(const c8* attributeName, Position2d v);
 
 		//! Gets an attribute as position
 		//! \param attributeName: Name of the attribute to get.
 		//! \return Returns value of the attribute previously set by setAttribute()
-		virtual Position2d getAttributeAsPosition2d(const c8* attributeName);
+	//	virtual Position2d getAttributeAsPosition2d(const c8* attributeName);
 
 		//! Gets an attribute as position
 		//! \param index: Index value, must be between 0 and getAttributeCount()-1.
-		virtual Position2d getAttributeAsPosition2d(SINT32 index);
+	//	virtual Position2d getAttributeAsPosition2d(SINT32 index);
 
 		//! Sets an attribute as 2d position
-		virtual void setAttribute(SINT32 index, Position2d v);
-		*/
+	//	virtual void setAttribute(SINT32 index, Position2d v);
+		
 
 
 		/*
@@ -703,7 +703,7 @@ namespace Sapphire
 
 		void readAttributeFromXML(IXMLReader* reader);
 
-		vector<IAttribute*> Attributes;
+		vector<IAttribute*>::type Attributes;
 
 		IAttribute* getAttributeP(const c8* attributeName) const;
 

@@ -1,152 +1,11 @@
-#ifndef _SAPPHIRE_I_XML_
-#define _SAPPHIRE_I_XML_
+#ifndef _SAPPHIRE_I_XML___
+#define _SAPPHIRE_I_XML___
 
 #include "SapphirePrerequisites.h"
 
 namespace Sapphire
 {
-	/** \mainpage irrXML 1.2 API documentation
-	<div align="center"><img src="logobig.png" ></div>
-
-	\section intro Introduction
-
-	Welcome to the irrXML API documentation.
-	Here you'll find any information you'll need to develop applications with
-	irrXML. If you look for a tutorial on how to start, take a look at the \ref irrxmlexample,
-	at the homepage of irrXML at <A HREF="http://www.ambiera.com/irrxml/">www.ambiera.com/irrxml/</A>
-	or into the SDK in the directory example.
-
-	irrXML is intended to be a high speed and easy-to-use XML Parser for C++, and
-	this documentation is an important part of it. If you have any questions or
-	suggestions, just send a email to the author of the engine, Nikolaus Gebhardt
-	(niko (at) irrlicht3d.org). For more informations about this parser, see \ref history.
-
-	\section features Features
-
-	irrXML provides forward-only, read-only
-	access to a stream of non validated XML data. It was fully implemented by
-	Nikolaus Gebhardt. Its current features are:
-
-	- It it fast as lighting and has very low memory usage. It was
-	developed with the intention of being used in 3D games, as it already has been.
-	- irrXML is very small: It only consists of 60 KB of code and can be added easily
-	to your existing project.
-	- Of course, it is platform independent and works with lots of compilers.
-	- It is able to parse ASCII, UTF-8, UTF-16 and UTF-32 text files, both in
-	little and big endian format.
-	- Independent of the input file format, the parser can return all strings in ASCII, UTF-8,
-	UTF-16 and UTF-32 format.
-	- With its optional file access abstraction it has the advantage that it can read not
-	only from files but from any type of data (memory, network, ...). For example when
-	used with the Irrlicht Engine, it directly reads from compressed .zip files.
-	- Just like the Irrlicht Engine for which it was originally created, it is extremely easy
-	to use.
-	- It has no external dependencies, it does not even need the STL.
-
-	Although irrXML has some strenghts, it currently also has the following limitations:
-
-	- The input xml file is not validated and assumed to be correct.
-
-	\section irrxmlexample Example
-
-	The following code demonstrates the basic usage of irrXML. A simple xml
-	file like this is parsed:
-	\code
-	<?xml version="1.0"?>
-	<config>
-	<!-- This is a config file for the mesh viewer -->
-	<model file="dwarf.dea" />
-	<messageText caption="Irrlicht Engine Mesh Viewer">
-	Welcome to the Mesh Viewer of the &quot;Irrlicht Engine&quot;.
-	</messageText>
-	</config>
-	\endcode
-
-	The code for parsing this file would look like this:
-	\code
-	#include <irrXML.h>
-	using namespace irr; // irrXML is located in the namespace irr::io
-	using namespace io;
-
-	#include <string> // we use STL strings to store data in this example
-
-	void main()
-	{
-	// create the reader using one of the factory functions
-
-	IrrXMLReader* xml = createIrrXMLReader("config.xml");
-
-	// strings for storing the data we want to get out of the file
-	std::string modelFile;
-	std::string messageText;
-	std::string caption;
-
-	// parse the file until end reached
-
-	while(xml && xml->read())
-	{
-	switch(xml->getNodeType())
-	{
-	case EXN_TEXT:
-	// in this xml file, the only text which occurs is the messageText
-	messageText = xml->getNodeData();
-	break;
-	case EXN_ELEMENT:
-	{
-	if (!strcmp("model", xml->getNodeName()))
-	modelFile = xml->getAttributeValue("file");
-	else
-	if (!strcmp("messageText", xml->getNodeName()))
-	caption = xml->getAttributeValue("caption");
-	}
-	break;
-	}
-	}
-
-	// delete the xml parser after usage
-	delete xml;
-	}
-	\endcode
-
-	\section howto How to use
-
-	Simply add the source files in the /src directory of irrXML to your project. Done.
-
-	\section license License
-
-	The irrXML license is based on the zlib license. Basicly, this means you can do with
-	irrXML whatever you want:
-
-	Copyright (C) 2002-2012 Nikolaus Gebhardt
-
-	This software is provided 'as-is', without any express or implied
-	warranty. In no event will the authors be held liable for any damages
-	arising from the use of this software.
-
-	Permission is granted to anyone to use this software for any purpose,
-	including commercial applications, and to alter it and redistribute it
-	freely, subject to the following restrictions:
-
-	1. The origin of this software must not be misrepresented; you must not
-	claim that you wrote the original software. If you use this software
-	in a product, an acknowledgment in the product documentation would be
-	appreciated but is not required.
-
-	2. Altered source versions must be plainly marked as such, and must not be
-	misrepresented as being the original software.
-
-	3. This notice may not be removed or altered from any source distribution.
-
-	\section history History
-
-	As lots of references in this documentation and the source show, this xml
-	parser has originally been a part of the
-	<A HREF="http://irrlicht.sourceforge.net" >Irrlicht Engine</A>. But because
-	the parser has become very useful with the latest release, people asked for a
-	separate version of it, to be able to use it in non Irrlicht projects. With
-	irrXML 1.0, this has now been done.
-	*/
-
+	
 //! Enumeration of all supported source text file formats
 enum ETEXT_FORMAT
 {
@@ -264,8 +123,7 @@ delete xml;
 \endcode
 See \ref irrxmlexample for a more detailed example.
 */
-template<class char_type, class super_class>
-class IIrrXMLReader : public virtual super_class
+class IIrrXMLReader : public virtual IReferenceCounter
 {
 public:
 
@@ -288,30 +146,30 @@ public:
 	//! Returns name of an attribute.
 	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
 	\return Name of the attribute, 0 if an attribute with this index does not exist. */
-	virtual const char_type* getAttributeName(int idx) const = 0;
+	virtual const char* getAttributeName(int idx) const = 0;
 
 	//! Returns the value of an attribute.
 	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
 	\return Value of the attribute, 0 if an attribute with this index does not exist. */
-	virtual const char_type* getAttributeValue(int idx) const = 0;
+	virtual const char* getAttributeValue(int idx) const = 0;
 
 	//! Returns the value of an attribute.
 	/** \param name: Name of the attribute.
 	\return Value of the attribute, 0 if an attribute with this name does not exist. */
-	virtual const char_type* getAttributeValue(const char_type* name) const = 0;
+	virtual const char* getAttributeValue(const char* name) const = 0;
 
 	//! Returns the value of an attribute in a safe way.
 	/** Like getAttributeValue(), but does not
 	return 0 if the attribute does not exist. An empty string ("") is returned then.
 	\param name: Name of the attribute.
 	\return Value of the attribute, and "" if an attribute with this name does not exist */
-	virtual const char_type* getAttributeValueSafe(const char_type* name) const = 0;
+	virtual const char* getAttributeValueSafe(const char* name) const = 0;
 
 	//! Returns the value of an attribute as integer.
 	/** \param name Name of the attribute.
 	\return Value of the attribute as integer, and 0 if an attribute with this name does not exist or
 	the value could not be interpreted as integer. */
-	virtual int getAttributeValueAsInt(const char_type* name) const = 0;
+	virtual int getAttributeValueAsInt(const char* name) const = 0;
 
 	//! Returns the value of an attribute as integer.
 	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
@@ -323,7 +181,7 @@ public:
 	/** \param name: Name of the attribute.
 	\return Value of the attribute as float, and 0 if an attribute with this name does not exist or
 	the value could not be interpreted as float. */
-	virtual float getAttributeValueAsFloat(const char_type* name) const = 0;
+	virtual float getAttributeValueAsFloat(const char* name) const = 0;
 
 	//! Returns the value of an attribute as float.
 	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
@@ -334,12 +192,107 @@ public:
 	//! Returns the name of the current node.
 	/** Only valid, if the node type is EXN_ELEMENT.
 	\return Name of the current node or 0 if the node has no name. */
-	virtual const char_type* getNodeName() const = 0;
+	virtual const char* getNodeName() const = 0;
 
 	//! Returns data of the current node.
 	/** Only valid if the node has some
 	data and it is of type EXN_TEXT, EXN_COMMENT, EXN_CDATA or EXN_UNKNOWN. */
-	virtual const char_type* getNodeData() const = 0;
+	virtual const char* getNodeData() const = 0;
+
+	//! Returns if an element is an empty element, like &lt;foo />
+	virtual bool isEmptyElement() const = 0;
+
+	//! Returns format of the source xml file.
+	/** It is not necessary to use
+	this method because the parser will convert the input file format
+	to the format wanted by the user when creating the parser. This
+	method is useful to get/display additional informations. */
+	virtual ETEXT_FORMAT getSourceFormat() const = 0;
+
+	//! Returns format of the strings returned by the parser.
+	/** This will be UTF8 for example when you created a parser with
+	IrrXMLReaderUTF8() and UTF32 when it has been created using
+	IrrXMLReaderUTF32. It should not be necessary to call this
+	method and only exists for informational purposes. */
+	virtual ETEXT_FORMAT getParserFormat() const = 0;
+};
+
+
+class IIrrXMLReaderUTF8 : public virtual IReferenceCounter
+{
+public:
+
+	//! Destructor
+	virtual ~IIrrXMLReaderUTF8() {}
+
+	//! Reads forward to the next xml node.
+	/** \return Returns false, if there was no further node. */
+	virtual bool read() = 0;
+
+	//! Returns the type of the current XML node.
+	virtual EXML_NODE getNodeType() const = 0;
+
+	//! Returns attribute count of the current XML node.
+	/** This is usually
+	non null if the current node is EXN_ELEMENT, and the element has attributes.
+	\return Returns amount of attributes of this xml node. */
+	virtual unsigned int getAttributeCount() const = 0;
+
+	//! Returns name of an attribute.
+	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
+	\return Name of the attribute, 0 if an attribute with this index does not exist. */
+	virtual const wchar_t* getAttributeName(int idx) const = 0;
+
+	//! Returns the value of an attribute.
+	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
+	\return Value of the attribute, 0 if an attribute with this index does not exist. */
+	virtual const wchar_t* getAttributeValue(int idx) const = 0;
+
+	//! Returns the value of an attribute.
+	/** \param name: Name of the attribute.
+	\return Value of the attribute, 0 if an attribute with this name does not exist. */
+	virtual const wchar_t* getAttributeValue(const wchar_t* name) const = 0;
+
+	//! Returns the value of an attribute in a safe way.
+	/** Like getAttributeValue(), but does not
+	return 0 if the attribute does not exist. An empty string ("") is returned then.
+	\param name: Name of the attribute.
+	\return Value of the attribute, and "" if an attribute with this name does not exist */
+	virtual const wchar_t* getAttributeValueSafe(const wchar_t* name) const = 0;
+
+	//! Returns the value of an attribute as integer.
+	/** \param name Name of the attribute.
+	\return Value of the attribute as integer, and 0 if an attribute with this name does not exist or
+	the value could not be interpreted as integer. */
+	virtual int getAttributeValueAsInt(const wchar_t* name) const = 0;
+
+	//! Returns the value of an attribute as integer.
+	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
+	\return Value of the attribute as integer, and 0 if an attribute with this index does not exist or
+	the value could not be interpreted as integer. */
+	virtual int getAttributeValueAsInt(int idx) const = 0;
+
+	//! Returns the value of an attribute as float.
+	/** \param name: Name of the attribute.
+	\return Value of the attribute as float, and 0 if an attribute with this name does not exist or
+	the value could not be interpreted as float. */
+	virtual float getAttributeValueAsFloat(const wchar_t* name) const = 0;
+
+	//! Returns the value of an attribute as float.
+	/** \param idx: Zero based index, should be something between 0 and getAttributeCount()-1.
+	\return Value of the attribute as float, and 0 if an attribute with this index does not exist or
+	the value could not be interpreted as float. */
+	virtual float getAttributeValueAsFloat(int idx) const = 0;
+
+	//! Returns the name of the current node.
+	/** Only valid, if the node type is EXN_ELEMENT.
+	\return Name of the current node or 0 if the node has no name. */
+	virtual const wchar_t* getNodeName() const = 0;
+
+	//! Returns data of the current node.
+	/** Only valid if the node has some
+	data and it is of type EXN_TEXT, EXN_COMMENT, EXN_CDATA or EXN_UNKNOWN. */
+	virtual const wchar_t* getNodeData() const = 0;
 
 	//! Returns if an element is an empty element, like &lt;foo />
 	virtual bool isEmptyElement() const = 0;
@@ -400,7 +353,7 @@ The file to read can be in any format, it will be converted to UTF-8 if it is no
 in this format.
 Create an instance of this with createIrrXMLReader();
 See IIrrXMLReader for description on how to use it. */
-typedef IIrrXMLReader<char, IXMLBase> IrrXMLReader;
+typedef IIrrXMLReader IrrXMLReader;
 
 //! A UTF-16 xml parser.
 /** This means that all character data will be returned in UTF-16 by this parser.
@@ -408,7 +361,7 @@ The file to read can be in any format, it will be converted to UTF-16 if it is n
 in this format.
 Create an instance of this with createIrrXMLReaderUTF16();
 See IIrrXMLReader for description on how to use it. */
-typedef IIrrXMLReader<char16, IXMLBase> IrrXMLReaderUTF16;
+typedef IIrrXMLReaderUTF8 IrrXMLReaderUTF16;
 
 //! A UTF-32 xml parser.
 /** This means that all character data will be returned in UTF-32 by this parser.
@@ -416,7 +369,7 @@ The file to read can be in any format, it will be converted to UTF-32 if it is n
 in this format.
 Create an instance of this with createIrrXMLReaderUTF32();
 See IIrrXMLReader for description on how to use it. */
-typedef IIrrXMLReader<char32, IXMLBase> IrrXMLReaderUTF32;
+typedef IIrrXMLReaderUTF8 IrrXMLReaderUTF32;
 
 
 //! Creates an instance of an UFT-8 or ASCII character xml parser.
@@ -540,26 +493,12 @@ _SapphireExport IrrXMLReaderUTF32* SAPPHIRE_CALLCONV createIrrXMLReaderUTF32(IFi
 	bool deleteCallback = false);
 
 
-/*! \file irrXML.h
-\brief Header file of the irrXML, the Irrlicht XML parser.
 
-This file includes everything needed for using irrXML,
-the XML parser of the Irrlicht Engine. To use irrXML,
-you only need to include this file in your project:
 
-\code
-#include <irrXML.h>
-\endcode
 
-It is also common to use the two namespaces in which irrXML is included,
-directly after including irrXML.h:
 
-\code
-#include <irrXML.h>
-using namespace irr;
-using namespace io;
-\endcode
-*/
+
+
 }
 
 #endif

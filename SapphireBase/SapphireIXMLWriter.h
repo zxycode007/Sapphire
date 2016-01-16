@@ -43,7 +43,7 @@ namespace Sapphire
 
 		//! Writes an xml element with any number of attributes
 		virtual void writeElement(const wchar_t* name, bool empty,
-			std::vector<String> &names, std::vector<String> &values) = 0;
+			vector<StringW>::type &names, vector<StringW>::type &values) = 0;
 
 		//! Writes a comment into the xml file
 		virtual void writeComment(const wchar_t* comment) = 0;
