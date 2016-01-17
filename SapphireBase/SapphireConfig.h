@@ -115,6 +115,9 @@ TBBø‚œﬂ≥Ã
 #define SAPPHIRE_CALLCONV __cdecl
 #endif // STDCALL_SUPPORTED
 
+
+//#define SAPPHIRE_WCHAR_FILESYSTEM
+
 namespace Sapphire
 {
 

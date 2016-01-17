@@ -451,6 +451,10 @@ namespace Sapphire {
 		return equals(_s1, _s2, caseSensitive);
 	}
 
+ 
+
+	
+
 	const bool StringUtil::equals(const String& source, const String& other, bool caseSensitive)
 	{
 		if (caseSensitive)

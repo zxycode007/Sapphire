@@ -211,7 +211,7 @@ namespace Sapphire
 			char* start = P;
 
 			// more forward until '<' found
-			while (*P != L'<' && *P)
+			while (*P != '<' && *P)
 				++P;
 
 			// not a node, so return false
@@ -230,13 +230,13 @@ namespace Sapphire
 			// based on current token, parse and report next element
 			switch (*P)
 			{
-			case L'/':
+			case '/':
 				parseClosingXMLElement();
 				break;
-			case L'?':
+			case '?':
 				ignoreDefinition();
 				break;
-			case L'!':
+			case '!':
 				if (!parseCDATA())
 					parseComment();
 				break;
@@ -283,7 +283,7 @@ namespace Sapphire
 			CurrentNodeType = EXN_UNKNOWN;
 
 			// move until end marked with '>' reached
-			while (*P != L'>')
+			while (*P != '>')
 				++P;
 
 			++P;
@@ -303,10 +303,10 @@ namespace Sapphire
 			// move until end of comment reached
 			while (count)
 			{
-				if (*P == L'>')
+				if (*P == '>')
 					--count;
 				else
-					if (*P == L'<')
+					if (*P == '<')
 						++count;
 
 				++P;
@@ -329,26 +329,26 @@ namespace Sapphire
 			const char* startName = P;
 
 			// find end of element
-			while (*P != L'>' && !isWhiteSpace(*P))
+			while (*P != '>' && !isWhiteSpace(*P))
 				++P;
 
 			const char* endName = P;
 
 			// find Attributes
-			while (*P != L'>')
+			while (*P != '>')
 			{
 				if (isWhiteSpace(*P))
 					++P;
 				else
 				{
-					if (*P != L'/')
+					if (*P != '/')
 					{
 						// we've got an attribute
 
 						// read the attribute names
 						const char* attributeNameBegin = P;
 
-						while (!isWhiteSpace(*P) && *P != L'=')
+						while (!isWhiteSpace(*P) && *P != '=')
 							++P;
 
 						const char* attributeNameEnd = P;
@@ -356,7 +356,7 @@ namespace Sapphire
 
 						// read the attribute value
 						// check for quotes and single quotes, thx to murphy
-						while ((*P != L'\"') && (*P != L'\'') && *P)
+						while ((*P != '\"') && (*P != '\'') && *P)
 							++P;
 
 						if (!*P) // malformatted xml file
@@ -397,7 +397,7 @@ namespace Sapphire
 			}
 
 			// check if this tag is closing directly
-			if (endName > startName && *(endName - 1) == L'/')
+			if (endName > startName && *(endName - 1) == '/')
 			{
 				// directly closing tag
 				IsEmptyElement = true;
@@ -419,7 +419,7 @@ namespace Sapphire
 			++P;
 			const char* pBeginClose = P;
 
-			while (*P != L'>')
+			while (*P != '>')
 				++P;
 
 			//NodeName = String(pBeginClose, (int)(P - pBeginClose));
@@ -430,7 +430,7 @@ namespace Sapphire
 		//! parses a possible CDATA section, returns false if begin was not a CDATA section
 		bool parseCDATA()
 		{
-			if (*(P + 1) != L'[')
+			if (*(P + 1) != '[')
 				return false;
 
 			CurrentNodeType = EXN_CDATA;
@@ -452,9 +452,9 @@ namespace Sapphire
 			// find end of CDATA
 			while (*P && !cDataEnd)
 			{
-				if (*P == L'>' &&
-					(*(P - 1) == L']') &&
-					(*(P - 2) == L']'))
+				if (*P == '>' &&
+					(*(P - 1) == ']') &&
+					(*(P - 2) == ']'))
 				{
 					cDataEnd = P - 2;
 				}

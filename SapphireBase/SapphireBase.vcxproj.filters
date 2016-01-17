@@ -732,6 +732,39 @@
     <ClInclude Include="zlib\zutil.h">
       <Filter>源文件\externs\zlib</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCXMLWriter.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCWriteFile.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCReadFile.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCFileSystem.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCPakReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCFileList.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCZipReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMountPointReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCNPKReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTarReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCLimitReadFile.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1087,6 +1120,39 @@
     </ClCompile>
     <ClCompile Include="zlib\zutil.c">
       <Filter>源文件\externs\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCXMLWriter.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCWriteFile.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCReadFile.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCFileList.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCPakReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCZipReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMountPointReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCFileSystem.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCNPKReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCTarReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCLimitReadFile.cpp">
+      <Filter>源文件\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

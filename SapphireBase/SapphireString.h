@@ -223,6 +223,27 @@ namespace Sapphire {
 			return ss.str();
 		}
 
+
+		//! 比较字符串，无视大小写
+		/** 
+		\param source:  源串
+		\param other: 另外一个字符串
+		\return 如果源串小于另一个，返回true*/
+		static bool lower_ignore_case(const String& source, const String& other)
+		{
+
+			for (UINT32 i = 0; source[i] && other[i]; ++i)
+			{
+
+				SINT32 diff = (SINT32)tolower(source[i]) - (SINT32)tolower(other[i]);
+				if (diff)
+					return diff < 0;
+			}
+
+			return source.length < other.length;
+		}
+
+
 		/// 空字符串
 		static const String BLANK;
 
