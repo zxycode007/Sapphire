@@ -66,6 +66,35 @@ namespace Sapphire
 		path Path;
 		path InternalName;
 	};
+
+
+	//! trim paths
+	inline path& deletePathFromPath(path& filename, SINT32 pathCount)
+	{
+		// delete path from filename
+		SINT32 i = filename.size();
+
+		// search for path separator or beginning
+		while (i >= 0)
+		{
+			if (filename[i] == '/' || filename[i] == '\\')
+			{
+				if (--pathCount <= 0)
+					break;
+			}
+			--i;
+		}
+
+		if (i>0)
+		{
+			filename[i + 1] = 0;
+			//filename.validate();
+		}
+		else
+			filename = "";
+		return filename;
+	}
+
 }
 
 

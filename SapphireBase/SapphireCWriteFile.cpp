@@ -73,7 +73,7 @@ namespace Sapphire
 			return;
 		}
 
-#if defined(SAPPHIRE_WCHAR_FILESYSTEM)
+#if (SAPPHIRE_WCHAR_T_STRINGS)
 		File = _wfopen(Filename.c_str(), append ? L"ab" : L"wb");
 #else
 		File = fopen(Filename.c_str(), append ? "ab" : "wb");

@@ -73,7 +73,34 @@ namespace Sapphire
 		return filename;
 	}
 
+	//! looks if file is in the same directory of path. returns offset of directory.
+	//! 0 means in same directory. 1 means file is direct child of path
+	inline SINT32 isInSameDirectory(const path& path, const String& file)
+	{
+		SINT32 subA = 0;
+		SINT32 subB = 0;
+		SINT32 pos;
 
+		//if (path.size() && !path.equalsn(file, path.size()))
+		if (path.size() && !StringUtil::equalsn(path,file, path.size()))
+			return -1;
+
+		pos = 0;
+		while ((pos = path.find('/', pos)) >= 0)
+		{
+			subA += 1;
+			pos += 1;
+		}
+
+		pos = 0;
+		while ((pos = file.find('/', pos)) >= 0)
+		{
+			subB += 1;
+			pos += 1;
+		}
+
+		return subB - subA;
+	}
 	
 
 

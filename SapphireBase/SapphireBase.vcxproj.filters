@@ -765,6 +765,12 @@
     <ClInclude Include="SapphireCLimitReadFile.h">
       <Filter>源文件\IO</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCMemoryFile.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCWADReader.h">
+      <Filter>源文件\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1142,9 +1148,6 @@
     <ClCompile Include="SapphireCMountPointReader.cpp">
       <Filter>源文件\IO</Filter>
     </ClCompile>
-    <ClCompile Include="SapphireCFileSystem.cpp">
-      <Filter>源文件\IO</Filter>
-    </ClCompile>
     <ClCompile Include="SapphireCNPKReader.cpp">
       <Filter>源文件\IO</Filter>
     </ClCompile>
@@ -1152,6 +1155,15 @@
       <Filter>源文件\IO</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCLimitReadFile.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMemeoryFile.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCWADReader.cpp">
+      <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCFileSystem.cpp">
       <Filter>源文件\IO</Filter>
     </ClCompile>
   </ItemGroup>

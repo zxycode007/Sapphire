@@ -36,7 +36,7 @@ namespace Sapphire
 		//! opens the file
 		void openFile(bool append);
 
-		path Filename;
+		String Filename;
 		FILE* File;
 		long FileSize;
 	};

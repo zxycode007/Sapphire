@@ -416,6 +416,17 @@ namespace Sapphire
 	typedef StringWStream stringWstream;
 #endif
 	
+#if SAPPHIRE_WCHAR_T_STRINGS
+	typedef wchar_t fschar_t;
+#define SAPPHIRE_TEXT(X) L##X
+#define CONVERT_TO_LOWER(X) towlower(X);
+#else
+	typedef char fschar_t;
+#define SAPPHIRE_TEXT(X) X
+#define  CONVERT_TO_LOWER(X) tolower(X);
+#endif
+
+
 
 }
 

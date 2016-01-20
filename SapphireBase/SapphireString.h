@@ -77,9 +77,17 @@ namespace Sapphire {
 		*/
 		static void toLowerCase(String& str);
 
+		/** 转换字符串到小写字符
+		*/
+		static String& toLowerCase2(String& str);
+
 		/**转换字符串到大写字符
 		*/
 		static void toUpperCase(String& str);
+
+		/**转换字符串到大写字符
+		*/
+		static String& toUpperCase2(String& str);
 
 
 		/** 进行模式匹配返回是否是由传入字符串开头
@@ -201,7 +209,21 @@ namespace Sapphire {
 			free(old_local);
 			return ret;
 		}
+		//! compares the first n characters of the strings
+		/** \param other Other string to compare.
+		\param n Number of characters to compare
+		\return True if the n first characters of both strings are equal. */
+		static bool equalsn(const String source, const String& other, UINT32 n) 
+		{
+			UINT32 i;
+			for (i = 0; source[i] && other[i] && i < n; ++i)
+				if (source[i] != other[i])
+					return false;
 
+			// if one (or both) of the strings was smaller then they
+			// are only equal if they have the same length
+			return (i == n) || (source.length() == other.length());
+		}
 
 		static String floatToString(FLOAT32 f)
 		{
@@ -240,7 +262,7 @@ namespace Sapphire {
 					return diff < 0;
 			}
 
-			return source.length < other.length;
+			return source.length() < other.length();
 		}
 
 
@@ -257,6 +279,8 @@ namespace Sapphire {
 	//! 用来在fast_atof统计小数点的字符的选择
 
 	_SapphireExport extern String LOCALE_DECIMAL_POINTS;
+
+	
 
 	const float fast_atof_table[17] = {
 		0.f,

@@ -178,6 +178,17 @@ namespace Sapphire {
 			tolower);
 	}
 
+	String& StringUtil::toLowerCase2(String& str)
+	{
+		std::transform(
+			str.begin(),
+			str.end(),
+			str.begin(),
+			tolower);
+		return str;
+	}
+
+
 	//-----------------------------------------------------------------------
 	void StringUtil::toUpperCase(String& str)
 	{
@@ -186,6 +197,17 @@ namespace Sapphire {
 			str.end(),
 			str.begin(),
 			toupper);
+	}
+
+
+	String& StringUtil::toUpperCase2(String& str)
+	{
+		std::transform(
+			str.begin(),
+			str.end(),
+			str.begin(),
+			toupper);
+		return str;
 	}
 	//-----------------------------------------------------------------------
 	bool StringUtil::startsWith(const String& str, const String& pattern, bool lowerCase)

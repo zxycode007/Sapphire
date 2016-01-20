@@ -106,6 +106,7 @@
     <ClInclude Include="SapphireCImageWriterJPEG.h" />
     <ClInclude Include="SapphireCImageWriterPNG.h" />
     <ClInclude Include="SapphireCImageWriterTGA.h" />
+    <ClInclude Include="SapphireCMemoryFile.h" />
     <ClInclude Include="SapphireCMeshManipulator.h" />
     <ClInclude Include="SapphireCMountPointReader.h" />
     <ClInclude Include="SapphireCNPKReader.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="SapphireCTarReader.h" />
     <ClInclude Include="SapphireCTimer.h" />
     <ClInclude Include="SapphireCVideoModelList.h" />
+    <ClInclude Include="SapphireCWADReader.h" />
     <ClInclude Include="SapphireCWriteFile.h" />
     <ClInclude Include="SapphireCXMLReader.h" />
     <ClInclude Include="SapphireCXMLReaderImpl.h" />
@@ -378,6 +380,7 @@
     <ClCompile Include="SapphireCImageWriterTGA.cpp" />
     <ClCompile Include="SapphireCIXMLReader.cpp" />
     <ClCompile Include="SapphireCLimitReadFile.cpp" />
+    <ClCompile Include="SapphireCMemeoryFile.cpp" />
     <ClCompile Include="SapphireCMountPointReader.cpp" />
     <ClCompile Include="SapphireCNPKReader.cpp" />
     <ClCompile Include="SapphireCNullDriver.cpp" />
@@ -389,6 +392,7 @@
     <ClCompile Include="SapphireCTarReader.cpp" />
     <ClCompile Include="SapphireCTimer.cpp" />
     <ClCompile Include="SapphireCVideoModelList.cpp" />
+    <ClCompile Include="SapphireCWADReader.cpp" />
     <ClCompile Include="SapphireCWriteFile.cpp" />
     <ClCompile Include="SapphireCXMLWriter.cpp" />
     <ClCompile Include="SapphireCZipReader.cpp" />

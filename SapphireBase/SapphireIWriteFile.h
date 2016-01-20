@@ -1,5 +1,5 @@
 #ifndef _SAPPHIRE_I_WRITE_FILE_
-#define _SAPPHIRE_T_WRITE_FILE_
+#define _SAPPHIRE_I_WRITE_FILE_
 
 #include "SapphireIReferenceCounter.h"
 #include "SapphirePath.h"
