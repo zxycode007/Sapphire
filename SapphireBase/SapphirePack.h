@@ -1,5 +1,3 @@
-#ifndef _SAPPHIRE_PACK_
-#define _SAPPHIRE_PACK_
 
 // include this file right before the data structures to be 1-aligned
 // and add to each structure the PACK_STRUCT define just like this:
@@ -36,4 +34,3 @@
 #	error compiler not supported
 #endif
 
-#endif

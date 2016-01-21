@@ -88,6 +88,9 @@
     <Filter Include="源文件\externs\zlib">
       <UniqueIdentifier>{3a7546d9-ea95-40ea-a3eb-52d8a946ebd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\gui">
+      <UniqueIdentifier>{16b9ec59-878c-496f-a20a-42d404e72f15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -770,6 +773,72 @@
     </ClInclude>
     <ClInclude Include="SapphireCWADReader.h">
       <Filter>源文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEGUIElementTypes.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireEMessageBoxFlags.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIImage.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIElement.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIElementFactory.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIImageList.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIButton.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUICheckBox.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIComboBox.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIContextMenu.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIEditBox.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIFileOpenDialog.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIListBox.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIMeshViewer.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIScrollBar.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUISpinBox.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUISpriteBank.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIStaticText.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUITabControl.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIToolBar.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUITreeView.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIWindow.h">
+      <Filter>头文件\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

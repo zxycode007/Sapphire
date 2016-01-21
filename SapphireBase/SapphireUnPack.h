@@ -1,5 +1,4 @@
-#ifndef _SAPPHIRE_UNPACK_
-#define _SAPPHIRE_UNPACK_
+
 
 // include this file to switch back to default alignment
 // file belongs to irrpack.h, see there for more info
@@ -18,4 +17,3 @@
 #undef PACK_STRUCT
 
 
-#endif
