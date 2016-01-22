@@ -603,6 +603,17 @@ namespace Sapphire
 		{
 			return a < b ? a : b;
 		}
+		template<class T>
+		static  T& max(const T& a, const T& b, const T& c)
+		{
+			return a < b ? _max(b, c) : _max(a, c);
+		}
+		
+		template<class T>
+		static T& min(const T& a, const T& b, const T& c)
+		{
+			return a < b ? _min(a, c) : _min(b, c);
+		}
 
 	protected:
 		//////////////////不对外由API内部调用//////////////////////

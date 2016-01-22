@@ -2,6 +2,17 @@
 #define _SAPPHIRE_COMPILE_CONFIG_
 
 
+
+//! Define _IRR_COMPILE_WITH_GUI_ to compile the engine with the built-in GUI
+/** Disable this if you are using an external library to draw the GUI. If you disable this then
+you will not be able to use anything provided by the GUI Environment, including loading fonts. */
+#define _SAPPHIRE_COMPILE_WITH_GUI_
+#ifdef NO_SAPPHIRE_COMPILE_WITH_GUI_
+#undef _SAPPHIRE_COMPILE_WITH_GUI_
+#endif
+
+
+
 //! Define SAPPHIRE_COMPILE_WITH_LIBPNG_ to enable compiling the engine using libpng.
 /** This enables the engine to read png images. If you comment this out,
 the engine will no longer read .png images. */

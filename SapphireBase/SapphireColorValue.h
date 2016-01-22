@@ -224,6 +224,26 @@ namespace Sapphire {
 			c.setBlue(blue);
 			return c;
 		}
+
+		ColourValue(ARGB color)
+		{
+			uint32 val32 = color;
+
+			// 转换到32位模式
+			// (ARGB = 8888)
+
+			// Alpha
+			a = ((val32 >> 24) & 0xFF) / 255.0f;
+
+			// Red
+			r = ((val32 >> 16) & 0xFF) / 255.0f;
+
+			// Green
+			g = ((val32 >> 8) & 0xFF) / 255.0f;
+
+			// Blue
+			b = (val32 & 0xFF) / 255.0f;
+		}
 		
 
 		/* ColourValue(UINT32 alpha=255, UINT32 red=255, UINT32 green=255, UINT32 blue=255, bool ignore=true)
@@ -646,6 +666,115 @@ namespace Sapphire {
 	/** @} */
 	/** @} */
 
+
+	//! Class representing a color in HSL format
+	/** The color values for hue, saturation, luminance
+	are stored in 32bit floating point variables. Hue is in range [0,360],
+	Luminance and Saturation are in percent [0,100]
+	*/
+	class SColorHSL
+	{
+	public:
+		SColorHSL ( FLOAT32 h = 0.f, FLOAT32 s = 0.f, FLOAT32 l = 0.f )
+			: Hue ( h ), Saturation ( s ), Luminance ( l ) {}
+
+		void fromRGB(const ColourValue &color);
+		void toRGB(ColourValue &color) const;
+
+		FLOAT32 Hue;
+		FLOAT32 Saturation;
+		FLOAT32 Luminance;
+
+	private:
+		inline FLOAT32 toRGB1(FLOAT32 rm1, FLOAT32 rm2, FLOAT32 rh) const;
+
+	};
+
+	inline void SColorHSL::fromRGB(const ColourValue &color)
+	{
+		const FLOAT32 maxVal = Math::max<FLOAT32>(color.r, color.g, color.b);
+		const FLOAT32 minVal = Math::min<FLOAT32>(color.r, color.g, color.b);
+		Luminance = (maxVal + minVal) * 50;
+		if (Math::equals(maxVal, minVal))
+		{
+			Hue = 0.f;
+			Saturation = 0.f;
+			return;
+		}
+
+		const FLOAT32 delta = maxVal - minVal;
+		if (Luminance <= 50)
+		{
+			Saturation = (delta) / (maxVal + minVal);
+		}
+		else
+		{
+			Saturation = (delta) / (2 - maxVal - minVal);
+		}
+		Saturation *= 100;
+
+		if (Math::equals (maxVal, color.r))
+			Hue = (color.g - color.b) / delta;
+		else if (Math::equals(maxVal, color.g))
+			Hue = 2 + ((color.b - color.r) / delta);
+		else // blue is max
+			Hue = 4 + ((color.r - color.g) / delta);
+
+		Hue *= 60.0f;
+		while (Hue < 0.f)
+			Hue += 360;
+	}
+
+
+	inline void SColorHSL::toRGB(ColourValue &color) const
+	{
+		const FLOAT32 l = Luminance / 100;
+		if (Math::iszero(Saturation)) // grey
+		{
+			color.r = 1.0;
+			color.g = 1.0;
+			color.b = 1.0;
+			return;
+		}
+
+		FLOAT32 rm2;
+
+		if (Luminance <= 50)
+		{
+			rm2 = l + l * (Saturation / 100);
+		}
+		else
+		{
+			rm2 = l + (1 - l) * (Saturation / 100);
+		}
+
+		const FLOAT32 rm1 = 2.0f * l - rm2;
+
+		const FLOAT32 h = Hue / 360.0f;
+		color.r = toRGB1(rm1, rm2, h + 1.f / 3.f);
+		color.g = toRGB1(rm1, rm2, h); 
+		color.b = toRGB1(rm1, rm2, h - 1.f / 3.f);
+		 
+	}
+
+
+	// algorithm from Foley/Van-Dam
+	inline FLOAT32 SColorHSL::toRGB1(FLOAT32 rm1, FLOAT32 rm2, FLOAT32 rh) const
+	{
+		if (rh<0)
+			rh += 1;
+		if (rh>1)
+			rh -= 1;
+
+		if (rh < 1.f / 6.f)
+			rm1 = rm1 + (rm2 - rm1) * rh*6.f;
+		else if (rh < 0.5f)
+			rm1 = rm2;
+		else if (rh < 2.f / 3.f)
+			rm1 = rm1 + (rm2 - rm1) * ((2.f / 3.f) - rh)*6.f;
+
+		return rm1;
+	}
 }  
 
 #endif

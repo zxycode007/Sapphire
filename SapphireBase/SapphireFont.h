@@ -4,6 +4,7 @@
 #include "SapphireRectangle.h"
 #include "SapphireColorValue.h"
 
+
 namespace Sapphire
 {
 	//! GUI字体的枚举类型
@@ -24,7 +25,7 @@ namespace Sapphire
 	};
 
 	//!字体接口
-	class IGUIFont 
+	class IGUIFont : public virtual IReferenceCounter
 	{
 	public:
 
@@ -36,9 +37,9 @@ namespace Sapphire
 		\param vcenter: 指定如果这个文本是否该在矩形的垂直中心
 		\param clip: 可选指针，指向一个矩形，它指向的文本会被剪切
 		*/
-		virtual void draw(const String& text, const Rectangle& position,
+		virtual void draw(const String& text, const rect<SINT32>& position,
 			ColourValue color, bool hcenter = false, bool vcenter = false,
-			const Rectangle* clip = 0) = 0;
+			const rect<SINT32>* clip = 0) = 0;
 
 		//! 计算给定文本字符串的宽度和高度
 		/** \return 要绘制的文本区域的宽度和高度*/

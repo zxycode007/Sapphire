@@ -429,7 +429,7 @@ namespace Sapphire
 		\param rect: Defining area where to draw.
 		\param clip: Clip area. */
 		virtual void draw3DButtonPaneStandard(IGUIElement* element,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0) = 0;
 
 		//! draws a pressed 3d button pane
@@ -442,7 +442,7 @@ namespace Sapphire
 		\param rect: Defining area where to draw.
 		\param clip: Clip area. */
 		virtual void draw3DButtonPanePressed(IGUIElement* element,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0) = 0;
 
 		//! draws a sunken 3d pane
@@ -459,7 +459,7 @@ namespace Sapphire
 		\param clip: Clip area. */
 		virtual void draw3DSunkenPane(IGUIElement* element,
 			ColourValue bgcolor, bool flat, bool fillBackGround,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0) = 0;
 
 		//! draws a window background
@@ -478,7 +478,7 @@ namespace Sapphire
 		work even when checkClientArea is set to a non-null value.*/
 		virtual rect<SINT32> draw3DWindowBackground(IGUIElement* element,
 			bool drawTitleBar, ColourValue titleBarColor,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0,
 			recti* checkClientArea = 0) = 0;
 
@@ -492,7 +492,7 @@ namespace Sapphire
 		\param rect: Defining area where to draw.
 		\param clip: Clip area. */
 		virtual void draw3DMenuPane(IGUIElement* element,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0) = 0;
 
 		//! draws a standard 3d tool bar
@@ -503,7 +503,7 @@ namespace Sapphire
 		\param rect: Defining area where to draw.
 		\param clip: Clip area. */
 		virtual void draw3DToolBar(IGUIElement* element,
-			const rect<SINT32>& rect,
+			const rect<SINT32>& rectangle,
 			const recti* clip = 0) = 0;
 
 		//! draws a tab button
@@ -516,7 +516,7 @@ namespace Sapphire
 		\param clip: Clip area.
 		\param alignment Alignment of GUI element. */
 		virtual void draw3DTabButton(IGUIElement* element, bool active,
-			const rect<SINT32>& rect, const recti* clip = 0, EGUI_ALIGNMENT alignment = EGUIA_UPPERLEFT) = 0;
+			const rect<SINT32>& rectangle, const recti* clip = 0, EGUI_ALIGNMENT alignment = EGUIA_UPPERLEFT) = 0;
 
 		//! draws a tab control body
 		/** \param element: Pointer to the element which wishes to draw this. This parameter
@@ -529,7 +529,7 @@ namespace Sapphire
 		\param tabHeight Height of tab.
 		\param alignment Alignment of GUI element. */
 		virtual void draw3DTabBody(IGUIElement* element, bool border, bool background,
-			const rect<SINT32>& rect, const recti* clip = 0, SINT32 tabHeight = -1, EGUI_ALIGNMENT alignment = EGUIA_UPPERLEFT) = 0;
+			const rect<SINT32>& rectangle, const recti* clip = 0, SINT32 tabHeight = -1, EGUI_ALIGNMENT alignment = EGUIA_UPPERLEFT) = 0;
 
 		//! draws an icon, usually from the skin's sprite bank
 		/** \param element: Pointer to the element which wishes to draw this icon.

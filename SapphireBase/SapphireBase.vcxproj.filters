@@ -840,6 +840,39 @@
     <ClInclude Include="SapphireIGUIWindow.h">
       <Filter>头文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCDefaultGUIElementFactory.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUITable.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIInOutFader.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIColorSelectDialog.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIButton.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUICheckBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGUIFontBitmap.h">
+      <Filter>头文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIColorSelectDialog.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIImage.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIImageList.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUISkin.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1234,6 +1267,24 @@
     </ClCompile>
     <ClCompile Include="SapphireCFileSystem.cpp">
       <Filter>源文件\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCDefaultGUIElementFactory.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIButton.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUICheckBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIImage.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIImageList.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUISkin.cpp">
+      <Filter>源文件\gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
