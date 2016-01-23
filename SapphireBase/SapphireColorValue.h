@@ -244,6 +244,26 @@ namespace Sapphire {
 			// Blue
 			b = (val32 & 0xFF) / 255.0f;
 		}
+
+		ColourValue(SINT32 color)
+		{
+			SINT32 val32 = color;
+
+			// 转换到32位模式
+			// (ARGB = 8888)
+
+			// Alpha
+			a = ((val32 >> 24) & 0xFF) / 255.0f;
+
+			// Red
+			r = ((val32 >> 16) & 0xFF) / 255.0f;
+
+			// Green
+			g = ((val32 >> 8) & 0xFF) / 255.0f;
+
+			// Blue
+			b = (val32 & 0xFF) / 255.0f;
+		}
 		
 
 		/* ColourValue(UINT32 alpha=255, UINT32 red=255, UINT32 green=255, UINT32 blue=255, bool ignore=true)
@@ -258,7 +278,7 @@ namespace Sapphire {
 		 
 		bool operator!=(const ColourValue& rhs) const;
 
-		ColourValue& operator=(const UINT32& rhs) const;
+		//ColourValue& operator=(const UINT32& rhs) const;
 
 		float r, g, b, a;
 

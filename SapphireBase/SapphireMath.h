@@ -282,7 +282,7 @@ namespace Sapphire
 		static T Clamp(T val, T minval, T maxval)
 		{
 			assert(minval <= maxval && "Invalid clamp range");
-			return max(min(val, maxval), minval);
+			return _max(_min(val, maxval), minval);
 		}
 
 
@@ -604,15 +604,25 @@ namespace Sapphire
 			return a < b ? a : b;
 		}
 		template<class T>
-		static  T& max(const T& a, const T& b, const T& c)
+		static T& max_(T& a, T& b)
 		{
-			return a < b ? _max(b, c) : _max(a, c);
+			return a > b ? a : b;
+		}
+		template<class T>
+		static T& min_(T& a, T& b)
+		{
+			return a < b ? a : b;
+		}
+		template<class T>
+		static  T max(const T a, const T b, const T c)
+		{
+ 			return a < b ? max_(b, c) : max_(a, c);
 		}
 		
 		template<class T>
-		static T& min(const T& a, const T& b, const T& c)
+		static T min(const T a, const T b, const T c)
 		{
-			return a < b ? _min(a, c) : _min(b, c);
+			return a < b ? min_(a, c) : min_(b, c);
 		}
 
 	protected:

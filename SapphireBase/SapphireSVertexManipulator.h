@@ -157,7 +157,7 @@ namespace Sapphire
 	public:
 		void operator()(S3DVertex& vertex) const
 		{
-			vertex.Color = vertex.Color.getLightness();
+			vertex.Color = Math::round2i(vertex.Color.getLightness());
 		}
 	};
 	//! 能降低颜色饱和度的顶点操作器
@@ -177,7 +177,7 @@ namespace Sapphire
 	public:
 		void operator()(S3DVertex& vertex) const
 		{
-			vertex.Color = vertex.Color.getLuminance();
+			vertex.Color = Math::round2i(vertex.Color.getLuminance());
 		}
 	};
 	//! 能对颜色值进行插值的顶点操作器

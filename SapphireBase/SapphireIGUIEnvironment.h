@@ -4,7 +4,7 @@
 #include "SapphireIReferenceCounter.h"
 #include "SapphireIGUISkin.h"
 #include "SapphireRectangle.h"
-#include "SapphireEMessageBoxFlag.h"
+#include "SapphireEMessageBoxFlags.h"
 #include "SapphireIEventRecevier.h"
 #include "SapphireIXMLReader.h"
 #include "SapphirePath.h"

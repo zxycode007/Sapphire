@@ -71,7 +71,7 @@ namespace Sapphire
 		EGST_GS_4_0 = 0,
 
 		 
-		EGST_COUNT
+		E_GST_COUNT
 	};
 
 	//! 支持的geometry shader types名

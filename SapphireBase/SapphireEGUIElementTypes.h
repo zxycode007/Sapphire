@@ -88,7 +88,7 @@ namespace Sapphire
 		EGUIET_COUNT,
 
 		//! This enum is never used, it only forces the compiler to compile this enumeration to 32 bit.
-		EGUIET_FORCE_32_BIT = 0x7fffffff
+		//EGUIET_FORCE_32_BIT = 0x7fffffff
 
 	};
 

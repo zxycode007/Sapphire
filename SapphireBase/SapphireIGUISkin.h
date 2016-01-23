@@ -41,7 +41,7 @@ namespace Sapphire
 	};
 
 	//! Names for gui element types
-	const c8* const GUISkinTypeNames[EGST_COUNT + 1] =
+	const c8* const GUISkinTypeNames[EGUI_SKIN_TYPE::EGST_COUNT + 1] =
 	{
 		"windowsClassic",
 		"windowsMetallic",

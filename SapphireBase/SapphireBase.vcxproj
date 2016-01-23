@@ -101,9 +101,12 @@
     <ClInclude Include="SapphireCGUIButton.h" />
     <ClInclude Include="SapphireCGUICheckBox.h" />
     <ClInclude Include="SapphireCGUIColorSelectDialog.h" />
+    <ClInclude Include="SapphireCGUIContextMenu.h" />
+    <ClInclude Include="SapphireCGUIFont.h" />
     <ClInclude Include="SapphireCGUIImage.h" />
     <ClInclude Include="SapphireCGUIImageList.h" />
     <ClInclude Include="SapphireCGUISkin.h" />
+    <ClInclude Include="SapphireCGUIStaticText.h" />
     <ClInclude Include="SapphireCImage.h" />
     <ClInclude Include="SapphireCImageLoaderBMP.h" />
     <ClInclude Include="SapphireCImageLoaderJPEG.h" />
@@ -405,9 +408,13 @@
     <ClCompile Include="SapphireCFPSCounter.cpp" />
     <ClCompile Include="SapphireCGUIButton.cpp" />
     <ClCompile Include="SapphireCGUICheckBox.cpp" />
+    <ClCompile Include="SapphireCGUIColorSelectDialog.cpp" />
+    <ClCompile Include="SapphireCGUIContextMenu.cpp" />
+    <ClCompile Include="SapphireCGUIFont.cpp" />
     <ClCompile Include="SapphireCGUIImage.cpp" />
     <ClCompile Include="SapphireCGUIImageList.cpp" />
     <ClCompile Include="SapphireCGUISkin.cpp" />
+    <ClCompile Include="SapphireCGUIStaticText.cpp" />
     <ClCompile Include="SapphireCImage.cpp" />
     <ClCompile Include="SapphireCImageLoaderBMP.cpp" />
     <ClCompile Include="SapphireCImageLoaderJPEG.cpp" />

@@ -1,6 +1,7 @@
 #ifndef _SAPPHIRE_FONT_
 #define _SAPPHIRE_FONT_
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphireRectangle.h"
 #include "SapphireColorValue.h"
 

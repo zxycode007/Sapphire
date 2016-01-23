@@ -55,7 +55,7 @@ namespace Sapphire
 		EET_USER_EVENT,
 
 		//! 这个不用
-		EGUIET_FORCE_32_BIT = 0x7fffffff
+		//EGUIET_FORCE_32_BIT = 0x7fffffff
 
 	};
 

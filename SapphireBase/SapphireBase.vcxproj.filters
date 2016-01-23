@@ -873,6 +873,15 @@
     <ClInclude Include="SapphireCGUISkin.h">
       <Filter>源文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCGUIFont.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIStaticText.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIContextMenu.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1284,6 +1293,18 @@
       <Filter>源文件\gui</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCGUISkin.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIColorSelectDialog.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIFont.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIStaticText.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIContextMenu.cpp">
       <Filter>源文件\gui</Filter>
     </ClCompile>
   </ItemGroup>

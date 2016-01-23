@@ -15,7 +15,7 @@ namespace Sapphire
 	public:
 
 		//! constructor
-		CGUIColorSelectDialog(const wchar_t* title, IGUIEnvironment* environment, IGUIElement* parent, s32 id);
+		CGUIColorSelectDialog(const wchar_t* title, IGUIEnvironment* environment, IGUIElement* parent, SINT32 id);
 
 		//! destructor
 		virtual ~CGUIColorSelectDialog();

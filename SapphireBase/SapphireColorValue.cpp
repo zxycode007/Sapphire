@@ -243,7 +243,7 @@ namespace Sapphire {
 			b == rhs.b &&
 			a == rhs.a);
 	}
-
+	/*
 	ColourValue& ColourValue::operator=(const UINT32& rhs) const
 	{
 		UINT32 val32 = rhs;
@@ -264,7 +264,7 @@ namespace Sapphire {
 		Real b = (val32 & 0xFF) / 255.0f;
 		return ColourValue(r,g,b,a);
 	}
-
+	*/
 	//---------------------------------------------------------------------
 	bool ColourValue::operator!=(const ColourValue& rhs) const
 	{
