@@ -93,6 +93,8 @@
     <ClInclude Include="SapphireBuildSets.h" />
     <ClInclude Include="SapphireCAtrributes.h" />
     <ClInclude Include="SapphireCBlit.h" />
+    <ClInclude Include="SapphireCGUIComboBox.h" />
+    <ClInclude Include="SapphireCGUIEditBox.h" />
     <ClInclude Include="SapphireCColourConverter.h" />
     <ClInclude Include="SapphireCDefaultGUIElementFactory.h" />
     <ClInclude Include="SapphireCFileList.h" />
@@ -105,6 +107,8 @@
     <ClInclude Include="SapphireCGUIFont.h" />
     <ClInclude Include="SapphireCGUIImage.h" />
     <ClInclude Include="SapphireCGUIImageList.h" />
+    <ClInclude Include="SapphireCGUIListBox.h" />
+    <ClInclude Include="SapphireCGUIScrollBar.h" />
     <ClInclude Include="SapphireCGUISkin.h" />
     <ClInclude Include="SapphireCGUIStaticText.h" />
     <ClInclude Include="SapphireCImage.h" />
@@ -409,10 +413,14 @@
     <ClCompile Include="SapphireCGUIButton.cpp" />
     <ClCompile Include="SapphireCGUICheckBox.cpp" />
     <ClCompile Include="SapphireCGUIColorSelectDialog.cpp" />
+    <ClCompile Include="SapphireCGUIComboBox.cpp" />
     <ClCompile Include="SapphireCGUIContextMenu.cpp" />
+    <ClCompile Include="SapphireCGUIEditBox.cpp" />
     <ClCompile Include="SapphireCGUIFont.cpp" />
     <ClCompile Include="SapphireCGUIImage.cpp" />
     <ClCompile Include="SapphireCGUIImageList.cpp" />
+    <ClCompile Include="SapphireCGUIListBox.cpp" />
+    <ClCompile Include="SapphireCGUIScrollBar.cpp" />
     <ClCompile Include="SapphireCGUISkin.cpp" />
     <ClCompile Include="SapphireCGUIStaticText.cpp" />
     <ClCompile Include="SapphireCImage.cpp" />

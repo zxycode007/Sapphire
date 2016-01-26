@@ -492,4 +492,19 @@ namespace Sapphire {
 		return false;
 	}
 
+	const bool StringUtil::equalsW(const StringW& source, const StringW& other, bool caseSensitive)
+	{
+		if (caseSensitive)
+		{
+			return source == other;
+		}
+#if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_WIN32
+		return wcsicmp(source.c_str(), other.c_str()) == 0;
+#else
+#include <strings.h>
+		return wcsncasecmp(source.c_str(), other.c_str()) == 0;
+#endif
+		return false;
+	}
+
 }

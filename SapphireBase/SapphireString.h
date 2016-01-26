@@ -166,6 +166,14 @@ namespace Sapphire {
 		@param  是否区分大小写（默认区分）
 		*/
 		static const bool equals(const String& source, const String& other, bool caseSensitive = true);
+
+		/**
+		比较两个字符串是否相同
+		@param  源字符串
+		@param  目的字符串
+		@param  是否区分大小写（默认区分）
+		*/
+		static const bool equalsW(const StringW& source, const StringW& other, bool caseSensitive = true);
 		
 
 		//! 比较源字符串的子串忽略大小写

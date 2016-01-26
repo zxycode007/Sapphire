@@ -882,6 +882,18 @@
     <ClInclude Include="SapphireCGUIContextMenu.h">
       <Filter>源文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCGUIEditBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIScrollBar.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIListBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIComboBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1305,6 +1317,18 @@
       <Filter>源文件\gui</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCGUIContextMenu.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIEditBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIScrollBar.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIListBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIComboBox.cpp">
       <Filter>源文件\gui</Filter>
     </ClCompile>
   </ItemGroup>
