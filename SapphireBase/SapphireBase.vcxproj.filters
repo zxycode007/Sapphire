@@ -894,6 +894,21 @@
     <ClInclude Include="SapphireCGUIComboBox.h">
       <Filter>源文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCGUIInOutFader.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIMenu.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIMeshViewer.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIMessageBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIWindow.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1329,6 +1344,21 @@
       <Filter>源文件\gui</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCGUIComboBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIInOutFader.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIMenu.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIMeshViewer.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIWindow.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIMessageBox.cpp">
       <Filter>源文件\gui</Filter>
     </ClCompile>
   </ItemGroup>

@@ -443,7 +443,7 @@ namespace Sapphire
 	//! refreshes the position and text on child buttons
 	void CGUIScrollBar::refreshControls()
 	{
-		CurrentIconColor = ColourValue(255, 255, 255, 255);
+		CurrentIconColor = ColourValue::getColourValue(255, 255, 255, 255);
 
 		IGUISkin* skin = Environment->getSkin();
 		IGUISpriteBank* sprites = 0;
