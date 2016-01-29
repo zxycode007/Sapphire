@@ -319,7 +319,7 @@ namespace Sapphire
 			}
 
 			if (font)
-				font->draw(StringUtil::StringWToString(Text), rect,
+				font->draw(Text, rect,
 				skin->getColor(isEnabled() ? EGDC_BUTTON_TEXT : EGDC_GRAY_TEXT),
 				true, true, &AbsoluteClippingRect);
 		}

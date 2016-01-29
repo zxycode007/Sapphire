@@ -812,7 +812,7 @@ namespace Sapphire
 
 
 					// draw normal text
-					font->draw(StringUtil::StringWToString(*txtLine), CurrentTextRect,
+					font->draw(*txtLine, CurrentTextRect,
 						OverrideColorEnabled ? OverrideColor : skin->getColor(EGDC_BUTTON_TEXT),
 						false, true, &localClipRect);
 
@@ -856,7 +856,7 @@ namespace Sapphire
 						s = txtLine->substr(lineStartPos, lineEndPos - lineStartPos);
 
 						if (s.size())
-							font->draw(StringUtil::StringWToString(s), CurrentTextRect,
+							font->draw(s, CurrentTextRect,
 							OverrideColorEnabled ? OverrideColor : skin->getColor(EGDC_HIGH_LIGHT_TEXT),
 							false, true, &localClipRect);
 
@@ -886,7 +886,7 @@ namespace Sapphire
 					setTextRect(cursorLine);
 					CurrentTextRect.UpperLeftCorner.x += charcursorpos;
 
-					font->draw("_", CurrentTextRect,
+					font->draw(L"_", CurrentTextRect,
 						OverrideColorEnabled ? OverrideColor : skin->getColor(EGDC_BUTTON_TEXT),
 						false, true, &localClipRect);
 				}

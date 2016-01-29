@@ -38,7 +38,19 @@ namespace Sapphire
 		\param vcenter: 指定如果这个文本是否该在矩形的垂直中心
 		\param clip: 可选指针，指向一个矩形，它指向的文本会被剪切
 		*/
-		virtual void draw(const String& text, const rect<SINT32>& position,
+		//virtual void draw(const String& text, const rect<SINT32>& position,
+		//	ColourValue color, bool hcenter = false, bool vcenter = false,
+		//	const rect<SINT32>* clip = 0) = 0;
+
+		//! 绘制一些文本并且剪切它到指定的矩形区域类(宽字节)
+		/** \param text: 要绘制的文本
+		\param position: 绘制文本的矩形的位置
+		\param color: 文本的颜色
+		\param hcenter: 指定如果这个文本是否该在矩形的水平中心
+		\param vcenter: 指定如果这个文本是否该在矩形的垂直中心
+		\param clip: 可选指针，指向一个矩形，它指向的文本会被剪切
+		*/
+		virtual void draw(const StringW& text, const rect<SINT32>& position,
 			ColourValue color, bool hcenter = false, bool vcenter = false,
 			const rect<SINT32>* clip = 0) = 0;
 

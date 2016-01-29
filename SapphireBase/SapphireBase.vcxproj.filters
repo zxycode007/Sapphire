@@ -909,6 +909,27 @@
     <ClInclude Include="SapphireCGUIWindow.h">
       <Filter>源文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCGUIModalScreen.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUISpinBox.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUISpriteBank.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUITabControl.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUITable.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIToolBar.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUITree.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1359,6 +1380,27 @@
       <Filter>源文件\gui</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCGUIMessageBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIModalScreen.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUISpinBox.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUISpriteBank.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUITabControl.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUITable.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIToolBar.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUITree.cpp">
       <Filter>源文件\gui</Filter>
     </ClCompile>
   </ItemGroup>

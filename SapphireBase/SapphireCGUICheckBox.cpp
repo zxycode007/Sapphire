@@ -149,7 +149,7 @@ namespace Sapphire
 				IGUIFont* font = skin->getFont();
 				if (font)
 				{
-					font->draw(StringUtil::StringWToString(Text), checkRect,
+					font->draw(Text, checkRect,
 						skin->getColor(isEnabled() ? EGDC_BUTTON_TEXT : EGDC_GRAY_TEXT), false, true, &AbsoluteClippingRect);
 				}
 			}

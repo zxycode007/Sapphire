@@ -553,6 +553,9 @@ namespace Sapphire
 	}
 
 
+
+
+
 	//! Calculates the index of the character in the text which is on a specific position.
 	SINT32 CGUIFont::getCharacterFromPos(const wchar_t* text, SINT32 pixel_x) const
 	{

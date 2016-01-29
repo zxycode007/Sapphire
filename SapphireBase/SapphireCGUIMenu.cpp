@@ -79,7 +79,7 @@ namespace Sapphire
 					c = EGDC_GRAY_TEXT;
 
 				if (font)
-					font->draw(StringUtil::StringWToString(Items[i].Text), rect,
+					font->draw(Items[i].Text, rect,
 					skin->getColor(c), true, true, &AbsoluteClippingRect);
 			}
 		}

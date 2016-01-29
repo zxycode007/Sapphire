@@ -560,14 +560,14 @@ namespace Sapphire
 
 					if (i == Selected && hl)
 					{
-						Font->draw(StringUtil::StringWToString(Items[i].text), textRect,
+						Font->draw(Items[i].text, textRect,
 							hasItemOverrideColor(i, EGUI_LBC_TEXT_HIGHLIGHT) ?
 							getItemOverrideColor(i, EGUI_LBC_TEXT_HIGHLIGHT) : getItemDefaultColor(EGUI_LBC_TEXT_HIGHLIGHT),
 							false, true, &clientClip);
 					}
 					else
 					{
-						Font->draw(StringUtil::StringWToString(Items[i].text), textRect,
+						Font->draw(Items[i].text, textRect,
 							hasItemOverrideColor(i, EGUI_LBC_TEXT) ? getItemOverrideColor(i, EGUI_LBC_TEXT) : getItemDefaultColor(EGUI_LBC_TEXT),
 							false, true, &clientClip);
 					}

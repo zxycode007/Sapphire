@@ -91,7 +91,7 @@ namespace Sapphire
 							font->getDimension(Text.c_str()).Width;
 					}
 
-					font->draw(StringUtil::StringWToString(Text), frameRect,
+					font->draw(Text, frameRect,
 						OverrideColorEnabled ? OverrideColor : skin->getColor(isEnabled() ? EGDC_BUTTON_TEXT : EGDC_GRAY_TEXT),
 						HAlign == EGUIA_CENTER, VAlign == EGUIA_CENTER, (RestrainTextInside ? &AbsoluteClippingRect : NULL));
 				}
@@ -120,7 +120,7 @@ namespace Sapphire
 								font->getDimension(BrokenText[i].c_str()).Width;
 						}
 
-						font->draw(StringUtil::StringWToString(BrokenText[i]), r,
+						font->draw(BrokenText[i], r,
 							OverrideColorEnabled ? OverrideColor : skin->getColor(isEnabled() ? EGDC_BUTTON_TEXT : EGDC_GRAY_TEXT),
 							HAlign == EGUIA_CENTER, false, (RestrainTextInside ? &AbsoluteClippingRect : NULL));
 

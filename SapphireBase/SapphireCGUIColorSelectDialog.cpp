@@ -403,7 +403,7 @@ namespace Sapphire
 
 			IGUIFont* font = skin->getFont(EGDF_WINDOW);
 			if (font)
-				font->draw(StringUtil::StringWToString(Text), rect, skin->getColor(EGDC_ACTIVE_CAPTION), false, true,
+				font->draw(Text, rect, skin->getColor(EGDC_ACTIVE_CAPTION), false, true,
 				&AbsoluteClippingRect);
 		}
 

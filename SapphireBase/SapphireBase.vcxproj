@@ -112,9 +112,16 @@
     <ClInclude Include="SapphireCGUIMenu.h" />
     <ClInclude Include="SapphireCGUIMeshViewer.h" />
     <ClInclude Include="SapphireCGUIMessageBox.h" />
+    <ClInclude Include="SapphireCGUIModalScreen.h" />
     <ClInclude Include="SapphireCGUIScrollBar.h" />
     <ClInclude Include="SapphireCGUISkin.h" />
+    <ClInclude Include="SapphireCGUISpinBox.h" />
+    <ClInclude Include="SapphireCGUISpriteBank.h" />
     <ClInclude Include="SapphireCGUIStaticText.h" />
+    <ClInclude Include="SapphireCGUITabControl.h" />
+    <ClInclude Include="SapphireCGUITable.h" />
+    <ClInclude Include="SapphireCGUIToolBar.h" />
+    <ClInclude Include="SapphireCGUITree.h" />
     <ClInclude Include="SapphireCGUIWindow.h" />
     <ClInclude Include="SapphireCImage.h" />
     <ClInclude Include="SapphireCImageLoaderBMP.h" />
@@ -429,9 +436,15 @@
     <ClCompile Include="SapphireCGUIMenu.cpp" />
     <ClCompile Include="SapphireCGUIMeshViewer.cpp" />
     <ClCompile Include="SapphireCGUIMessageBox.cpp" />
+    <ClCompile Include="SapphireCGUIModalScreen.cpp" />
     <ClCompile Include="SapphireCGUIScrollBar.cpp" />
     <ClCompile Include="SapphireCGUISkin.cpp" />
+    <ClCompile Include="SapphireCGUISpriteBank.cpp" />
     <ClCompile Include="SapphireCGUIStaticText.cpp" />
+    <ClCompile Include="SapphireCGUITabControl.cpp" />
+    <ClCompile Include="SapphireCGUITable.cpp" />
+    <ClCompile Include="SapphireCGUIToolBar.cpp" />
+    <ClCompile Include="SapphireCGUITree.cpp" />
     <ClCompile Include="SapphireCGUIWindow.cpp" />
     <ClCompile Include="SapphireCImage.cpp" />
     <ClCompile Include="SapphireCImageLoaderBMP.cpp" />
@@ -494,6 +507,7 @@
     <ClCompile Include="zlib\trees.c" />
     <ClCompile Include="zlib\uncompr.c" />
     <ClCompile Include="zlib\zutil.c" />
+    <ClCompile Include="SapphireCGUISpinBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

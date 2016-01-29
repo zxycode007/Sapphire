@@ -225,7 +225,6 @@ namespace Sapphire
 
 			return *this;
 		}
-
 		inline Vector2& operator -= (const Vector2& rkVector)
 		{
 			x -= rkVector.x;
