@@ -93,6 +93,9 @@
     <ClInclude Include="SapphireBuildSets.h" />
     <ClInclude Include="SapphireCAtrributes.h" />
     <ClInclude Include="SapphireCBlit.h" />
+    <ClInclude Include="SapphireCDefaultSceneNodeAnimatorFactory.h" />
+    <ClInclude Include="SapphireCDefaultSceneNodeFactory.h" />
+    <ClInclude Include="SapphireCGeometryCreator.h" />
     <ClInclude Include="SapphireCGUIComboBox.h" />
     <ClInclude Include="SapphireCGUIEditBox.h" />
     <ClInclude Include="SapphireCColourConverter.h" />
@@ -133,6 +136,8 @@
     <ClInclude Include="SapphireCImageWriterPNG.h" />
     <ClInclude Include="SapphireCImageWriterTGA.h" />
     <ClInclude Include="SapphireCMemoryFile.h" />
+    <ClInclude Include="SapphireCMeshBuffer.h" />
+    <ClInclude Include="SapphireCMeshCache.h" />
     <ClInclude Include="SapphireCMeshManipulator.h" />
     <ClInclude Include="SapphireCMountPointReader.h" />
     <ClInclude Include="SapphireCNPKReader.h" />
@@ -145,6 +150,7 @@
     <ClInclude Include="SapphireCoreUtil.h" />
     <ClInclude Include="SapphireCPakReader.h" />
     <ClInclude Include="SapphireCReadFile.h" />
+    <ClInclude Include="SapphireCSceneManager.h" />
     <ClInclude Include="SapphireCTarReader.h" />
     <ClInclude Include="SapphireCTimer.h" />
     <ClInclude Include="SapphireCVideoModelList.h" />
@@ -195,6 +201,7 @@
     <ClInclude Include="SapphireIFileArchive.h" />
     <ClInclude Include="SapphireIFileList.h" />
     <ClInclude Include="SapphireIFileSystem.h" />
+    <ClInclude Include="SapphireIGeometryCreator.h" />
     <ClInclude Include="SapphireIGPUProgramServices.h" />
     <ClInclude Include="SapphireIGUIButton.h" />
     <ClInclude Include="SapphireIGUICheckBox.h" />
@@ -227,6 +234,7 @@
     <ClInclude Include="SapphireIImagePresenter.h" />
     <ClInclude Include="SapphireIImageWriter.h" />
     <ClInclude Include="SapphireIIndexBuffer.h" />
+    <ClInclude Include="SapphireILightManager.h" />
     <ClInclude Include="SapphireILightSceneNode.h" />
     <ClInclude Include="SapphireIMaterialRenderer.h" />
     <ClInclude Include="SapphireIMaterialRendererServices.h" />
@@ -306,6 +314,7 @@
     <ClInclude Include="SapphireRectangle.h" />
     <ClInclude Include="SapphireESceneNodeTypes.h" />
     <ClInclude Include="SapphireIScenesManager.h" />
+    <ClInclude Include="SapphireSAnimatedMesh.h" />
     <ClInclude Include="SapphireSceneParameters.h" />
     <ClInclude Include="SapphireSCreationParameters.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
@@ -313,6 +322,7 @@
     <ClInclude Include="SapphireSLight.h" />
     <ClInclude Include="SapphireSMaterial.h" />
     <ClInclude Include="SapphireSMesh.h" />
+    <ClInclude Include="SapphireSMeshBuffer.h" />
     <ClInclude Include="SapphireSoftDriverHelper.h" />
     <ClInclude Include="SapphireSParticle.h" />
     <ClInclude Include="SapphireSphere.h" />
@@ -419,6 +429,7 @@
     <ClCompile Include="SapphireCAttributes.cpp" />
     <ClCompile Include="SapphireCDefaultGUIElementFactory.cpp" />
     <ClCompile Include="SapphireCColourConverter.cpp" />
+    <ClCompile Include="SapphireCDefaultSceneNodeFactory.cpp" />
     <ClCompile Include="SapphireCFileList.cpp" />
     <ClCompile Include="SapphireCFileSystem.cpp" />
     <ClCompile Include="SapphireCFPSCounter.cpp" />
@@ -458,6 +469,8 @@
     <ClCompile Include="SapphireCIXMLReader.cpp" />
     <ClCompile Include="SapphireCLimitReadFile.cpp" />
     <ClCompile Include="SapphireCMemeoryFile.cpp" />
+    <ClCompile Include="SapphireCMeshCache.cpp" />
+    <ClCompile Include="SapphireCMeshManipulator.cpp" />
     <ClCompile Include="SapphireCMountPointReader.cpp" />
     <ClCompile Include="SapphireCNPKReader.cpp" />
     <ClCompile Include="SapphireCNullDriver.cpp" />

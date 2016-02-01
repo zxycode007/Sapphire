@@ -30,7 +30,10 @@ namespace Sapphire
 		{
 			return InternalName < other.InternalName;
 		}
-
+		bool operator ==(const SNamedPath& other) const
+		{
+			return (InternalName < other.InternalName) && (Path == other.Path);
+		}
 	 
 		void setPath(const path& p)
 		{

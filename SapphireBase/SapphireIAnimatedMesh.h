@@ -62,13 +62,13 @@ namespace Sapphire
 
 		//! 获取这个动画网格的动画速度
 		/** \return 默认播放这个动画每秒的帧数. 如果数量是0，它是静态的，没有动画的网格 */
-		virtual Real getAnimationSpeed() const = 0;
+		virtual FLOAT32 getAnimationSpeed() const = 0;
 
 		//! 设置动画网格的动画速度
 		/** \param fps 默认播放这个动画每秒的帧数. 如果数量是0，它不会获得。这实际速度在
 		场景节点的网格实例化中设置
 		*/
-		virtual void setAnimationSpeed(Real fps) = 0;
+		virtual void setAnimationSpeed(FLOAT32 fps) = 0;
 
 		//! 返回一个帧IMesh接口
 		/** \param frame: 基于0索引的帧数。最大值是getFrameCount() - 1

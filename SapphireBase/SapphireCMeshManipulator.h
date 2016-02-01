@@ -40,13 +40,13 @@ namespace Sapphire
 		/** \param mesh:  要应用操作的网格
 		\param resolution: plannar映射的分辨率。这是个特别的值，它与世界空间和纹理坐标空间相关
 		*/
-		virtual void makePlanarTextureMapping(IMesh* mesh, Real resolution = 0.001f) const;
+		virtual void makePlanarTextureMapping(IMesh* mesh, FLOAT32 resolution = 0.001f) const;
 
 
 		//! 在这个网格缓冲区上创建一个planar纹理映射
 		/** \param meshbuffer: 要应用操作的网格缓冲区
 		\param resolution: plannar映射的分辨率。这是个特别的值，它与世界空间和纹理坐标空间相关 */
-		virtual void makePlanarTextureMapping(IMeshBuffer* meshbuffer, Real resolution = 0.001f) const;
+		virtual void makePlanarTextureMapping(IMeshBuffer* meshbuffer, FLOAT32 resolution = 0.001f) const;
 
 		//! 在这个缓冲创建一个plannar纹理映射
 		/** 这个方法是对LWO plannar 映射的当前实现。需要一个更加通用的偏移值
@@ -56,7 +56,7 @@ namespace Sapphire
 		\param axis 纹理沿着投影的轴。这允许值是0(x),1(y),和2(z)
 		\param offset 添加到这个顶点位置的向量（在对象空间）
 		*/
-		void makePlanarTextureMapping(IMeshBuffer* buffer, Real resolutionS, Real resolutionT, UINT32 axis, const Vector3& offset) const;
+		void makePlanarTextureMapping(IMeshBuffer* buffer, FLOAT32 resolutionS, FLOAT32 resolutionT, UINT32 axis, const Vector3& offset) const;
 
 		//! 在这个网格缓冲创建一个plannar纹理映射
 		/** 这个方法是对LWO plannar 映射的当前实现。需要一个更加通用的偏移值
@@ -66,7 +66,7 @@ namespace Sapphire
 		\param axis 纹理沿着投影的轴。这允许值是0(x),1(y),和2(z)
 		\param offset 添加到这个顶点位置的向量（在对象空间）
 		*/
-		void makePlanarTextureMapping(IMesh* mesh, Real resolutionS, Real resolutionT, UINT32 axis, const Vector3& offset) const;
+		void makePlanarTextureMapping(IMesh* mesh, FLOAT32 resolutionS, FLOAT32 resolutionT, UINT32 axis, const Vector3& offset) const;
 
 		//! 重新计算切线，需要一个切线网格缓冲区
 		/** \param buffer 要应用操作的网格缓冲区
@@ -116,7 +116,7 @@ namespace Sapphire
 		/** \param mesh 输入的网格
 		\param tolerance 顶点比较的阀值
 		\return 不使用冗余顶点列表的网格。*/
-		virtual IMesh* createMeshWelded(IMesh *mesh, Real tolerance = std::numeric_limits<Real>::epsilon()) const;
+		virtual IMesh* createMeshWelded(IMesh *mesh, FLOAT32 tolerance = std::numeric_limits<FLOAT32>::epsilon()) const;
 
 		//! 获取这个网格多边形数量
 		/** \param mesh 输入的网格

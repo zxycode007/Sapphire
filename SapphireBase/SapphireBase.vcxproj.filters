@@ -930,6 +930,36 @@
     <ClInclude Include="SapphireCGUITree.h">
       <Filter>源文件\gui</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCSceneManager.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireILightManager.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMeshCache.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGeometryCreator.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSMeshBuffer.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMeshBuffer.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIGeometryCreator.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCDefaultSceneNodeFactory.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCDefaultSceneNodeAnimatorFactory.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSAnimatedMesh.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1402,6 +1432,15 @@
     </ClCompile>
     <ClCompile Include="SapphireCGUITree.cpp">
       <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMeshCache.cpp">
+      <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCDefaultSceneNodeFactory.cpp">
+      <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMeshManipulator.cpp">
+      <Filter>源文件\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

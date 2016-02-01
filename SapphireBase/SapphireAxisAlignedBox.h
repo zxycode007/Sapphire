@@ -138,7 +138,10 @@ namespace Sapphire
 		{
 			return mMaximum;
 		}
-
+		Vector3 getExtent() const
+		{
+			return mMaximum - mMinimum;
+		}
 
 		/**
 		设置盒子最小corner

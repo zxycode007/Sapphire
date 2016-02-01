@@ -111,6 +111,8 @@ namespace Sapphire
 			return (x == rkVector.x && y == rkVector.y && z == rkVector.z);
 		}
 
+		
+
 		inline bool operator != (const Vector3& rkVector) const
 		{
 			return (x != rkVector.x || y != rkVector.y || z != rkVector.z);

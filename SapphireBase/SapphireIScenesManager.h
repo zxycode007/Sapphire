@@ -553,7 +553,7 @@ namespace Sapphire
 
 
 		//! 添加一个文本场景节点，它显示一个2d文本到3维空间的一个位置
-		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const String* text,
+		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const StringW text,
 			ColourValue color = ColourValue::getColourValue(100, 255, 255, 255),
 			ISceneNode* parent = 0, Vector3& position = Vector3(0, 0, 0),
 			SINT32 id = -1) = 0;
