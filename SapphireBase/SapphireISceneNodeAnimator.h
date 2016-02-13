@@ -58,7 +58,7 @@ namespace Sapphire
 		}
 	};
 
-	typedef SharedPtr<ISceneNodeAnimator> ISceneNodeAnimatorPtr;
+	//typedef SharedPtr<ISceneNodeAnimator> ISceneNodeAnimatorPtr;
 }
 
 #endif

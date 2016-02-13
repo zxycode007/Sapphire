@@ -91,6 +91,9 @@
     <Filter Include="源文件\gui">
       <UniqueIdentifier>{16b9ec59-878c-496f-a20a-42d404e72f15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\scene\animator">
+      <UniqueIdentifier>{f6637934-c1a2-4309-b2aa-8701b9c811e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -960,6 +963,48 @@
     <ClInclude Include="SapphireSAnimatedMesh.h">
       <Filter>源文件\scene</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorCameraFPS.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimatorCameraFPS.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSKeyMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorCameraMaya.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimatorCameraMaya.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimatorCollisionResponse.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorCollisionResponse.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorFinish.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneNodeAnimatorFinishing.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorFlyCircle.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorFlyStraight.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorFollowSpline.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorRotation.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorTexture.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1441,6 +1486,39 @@
     </ClCompile>
     <ClCompile Include="SapphireCMeshManipulator.cpp">
       <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneManager.cpp">
+      <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorCameraFPS.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGeometryCreator.cpp">
+      <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorCameraMaya.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorCollisionResponse.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorFinish.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorFlyCircle.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorFlyStraight.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorFollowSpline.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorRatation.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorTexture.cpp">
+      <Filter>源文件\scene\animator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

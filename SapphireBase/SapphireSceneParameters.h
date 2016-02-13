@@ -141,7 +141,7 @@ namespace Sapphire
 	//! 当scene manager 作为编辑器使用时，设置这个标志
 	/** 特殊的animator喜欢这种删除animator的方式,例如会阻止删除场景节点.
 	  */
-	const c8* const IRR_SCENE_MANAGER_IS_EDITOR = "IRR_Editor";
+	const c8* const SAPPHIRE_SCENE_MANAGER_IS_EDITOR = "SAPPHIRE_Editor";
 
 	//! 设置debug法线长度的参数名
 	/** 例如

@@ -581,7 +581,17 @@ namespace Sapphire
 		static Real boundingRadiusFromAABB(const AxisAlignedBox& aabb);
 
 		//判断两个浮点数是否相等
-		static inline bool equals(const Real a, const Real b, const Real tolerance = EPSILON_E6)
+		static inline bool equals(const Real a, const Real b, const Real tolerance = std::numeric_limits<Real>::epsilon())
+		{
+			return (a + tolerance >= b) && (a - tolerance <= b);
+		}
+
+		static inline bool equals32(const FLOAT32 a, const FLOAT32 b, const FLOAT32 tolerance = std::numeric_limits<FLOAT32>::epsilon())
+		{
+			return (a + tolerance >= b) && (a - tolerance <= b);
+		}
+
+		static inline bool equals64(const FLOAT64 a, const FLOAT64 b, const FLOAT64 tolerance = std::numeric_limits<FLOAT64>::epsilon())
 		{
 			return (a + tolerance >= b) && (a - tolerance <= b);
 		}
@@ -683,5 +693,23 @@ namespace Sapphire
 	{
 		return Degree(Math::AngleUnitsToDegrees(mAngle));
 	}
+
+	//! Constant for 64bit PI.
+	const FLOAT64 PI64 = 3.1415926535897932384626433832795028841971693993751;
+
+	//! Constant for 64bit reciprocal of PI.
+	const FLOAT64 RECIPROCAL_PI64 = 1.0 / PI64;
+
+	//! 32bit Constant for converting from degrees to radians
+	const FLOAT64 DEGTORAD = PI / 180.0f;
+
+	//! 32bit constant for converting from radians to degrees (formally known as GRAD_PI)
+	const FLOAT64 RADTODEG = 180.0f / PI;
+
+	//! 64bit constant for converting from degrees to radians (formally known as GRAD_PI2)
+	const FLOAT64 DEGTORAD64 = PI64 / 180.0;
+
+	//! 64bit constant for converting from radians to degrees
+	const FLOAT64 RADTODEG64 = 180.0 / PI64;
 }
 #endif

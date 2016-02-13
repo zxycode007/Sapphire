@@ -114,11 +114,11 @@ namespace Sapphire
 
 		
 
-		//inline Real operator [] (SINT32 iIndex)
-		//{
-		//	assert(iIndex < 16);
-		//	return _m[iIndex];
-		//}
+		inline Real getIndex(SINT32 iIndex)
+		{
+		assert(iIndex < 16);
+			return _m[iIndex];
+		}
 		inline Real* operator [] (size_t iRow)
 		{
 			assert(iRow < 4);
@@ -461,6 +461,33 @@ namespace Sapphire
 
 			m[0][2] =  (crsp*cy + sr*sy);
 			m[1][2] =  (crsp*sy - sr*cy);
+			m[1][2] = (cr*cp);
+
+			return *this;
+		}
+
+		inline Matrix4&  setRotationDegrees(const Vector3& rotation, bool useTable = false)
+		{
+			const Real cr = Math::Cos(Math::DegreesToRadians(rotation.x), useTable);
+			const Real sr = Math::Sin(Math::DegreesToRadians(rotation.x), useTable);
+			const Real cp = Math::Cos(Math::DegreesToRadians(rotation.y), useTable);
+			const Real sp = Math::Sin(Math::DegreesToRadians(rotation.y), useTable);
+			const Real cy = Math::Cos(Math::DegreesToRadians(rotation.z), useTable);
+			const Real sy = Math::Sin(Math::DegreesToRadians(rotation.z), useTable);
+
+			m[0][0] = (cp*cy);
+			m[1][0] = (cp*sy);
+			m[2][0] = (-sp);
+
+			const Real srsp = sr*sp;
+			const Real crsp = cr*sp;
+
+			m[0][1] = (srsp*cy - cr*sy);
+			m[1][1] = (srsp*sy + cr*cy);
+			m[2][1] = (sr*cp);
+
+			m[0][2] = (crsp*cy + sr*sy);
+			m[1][2] = (crsp*sy - sr*cy);
 			m[1][2] = (cr*cp);
 
 			return *this;

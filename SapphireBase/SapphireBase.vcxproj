@@ -151,6 +151,15 @@
     <ClInclude Include="SapphireCPakReader.h" />
     <ClInclude Include="SapphireCReadFile.h" />
     <ClInclude Include="SapphireCSceneManager.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorCameraFPS.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorCameraMaya.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorCollisionResponse.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorFinish.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorFlyCircle.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorFlyStraight.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorFollowSpline.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorRotation.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorTexture.h" />
     <ClInclude Include="SapphireCTarReader.h" />
     <ClInclude Include="SapphireCTimer.h" />
     <ClInclude Include="SapphireCVideoModelList.h" />
@@ -189,6 +198,7 @@
     <ClInclude Include="SapphireIAnimatedMesh.h" />
     <ClInclude Include="SapphireIAnimatedMeshMD3.h" />
     <ClInclude Include="SapphireIAnimatedMeshSceneNode.h" />
+    <ClInclude Include="SapphireISceneNodeAnimatorFinishing.h" />
     <ClInclude Include="SapphireIAttribute.h" />
     <ClInclude Include="SapphireIAttributeExchangingObject.h" />
     <ClInclude Include="SapphireIAttributes.h" />
@@ -261,6 +271,9 @@
     <ClInclude Include="SapphireIReadFile.h" />
     <ClInclude Include="SapphireISceneCollisionManager.h" />
     <ClInclude Include="SapphireISceneLoader.h" />
+    <ClInclude Include="SapphireISceneNodeAnimatorCameraFPS.h" />
+    <ClInclude Include="SapphireISceneNodeAnimatorCameraMaya.h" />
+    <ClInclude Include="SapphireISceneNodeAnimatorCollisionResponse.h" />
     <ClInclude Include="SapphireISceneNodeFactory.h" />
     <ClInclude Include="SapphireIParticleEmitter.h" />
     <ClInclude Include="SapphireIParticleAffector.h" />
@@ -319,6 +332,7 @@
     <ClInclude Include="SapphireSCreationParameters.h" />
     <ClInclude Include="SapphireSharedPtr.h" />
     <ClInclude Include="SapphireSingleton.h" />
+    <ClInclude Include="SapphireSKeyMap.h" />
     <ClInclude Include="SapphireSLight.h" />
     <ClInclude Include="SapphireSMaterial.h" />
     <ClInclude Include="SapphireSMesh.h" />
@@ -433,6 +447,7 @@
     <ClCompile Include="SapphireCFileList.cpp" />
     <ClCompile Include="SapphireCFileSystem.cpp" />
     <ClCompile Include="SapphireCFPSCounter.cpp" />
+    <ClCompile Include="SapphireCGeometryCreator.cpp" />
     <ClCompile Include="SapphireCGUIButton.cpp" />
     <ClCompile Include="SapphireCGUICheckBox.cpp" />
     <ClCompile Include="SapphireCGUIColorSelectDialog.cpp" />
@@ -479,6 +494,16 @@
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
     <ClCompile Include="SapphireCPakReader.cpp" />
     <ClCompile Include="SapphireCReadFile.cpp" />
+    <ClCompile Include="SapphireCSceneManager.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorCameraFPS.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorCameraMaya.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorCollisionResponse.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorFinish.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorFlyCircle.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorFlyStraight.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorFollowSpline.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorRatation.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorTexture.cpp" />
     <ClCompile Include="SapphireCTarReader.cpp" />
     <ClCompile Include="SapphireCTimer.cpp" />
     <ClCompile Include="SapphireCVideoModelList.cpp" />

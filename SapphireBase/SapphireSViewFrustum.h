@@ -250,40 +250,40 @@ namespace Sapphire
 		Matrix4 mat = matrix;
 		mat.transpose();
 		// 左裁平面
-		planes[VF_LEFT_PLANE].normal.x = mat[3] + mat[0];
-		planes[VF_LEFT_PLANE].normal.y = mat[7] + mat[4];
-		planes[VF_LEFT_PLANE].normal.z = mat[11] + mat[8];
-		planes[VF_LEFT_PLANE].d = mat[15] + mat[12];
+		planes[VF_LEFT_PLANE].normal.x = mat.getIndex(3) + mat.getIndex(0);
+		planes[VF_LEFT_PLANE].normal.y = mat.getIndex(7) + mat.getIndex(4);
+		planes[VF_LEFT_PLANE].normal.z = mat.getIndex(11) + mat.getIndex(8);
+		planes[VF_LEFT_PLANE].d = mat.getIndex(15) + mat.getIndex(12);
 
 		// 右裁平面
-		planes[VF_RIGHT_PLANE].normal.x = mat[3] - mat[0];
-		planes[VF_RIGHT_PLANE].normal.y = mat[7] - mat[4];
-		planes[VF_RIGHT_PLANE].normal.z = mat[11] - mat[8];
-		planes[VF_RIGHT_PLANE].d = mat[15] - mat[12];
+		planes[VF_RIGHT_PLANE].normal.x = mat.getIndex(3) - mat.getIndex(0);
+		planes[VF_RIGHT_PLANE].normal.y = mat.getIndex(7) - mat.getIndex(4);
+		planes[VF_RIGHT_PLANE].normal.z = mat.getIndex(11) - mat.getIndex(8);
+		planes[VF_RIGHT_PLANE].d = mat.getIndex(15) - mat.getIndex(12);
 
 		// 顶裁平面
-		planes[VF_TOP_PLANE].normal.x = mat[3] - mat[1];
-		planes[VF_TOP_PLANE].normal.y = mat[7] - mat[5];
-		planes[VF_TOP_PLANE].normal.z = mat[11] - mat[9];
-		planes[VF_TOP_PLANE].d = mat[15] - mat[13];
+		planes[VF_TOP_PLANE].normal.x = mat.getIndex(3) - mat.getIndex(1);
+		planes[VF_TOP_PLANE].normal.y = mat.getIndex(7) - mat.getIndex(5);
+		planes[VF_TOP_PLANE].normal.z = mat.getIndex(11) - mat.getIndex(9);
+		planes[VF_TOP_PLANE].d = mat.getIndex(15) - mat.getIndex(13);
 
 		// 底裁平面
-		planes[VF_BOTTOM_PLANE].normal.x = mat[3] + mat[1];
-		planes[VF_BOTTOM_PLANE].normal.y = mat[7] + mat[5];
-		planes[VF_BOTTOM_PLANE].normal.z = mat[11] + mat[9];
-		planes[VF_BOTTOM_PLANE].d = mat[15] + mat[13];
+		planes[VF_BOTTOM_PLANE].normal.x = mat.getIndex(3) + mat.getIndex(1);
+		planes[VF_BOTTOM_PLANE].normal.y = mat.getIndex(7) + mat.getIndex(5);
+		planes[VF_BOTTOM_PLANE].normal.z = mat.getIndex(11) + mat.getIndex(9);
+		planes[VF_BOTTOM_PLANE].d = mat.getIndex(15) + mat.getIndex(13);
 
 		// 远裁平面
-		planes[VF_FAR_PLANE].normal.x = mat[3] - mat[2];
-		planes[VF_FAR_PLANE].normal.y = mat[7] - mat[6];
-		planes[VF_FAR_PLANE].normal.z = mat[11] - mat[10];
-		planes[VF_FAR_PLANE].d = mat[15] - mat[14];
+		planes[VF_FAR_PLANE].normal.x = mat.getIndex(3) - mat.getIndex(2);
+		planes[VF_FAR_PLANE].normal.y = mat.getIndex(7) - mat.getIndex(6);
+		planes[VF_FAR_PLANE].normal.z = mat.getIndex(11) - mat.getIndex(10);
+		planes[VF_FAR_PLANE].d = mat.getIndex(15) - mat.getIndex(14);
 
 		// 近裁平面
-		planes[VF_NEAR_PLANE].normal.x = mat[2];
-		planes[VF_NEAR_PLANE].normal.y = mat[6];
-		planes[VF_NEAR_PLANE].normal.z = mat[10];
-		planes[VF_NEAR_PLANE].d = mat[14];
+		planes[VF_NEAR_PLANE].normal.x = mat.getIndex(2);
+		planes[VF_NEAR_PLANE].normal.y = mat.getIndex(6);
+		planes[VF_NEAR_PLANE].normal.z = mat.getIndex(10);
+		planes[VF_NEAR_PLANE].d = mat.getIndex(14);
 
 		// 标准化法线
 		UINT32 i;

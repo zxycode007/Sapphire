@@ -37,7 +37,7 @@ namespace Sapphire
 		/** \return Pointer to vertices. */
 		virtual const void* getVertices() const
 		{
-			return Vertices.const_pointer();
+			return (void*)Vertices.begin()._Ptr;
 		}
 
 
@@ -45,7 +45,7 @@ namespace Sapphire
 		/** \return Pointer to vertices. */
 		virtual void* getVertices()
 		{
-			return Vertices.pointer();
+			return (void*)Vertices.begin()._Ptr;
 		}
 
 
@@ -67,7 +67,7 @@ namespace Sapphire
 		/** \return Pointer to indices. */
 		virtual const UINT16* getIndices() const
 		{
-			return Indices.const_pointer();
+			return (UINT16*)Indices.begin()._Ptr;
 		}
 
 
@@ -75,7 +75,7 @@ namespace Sapphire
 		/** \return Pointer to indices. */
 		virtual UINT16* getIndices()
 		{
-			return Indices.pointer();
+			return (UINT16*)Indices.begin()._Ptr;;
 		}
 
 
@@ -109,7 +109,7 @@ namespace Sapphire
 		virtual void recalculateBoundingBox()
 		{
 			if (Vertices.empty())
-				BoundingBox.reset(0, 0, 0);
+				BoundingBox.reset(Vector3(0, 0, 0));
 			else
 			{
 				BoundingBox.reset(Vertices[0].Pos);
@@ -176,14 +176,14 @@ namespace Sapphire
 			const UINT32 vertexCount = getVertexCount();
 			UINT32 i;
 
-			Vertices.reallocate(vertexCount + numVertices);
+			//Vertices.reallocate(vertexCount + numVertices);
 			for (i = 0; i<numVertices; ++i)
 			{
 				Vertices.push_back(reinterpret_cast<const T*>(vertices)[i]);
 				BoundingBox.addInternalPoint(reinterpret_cast<const T*>(vertices)[i].Pos);
 			}
 
-			Indices.reallocate(getIndexCount() + numIndices);
+			//Indices.reallocate(getIndexCount() + numIndices);
 			for (i = 0; i<numIndices; ++i)
 			{
 				Indices.push_back(indices[i] + vertexCount);
@@ -271,6 +271,7 @@ namespace Sapphire
 		//! Material for this meshbuffer.
 		SMaterial Material;
 		//! Vertices of this buffer
+		//vector<T>::type Vertices;
 		vector<T>::type Vertices;
 		//! Indices into the vertices of this buffer.
 		vector<UINT16>::type Indices;

@@ -182,6 +182,13 @@ namespace Sapphire
 		}
 
 		 
+		bool equals(const Vector3& other, const Real tolerance = std::numeric_limits<Real>::epsilon()) const
+		{
+			return Math::equals(x, other.x, tolerance) &&
+				Math::equals(y, other.y, tolerance) &&
+				Math::equals(z, other.z, tolerance);
+		}
+		 
 		inline friend Vector3 operator * (const Real fScalar, const Vector3& rkVector)
 		{
 			return Vector3(
@@ -295,6 +302,12 @@ namespace Sapphire
 			return *this;
 		}
 
+		inline void set(Real X, Real Y, Real Z)
+		{
+			this->x = X;
+			this->y = Y;
+			this->z = Z;
+		}
 		inline Vector3& operator /= (const Vector3& rkVector)
 		{
 			x /= rkVector.x;
@@ -612,6 +625,90 @@ namespace Sapphire
 					return z > 0 ? Vector3::UNIT_Z : Vector3::NEGATIVE_UNIT_Z;
 
 
+		}
+
+		//! Get the rotations that would make a (0,0,1) direction vector point in the same direction as this direction vector.
+		/** Thanks to Arras on the Irrlicht forums for this method.  This utility method is very useful for
+		orienting scene nodes towards specific targets.  For example, if this vector represents the difference
+		between two scene nodes, then applying the result of getHorizontalAngle() to one scene node will point
+		it at the other one.
+		Example code:
+		// Where target and seeker are of type ISceneNode*
+		const vector3df toTarget(target->getAbsolutePosition() - seeker->getAbsolutePosition());
+		const vector3df requiredRotation = toTarget.getHorizontalAngle();
+		seeker->setRotation(requiredRotation);
+
+		\return A rotation vector containing the X (pitch) and Y (raw) rotations (in degrees) that when applied to a
+		+Z (e.g. 0, 0, 1) direction vector would make it point in the same direction as this vector. The Z (roll) rotation
+		is always 0, since two Euler rotations are sufficient to point in any given direction. */
+		Vector3 getHorizontalAngle() const
+		{
+			Vector3 angle;
+
+			const Real tmp = (atan2((Real)x, (Real)z) * RADTODEG64);
+			angle.y = tmp;
+
+			if (angle.y < 0)
+				angle.y += 360;
+			if (angle.y >= 360)
+				angle.y -= 360;
+
+			const Real z1 = Math::Sqrt(x*x + z*z);
+
+			angle.x = (atan2((Real)z1, (Real)y) * RADTODEG64 - 90.0);
+
+			if (angle.x < 0)
+				angle.x += 360;
+			if (angle.x >= 360)
+				angle.x -= 360;
+
+			return angle;
+		}
+
+
+		//! Rotates the vector by a specified number of degrees around the Z axis and the specified center.
+		/** \param degrees: Number of degrees to rotate around the Z axis.
+		\param center: The center of the rotation. */
+		void rotateXYBy(FLOAT64 degrees, const Vector3& center = Vector3())
+		{
+			degrees *= DEGTORAD64;
+			FLOAT64 cs = cos(degrees);
+			FLOAT64 sn = sin(degrees);
+			x -= center.x;
+			y -= center.y;
+			set((x*cs - y*sn), (x*sn + y*cs), z);
+			x += center.x;
+			y += center.y;
+		}
+
+		//! Rotates the vector by a specified number of degrees around the X axis and the specified center.
+		/** \param degrees: Number of degrees to rotate around the X axis.
+		\param center: The center of the rotation. */
+		void rotateYZBy(FLOAT64 degrees, const Vector3& center = Vector3())
+		{
+			degrees *= DEGTORAD64;
+			FLOAT64 cs = cos(degrees);
+			FLOAT64 sn = sin(degrees);
+			z -= center.z;
+			y -= center.y;
+			set(x, (y*cs - z*sn), (y*sn + z*cs));
+			z += center.z;
+			y += center.y;
+		}
+
+		//! Rotates the vector by a specified number of degrees around the Y axis and the specified center.
+		/** \param degrees Number of degrees to rotate around the Y axis.
+		\param center The center of the rotation. */
+		void rotateXZBy(FLOAT64 degrees, const Vector3& center = Vector3())
+		{
+			degrees *= DEGTORAD64;
+			FLOAT64 cs = cos(degrees);
+			FLOAT64 sn = sin(degrees);
+			x -= center.x;
+			z -= center.z;
+			set((x*cs - z*sn), y, (x*sn + z*cs));
+			x += center.x;
+			z += center.z;
 		}
 
 		// ÌØ±ðµã

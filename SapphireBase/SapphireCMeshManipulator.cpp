@@ -81,7 +81,7 @@ namespace Sapphire
 					const Vector3& v1 = buffer->getPosition(idx[i + 0]);
 					const Vector3& v2 = buffer->getPosition(idx[i + 1]);
 					const Vector3& v3 = buffer->getPosition(idx[i + 2]);
-					const Vector3 normal = plane3d<FLOAT32>(v1, v2, v3).Normal;
+					const Vector3 normal = Plane(v1, v2, v3).normal;
 					buffer->getNormal(idx[i + 0]) = normal;
 					buffer->getNormal(idx[i + 1]) = normal;
 					buffer->getNormal(idx[i + 2]) = normal;
@@ -92,22 +92,22 @@ namespace Sapphire
 				UINT32 i;
 
 				for (i = 0; i != vtxcnt; ++i)
-					buffer->getNormal(i).set(0.f, 0.f, 0.f);
+					buffer->getNormal(i).set(0.0, 0.0, 0.0);//buffer->getNormal(i).set(0.f, 0.f, 0.f);
 
 				for (i = 0; i<idxcnt; i += 3)
 				{
 					const Vector3& v1 = buffer->getPosition(idx[i + 0]);
 					const Vector3& v2 = buffer->getPosition(idx[i + 1]);
 					const Vector3& v3 = buffer->getPosition(idx[i + 2]);
-					const Vector3 normal = plane3d<FLOAT32>(v1, v2, v3).Normal;
+					const Vector3 normal = Plane(v1, v2, v3).normal;
 
 					Vector3 weight(1.f, 1.f, 1.f);
 					if (angleWeighted)
-						weight = irr::getAngleWeight(v1, v2, v3); // writing irr:: necessary for borland
+						weight = getAngleWeight(v1, v2, v3); // writing irr:: necessary for borland
 
-					buffer->getNormal(idx[i + 0]) += weight.X*normal;
-					buffer->getNormal(idx[i + 1]) += weight.Y*normal;
-					buffer->getNormal(idx[i + 2]) += weight.Z*normal;
+					buffer->getNormal(idx[i + 0]) += weight.x*normal;
+					buffer->getNormal(idx[i + 1]) += weight.y*normal;
+					buffer->getNormal(idx[i + 2]) += weight.z*normal;
 				}
 
 				for (i = 0; i != vtxcnt; ++i)
@@ -194,34 +194,34 @@ namespace Sapphire
 			tangent.set(0, 0, 0);
 			binormal.set(0, 0, 0);
 
-			Vector3 v1(vt2.X - vt1.X, tc2.x - tc1.x, tc2.Y - tc1.Y);
-			Vector3 v2(vt3.X - vt1.X, tc3.X - tc1.x, tc3.Y - tc1.Y);
+			Vector3 v1(vt2.x - vt1.x, tc2.x - tc1.x, tc2.y - tc1.y);
+			Vector3 v2(vt3.x - vt1.x, tc3.x - tc1.x, tc3.y - tc1.y);
 
 			Vector3 txb = v1.crossProduct(v2);
-			if (!iszero(txb.X))
+			if (!iszero(txb.x))
 			{
-				tangent.X = -txb.Y / txb.X;
-				binormal.X = -txb.Z / txb.X;
+				tangent.x = -txb.y / txb.x;
+				binormal.x = -txb.z / txb.x;
 			}
 
-			v1.X = vt2.Y - vt1.Y;
-			v2.X = vt3.Y - vt1.Y;
+			v1.x = vt2.y - vt1.y;
+			v2.x = vt3.y - vt1.y;
 			txb = v1.crossProduct(v2);
 
-			if (!iszero(txb.X))
+			if (!iszero(txb.x))
 			{
-				tangent.Y = -txb.Y / txb.X;
-				binormal.Y = -txb.Z / txb.X;
+				tangent.y = -txb.y / txb.x;
+				binormal.y = -txb.z / txb.x;
 			}
 
-			v1.X = vt2.Z - vt1.Z;
-			v2.X = vt3.Z - vt1.Z;
+			v1.x = vt2.z - vt1.z;
+			v2.x = vt3.z - vt1.z;
 			txb = v1.crossProduct(v2);
 
-			if (!iszero(txb.X))
+			if (!iszero(txb.x))
 			{
-				tangent.Z = -txb.Y / txb.X;
-				binormal.Z = -txb.Z / txb.X;
+				tangent.z = -txb.y / txb.x;
+				binormal.z = -txb.z / txb.x;
 			}
 
 			tangent.normalise();
@@ -285,7 +285,7 @@ namespace Sapphire
 					//Angle-weighted normals look better, but are slightly more CPU intensive to calculate
 					Vector3 weight(1.f, 1.f, 1.f);
 					if (angleWeighted)
-						weight = irr::getAngleWeight(v[i + 0].Pos, v[i + 1].Pos, v[i + 2].Pos);	// writing irr:: necessary for borland
+						weight = getAngleWeight(v[i + 0].Pos, v[i + 1].Pos, v[i + 2].Pos);	// writing irr:: necessary for borland
 					Vector3 localNormal;
 					Vector3 localTangent;
 					Vector3 localBinormal;
@@ -302,9 +302,9 @@ namespace Sapphire
 						v[idx[i + 2]].TCoords);
 
 					if (recalculateNormals)
-						v[idx[i + 0]].Normal += localNormal * weight.X;
-					v[idx[i + 0]].Tangent += localTangent * weight.X;
-					v[idx[i + 0]].Binormal += localBinormal * weight.X;
+						v[idx[i + 0]].Normal += localNormal * weight.x;
+					v[idx[i + 0]].Tangent += localTangent * weight.x;
+					v[idx[i + 0]].Binormal += localBinormal * weight.x;
 
 					calculateTangents(
 						localNormal,
@@ -318,9 +318,9 @@ namespace Sapphire
 						v[idx[i + 0]].TCoords);
 
 					if (recalculateNormals)
-						v[idx[i + 1]].Normal += localNormal * weight.Y;
-					v[idx[i + 1]].Tangent += localTangent * weight.Y;
-					v[idx[i + 1]].Binormal += localBinormal * weight.Y;
+						v[idx[i + 1]].Normal += localNormal * weight.y;
+					v[idx[i + 1]].Tangent += localTangent * weight.y;
+					v[idx[i + 1]].Binormal += localBinormal * weight.y;
 
 					calculateTangents(
 						localNormal,
@@ -334,9 +334,9 @@ namespace Sapphire
 						v[idx[i + 1]].TCoords);
 
 					if (recalculateNormals)
-						v[idx[i + 2]].Normal += localNormal * weight.Z;
-					v[idx[i + 2]].Tangent += localTangent * weight.Z;
-					v[idx[i + 2]].Binormal += localBinormal * weight.Z;
+						v[idx[i + 2]].Normal += localNormal * weight.z;
+					v[idx[i + 2]].Tangent += localTangent * weight.z;
+					v[idx[i + 2]].Binormal += localBinormal * weight.z;
 				}
 
 				// Normalize the tangents and binormals
@@ -438,35 +438,35 @@ namespace Sapphire
 
 			for (UINT32 i = 0; i<idxcnt; i += 3)
 			{
-				plane3df p(buffer->getPosition(idx[i + 0]), buffer->getPosition(idx[i + 1]), buffer->getPosition(idx[i + 2]));
-				p.Normal.X = fabsf(p.Normal.X);
-				p.Normal.Y = fabsf(p.Normal.Y);
-				p.Normal.Z = fabsf(p.Normal.Z);
+				Plane p(buffer->getPosition(idx[i + 0]), buffer->getPosition(idx[i + 1]), buffer->getPosition(idx[i + 2]));
+				p.normal.x = fabsf(p.normal.x);
+				p.normal.y = fabsf(p.normal.y);
+				p.normal.z = fabsf(p.normal.z);
 				// calculate planar mapping worldspace coordinates
 
-				if (p.Normal.X > p.Normal.Y && p.Normal.X > p.Normal.Z)
+				if (p.normal.x > p.normal.y && p.normal.x > p.normal.z)
 				{
 					for (UINT32 o = 0; o != 3; ++o)
 					{
-						buffer->getTCoords(idx[i + o]).X = buffer->getPosition(idx[i + o]).Y * resolution;
-						buffer->getTCoords(idx[i + o]).Y = buffer->getPosition(idx[i + o]).Z * resolution;
+						buffer->getTCoords(idx[i + o]).x = buffer->getPosition(idx[i + o]).y * resolution;
+						buffer->getTCoords(idx[i + o]).y = buffer->getPosition(idx[i + o]).z * resolution;
 					}
 				}
 				else
-					if (p.Normal.Y > p.Normal.X && p.Normal.Y > p.Normal.Z)
+					if (p.normal.y > p.normal.x && p.normal.y > p.normal.z)
 					{
 						for (UINT32 o = 0; o != 3; ++o)
 						{
-							buffer->getTCoords(idx[i + o]).X = buffer->getPosition(idx[i + o]).X * resolution;
-							buffer->getTCoords(idx[i + o]).Y = buffer->getPosition(idx[i + o]).Z * resolution;
+							buffer->getTCoords(idx[i + o]).x = buffer->getPosition(idx[i + o]).x * resolution;
+							buffer->getTCoords(idx[i + o]).y = buffer->getPosition(idx[i + o]).z * resolution;
 						}
 					}
 					else
 					{
 						for (UINT32 o = 0; o != 3; ++o)
 						{
-							buffer->getTCoords(idx[i + o]).X = buffer->getPosition(idx[i + o]).X * resolution;
-							buffer->getTCoords(idx[i + o]).Y = buffer->getPosition(idx[i + o]).Y * resolution;
+							buffer->getTCoords(idx[i + o]).x = buffer->getPosition(idx[i + o]).x * resolution;
+							buffer->getTCoords(idx[i + o]).y = buffer->getPosition(idx[i + o]).y * resolution;
 						}
 					}
 			}
@@ -517,24 +517,24 @@ namespace Sapphire
 				{
 					for (UINT32 o = 0; o != 3; ++o)
 					{
-						buffer->getTCoords(idx[i + o]).X = 0.5f + (buffer->getPosition(idx[i + o]).Z + offset.Z) * resolutionS;
-						buffer->getTCoords(idx[i + o]).Y = 0.5f - (buffer->getPosition(idx[i + o]).Y + offset.Y) * resolutionT;
+						buffer->getTCoords(idx[i + o]).x = 0.5f + (buffer->getPosition(idx[i + o]).z + offset.z) * resolutionS;
+						buffer->getTCoords(idx[i + o]).y = 0.5f - (buffer->getPosition(idx[i + o]).y + offset.y) * resolutionT;
 					}
 				}
 				else if (axis == 1)
 				{
 					for (UINT32 o = 0; o != 3; ++o)
 					{
-						buffer->getTCoords(idx[i + o]).X = 0.5f + (buffer->getPosition(idx[i + o]).X + offset.X) * resolutionS;
-						buffer->getTCoords(idx[i + o]).Y = 1.f - (buffer->getPosition(idx[i + o]).Z + offset.Z) * resolutionT;
+						buffer->getTCoords(idx[i + o]).x = 0.5f + (buffer->getPosition(idx[i + o]).x + offset.x) * resolutionS;
+						buffer->getTCoords(idx[i + o]).y = 1.f - (buffer->getPosition(idx[i + o]).z + offset.z) * resolutionT;
 					}
 				}
 				else if (axis == 2)
 				{
 					for (UINT32 o = 0; o != 3; ++o)
 					{
-						buffer->getTCoords(idx[i + o]).X = 0.5f + (buffer->getPosition(idx[i + o]).X + offset.X) * resolutionS;
-						buffer->getTCoords(idx[i + o]).Y = 0.5f - (buffer->getPosition(idx[i + o]).Y + offset.Y) * resolutionT;
+						buffer->getTCoords(idx[i + o]).y = 0.5f + (buffer->getPosition(idx[i + o]).x + offset.x) * resolutionS;
+						buffer->getTCoords(idx[i + o]).y = 0.5f - (buffer->getPosition(idx[i + o]).y + offset.y) * resolutionT;
 					}
 				}
 			}
@@ -993,7 +993,7 @@ namespace Sapphire
 				}
 				break;
 				}
-				map<S3DVertexTangents, int>::iterator n = std::find(vertMap.begin(), vertMap.end(), vNew);//vertMap.find(vNew);
+				map<S3DVertexTangents, int>::iterator n = vertMap.find(vNew);//vertMap.find(vNew);
 				if (n != vertMap.end())
 				{
 					//vertLocation = n->getValue();
@@ -1083,7 +1083,7 @@ namespace Sapphire
 				}
 				break;
 				}
-				map<S3DVertex2TCoords, int>::iterator n = std::find(vertMap.begin(), vertMap.end(), vNew); //vertMap.find(vNew);
+				map<S3DVertex2TCoords, int>::iterator n = vertMap.find(vNew); //vertMap.find(vNew);
 				if (n != vertMap.end())
 				{
 					vertLocation = n->second; //n->getValue();
@@ -1168,7 +1168,7 @@ namespace Sapphire
 				break;
 				}
 				//map<S3DVertex, int>::Node* n = vertMap.find(vNew);
-				map<S3DVertex, int>::iterator n = std::find(vertMap.begin(), vertMap.end(), vNew);
+				map<S3DVertex, int>::iterator n = vertMap.find(vNew);
 				if (n != vertMap.end())
 				{
 					//vertLocation = n->getValue();
@@ -1522,7 +1522,7 @@ namespace Sapphire
 					UINT16 newind = buf->Vertices.size();
 
 					//snode *s = sind.find(v[tc[highest].ind[0]]);
-					snode s = std::find(sind.begin(), sind.end(), v[tc[highest].ind[0]]);
+					snode s = sind.find(v[tc[highest].ind[0]]);
 
 					if (s != sind.end())
 					{
