@@ -139,6 +139,7 @@
     <ClInclude Include="SapphireCMeshBuffer.h" />
     <ClInclude Include="SapphireCMeshCache.h" />
     <ClInclude Include="SapphireCMeshManipulator.h" />
+    <ClInclude Include="SapphireCMetaTriangleSelector.h" />
     <ClInclude Include="SapphireCMountPointReader.h" />
     <ClInclude Include="SapphireCNPKReader.h" />
     <ClInclude Include="SapphireCNullDriver.h" />
@@ -161,7 +162,10 @@
     <ClInclude Include="SapphireCSceneNodeAnimatorRotation.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorTexture.h" />
     <ClInclude Include="SapphireCTarReader.h" />
+    <ClInclude Include="SapphireCTerrianSceneNode.h" />
+    <ClInclude Include="SapphireCTerrianTriangleSelector.h" />
     <ClInclude Include="SapphireCTimer.h" />
+    <ClInclude Include="SapphireCTriangleSelector.h" />
     <ClInclude Include="SapphireCVideoModelList.h" />
     <ClInclude Include="SapphireCWADReader.h" />
     <ClInclude Include="SapphireCWriteFile.h" />
@@ -486,6 +490,7 @@
     <ClCompile Include="SapphireCMemeoryFile.cpp" />
     <ClCompile Include="SapphireCMeshCache.cpp" />
     <ClCompile Include="SapphireCMeshManipulator.cpp" />
+    <ClCompile Include="SapphireCMetaTriangleSelector.cpp" />
     <ClCompile Include="SapphireCMountPointReader.cpp" />
     <ClCompile Include="SapphireCNPKReader.cpp" />
     <ClCompile Include="SapphireCNullDriver.cpp" />
@@ -505,7 +510,9 @@
     <ClCompile Include="SapphireCSceneNodeAnimatorRatation.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorTexture.cpp" />
     <ClCompile Include="SapphireCTarReader.cpp" />
+    <ClCompile Include="SapphireCTerrianTriangleSelector.cpp" />
     <ClCompile Include="SapphireCTimer.cpp" />
+    <ClCompile Include="SapphireCTriangleSelector.cpp" />
     <ClCompile Include="SapphireCVideoModelList.cpp" />
     <ClCompile Include="SapphireCWADReader.cpp" />
     <ClCompile Include="SapphireCWriteFile.cpp" />

@@ -94,6 +94,12 @@
     <Filter Include="源文件\scene\animator">
       <UniqueIdentifier>{f6637934-c1a2-4309-b2aa-8701b9c811e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\scene\collision">
+      <UniqueIdentifier>{5e42c566-135e-4a05-9f0b-40d64dca79ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\scene\nodes">
+      <UniqueIdentifier>{0c530090-8c88-4d74-be2c-e0972a41cf7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -1005,6 +1011,18 @@
     <ClInclude Include="SapphireCSceneNodeAnimatorTexture.h">
       <Filter>源文件\scene\animator</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCMetaTriangleSelector.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTriangleSelector.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTerrianTriangleSelector.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTerrianSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1519,6 +1537,15 @@
     </ClCompile>
     <ClCompile Include="SapphireCSceneNodeAnimatorTexture.cpp">
       <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMetaTriangleSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCTriangleSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCTerrianTriangleSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

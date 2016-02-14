@@ -604,33 +604,33 @@ namespace Sapphire
 			return static_cast<SINT32>(val + 0.5);
 		}
 		template<class T>
-		static T _max(T a, T b)
+		static const T _max(const T a, const T b)
 		{
 			return a > b ? a : b;
 		}
 		template<class T>
-		static T _min(T a, T b)
+		static const T _min(const T a, const T b)
 		{
 			return a < b ? a : b;
 		}
 		template<class T>
-		static T& max_(T& a, T& b)
+		static const T& max_(const T& a, const T& b)
 		{
 			return a > b ? a : b;
 		}
 		template<class T>
-		static T& min_(T& a, T& b)
+		static const T& min_(const T& a, const T& b)
 		{
 			return a < b ? a : b;
 		}
 		template<class T>
-		static  T max(const T a, const T b, const T c)
+		static const T& max3(const T& a, const T& b, const T& c)
 		{
  			return a < b ? max_(b, c) : max_(a, c);
 		}
 		
 		template<class T>
-		static T min(const T a, const T b, const T c)
+		static const T& min3(const T& a, const T& b, const T& c)
 		{
 			return a < b ? min_(a, c) : min_(b, c);
 		}

@@ -65,7 +65,7 @@ namespace Sapphire
 		\param LOD 对于这个Patch的LOD，如果为-1，获取当前LOD。 如果当前LOD设置为-1,意味着它不会显示，那么它返回更高一级LOD （LOD 0）
 		的三角形
 		\return 放入这个缓冲区的索引数 */
-		virtual SINT32 getIndicesForPatch(std::vector<UINT32>& indices,
+		virtual SINT32 getIndicesForPatch(vector<UINT32>::type& indices,
 			SINT32 patchX, SINT32 patchZ, SINT32 LOD = 0) = 0;
 
 		//! 填充每个patch的当前LOD到一个数组

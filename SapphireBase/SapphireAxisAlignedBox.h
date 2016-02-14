@@ -4,6 +4,7 @@
 #include "SapphirePrerequisites.h"
 #include "SapphireVector3.h"
 #include "SapphireMatrix4.h"
+#include "SapphireLine3D.h"
 
 namespace Sapphire
 {
@@ -581,6 +582,51 @@ namespace Sapphire
 			 
 			return true;
 
+		}
+
+		
+
+		//! Tests if the box intersects with a line
+		/** \param linemiddle Center of the line.
+		\param linevect Vector of the line.
+		\param halflength Half length of the line.
+		\return True if there is an intersection, else false. */
+		inline bool intersectsWithLine(const Vector3& linemiddle,
+			const Vector3& linevect, Real halflength) const
+		{
+			const Vector3 e = getExtent() * (Real)0.5;
+			const Vector3 t = getCenter() - linemiddle;
+
+			if ((fabs(t.x) > e.x + halflength * fabs(linevect.x)) ||
+				(fabs(t.y) > e.y + halflength * fabs(linevect.y)) ||
+				(fabs(t.z) > e.z + halflength * fabs(linevect.z)))
+				return false;
+
+			Real r = e.y * (Real)fabs(linevect.z) + e.z * (Real)fabs(linevect.y);
+			if (fabs(t.y*linevect.z - t.z*linevect.y) > r)
+				return false;
+
+			r = e.x * (Real)fabs(linevect.z) + e.z * (Real)fabs(linevect.x);
+			if (fabs(t.z*linevect.x - t.x*linevect.z) > r)
+				return false;
+
+			r = e.x * (Real)fabs(linevect.y) + e.y * (Real)fabs(linevect.x);
+			if (fabs(t.x*linevect.y - t.y*linevect.x) > r)
+				return false;
+
+			return true;
+		}
+
+		//! Tests if the box intersects with a line
+		/** \param line: Line to test intersection with.
+		\return True if there is an intersection , else false. */
+		template<class K>
+		inline bool intersectsWithLine(const line3d<K>& line) const
+		{
+			Vector3 v = line.getVector();
+			v.normalise();
+			return intersectsWithLine(line.getMiddle(), v, (Real)(line.getLength() * 0.5));
+				
 		}
 
 	 

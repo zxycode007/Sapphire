@@ -1,4 +1,5 @@
 #include "SapphireCOpenGLExtensionHandler.h"
+#include "SapphireMath.h"
 #include "SapphireSMaterial.h"
 #include "SapphireOS.h"
 
@@ -575,7 +576,7 @@ namespace Sapphire
 #elif defined(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB)
 			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB, &num);
 #endif
-			MaxSupportedTextures = Math::_max(MaxSupportedTextures, static_cast<UINT8>(num));
+			MaxSupportedTextures = Math::_max<UINT8>(MaxSupportedTextures, static_cast<UINT8>(num));
 		}
 #endif
 		glGetIntegerv(GL_MAX_LIGHTS, &num);

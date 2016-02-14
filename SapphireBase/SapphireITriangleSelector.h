@@ -1,5 +1,5 @@
-#ifndef _SAPPHIRE_ITRIANGLE_SELECTOR_
-#define _SAPPHIRE_ITRIANGLE_SELECTOR_
+#ifndef _SAPPHIRE_I_TRIANGLE_SELECTOR_
+#define _SAPPHIRE_I_TRIANGLE_SELECTOR_
 
 #include "SapphirePrerequisites.h"
 #include "SapphireIReferenceCounter.h"
@@ -17,8 +17,10 @@ namespace Sapphire
 	获得。这用于碰撞检测：例如你如果指定，有一个碰撞可能发生在区域（1，1，1）和（10，10，10），你可以通过ITriangleSelector获取容易
 	的场景节点在这个区域内的所有三角形，并且检测这些三角形是否每一个都发生碰撞
 	 */
-	class ITriangleSelector : public SceneAlloc, public virtual IReferenceCounter
+	class ITriangleSelector : public virtual IReferenceCounter
 	{
+	public:
+	
 		//! 获取这个selector所有可用的三角形数量
 		virtual SINT32 getTriangleCount() const = 0;
 
@@ -32,7 +34,7 @@ namespace Sapphire
 		\param outTriangleCount: 写入这个数组的三角形数量
 		\param transform 在它们返回之前变换这些三角形的矩阵指针
 	    例如用于缩放所有三角形到一个椭圆形空间中。如果这个指针是NULL，没有变换*/
-		virtual void getTriangles(triangle3d<Real>* triangles, SINT32 arraySize,
+		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
 			SINT32& outTriangleCount, const Matrix4* transform = 0) const = 0;
 
 		//! 获取一个与指定一个AABB盒子的节点联系的所有三角形
@@ -48,7 +50,7 @@ namespace Sapphire
 		\param box 只包括在AABB盒子里的三角形写入数组
 		\param transform 在它们返回之前变换这些三角形的矩阵指针
 	    例如用于缩放所有三角形到一个椭圆形空间中。如果这个指针是NULL，没有变换 */
-		virtual void getTriangles(triangle3d<Real>* triangles, SINT32 arraySize,
+		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
 			SINT32& outTriangleCount, const AxisAlignedBox& box,
 			const Matrix4* transform = 0) const = 0;
 
@@ -66,8 +68,8 @@ namespace Sapphire
 		\param line 只有与这个3d线段有联系的三角形会写入到这个数组
 		\param transform 在它们返回之前变换这些三角形的矩阵指针
 	    例如用于缩放所有三角形到一个椭圆形空间中。如果这个指针是NULL，没有变换 */
-		virtual void getTriangles(triangle3d<Real>* triangles, SINT32 arraySize,
-			SINT32& outTriangleCount, const line3d<Real>& line,
+		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
+			SINT32& outTriangleCount, const line3d<FLOAT32>& line,
 			const Matrix4* transform = 0) const = 0;
 
 		//! 获取与一个给定三角形相关的场景节点
@@ -94,6 +96,7 @@ namespace Sapphire
 		*/
 		virtual const ITriangleSelector* getSelector(UINT32 index) const = 0;
 	};
+
 }
 
 

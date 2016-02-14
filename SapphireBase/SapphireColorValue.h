@@ -712,8 +712,8 @@ namespace Sapphire {
 
 	inline void SColorHSL::fromRGB(const ColourValue &color)
 	{
-		const FLOAT32 maxVal = Math::max<FLOAT32>(color.r, color.g, color.b);
-		const FLOAT32 minVal = Math::min<FLOAT32>(color.r, color.g, color.b);
+		const FLOAT32 maxVal = Math::max3<FLOAT32>(color.r, color.g, color.b);
+		const FLOAT32 minVal = Math::min3<FLOAT32>(color.r, color.g, color.b);
 		Luminance = (maxVal + minVal) * 50;
 		if (Math::equals(maxVal, minVal))
 		{
