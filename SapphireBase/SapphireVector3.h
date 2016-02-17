@@ -324,6 +324,12 @@ namespace Sapphire
 			return Math::Sqrt(x * x + y * y + z * z);
 		}
 
+		//! Sets the length of the vector to a new value
+		inline Vector3& setLength(Real newlength)
+		{
+			normalize();
+			return (*this *= newlength);
+		}
 		 
 		inline Real squaredLength() const
 		{
@@ -377,6 +383,23 @@ namespace Sapphire
 			}
 
 			return fLength;
+		}
+
+
+		inline Vector3 normalize()
+		{
+			Real fLength = Math::Sqrt(x * x + y * y + z * z);
+			Vector3 v = *this;
+
+			if (fLength > Real(0.0f))
+			{
+				Real fInvLength = 1.0f / fLength;
+				v.x *= fInvLength;
+				v.y *= fInvLength;
+				v.z *= fInvLength;
+			}
+
+			return v;
 		}
 
 		/** 

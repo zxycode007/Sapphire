@@ -30,16 +30,16 @@ namespace Sapphire
 		CTriangleSelector(const AxisAlignedBox& box, ISceneNode* node);
 
 		//! Gets all triangles.
-		void getTriangles(triangle3d<FLOAT32>* triangles, SINT32 arraySize, SINT32& outTriangleCount,
+		void getTriangles(triangle3df* triangles, SINT32 arraySize, SINT32& outTriangleCount,
 			const Matrix4* transform = 0) const;
 
 		//! Gets all triangles which lie within a specific bounding box.
-		void getTriangles(triangle3d<FLOAT32>* triangles, SINT32 arraySize, SINT32& outTriangleCount,
+		void getTriangles(triangle3df* triangles, SINT32 arraySize, SINT32& outTriangleCount,
 			const AxisAlignedBox& box, const Matrix4* transform = 0) const;
 
 		//! Gets all triangles which have or may have contact with a 3d line.
-		virtual void getTriangles(triangle3d<FLOAT32>* triangles, SINT32 arraySize,
-			SINT32& outTriangleCount, const line3d<FLOAT32>& line,
+		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
+			SINT32& outTriangleCount, const line3df& line,
 			const Matrix4* transform = 0) const;
 
 		//! Returns amount of all available triangles in this selector
@@ -70,7 +70,7 @@ namespace Sapphire
 		virtual void update(void) const;
 
 		ISceneNode* SceneNode;
-		mutable vector<triangle3d<FLOAT32>>::type Triangles; // (mutable for CTriangleBBSelector)
+		mutable vector<triangle3df>::type Triangles; // (mutable for CTriangleBBSelector)
 		mutable AxisAlignedBox BoundingBox; // Allows for trivial rejection
 
 		IAnimatedMeshSceneNode* AnimatedNode;

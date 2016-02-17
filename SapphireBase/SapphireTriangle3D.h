@@ -165,7 +165,7 @@ namespace Sapphire
 			triangle3d<Real> trianglef(Vector3((Real)pointA.x, (Real)pointA.y, (Real)pointA.z)
 				, Vector3((Real)pointB.x, (Real)pointB.y, (Real)pointB.z)
 				, Vector3((Real)pointC.x, (Real)pointC.y, (Real)pointC.z));
-			const Vector3 normalf = trianglef.getNormal().normalise();
+ 			const Vector3 normalf = trianglef.getNormal().normalize();
 			Real t2;
 
 			if ( Math::iszero(t2 = normalf.dotProduct(lineVectf)))

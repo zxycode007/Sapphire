@@ -143,6 +143,7 @@
     <ClInclude Include="SapphireCMountPointReader.h" />
     <ClInclude Include="SapphireCNPKReader.h" />
     <ClInclude Include="SapphireCNullDriver.h" />
+    <ClInclude Include="SapphireCOctreeTriangleSelector.h" />
     <ClInclude Include="SapphireColorValue.h" />
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireCompileConifg.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="SapphireCoreUtil.h" />
     <ClInclude Include="SapphireCPakReader.h" />
     <ClInclude Include="SapphireCReadFile.h" />
+    <ClInclude Include="SapphireCSceneCollisionManager.h" />
     <ClInclude Include="SapphireCSceneManager.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraFPS.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraMaya.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="SapphireCTerrianSceneNode.h" />
     <ClInclude Include="SapphireCTerrianTriangleSelector.h" />
     <ClInclude Include="SapphireCTimer.h" />
+    <ClInclude Include="SapphireCTriangleBBSelector.h" />
     <ClInclude Include="SapphireCTriangleSelector.h" />
     <ClInclude Include="SapphireCVideoModelList.h" />
     <ClInclude Include="SapphireCWADReader.h" />
@@ -494,11 +497,13 @@
     <ClCompile Include="SapphireCMountPointReader.cpp" />
     <ClCompile Include="SapphireCNPKReader.cpp" />
     <ClCompile Include="SapphireCNullDriver.cpp" />
+    <ClCompile Include="SapphireCOctreeTriangleSelector.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
     <ClCompile Include="SapphireCPakReader.cpp" />
     <ClCompile Include="SapphireCReadFile.cpp" />
+    <ClCompile Include="SapphireCSceneCollisionManager.cpp" />
     <ClCompile Include="SapphireCSceneManager.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraFPS.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraMaya.cpp" />
@@ -512,6 +517,7 @@
     <ClCompile Include="SapphireCTarReader.cpp" />
     <ClCompile Include="SapphireCTerrianTriangleSelector.cpp" />
     <ClCompile Include="SapphireCTimer.cpp" />
+    <ClCompile Include="SapphireCTriangleBBSelector.cpp" />
     <ClCompile Include="SapphireCTriangleSelector.cpp" />
     <ClCompile Include="SapphireCVideoModelList.cpp" />
     <ClCompile Include="SapphireCWADReader.cpp" />

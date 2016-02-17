@@ -32,7 +32,7 @@ namespace Sapphire
 
 		//! Gets all triangles which have or may have contact with a 3d line.
 		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
-			SINT32& outTriangleCount, const line3d<FLOAT32>& line,
+			SINT32& outTriangleCount, const line3df& line,
 			const Matrix4* transform = 0) const;
 
 		//! Adds a triangle selector to the collection of triangle selectors

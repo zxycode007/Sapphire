@@ -86,12 +86,12 @@ namespace Sapphire
 
 			for (UINT32 j = 0; j<idxCnt; j += 3)
 			{
-				Triangles.push_back(triangle3d<FLOAT32>(
+				Triangles.push_back(triangle3df(
 					buf->getPosition(indices[j + 0]),
 					buf->getPosition(indices[j + 1]),
 					buf->getPosition(indices[j + 2])));
 				//const triangle3df& tri = Triangles.getLast();
-				const triangle3d<FLOAT32>& tri = Triangles.back();
+				const triangle3df& tri = Triangles.back();
 				BoundingBox.addInternalPoint(tri.pointA);
 				BoundingBox.addInternalPoint(tri.pointB);
 				BoundingBox.addInternalPoint(tri.pointC);
@@ -117,7 +117,7 @@ namespace Sapphire
 
 			for (UINT32 index = 0; index < idxCnt; index += 3)
 			{
-				triangle3d<FLOAT32>& tri = Triangles[triangleCount++];
+				triangle3df& tri = Triangles[triangleCount++];
 				tri.pointA = buf->getPosition(indices[index + 0]);
 				tri.pointB = buf->getPosition(indices[index + 1]);
 				tri.pointC = buf->getPosition(indices[index + 2]);
@@ -152,7 +152,7 @@ namespace Sapphire
 
 
 	//! Gets all triangles.
-	void CTriangleSelector::getTriangles(triangle3d<FLOAT32>* triangles,
+	void CTriangleSelector::getTriangles(triangle3df* triangles,
 		SINT32 arraySize, SINT32& outTriangleCount,
 		const Matrix4* transform) const
 	{
@@ -176,9 +176,9 @@ namespace Sapphire
 			//mat.transformVect(triangles[i].pointA, Triangles[i].pointA);
 			//mat.transformVect(triangles[i].pointB, Triangles[i].pointB);
 			//mat.transformVect(triangles[i].pointC, Triangles[i].pointC);
-			mat.transformAffine(triangles[i].pointA);
-			mat.transformAffine(triangles[i].pointB);
-			mat.transformAffine(triangles[i].pointC);
+			triangles[i].pointA = mat.transformAffine(triangles[i].pointA);
+			triangles[i].pointB = mat.transformAffine(triangles[i].pointB);
+			triangles[i].pointC = mat.transformAffine(triangles[i].pointC);
 		}
 
 		outTriangleCount = cnt;
@@ -186,7 +186,7 @@ namespace Sapphire
 
 
 	//! Gets all triangles which lie within a specific bounding box.
-	void CTriangleSelector::getTriangles(triangle3d<FLOAT32>* triangles,
+	void CTriangleSelector::getTriangles(triangle3df* triangles,
 		SINT32 arraySize, SINT32& outTriangleCount,
 		const AxisAlignedBox& box,
 		const Matrix4* transform) const
@@ -231,9 +231,9 @@ namespace Sapphire
 			//mat.transformVect(triangles[triangleCount].pointA);
 			//mat.transformVect(triangles[triangleCount].pointB);
 			//mat.transformVect(triangles[triangleCount].pointC);
-			mat.transformAffine(triangles[triangleCount].pointA);
-			mat.transformAffine(triangles[triangleCount].pointB);
-			mat.transformAffine(triangles[triangleCount].pointC);
+			triangles[triangleCount].pointA = mat.transformAffine(triangles[triangleCount].pointA);
+			triangles[triangleCount].pointA = mat.transformAffine(triangles[triangleCount].pointB);
+			triangles[triangleCount].pointA = mat.transformAffine(triangles[triangleCount].pointC);
 
 			++triangleCount;
 
@@ -246,9 +246,9 @@ namespace Sapphire
 
 
 	//! Gets all triangles which have or may have contact with a 3d line.
-	void CTriangleSelector::getTriangles(triangle3d<FLOAT32>* triangles,
+	void CTriangleSelector::getTriangles(triangle3df* triangles,
 		SINT32 arraySize, SINT32& outTriangleCount,
-		const line3d<FLOAT32>& line,
+		const line3df& line,
 		const Matrix4* transform) const
 	{
 		// Update my triangles if necessary

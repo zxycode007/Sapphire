@@ -119,6 +119,12 @@ namespace Sapphire
 		assert(iIndex < 16);
 			return _m[iIndex];
 		}
+		inline Real& operator () (size_t iRow, size_t iColumn)
+		{
+			assert(iRow < 4);
+			assert(iColumn < 4);
+			return m[iColumn][iRow];
+		}
 		inline Real* operator [] (size_t iRow)
 		{
 			assert(iRow < 4);
@@ -533,6 +539,7 @@ namespace Sapphire
 		Matrix4 adjoint() const;
 		Real determinant() const;
 		Matrix4 inverse() const;
+		inline bool Matrix4::getInverse(Matrix4& out) const;
 
 		 
 		void makeTransform(const Vector3& position, const Vector3& scale, const Quaternion& orientation);
@@ -552,6 +559,18 @@ namespace Sapphire
 		inline bool isAffine(void) const
 		{
 			return m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0 && m[3][3] == 1;
+		}
+
+
+		/**
+		检测这个矩阵是否是仿射矩阵
+		@remarks
+		一个仿射矩阵是4X4矩阵由3行等于(0,0,0,1)构成
+		e.g.非投影系数
+		*/
+		inline bool isIdentify(void) const
+		{
+			return m[0][0] == 1 && m[1][1] == 1 && m[2][2] == 1 && m[3][3] == 1;
 		}
 
 		 

@@ -1023,6 +1023,15 @@
     <ClInclude Include="SapphireCTerrianSceneNode.h">
       <Filter>源文件\scene\nodes</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCOctreeTriangleSelector.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTriangleBBSelector.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneCollisionManager.h">
+      <Filter>源文件\scene\collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1545,6 +1554,15 @@
       <Filter>源文件\scene\collision</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCTerrianTriangleSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOctreeTriangleSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCTriangleBBSelector.cpp">
+      <Filter>源文件\scene\collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneCollisionManager.cpp">
       <Filter>源文件\scene\collision</Filter>
     </ClCompile>
   </ItemGroup>

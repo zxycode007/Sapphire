@@ -151,6 +151,22 @@ namespace Sapphire
 			return ISREL3D_PLANAR;
 		}
 
+		//! 测试三角形是在任意点的前面或背面
+		//Test if the triangle would be front or backfacing from any point.
+		/** Thus, this method assumes a camera position from
+		which the triangle is definitely visible when looking into
+		the given direction.
+		Note that this only works if the normal is Normalized.
+		Do not use this method with points as it will give wrong results!
+		\param lookDirection: Look direction.
+		\return True if the plane is front facing and
+		false if it is backfacing. */
+		bool isFrontFacing(const Vector3& lookDirection) const
+		{
+			const Real d = normal.dotProduct(lookDirection);
+			return (d<=0.0f);
+		}
+
 		//! 获取平面相交的线段分割比例
 		/** 只用于有相交发生的情况
 		\param linePoint1 线段的1个点
@@ -163,6 +179,26 @@ namespace Sapphire
 			Vector3 vect = linePoint2 - linePoint1;
 			Real t2 = (Real)normal.dotProduct(vect);
 			return (Real)-((normal.dotProduct(linePoint1) + d) / t2);
+		}
+
+		//! 获取与一个3d指向的相交性
+		/** \param lineVect 相交性判断的直线向量
+		\param linePoint 相信判断的直线上的一点
+		\param outIntersection 如果有的话，保存的交点的变量
+		\return 如果相交返回true，否则false
+		*/
+		bool getIntersectionWithLine(const Vector3& linePoint,
+			const Vector3& lineVect,
+			Vector3& outIntersection) const
+		{
+			Real t2 = normal.dotProduct(lineVect);
+
+			if (t2 == 0)
+				return false;
+
+			Real t = -(normal.dotProduct(linePoint) + d) / t2;
+			outIntersection = linePoint + (lineVect * t);
+			return true;
 		}
 
 		_SapphireExport friend std::ostream& operator<< (std::ostream& o, const Plane& p);

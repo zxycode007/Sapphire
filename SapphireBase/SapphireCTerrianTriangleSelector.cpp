@@ -97,9 +97,9 @@ namespace Sapphire
 					//mat.transformVect(triangles[tIndex].pointA);
 					//mat.transformVect(triangles[tIndex].pointB);
 					//mat.transformVect(triangles[tIndex].pointC);
-					mat.transformAffine(triangles[tIndex].pointA);
-					mat.transformAffine(triangles[tIndex].pointB);
-					mat.transformAffine(triangles[tIndex].pointC);
+					triangles[tIndex].pointA = mat.transformAffine(triangles[tIndex].pointA);
+					triangles[tIndex].pointB = mat.transformAffine(triangles[tIndex].pointB);
+					triangles[tIndex].pointC = mat.transformAffine(triangles[tIndex].pointC);
 
 					++tIndex;
 				}
@@ -137,9 +137,9 @@ namespace Sapphire
 					//mat.transformVect(triangles[tIndex].pointA);
 					//mat.transformVect(triangles[tIndex].pointB);
 					//mat.transformVect(triangles[tIndex].pointC);
-					mat.transformAffine(triangles[tIndex].pointA);
-					mat.transformAffine(triangles[tIndex].pointC);
-					mat.transformAffine(triangles[tIndex].pointB);
+					triangles[tIndex].pointA = mat.transformAffine(triangles[tIndex].pointA);
+					triangles[tIndex].pointC = mat.transformAffine(triangles[tIndex].pointC);
+					triangles[tIndex].pointB = mat.transformAffine(triangles[tIndex].pointB);
 
 					++tIndex;
 				}
@@ -176,9 +176,9 @@ namespace Sapphire
 					//mat.transformVect(triangles[tIndex].pointA);
 					//mat.transformVect(triangles[tIndex].pointB);
 					//mat.transformVect(triangles[tIndex].pointC);
-					mat.transformAffine(triangles[tIndex].pointA);
-					mat.transformAffine(triangles[tIndex].pointB);
-					mat.transformAffine(triangles[tIndex].pointC);
+					triangles[tIndex].pointA = mat.transformAffine(triangles[tIndex].pointA);
+					triangles[tIndex].pointB = mat.transformAffine(triangles[tIndex].pointB);
+					triangles[tIndex].pointC = mat.transformAffine(triangles[tIndex].pointC);
 
 					++tIndex;
 				}

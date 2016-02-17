@@ -195,13 +195,13 @@ namespace Sapphire
 		Matrix4 mat;
 		mat.setRotationDegrees(Vector3(relativeRotation.x, relativeRotation.y, 0));
 		//mat.transformVect(target);
-		mat.transformAffine(target);
+		target = mat.transformAffine(target);
 
 		if (NoVerticalMovement)
 		{
 			mat.setRotationDegrees(Vector3(0, relativeRotation.y, 0));
 			//mat.transformVect(movedir);
-			mat.transformAffine(target);
+			target = mat.transformAffine(target);
 		}
 		else
 		{

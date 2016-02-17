@@ -1,5 +1,6 @@
 #ifndef _SAPPHIRE_C_MESH_BUFFER_
 #define _SAPPHIRE_C_MESH_BUFFER_
+#include "SapphirePrerequisites.h"
 #include "SapphireIMeshBuffer.h"
 namespace Sapphire
 {
@@ -272,7 +273,9 @@ namespace Sapphire
 		SMaterial Material;
 		//! Vertices of this buffer
 		//vector<T>::type Vertices;
-		vector<T>::type Vertices;
+		typedef typename vector<T>::type vectorT;
+		vectorT Vertices;
+		//vector<T>::type Vertices;
 		//! Indices into the vertices of this buffer.
 		vector<UINT16>::type Indices;
 		//! Bounding box of this meshbuffer.

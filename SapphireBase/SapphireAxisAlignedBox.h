@@ -82,6 +82,10 @@ namespace Sapphire
 			setExtents(min, max);
 		}
 
+		inline AxisAlignedBox(const Vector3& init) : mMinimum(init), mMaximum(init), mCorners(0)
+		{
+			 
+		}
 		inline AxisAlignedBox(
 			Real mx, Real my, Real mz,
 			Real Mx, Real My, Real Mz) : mMinimum(Vector3::ZERO), mMaximum(Vector3::UNIT_SCALE), mCorners(0)

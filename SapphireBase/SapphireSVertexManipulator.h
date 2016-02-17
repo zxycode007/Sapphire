@@ -249,7 +249,7 @@ namespace Sapphire
 		void operator()(VType& vertex) const
 		{
 			//Transformation.transformVect(vertex.Pos);
-			Transformation.transformAffine(vertex.Pos);
+			vertex.Pos = Transformation.transformAffine(vertex.Pos);
 		}
 	private:
 		Matrix4 Transformation;

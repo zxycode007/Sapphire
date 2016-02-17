@@ -69,7 +69,7 @@ namespace Sapphire
 		\param transform 在它们返回之前变换这些三角形的矩阵指针
 	    例如用于缩放所有三角形到一个椭圆形空间中。如果这个指针是NULL，没有变换 */
 		virtual void getTriangles(triangle3df* triangles, SINT32 arraySize,
-			SINT32& outTriangleCount, const line3d<FLOAT32>& line,
+			SINT32& outTriangleCount, const line3df& line,
 			const Matrix4* transform = 0) const = 0;
 
 		//! 获取与一个给定三角形相关的场景节点
