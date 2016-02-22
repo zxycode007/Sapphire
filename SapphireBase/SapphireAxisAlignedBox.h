@@ -830,6 +830,43 @@ namespace Sapphire
 			}
 		}
 
+		//! Classifies a relation with a plane.
+		/** \param plane Plane to classify relation to.
+		\return Returns ISREL3D_FRONT if the box is in front of the plane,
+		ISREL3D_BACK if the box is behind the plane, and
+		ISREL3D_CLIPPED if it is on both sides of the plane. */
+		EIntersectionRelation3D classifyPlaneRelation(const Plane& plane) const
+		{
+			Vector3 nearPoint(getMaximum());
+			Vector3 farPoint(getMinimum());
+
+			if (plane.normal.x > 0)
+			{
+				nearPoint.x = getMaximum().x;
+				farPoint.x = getMinimum().x;
+			}
+
+			if (plane.normal.y >  0)
+			{
+				nearPoint.y = getMinimum().y;
+				farPoint.y = getMaximum().y;
+			}
+
+			if (plane.normal.z > 0)
+			{
+				nearPoint.z = getMinimum().z;
+				farPoint.z = getMaximum().z;
+			}
+
+			if (plane.normal.dotProduct(nearPoint) + plane.d > 0)
+				return ISREL3D_FRONT;
+
+			if (plane.normal.dotProduct(farPoint) + plane.d > 0)
+				return ISREL3D_CLIPPED;
+
+			return ISREL3D_BACK;
+		}
+
 		/** 测试另一个盒子是否被这个盒子包含
 		*/
 		bool contains(const AxisAlignedBox& other) const

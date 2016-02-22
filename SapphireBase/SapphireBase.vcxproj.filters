@@ -1032,6 +1032,69 @@
     <ClInclude Include="SapphireCSceneCollisionManager.h">
       <Filter>源文件\scene\collision</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCAnimatedMeshSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCCubeSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCDummyTransformationSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCEmptySceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCLightSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOctreeSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCBillboardSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCBoneSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCCameraSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMeshSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireOctree.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCQuake3ShaderSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSMeshBufferLightMap.h">
+      <Filter>源文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCShadowVolumeSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSkyBoxSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireSkyDomeSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSphereSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCTextSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireIBillboardTextSceneNode.h">
+      <Filter>头文件\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCVolumeLightSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCWaterSurfaceSceneNode.h">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
