@@ -434,6 +434,15 @@ namespace Sapphire
 			return t;
 		}
 	}
+
+	//-----------------------------------------------------------------------
+	Quaternion Quaternion::Slerp(const Quaternion& rkP,
+		const Quaternion& rkQ, Real fT)
+	{
+		return Slerp(fT, rkP, rkQ, false);
+	}
+
+
 	//-----------------------------------------------------------------------
 	Quaternion Quaternion::SlerpExtraSpins(Real fT,
 		const Quaternion& rkP, const Quaternion& rkQ, int iExtraSpins)
@@ -586,6 +595,15 @@ namespace Sapphire
 		ToRotationMatrix(mat3);
 		dest = Matrix4(mat3);
 		dest.setTrans(translation);
+
+	}
+
+	void Quaternion::getMatrix(Matrix4 &dest) const
+	{
+		Matrix3 mat3;
+		ToRotationMatrix(mat3);
+		dest = Matrix4(mat3);
+		//dest.setTrans(translation);
 
 	}
 }

@@ -197,7 +197,7 @@ namespace Sapphire
 		\return 如果这个平面正面朝向返回true，如果反面返回false */
 		bool isFrontFacing(const Vector3& lookDirection) const
 		{
-			const Vector3 n = getNormal().normalise();
+			const Vector3 n = getNormal().normalize();
 			const Real d = (Real)n.dotProduct(lookDirection);
 			return ((d) <= 0.0f);
 		}

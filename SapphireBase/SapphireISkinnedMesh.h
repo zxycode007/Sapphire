@@ -125,22 +125,22 @@ namespace Sapphire
 			Matrix4 LocalMatrix;
 
 			//! 子joint列表
-			vector<SJoint*> Children;
+			vector<SJoint*>::type Children;
 
 			//! 附加网格列表
-			vector<UINT32> AttachedMeshes;
+			vector<UINT32>::type AttachedMeshes;
 
 			//! 造成位置改变的关键帧
-			vector<SPositionKey> PositionKeys;
+			deque<SPositionKey>::type PositionKeys;
 
 			//! 造成缩放改变的关键字帧
-			vector<SScaleKey> ScaleKeys;
+			deque<SScaleKey>::type ScaleKeys;
 
 			//! 造成旋转改变的关键字
-			vector<SRotationKey> RotationKeys;
+			deque<SRotationKey>::type RotationKeys;
 
 			//! 皮肤权重
-			vector<SWeight> Weights;
+			vector<SWeight>::type Weights;
 
 			//! 对于加载器不是必须的，最终会被重新写
 			Matrix4 GlobalMatrix;
@@ -168,13 +168,13 @@ namespace Sapphire
 	 
 
 		//! 暴光给加载器：添加网格缓冲区
-		virtual vector<SSkinMeshBuffer*>& getMeshBuffers() = 0;
+		virtual vector<SSkinMeshBuffer*>::type& getMeshBuffers() = 0;
 
 		//! 暴光给加载器： joints列表
-		virtual vector<SJoint*>& getAllJoints() = 0;
+		virtual vector<SJoint*>::type& getAllJoints() = 0;
 
 		//! 暴光给加载器： joints 列表
-		virtual const vector<SJoint*>& getAllJoints() const = 0;
+		virtual const vector<SJoint*>::type& getAllJoints() const = 0;
 
 		//! 加载器会填充网格之后调用
 		virtual void finalize() = 0;

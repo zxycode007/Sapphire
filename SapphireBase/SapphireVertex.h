@@ -1,10 +1,10 @@
 #ifndef _SAPPHIRE_VERTEX_
 #define _SAPPHIRE_VERTEX_
-#include "SapphirePrerequisites.h"
 #include "SapphireVector4.h"
 #include "SapphireVector3.h"
 #include "SapphireVector2.h"
 #include "SapphireColorValue.h"
+#include "SapphireException.h"
 
 namespace Sapphire
 {

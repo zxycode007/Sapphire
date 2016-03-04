@@ -114,11 +114,12 @@ namespace Sapphire
 
 		
 
-		inline Real getIndex(SINT32 iIndex)
+		inline Real& getIndex(SINT32 iIndex)
 		{
 		assert(iIndex < 16);
 			return _m[iIndex];
 		}
+
 		inline Real& operator () (size_t iRow, size_t iColumn)
 		{
 			assert(iRow < 4);
@@ -376,6 +377,11 @@ namespace Sapphire
 			m[2][2] = v.z;
 		}
 
+		inline Vector3 getScale()
+		{
+			return Vector3(m[0][0], m[1][1], m[2][2]);
+		}
+
 		 
 		inline static Matrix4 getScale(const Vector3& v)
 		{
@@ -387,6 +393,7 @@ namespace Sapphire
 
 			return r;
 		}
+ 
 
 		 
 		inline static Matrix4 getScale(Real s_x, Real s_y, Real s_z)
@@ -400,7 +407,66 @@ namespace Sapphire
 			return r;
 		}
 
+		//! Returns a rotation that is equivalent to that set by setRotationDegrees().
+		/** This code was sent in by Chev.  Note that it does not necessarily return
+		the *same* Euler angles as those set by setRotationDegrees(), but the rotation will
+		be equivalent, i.e. will have the same result when used to rotate a vector or node. */
 		 
+		inline Vector3 getRotationDegrees() 
+		{
+			Matrix4 mat = *this;
+			mat = mat.transpose();
+			Vector3 scale = this->getScale();
+			// we need to check for negative scale on to axes, which would bring up wrong results
+			if (scale.y<0 && scale.z<0)
+			{
+				scale.y = -scale.y;
+				scale.z = -scale.z;
+			}
+			else if (scale.x<0 && scale.z<0)
+			{
+				scale.x = -scale.x;
+				scale.z = -scale.z;
+			}
+			else if (scale.x<0 && scale.y<0)
+			{
+				scale.x = -scale.x;
+				scale.y = -scale.y;
+			}
+			const Vector3 invScale(reciprocal(scale.x), reciprocal(scale.y), reciprocal(scale.z));
+
+			Real Y = -asin(Math::Clamp(mat.getIndex(2) * invScale.x, -1.0, 1.0));
+			const Real C = cos(Y);
+			//Y *= RADTODEG64;
+
+			Real rotx, roty, X, Z;
+
+			if (!Math::iszero(C))
+			{
+				const Real invC = reciprocal(C);
+				rotx = mat.getIndex(10) * invC * invScale.z;
+				roty = mat.getIndex(6) * invC * invScale.y;
+				X = atan2(roty, rotx) * RADTODEG64;
+				rotx = mat.getIndex(0) * invC * invScale.x;
+				roty = mat.getIndex(1) * invC * invScale.x;
+				Z = atan2(roty, rotx) * RADTODEG64;
+			}
+			else
+			{
+				X = 0.0;
+				rotx = mat.getIndex(5) * invScale.y;
+				roty = -mat.getIndex(4) * invScale.y;
+				Z = atan2(roty, rotx) * RADTODEG64;
+			}
+
+			// fix values that get below zero
+			if (X < 0.0) X += 2 * PI;
+			if (Y < 0.0) Y += 2 * PI;
+			if (Z < 0.0) Z += 2 * PI;
+
+			return Vector3(X, Y, Z);
+		}
+
 		inline void extract3x3Matrix(Matrix3& m3x3) const
 		{
 			m3x3.m[0][0] = m[0][0];
@@ -447,6 +513,8 @@ namespace Sapphire
 
 		inline Matrix4&  setRotationRadians(const Vector3& rotation, bool useTable=false)
 		{
+			*this = transpose();
+
 			const Real cr = Math::Cos(rotation.x,useTable);
 			const Real sr = Math::Sin(rotation.x, useTable);
 			const Real cp = Math::Cos(rotation.y, useTable);
@@ -454,48 +522,243 @@ namespace Sapphire
 			const Real cy = Math::Cos(rotation.z, useTable);
 			const Real sy = Math::Sin(rotation.z, useTable);
 
-			m[0][0] =  (cp*cy);
-			m[1][0]=  (cp*sy);
-			m[2][0] =  (-sp);
+			getIndex(0) =  (cp*cy);
+			getIndex(1) = (cp*sy);
+			getIndex(2) = (-sp);
 
 			const Real srsp = sr*sp;
 			const Real crsp = cr*sp;
 
-			m[0][1] =  (srsp*cy - cr*sy);
-			m[1][1] =  (srsp*sy + cr*cy);
-			m[2][1] =  (sr*cp);
+			getIndex(4) = (srsp*cy - cr*sy);
+			getIndex(5) = (srsp*sy + cr*cy);
+			getIndex(6) = (sr*cp);
 
-			m[0][2] =  (crsp*cy + sr*sy);
-			m[1][2] =  (crsp*sy - sr*cy);
-			m[1][2] = (cr*cp);
+			getIndex(8) = (crsp*cy + sr*sy);
+			getIndex(9) = (crsp*sy - sr*cy);
+			getIndex(10) = (cr*cp);
+
+			*this = transpose();
 
 			return *this;
 		}
 
 		inline Matrix4&  setRotationDegrees(const Vector3& rotation, bool useTable = false)
 		{
-			const Real cr = Math::Cos(Math::DegreesToRadians(rotation.x), useTable);
-			const Real sr = Math::Sin(Math::DegreesToRadians(rotation.x), useTable);
-			const Real cp = Math::Cos(Math::DegreesToRadians(rotation.y), useTable);
-			const Real sp = Math::Sin(Math::DegreesToRadians(rotation.y), useTable);
-			const Real cy = Math::Cos(Math::DegreesToRadians(rotation.z), useTable);
-			const Real sy = Math::Sin(Math::DegreesToRadians(rotation.z), useTable);
+			//先转置为行矩阵
+			*this = transpose();
 
-			m[0][0] = (cp*cy);
-			m[1][0] = (cp*sy);
-			m[2][0] = (-sp);
+			const Real cr = Math::Cos(Math::DegreesToRadians(rotation.x), useTable); //roll 绕Z轴旋转角度的cos值
+			const Real sr = Math::Sin(Math::DegreesToRadians(rotation.x), useTable); // roll绕Z轴旋转角度的sin值
+			const Real cp = Math::Cos(Math::DegreesToRadians(rotation.y), useTable); // pitch  绕x轴旋转角度的cos值
+			const Real sp = Math::Sin(Math::DegreesToRadians(rotation.y), useTable); // pitch  绕y轴旋转角度的sin值
+			const Real cy = Math::Cos(Math::DegreesToRadians(rotation.z), useTable); // yaw 绕z轴旋转的cos值
+			const Real sy = Math::Sin(Math::DegreesToRadians(rotation.z), useTable); //yaw 绕z轴旋转的sin值
+
+			getIndex(0) = (cp*cy);
+			getIndex(1) = (cp*sy);
+			getIndex(2) = (-sp);
 
 			const Real srsp = sr*sp;
 			const Real crsp = cr*sp;
 
-			m[0][1] = (srsp*cy - cr*sy);
-			m[1][1] = (srsp*sy + cr*cy);
-			m[2][1] = (sr*cp);
+			getIndex(4) = (srsp*cy - cr*sy);
+			getIndex(5) = (srsp*sy + cr*cy);
+			getIndex(6) = (sr*cp);
 
-			m[0][2] = (crsp*cy + sr*sy);
-			m[1][2] = (crsp*sy - sr*cy);
-			m[1][2] = (cr*cp);
+			getIndex(8) = (crsp*cy + sr*sy);
+			getIndex(9) = (crsp*sy - sr*cy);
+			getIndex(10) = (cr*cp);
+			//然后转换回列矩阵
+			*this = transpose();
 
+			return *this;
+		}
+
+		// Builds a left-handed perspective projection matrix based on a field of view
+		inline Matrix4& buildProjectionMatrixPerspectiveFovLH(
+			Real fieldOfViewRadians, Real aspectRatio, Real zNear, Real zFar)
+		{
+			const Real h = reciprocal(tan(fieldOfViewRadians*0.5));
+			assert(aspectRatio == 0.f); //divide by zero
+			const Real w = static_cast<Real>(h / aspectRatio);
+
+			assert(zNear == zFar); //divide by zero
+			*this = transpose();
+			getIndex(0) = w;
+			getIndex(1) = 0;
+			getIndex(2) = 0;
+			getIndex(3) = 0;
+
+			getIndex(4) = 0;
+			getIndex(5) = (Real)h;
+			getIndex(6) = 0;
+			getIndex(7) = 0;
+
+			getIndex(8) = 0;
+			getIndex(9) = 0;
+			getIndex(10) = (Real)(zFar / (zFar - zNear));
+			getIndex(11) = 1;
+
+			getIndex(12) = 0;
+			getIndex(13) = 0;
+			getIndex(14) = (Real)(-zNear*zFar / (zFar - zNear));
+			getIndex(15) = 0;
+
+			*this = transpose();
+
+
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
+			return *this;
+		}
+
+
+		// Builds a right-handed perspective projection matrix based on a field of view
+		inline Matrix4& buildProjectionMatrixPerspectiveFovRH(
+			Real fieldOfViewRadians, Real aspectRatio, Real zNear, Real zFar)
+		{
+			const Real h = reciprocal(tan(fieldOfViewRadians*0.5));
+			assert(aspectRatio == 0.f); //divide by zero
+			const Real w = static_cast<Real>(h / aspectRatio);
+
+			assert(zNear == zFar); //divide by zero
+
+			*this = transpose();
+			getIndex(0) = w;
+			getIndex(1) = 0;
+			getIndex(2) = 0;
+			getIndex(3) = 0;
+
+			getIndex(4) = 0;
+			getIndex(5) = (Real)h;
+			getIndex(6) = 0;
+			getIndex(7) = 0;
+
+			getIndex(8) = 0;
+			getIndex(9) = 0;
+			getIndex(10) = (Real)(zFar / (zNear - zFar)); // DirectX version
+			//		M[10] = (T)(zFar+zNear/(zNear-zFar)); // OpenGL version
+			getIndex(11) = -1;
+
+			getIndex(12) = 0;
+			getIndex(13) = 0;
+			getIndex(14) = (Real)(zNear*zFar / (zNear - zFar)); // DirectX version
+			//		M[14] = (T)(2.0f*zNear*zFar/(zNear-zFar)); // OpenGL version
+			getIndex(15) = 0;
+
+			*this = transpose();
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
+			return *this;
+		}
+
+
+		// Builds a left-handed look-at matrix.
+		inline Matrix4& buildCameraLookAtMatrixLH(
+			const Vector3& position,
+			const Vector3& target,
+			const Vector3& upVector)
+		{
+			Vector3 zaxis = target - position;
+			zaxis.normalize();
+
+			Vector3 xaxis = upVector.crossProduct(zaxis);
+			xaxis.normalize();
+
+			Vector3 yaxis = zaxis.crossProduct(xaxis);
+			//计算方法是以行矩阵，而Matrix4是列矩阵存储的，先转置
+			*this = transpose(); 
+			getIndex(0) = (Real)xaxis.x;
+			getIndex(1) = (Real)yaxis.x;
+			getIndex(2) = (Real)zaxis.x;
+			getIndex(3) = 0;
+
+			getIndex(4) = (Real)xaxis.y;
+			getIndex(5) = (Real)yaxis.y;
+			getIndex(6) = (Real)zaxis.y;
+			getIndex(7) = 0;
+
+			getIndex(8) = (Real)xaxis.z;
+			getIndex(9) = (Real)yaxis.z;
+			getIndex(10) = (Real)zaxis.z;
+			getIndex(11) = 0;
+
+			getIndex(12) = (Real)-xaxis.dotProduct(position);
+			getIndex(13) = (Real)-yaxis.dotProduct(position);
+			getIndex(14) = (Real)-zaxis.dotProduct(position);
+			getIndex(15) = 1;
+			//计算方法是以行矩阵，而Matrix4是列矩阵存储的，再转置回列矩阵
+			*this = transpose(); 
+#if defined ( USE_MARealRIX_RealESReal )
+			definitelyIdentityMatrix = false;
+#endif
+			return *this;
+		}
+
+		inline Matrix4 setbyProduct(const Matrix4& other_a, const Matrix4& other_b)
+		{
+			
+		    Matrix4 m1 = other_a;
+			Matrix4 m2 = other_b;
+			m[0][0] = m1.m[0][0] * m2.m[0][0] + m1.m[0][1] * m2.m[1][0] + m1.m[0][2] * m2.m[2][0] + m1.m[0][3] * m2.m[3][0];
+			m[0][1] = m1.m[0][0] * m2.m[0][1] + m1.m[0][1] * m2.m[1][1] + m1.m[0][2] * m2.m[2][1] + m1.m[0][3] * m2.m[3][1];
+			m[0][2] = m1.m[0][0] * m2.m[0][2] + m1.m[0][1] * m2.m[1][2] + m1.m[0][2] * m2.m[2][2] + m1.m[0][3] * m2.m[3][2];
+			m[0][3] = m1.m[0][0] * m2.m[0][3] + m1.m[0][1] * m2.m[1][3] + m1.m[0][2] * m2.m[2][3] + m1.m[0][3] * m2.m[3][3];
+
+			m[1][0] = m1.m[1][0] * m2.m[0][0] + m1.m[1][1] * m2.m[1][0] + m1.m[1][2] * m2.m[2][0] + m1.m[1][3] * m2.m[3][0];
+			m[1][1] = m1.m[1][0] * m2.m[0][1] + m1.m[1][1] * m2.m[1][1] + m1.m[1][2] * m2.m[2][1] + m1.m[1][3] * m2.m[3][1];
+			m[1][2] = m1.m[1][0] * m2.m[0][2] + m1.m[1][1] * m2.m[1][2] + m1.m[1][2] * m2.m[2][2] + m1.m[1][3] * m2.m[3][2];
+			m[1][3] = m1.m[1][0] * m2.m[0][3] + m1.m[1][1] * m2.m[1][3] + m1.m[1][2] * m2.m[2][3] + m1.m[1][3] * m2.m[3][3];
+
+			m[2][0] = m1.m[2][0] * m2.m[0][0] + m1.m[2][1] * m2.m[1][0] + m1.m[2][2] * m2.m[2][0] + m1.m[2][3] * m2.m[3][0];
+			m[2][1] = m1.m[2][0] * m2.m[0][1] + m1.m[2][1] * m2.m[1][1] + m1.m[2][2] * m2.m[2][1] + m1.m[2][3] * m2.m[3][1];
+			m[2][2] = m1.m[2][0] * m2.m[0][2] + m1.m[2][1] * m2.m[1][2] + m1.m[2][2] * m2.m[2][2] + m1.m[2][3] * m2.m[3][2];
+			m[2][3] = m1.m[2][0] * m2.m[0][3] + m1.m[2][1] * m2.m[1][3] + m1.m[2][2] * m2.m[2][3] + m1.m[2][3] * m2.m[3][3];
+
+			m[3][0] = m1.m[3][0] * m2.m[0][0] + m1.m[3][1] * m2.m[1][0] + m1.m[3][2] * m2.m[2][0] + m1.m[3][3] * m2.m[3][0];
+			m[3][1] = m1.m[3][0] * m2.m[0][1] + m1.m[3][1] * m2.m[1][1] + m1.m[3][2] * m2.m[2][1] + m1.m[3][3] * m2.m[3][1];
+			m[3][2] = m1.m[3][0] * m2.m[0][2] + m1.m[3][1] * m2.m[1][2] + m1.m[3][2] * m2.m[2][2] + m1.m[3][3] * m2.m[3][2];
+			m[3][3] = m1.m[3][0] * m2.m[0][3] + m1.m[3][1] * m2.m[1][3] + m1.m[3][2] * m2.m[2][3] + m1.m[3][3] * m2.m[3][3];
+			return *this;
+		}
+
+		//! multiply by another matrix
+		// set this matrix to the product of two other matrices
+		// goal is to reduce stack use and copy
+		inline Matrix4 setbyproduct_nocheck(const Matrix4& other_a, const Matrix4& other_b)
+		{
+			 Matrix4 m1 = other_a;
+			 Matrix4 m2 = other_b;
+			 //列矩阵转成行矩阵
+			 m1.transpose();
+			 m2.transpose();
+
+			 getIndex(0) = m1.getIndex(0) * m2.getIndex(0) + m1.getIndex(4) * m2.getIndex(1) + m1.getIndex(8) * m2.getIndex(2) + m1.getIndex(12) * m2.getIndex(3);
+			 getIndex(1) = m1.getIndex(1) * m2.getIndex(0) + m1.getIndex(5) * m2.getIndex(1) + m1.getIndex(9) * m2.getIndex(2) + m1.getIndex(13) * m2.getIndex(3);
+			 getIndex(2) = m1.getIndex(2) * m2.getIndex(0) + m1.getIndex(6) * m2.getIndex(1) + m1.getIndex(10) * m2.getIndex(2) + m1.getIndex(14) * m2.getIndex(3);
+			 getIndex(3) = m1.getIndex(3) * m2.getIndex(0) + m1.getIndex(7) * m2.getIndex(1) + m1.getIndex(11) * m2.getIndex(2) + m1.getIndex(15) * m2.getIndex(3);
+
+			 getIndex(4) = m1.getIndex(0) * m2.getIndex(4) + m1.getIndex(4) * m2.getIndex(5) + m1.getIndex(8) * m2.getIndex(6) + m1.getIndex(12) * m2.getIndex(7);
+			 getIndex(5) = m1.getIndex(1) * m2.getIndex(4) + m1.getIndex(5) * m2.getIndex(5) + m1.getIndex(9) * m2.getIndex(6) + m1.getIndex(13) * m2.getIndex(7);
+			 getIndex(6) = m1.getIndex(2) * m2.getIndex(4) + m1.getIndex(6) * m2.getIndex(5) + m1.getIndex(10) * m2.getIndex(6) + m1.getIndex(14) * m2.getIndex(7);
+			 getIndex(7) = m1.getIndex(3) * m2.getIndex(4) + m1.getIndex(7) * m2.getIndex(5) + m1.getIndex(11) * m2.getIndex(6) + m1.getIndex(15) * m2.getIndex(7);
+
+			 getIndex(8) = m1.getIndex(0) * m2.getIndex(8) + m1.getIndex(4) * m2.getIndex(9) + m1.getIndex(8) * m2.getIndex(10) + m1.getIndex(12) * m2.getIndex(11);
+			 getIndex(9) = m1.getIndex(1) * m2.getIndex(8) + m1.getIndex(5) * m2.getIndex(9) + m1.getIndex(9) * m2.getIndex(10) + m1.getIndex(13) * m2.getIndex(11);
+			 getIndex(10) = m1.getIndex(2) * m2.getIndex(8) + m1.getIndex(6) * m2.getIndex(9) + m1.getIndex(10) * m2.getIndex(10) + m1.getIndex(14) * m2.getIndex(11);
+			 getIndex(11) = m1.getIndex(3) * m2.getIndex(8) + m1.getIndex(7) * m2.getIndex(9) + m1.getIndex(11) * m2.getIndex(10) + m1.getIndex(15) * m2.getIndex(11);
+
+			 getIndex(12) = m1.getIndex(0) * m2.getIndex(12) + m1.getIndex(4) * m2.getIndex(13) + m1.getIndex(8) * m2.getIndex(14) + m1.getIndex(12) * m2.getIndex(15);
+			 getIndex(13) = m1.getIndex(1) * m2.getIndex(12) + m1.getIndex(5) * m2.getIndex(13) + m1.getIndex(9) * m2.getIndex(14) + m1.getIndex(13) * m2.getIndex(15);
+			 getIndex(14) = m1.getIndex(2) * m2.getIndex(12) + m1.getIndex(6) * m2.getIndex(13) + m1.getIndex(10) * m2.getIndex(14) + m1.getIndex(14) * m2.getIndex(15);
+			 getIndex(15) = m1.getIndex(3) * m2.getIndex(12) + m1.getIndex(7) * m2.getIndex(13) + m1.getIndex(11) * m2.getIndex(14) + m1.getIndex(15) * m2.getIndex(15);
+			 //将行矩阵计算结果再转换会列矩阵（计算方法是按行矩阵，Matrix4是按列矩阵存储的）
+			 *this = transpose();
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
 			return *this;
 		}
 
@@ -630,6 +893,32 @@ namespace Sapphire
 				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
 				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
 				v.w);
+		}
+
+		inline Vector3 rotateVect(const Vector3& v) const
+		{
+			assert(isAffine());
+
+			return Vector3(
+				m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z,
+				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z,
+				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z);
+		}
+		
+		inline void inverseRotateVect(Vector3& vect) const
+		{
+			Vector3 tmp;
+			//vect.x = m[0][0] * vect.x + m[0][1] * vect.y + m[0][2] * vect.z + m[0][3];
+			//vect.y = m[1][0] * vect.x + m[1][1] * vect.y + m[1][2] * vect.z + m[1][3];
+			//vect.z = m[2][0] * vect.x + m[2][1] * vect.y + m[2][2] * vect.z + m[2][3];
+			tmp.x = m[0][0] * vect.x + m[1][0] * vect.y + m[2][0] * vect.z;
+			tmp.y = m[0][1] * vect.x + m[1][1] * vect.y + m[2][1] * vect.z;
+			tmp.z = m[0][2] * vect.x + m[1][2] * vect.y + m[2][2] * vect.z;
+
+			vect.x = tmp.x;
+			vect.y = tmp.y;
+			vect.z = tmp.z;
+		
 		}
 	};
 

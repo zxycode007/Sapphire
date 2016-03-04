@@ -307,7 +307,11 @@ namespace Sapphire
 			 
 			return (SINT32)(y+0.5);
 		}
-
+		inline void set(Real X, Real Y)
+		{
+			x = X;
+			x = Y;
+		}
 
 		/** 
 		

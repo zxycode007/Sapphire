@@ -634,6 +634,11 @@ namespace Sapphire
 		{
 			return a < b ? min_(a, c) : min_(b, c);
 		}
+		template<class T>
+		static T lerp(const T& a, const T& b, const FLOAT32 t)
+		{
+			return (T)(a*(1.f - t)) + (b*t);
+		}
 
 	protected:
 		//////////////////不对外由API内部调用//////////////////////
@@ -693,6 +698,12 @@ namespace Sapphire
 	{
 		return Degree(Math::AngleUnitsToDegrees(mAngle));
 	}
+
+	//! Constant for reciprocal of PI.
+	const FLOAT32 RECIPROCAL_PI = 1.0f / PI;
+
+	//! Constant for half of PI.
+	const FLOAT32 HALF_PI = PI / 2.0f;
 
 	//! Constant for 64bit PI.
 	const FLOAT64 PI64 = 3.1415926535897932384626433832795028841971693993751;

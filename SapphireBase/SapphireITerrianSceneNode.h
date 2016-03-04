@@ -71,7 +71,7 @@ namespace Sapphire
 		//! 填充每个patch的当前LOD到一个数组
 		/** \param LODs 一个保存这些值的引用
 		\return 数组元素个数 */
-		virtual SINT32 getCurrentLODOfPatches(std::vector<SINT32>& LODs) const = 0;
+		virtual SINT32 getCurrentLODOfPatches(vector<SINT32>::type& LODs) const = 0;
 
 		//! 手动设置一个patch的LOD
 		/** \param patchX patch的x坐标
@@ -83,15 +83,15 @@ namespace Sapphire
 		virtual const Vector3& getTerrainCenter() const = 0;
 
 		//! 获取地形高度
-		virtual Real getHeight(Real x, Real y) const = 0;
+		virtual FLOAT32 getHeight(FLOAT32 x, FLOAT32 y) const = 0;
 
 		//! 设置相机移动阀值
 		/** 它用于确定重新计算场景节点的索引，这个值默认10.0f */
-		virtual void setCameraMovementDelta(Real delta) = 0;
+		virtual void setCameraMovementDelta(FLOAT32 delta) = 0;
 
 		//! 设置相机旋转阀值
 		/** 它用于确定重新计算场景节点的索引，这个值默认10.0f */
-		virtual void setCameraRotationDelta(Real delta) = 0;
+		virtual void setCameraRotationDelta(FLOAT32 delta) = 0;
 
 		//! 设置当geomipmap数据改变，这个节点是否需要动态更新它相关的selector
 		/** \param bVal: 布尔值表示是否需要动态更新selector*/
@@ -107,7 +107,7 @@ namespace Sapphire
 		/** \param scale  缩放量，值大于1，0，会增加在地形上绘制纹理的时间。值小于0，会减少在地形上绘制纹理的世界。
 		用负值会翻转纹理，而且仍然能缩放它
 		\param scale2 如果设置为0(默认), 这将设置第二个纹理坐标与第一个纹理坐标同样的值，如果非0值，它将缩放第二个纹理坐标*/
-		virtual void scaleTexture(Real scale = 1.0f, Real scale2 = 0.0f) = 0;
+		virtual void scaleTexture(FLOAT32 scale = 1.0f, FLOAT32 scale2 = 0.0f) = 0;
 
 		//! 初始化地形数据，从高程图文件中加载顶点
 		/** 这个文件必须包含一个可加载的高程图图像。这个高程图必须是正方形

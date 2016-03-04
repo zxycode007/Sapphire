@@ -89,16 +89,16 @@ namespace Sapphire
 		virtual Real getFOV() const;
 
 		//! Sets the value of the near clipping plane. (default: 1.0f)
-		virtual void setNearValue(FLOAT32 zn);
+		virtual void setNearValue(Real zn);
 
 		//! Sets the value of the far clipping plane (default: 2000.0f)
-		virtual void setFarValue(FLOAT32 zf);
+		virtual void setFarValue(Real zf);
 
 		//! Sets the aspect ratio (default: 4.0f / 3.0f)
-		virtual void setAspectRatio(FLOAT32 aspect);
+		virtual void setAspectRatio(Real aspect);
 
 		//! Sets the field of view (Default: PI / 3.5f)
-		virtual void setFOV(FLOAT32 fovy);
+		virtual void setFOV(Real fovy);
 
 		//! PreRender event
 		virtual void OnRegisterSceneNode();

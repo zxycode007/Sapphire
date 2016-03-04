@@ -30,7 +30,7 @@ namespace Sapphire
 	{
 	public:
 
-		typedef typename std::vector<T> array;
+		
 
 		struct SMeshChunk : public  CMeshBuffer<T>
 		{
@@ -48,13 +48,8 @@ namespace Sapphire
 			SINT32 MaterialId;
 		};
 
-		void f()
-		{
-		    
-			
-			
-			
-		}
+		
+		
 		
  
 		struct SIndexChunk
@@ -62,6 +57,13 @@ namespace Sapphire
 			vector<UINT16>::type Indices;
 			SINT32 MaterialId;
 		};
+
+		typedef typename Sapphire::vector<SMeshChunk>::type SMeshChunkArray;
+		typedef typename Sapphire::vector<SMeshChunk>::iterator SMeshChunkIterator;
+		typedef typename Sapphire::vector<SMeshChunk>::const_iterator SMeshChunkCIterator;
+		typedef typename Sapphire::vector<SIndexChunk>::type SIndexChunkArray;
+		typedef typename Sapphire::vector<SIndexChunk>::iterator SIndexChunkIterator;
+		typedef typename Sapphire::vector<SIndexChunk>::const_iterator SIndexChunkCIterator;
 
 		struct SIndexData
 		{
@@ -72,7 +74,7 @@ namespace Sapphire
 
 		
 		//! Constructor
-		Octree(const Sapphire::vector<SMeshChunk>::type& meshes, SINT32 minimalPolysPerNode = 128) :
+		Octree(const SMeshChunkArray& meshes, SINT32 minimalPolysPerNode = 128) :
 			IndexData(0), IndexDataCount(meshes.size()), NodeCount(0)
 		{
 			IndexData = new SIndexData[IndexDataCount];
@@ -81,7 +83,7 @@ namespace Sapphire
 			
 			
 
-			Sapphire::vector<SIndexChunk>::type indexChunks;
+			SIndexChunkArray indexChunks;
 			indexChunks.reserve(meshes.size());
 			for (UINT32 i = 0; i != meshes.size(); ++i)
 			{
@@ -138,7 +140,7 @@ namespace Sapphire
 
 		//! for debug purposes only, collects the bounding boxes of the tree
 		void getBoundingBoxes(const AxisAlignedBox& box,
-			array< const AxisAlignedBox* >&outBoxes) const
+			vector< const AxisAlignedBox* >::type&outBoxes) const
 		{
 			Root->getBoundingBoxes(box, outBoxes);
 		}
@@ -161,8 +163,8 @@ namespace Sapphire
 
 			// constructor
 			OctreeNode(UINT32& nodeCount, UINT32 currentdepth,
-				const Sapphire::vector<SMeshChunk>::type& allmeshdata,
-				Sapphire::vector<SIndexChunk>::type indices,
+				const SMeshChunkArray& allmeshdata,
+				SIndexChunkArray indices,
 				SINT32 minimalPolysPerNode) : IndexData(0),
 				Depth(currentdepth + 1)
 			{
@@ -173,9 +175,9 @@ namespace Sapphire
 				for (i = 0; i != 8; ++i)
 					Children[i] = 0;
 
-				if (indices.clear())
+				if (indices.empty())
 				{
-					delete indices;
+					//delete indices;
 					return;
 				}
 
@@ -183,11 +185,12 @@ namespace Sapphire
 
 				// find first point for bounding box
 
-				for (i = 0; i<indices.size(); ++i)
+				for (SIndexChunkIterator it = indices.begin(); it<indices.end(); it++)
 				{
-					if (!(*indices)[i].Indices.empty())
+					if (!it->Indices.empty())//if (!(*indices)[i].Indices.empty())
 					{
-						Box.reset(allmeshdata[i].Vertices[(*indices)[i].Indices[0]].Pos);
+						//Box.reset(allmeshdata[i].Vertices[(*indices)[i].Indices[0]].Pos);
+						Box.reset(allmeshdata[i].Vertices[it->Indices[0]].Pos);
 						found = true;
 						break;
 					}
@@ -195,23 +198,30 @@ namespace Sapphire
 
 				if (!found)
 				{
-					delete indices;
+					//delete indices;
 					return;
 				}
 
 				SINT32 totalPrimitives = 0;
 
 				// now lets calculate our bounding box
-				for (i = 0; i<indices.size(); ++i)
+				//for (i = 0; i<indices.size(); ++i)
+				for (SIndexChunkIterator it = indices.begin(); it<indices.end(); it++)
 				{
-					totalPrimitives += (*indices)[i].Indices.size();
-					for (UINT32 j = 0; j<(*indices)[i].Indices.size(); ++j)
-						Box.addInternalPoint(allmeshdata[i].Vertices[(*indices)[i].Indices[j]].Pos);
+					//totalPrimitives += (*indices)[i].Indices.size();
+					totalPrimitives += it->Indices.size();
+					//for (UINT32 j = 0; j < (*indices)[i].Indices.size(); ++j)
+					for (UINT32 j = 0; j < it->Indices.size(); ++j)
+					{
+						
+						Box.addInternalPoint(allmeshdata[i].Vertices[it->Indices[j]].Pos);
+					}
 				}
 
 				Vector3 middle = Box.getCenter();
-				Vector3 edges[8];
-				Box.getAllCorners(edges);
+				//取得盒子所有顶点
+				const Vector3* edges = Box.getAllCorners();
+				
 
 				// calculate all children
 				AxisAlignedBox box;
@@ -225,7 +235,7 @@ namespace Sapphire
 
 						// create indices for child
 						bool added = false;
-						Sapphire::vector<SIndexChunk>::type cindexChunks;
+						SIndexChunkArray cindexChunks;
 						cindexChunks.reserve(allmeshdata.size());
 						for (i = 0; i<allmeshdata.size(); ++i)
 						{
@@ -233,36 +243,40 @@ namespace Sapphire
 							SIndexChunk& tic = cindexChunks.back();
 							tic.MaterialId = allmeshdata[i].MaterialId;
 
-							for (UINT32 t = 0; t<(*indices)[i].Indices.size(); t += 3)
+							//for (UINT32 t = 0; t<(*indices)[i].Indices.size(); t += 3)
+							for (UINT32 t = 0; t<indices[i].Indices.size(); t += 3)
 							{
-								if (box.isPointInside(allmeshdata[i].Vertices[(*indices)[i].Indices[t]].Pos) &&
-									box.isPointInside(allmeshdata[i].Vertices[(*indices)[i].Indices[t + 1]].Pos) &&
-									box.isPointInside(allmeshdata[i].Vertices[(*indices)[i].Indices[t + 2]].Pos))
+								if (box.contains(allmeshdata[i].Vertices[indices[i].Indices[t]].Pos) &&//box.isPointInside(allmeshdata[i].Vertices[indices[i].Indices[t]].Pos) &&
+									box.contains(allmeshdata[i].Vertices[indices[i].Indices[t + 1]].Pos) &&//box.isPointInside(allmeshdata[i].Vertices[indices[i].Indices[t + 1]].Pos) &&
+									box.contains(allmeshdata[i].Vertices[indices[i].Indices[t + 2]].Pos))//box.isPointInside(allmeshdata[i].Vertices[indices[i].Indices[t + 2]].Pos))
 								{
-									tic.Indices.push_back((*indices)[i].Indices[t]);
-									tic.Indices.push_back((*indices)[i].Indices[t + 1]);
-									tic.Indices.push_back((*indices)[i].Indices[t + 2]);
+									tic.Indices.push_back(indices[i].Indices[t]);
+									tic.Indices.push_back(indices[i].Indices[t + 1]);
+									tic.Indices.push_back(indices[i].Indices[t + 2]);
 
 									added = true;
 								}
 								else
 								{
-									keepIndices.push_back((*indices)[i].Indices[t]);
-									keepIndices.push_back((*indices)[i].Indices[t + 1]);
-									keepIndices.push_back((*indices)[i].Indices[t + 2]);
+									keepIndices.push_back(indices[i].Indices[t]);
+									keepIndices.push_back(indices[i].Indices[t + 1]);
+									keepIndices.push_back(indices[i].Indices[t + 2]);
 								}
 							}
 
-							(*indices)[i].Indices.reserve(keepIndices.size());
-							memcpy((*indices)[i].Indices.begin()._Ptr, keepIndices.pointer(), keepIndices.size()*sizeof(UINT16));
-							keepIndices.reserve());
+							indices[i].Indices.reserve(keepIndices.size());
+							memcpy(indices[i].Indices.begin()._Ptr, keepIndices.begin()._Ptr, keepIndices.size()*sizeof(UINT16));
+							//keepIndices.set_used(0);
+							keepIndices.clear();
 						}
 
 						if (added)
 							Children[ch] = new OctreeNode(nodeCount, Depth,
 							allmeshdata, cindexChunks, minimalPolysPerNode);
 						else
-							delete cindexChunks;
+						{
+							//delete cindexChunks;
+						}
 
 					} // end for all possible children
 
@@ -272,10 +286,13 @@ namespace Sapphire
 			// destructor
 			~OctreeNode()
 			{
-				delete IndexData;
+				//delete IndexData;
 
-				for (UINT32 i = 0; i<8; ++i)
-					delete Children[i];
+				for (UINT32 i = 0; i < 8; ++i)
+				{
+					//delete Children[i];
+				}
+					
 			}
 
 			// returns all ids of polygons partially or full enclosed
@@ -298,17 +315,17 @@ namespace Sapphire
 				if (Box.intersects(box))
 #endif
 				{
-					const UINT32 cnt = IndexData->size();
+					const UINT32 cnt = IndexData.size();
 					UINT32 i; // new ISO for scoping problem in some compilers
 
 					for (i = 0; i<cnt; ++i)
 					{
-						const SINT32 idxcnt = (*IndexData)[i].Indices.size();
+						const SINT32 idxcnt = IndexData[i].Indices.size();
 
 						if (idxcnt)
 						{
 							memcpy(&idxdata[i].Indices[idxdata[i].CurrentSize],
-								&(*IndexData)[i].Indices[0], idxcnt * sizeof(SINT16));
+								&IndexData[i].Indices[0], idxcnt * sizeof(SINT16));
 							idxdata[i].CurrentSize += idxcnt;
 						}
 					}
@@ -346,16 +363,16 @@ namespace Sapphire
 				}
 
 
-				const UINT32 cnt = IndexData->size();
+				const UINT32 cnt = IndexData.size();
 
 				for (i = 0; i != cnt; ++i)
 				{
-					SINT32 idxcnt = (*IndexData)[i].Indices.size();
+					SINT32 idxcnt = IndexData[i].Indices.size();
 
 					if (idxcnt)
 					{
 						memcpy(&idxdata[i].Indices[idxdata[i].CurrentSize],
-							&(*IndexData)[i].Indices[0], idxcnt * sizeof(SINT16));
+							&IndexData[i].Indices[0], idxcnt * sizeof(SINT16));
 						idxdata[i].CurrentSize += idxcnt;
 					}
 				}
@@ -367,7 +384,7 @@ namespace Sapphire
 
 			//! for debug purposes only, collects the bounding boxes of the node
 			void getBoundingBoxes(const AxisAlignedBox& box,
-				array< const AxisAlignedBox* >&outBoxes) const
+				vector< const AxisAlignedBox* >::type& outBoxes) const
 			{
 				if (Box.intersects(box))
 				{
@@ -382,7 +399,8 @@ namespace Sapphire
 		private:
 
 			AxisAlignedBox Box;
-			array<SIndexChunk>* IndexData;
+			//array<SIndexChunk>* IndexData;
+			SIndexChunkArray IndexData;
 			OctreeNode* Children[8];
 			UINT32 Depth;
 	};

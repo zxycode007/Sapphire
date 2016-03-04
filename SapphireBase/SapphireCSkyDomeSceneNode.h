@@ -1,5 +1,5 @@
-#ifndef _SAPPHIRE_SKY_DOME_SCENE_NODE_
-#define _SAPPHIRE_SKY_DOME_SCENE_NODE_
+#ifndef _SAPPHIRE_C_SKY_DOME_SCENE_NODE_
+#define _SAPPHIRE_C_SKY_DOME_SCENE_NODE_
 
 #include "SapphireISceneNode.h"
 #include "SapphireSMeshBuffer.h"
@@ -34,6 +34,8 @@ namespace Sapphire
 		UINT32 HorizontalResolution, VerticalResolution;
 		FLOAT32 TexturePercentage, SpherePercentage, Radius;
 	};
+
 }
+
 
 #endif

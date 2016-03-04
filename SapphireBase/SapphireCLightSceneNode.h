@@ -61,7 +61,7 @@ namespace Sapphire
 		it to (0,1/radius,0). If you want to override this behavior, set the
 		attenuation after the radius.
 		\param radius The new radius. */
-		virtual void setRadius(FLOAT32 radius);
+		virtual void setRadius(Real radius);
 
 		//! Gets the light's radius of influence.
 		/** \return The current radius. */

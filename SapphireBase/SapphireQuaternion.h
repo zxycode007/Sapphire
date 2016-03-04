@@ -101,6 +101,8 @@ namespace Sapphire {
 		由四元数创建一个矩阵
 		*/
 		void getMatrix(Matrix4 &dest, const Vector3 &translation) const;
+
+		void getMatrix(Matrix4 &dest) const;
 		/** 
 		用支持的向量设置四元数，通过指定角度来“roll”向量
 		*/
@@ -222,6 +224,10 @@ namespace Sapphire {
 		*/
 		static Quaternion Slerp(Real fT, const Quaternion& rkP,
 			const Quaternion& rkQ, bool shortestPath = false);
+
+
+		static Quaternion Slerp(const Quaternion& rkP,
+			const Quaternion& rkQ, Real fT=0.5);
 
 		/** 
 		@见Slerp. 它额外增加了自旋“spins”（旋转多次），通过参数 'iExtraSpins'。

@@ -77,6 +77,11 @@ namespace Sapphire
 #   if SAPPHIRE_COMP_VER >= 1200
 #       define FORCEINLINE __forceinline
 #   endif
+#define swprintf swprintf_s
+#define snprintf sprintf_s
+#elif !defined(__CYGWIN__)
+#define swprintf _snwprintf
+#define snprintf _snprintf
 #elif defined(__MINGW32__)
 #   if !defined(FORCEINLINE)
 #       define FORCEINLINE __inline

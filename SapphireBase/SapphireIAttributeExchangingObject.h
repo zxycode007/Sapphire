@@ -34,7 +34,7 @@ namespace Sapphire
 		SINT32 Flags;
 
 		//! 可选文件名
-		const String* Filename;
+		const String Filename;
 	};
 
 	//! 一个要序列化和反序列化它的属性到一个属性对象的对象

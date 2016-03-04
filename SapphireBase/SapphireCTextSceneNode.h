@@ -125,7 +125,7 @@ namespace Sapphire
 		ColourValue Color;
 		IGUIFontBitmap* Font;
 
-		dimension2d<FLOAT32> Size;
+		dimension2df Size;
 		AxisAlignedBox BBox;
 		SMaterial Material;
 

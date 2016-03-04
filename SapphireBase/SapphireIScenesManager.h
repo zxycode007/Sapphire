@@ -14,6 +14,7 @@
 #include "SapphireESceneNodeAnimatorType.h"
 #include "SapphireIUserDataSerializer.h"
 #include "SapphireETerrianElements.h"
+#include "SapphireIGeometryCreator.h"
 #include "SapphireDefines.h"
 
 
@@ -135,7 +136,7 @@ namespace Sapphire
 	//
 	class ILightManager; 
 	//几何体生成器
-	class IGeometryCreator;
+	//class IGeometryCreator;
 
 
 

@@ -43,7 +43,7 @@ namespace Sapphire
 		typedef vector<Vector3>::type SShadowVolume;
 
 		void createShadowVolume(const Vector3& pos, bool isDirectional = false);
-		UINT32 createEdgesAndCaps(const Vector3& light, SShadowVolume* svp, AxisAlignedBox* bb);
+		UINT32 createEdgesAndCaps(const Vector3& light, SShadowVolume svp, AxisAlignedBox* bb);
 
 		//! Generates adjacency information based on mesh indices.
 		void calculateAdjacency();

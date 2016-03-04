@@ -16,7 +16,7 @@ namespace Sapphire
 
 		//! constructor
 		CBillboardSceneNode(ISceneNode* parent, ISceneManager* mgr, SINT32 id,
-			const Vector3& position, const dimension2d<FLOAT32>& size,
+			const Vector3& position, const dimension2d<Real>& size,
 			ColourValue colorTop = ColourValue(0xFFFFFFFF),
 			ColourValue colorBottom = ColourValue(0xFFFFFFFF));
 
@@ -30,16 +30,16 @@ namespace Sapphire
 		virtual const AxisAlignedBox& getBoundingBox() const;
 
 		//! sets the size of the billboard
-		virtual void setSize(const dimension2d<FLOAT32>& size);
+		virtual void setSize(const dimension2d<Real>& size);
 
 		//! Sets the widths of the top and bottom edges of the billboard independently.
-		virtual void setSize(FLOAT32 height, FLOAT32 bottomEdgeWidth, FLOAT32 topEdgeWidth);
+		virtual void setSize(Real height, Real bottomEdgeWidth, Real topEdgeWidth);
 
 		//! gets the size of the billboard
-		virtual const dimension2d<Real>& getSize() const;
+		virtual const dimension2df& getSize() const;
 
 		//! Gets the widths of the top and bottom edges of the billboard.
-		virtual void getSize(FLOAT32& height, FLOAT32& bottomEdgeWidth, FLOAT32& topEdgeWidth) const;
+		virtual void getSize(Real& height, Real& bottomEdgeWidth, Real& topEdgeWidth) const;
 
 		virtual SMaterial& getMaterial(UINT32 i);
 
@@ -77,8 +77,8 @@ namespace Sapphire
 	private:
 
 		//! Size.Width is the bottom edge width
-		dimension2d<FLOAT32> Size;
-		FLOAT32 TopEdgeWidth;
+		dimension2df Size;
+		Real TopEdgeWidth;
 		AxisAlignedBox BBox;
 		SMaterial Material;
 

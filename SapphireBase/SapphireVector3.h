@@ -688,6 +688,42 @@ namespace Sapphire
 			return angle;
 		}
 
+		//! Builds a direction vector from (this) rotation vector.
+		/** This vector is assumed to be a rotation vector composed of 3 Euler angle rotations, in degrees.
+		The implementation performs the same calculations as using a matrix to do the rotation.
+
+		\param[in] forwards  The direction representing "forwards" which will be rotated by this vector.
+		If you do not provide a direction, then the +Z axis (0, 0, 1) will be assumed to be forwards.
+		\return A direction vector calculated by rotating the forwards direction by the 3 Euler angles
+		(in degrees) represented by this vector. */
+		Vector3 rotationToDirection(const Vector3 & forwards = Vector3(0, 0, 1)) const
+		{
+			const Real cr = cos(DEGTORAD64 * x);
+			const Real sr = sin(DEGTORAD64 * x);
+			const Real cp = cos(DEGTORAD64 * y);
+			const Real sp = sin(DEGTORAD64 * y);
+			const Real cy = cos(DEGTORAD64 * z);
+			const Real sy = sin(DEGTORAD64 * z);
+
+			const Real srsp = sr*sp;
+			const Real crsp = cr*sp;
+
+			const Real pseudoMatrix[] = {
+				(cp*cy), (cp*sy), (-sp),
+				(srsp*cy - cr*sy), (srsp*sy + cr*cy), (sr*cp),
+				(crsp*cy + sr*sy), (crsp*sy - sr*cy), (cr*cp) };
+
+			return Vector3(
+				(forwards.x * pseudoMatrix[0] +
+				forwards.y * pseudoMatrix[3] +
+				forwards.z * pseudoMatrix[6]),
+				(forwards.x * pseudoMatrix[1] +
+				forwards.y * pseudoMatrix[4] +
+				forwards.z * pseudoMatrix[7]),
+				(forwards.x * pseudoMatrix[2] +
+				forwards.y * pseudoMatrix[5] +
+				forwards.z * pseudoMatrix[8]));
+		}
 
 		//! Rotates the vector by a specified number of degrees around the Z axis and the specified center.
 		/** \param degrees: Number of degrees to rotate around the Z axis.

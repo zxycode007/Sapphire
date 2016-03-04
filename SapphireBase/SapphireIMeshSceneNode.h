@@ -43,7 +43,7 @@ namespace Sapphire
 		，所以相机zfar必须大于这个阴影的back cap，它依赖于infinity参数)
 		\return 创建的阴影节点的指针。*/
 		virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh = 0,
-			SINT32 id = -1, bool zfailmethod = true, Real infinity = 1000.0f) = 0;
+			SINT32 id = -1, bool zfailmethod = true, FLOAT32 infinity = 1000.0f) = 0;
 
 		//! 设置这个场景节点不拷贝这个网格的材质是否在只读模式使用它们
 		/** 这个方法可能会改变一个网格的材质，导致引用这个网格的所有网格节点发生改变。

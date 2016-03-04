@@ -1838,10 +1838,10 @@ namespace Sapphire
 		for (i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
 		{
 			//纹理使用真实路径
-			if (options && (options->Flags&EARWF_USE_RELATIVE_PATHS) && options->Filename && material.getTexture(i))
+			if (options && (options->Flags&EARWF_USE_RELATIVE_PATHS) && (options->Filename.size()>0) && material.getTexture(i))
 			{
 				path path = FileSystem->getRelativeFilename(
-					FileSystem->getAbsolutePath(material.getTexture(i)->getName().getPath()), options->Filename->c_str());
+					FileSystem->getAbsolutePath(material.getTexture(i)->getName().getPath()), options->Filename);
 				attr->addTexture((prefix + StringUtil::uint32ToString(i + 1)).c_str(), material.getTexture(i), path);
 			}
 			else

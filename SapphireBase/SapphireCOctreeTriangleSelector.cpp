@@ -91,8 +91,9 @@ namespace Sapphire
 				}
 				//memcpy(node->Triangles.pointer(), keepTriangles.pointer(),
 					//sizeof(triangle3df)*keepTriangles.size());
-				memcpy(node->Triangles.begin()._Ptr, keepTriangles.begin()._Ptr,
-				sizeof(triangle3df)*keepTriangles.size());
+				std::copy(node->Triangles.begin(), node->Triangles.begin() + node->Triangles.size(), keepTriangles.begin());
+				//memcpy(node->Triangles.begin()._Ptr, keepTriangles.begin()._Ptr,
+				//sizeof(triangle3df)*keepTriangles.size());
 
 				//node->Triangles.set_used(keepTriangles.size());
 				//keepTriangles.set_used(0);

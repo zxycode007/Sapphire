@@ -1,5 +1,5 @@
 #include "SapphireCTerrianTriangleSelector.h"
-#include "SapphireCTerrianSceneNode.h"
+#include "SapphireCTerrainSceneNode.h"
 #include "SapphireOS.h"
 
 
