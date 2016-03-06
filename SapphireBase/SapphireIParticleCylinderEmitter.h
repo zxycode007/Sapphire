@@ -32,10 +32,10 @@ namespace Sapphire
 		virtual const Vector3& getNormal() const = 0;
 
 		//! 获取圆柱的半径
-		virtual Real getRadius() const = 0;
+		virtual FLOAT32 getRadius() const = 0;
 
 		//! 获取圆柱的中心
-		virtual Real getLength() const = 0;
+		virtual FLOAT32 getLength() const = 0;
 
 		//! 获取是否在圆柱内部绘制点
 		virtual bool getOutlineOnly() const = 0;

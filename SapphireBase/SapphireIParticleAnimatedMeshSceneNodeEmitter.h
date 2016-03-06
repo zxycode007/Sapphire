@@ -32,7 +32,7 @@ namespace Sapphire
 		virtual bool isUsingNormalDirection() const = 0;
 
 		//! 获取对于一个给定的粒子方向分离出的法线数量
-		virtual Real getNormalDirectionModifier() const = 0;
+		virtual FLOAT32 getNormalDirectionModifier() const = 0;
 
 		//! 获取是否对每一个顶点或或者拾取从min到max的顶点发射从min到max的粒子
 		virtual bool getEveryMeshVertex() const = 0;

@@ -103,6 +103,9 @@
     <Filter Include="源文件\scene\loader">
       <UniqueIdentifier>{f8596e70-6ce3-4bd2-a9ad-38e98d9185ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\scene\particleSystem">
+      <UniqueIdentifier>{493fa02c-5117-4d52-8b06-a2dfd8f67c63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -1110,6 +1113,36 @@
     <ClInclude Include="SapphireCSkinnedMesh.h">
       <Filter>源文件\scene\loader</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCSceneLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireISceneUserDataSerializer.h">
+      <Filter>头文件\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleAttractionAffector.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleBoxEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleCylinderEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleFadeOutAffector.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleGravityAffector.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleMeshEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticlePointEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1696,6 +1729,33 @@
     </ClCompile>
     <ClCompile Include="SapphireCSkinnedMesh.cpp">
       <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleAttractionAffector.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleBoxEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleCylinderEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleFadeOutAffector.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleGravityAffector.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleMeshEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticlePointEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,7 @@ namespace Sapphire
 		virtual void setGravity(const Vector3& gravity) = 0;
 
 		//! 获取发射器力量完全消失的时间
-		virtual Real getTimeForceLost() const = 0;
+		virtual FLOAT32 getTimeForceLost() const = 0;
 
 		//! 获取重力的方向向量
 		virtual const Vector3& getGravity() const = 0;

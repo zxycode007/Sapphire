@@ -38,8 +38,8 @@ namespace Sapphire
 	
 		bool operator==(const dimension2d<T>& other) const
 		{
-			return equals(Width, other.Width) &&
-				equals(Height, other.Height);
+			return Math::equals(Width, other.Width) &&
+				Math::equals(Height, other.Height);
 		}
 
 	 
