@@ -95,6 +95,8 @@ namespace Sapphire {
 			return &w;
 		}
 
+		void set(Real x, Real y, Real z, Real w);
+
 		void FromRotationMatrix(const Matrix3& kRot);
 		void ToRotationMatrix(Matrix3& kRot) const;
 		/** 

@@ -867,6 +867,19 @@ namespace Sapphire
 			return ISREL3D_BACK;
 		}
 
+		//! Calculates a new interpolated bounding box.
+		/** d=0 returns other, d=1 returns this, all other values blend between
+		the two boxes.
+		\param other Other box to interpolate between
+		\param d Value between 0.0f and 1.0f.
+		\return Interpolated box. */
+		AxisAlignedBox getInterpolated(const AxisAlignedBox& other, FLOAT32 d) const
+		{
+			FLOAT32 inv = 1.0f - d;
+			return AxisAlignedBox((other.getMinimum()*inv) + (getMinimum()*d),
+				(other.getMaximum()*inv) + (getMaximum()*d));
+		}
+
 		/** 测试另一个盒子是否被这个盒子包含
 		*/
 		bool contains(const AxisAlignedBox& other) const

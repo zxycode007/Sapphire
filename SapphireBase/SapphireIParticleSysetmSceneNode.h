@@ -89,7 +89,7 @@ namespace Sapphire
 
 		//! 获取所有的粒子影响器的列表
 		/** \return 所有关联到这个节点的粒子影响器的列表*/
-		virtual const list<IParticleAffector*>& getAffectors() const = 0;
+		virtual const list<IParticleAffector*>::type& getAffectors() const = 0;
 
 		//! 在这个例子系统里移除所有的的粒子影响器
 		virtual void removeAllAffectors() = 0;

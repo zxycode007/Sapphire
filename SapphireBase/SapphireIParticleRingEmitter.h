@@ -23,10 +23,10 @@ namespace Sapphire
 		virtual const Vector3& getCenter() const = 0;
 
 		//! 获取环形半径
-		virtual Real getRadius() const = 0;
+		virtual FLOAT32 getRadius() const = 0;
 
 		//! 获取环形厚度
-		virtual Real getRingThickness() const = 0;
+		virtual FLOAT32 getRingThickness() const = 0;
 
 		//! 获取发射器类型
 		virtual E_PARTICLE_EMITTER_TYPE getType() const { return EPET_RING; }

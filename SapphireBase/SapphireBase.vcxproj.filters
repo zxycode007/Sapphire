@@ -1143,6 +1143,36 @@
     <ClInclude Include="SapphireCParticlePointEmitter.h">
       <Filter>源文件\scene\particleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCParticlleRingEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleRotationAffector.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleScaleAffector.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleSphereEmitter.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCParticleSystemSceneNode.h">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCAnimatedMeshMD2.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCAnimatedMeshMD3.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCBSPMeshFileLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCQ3LevelMesh.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOBJMeshFileLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1756,6 +1786,33 @@
     </ClCompile>
     <ClCompile Include="SapphireCParticlePointEmitter.cpp">
       <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleRingEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleRotationAffector.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleScaleAffector.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleSphereEmitter.cpp">
+      <Filter>源文件\scene\particleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCAnimatedMeshMD3.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCAnimatedMeshMD2.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCBSPMeshFileLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCQ3LevelMesh.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOBJMeshFileLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,19 @@ namespace Sapphire
 		y = vec.y;
 		z = vec.z;
 	}
+
+	//-----------------------------------------------------------------------
+	void Quaternion::set(Real x, Real y, Real z, Real w)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+
+
+
+	//-----------------------------------------------------------------------
 	void Quaternion::FromRotationMatrix(const Matrix3& kRot)
 	{
 		// Ken Shoemake 1987 在SIGGRAPH 的算法：四元数积分和快速动画

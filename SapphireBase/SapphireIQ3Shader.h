@@ -70,8 +70,8 @@ namespace Sapphire
 		};
 
 		// 某些有用的定义
-		typedef std::vector< String > tStringList;
-		typedef std::vector< ITexture* > tTexArray;
+		typedef vector< String >::type tStringList;
+		typedef vector< ITexture* >::type tTexArray;
 
 		 
 		inline SINT16 isEqual(const String &string, UINT32 &pos, const c8 *list[], UINT16 listSize)
@@ -699,7 +699,7 @@ namespace Sapphire
 
 		typedef IShader IEntity;
 
-		typedef std::vector < IEntity > tQ3EntityList;
+		typedef vector < IEntity >::type tQ3EntityList;
 
 		/*
 		按源布局dump shader, 不考虑内部数据有没有递归

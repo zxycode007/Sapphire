@@ -188,7 +188,7 @@ namespace Sapphire
 				entry.Name = "";
 				entry.Length = 0;
 				entry.Offset = 0;
-				const SINT32 pos = dirName.find('/', dirName.size() - 2);//dirName.findLast('/', dirName.size() - 2);
+				const SINT32 pos = dirName.rfind('/', dirName.size() - 2);//dirName.findLast('/', dirName.size() - 2);
 				if (pos == -1)
 					dirName = "";
 				else

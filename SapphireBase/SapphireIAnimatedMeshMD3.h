@@ -134,9 +134,9 @@ namespace Sapphire
 		SMD3MeshHeader MeshHeader;
 
 		String Shader;
-		vector < SINT32 > Indices;
-		vector < SMD3Vertex > Vertices;
-		vector < SMD3TexCoord > Tex;
+		vector < SINT32 >::type Indices;
+		vector < SMD3Vertex >::type Vertices;
+		vector < SMD3TexCoord >::type Tex;
 	};
 
 	//! hold a tag info for connecting meshes

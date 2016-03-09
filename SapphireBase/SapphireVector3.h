@@ -213,6 +213,11 @@ namespace Sapphire
 				lhs.z + rhs);
 		}
 
+		inline Vector3 operator + (const Real rhs)
+		{
+			return Vector3(this->x + rhs, this->y + rhs, this->z + rhs);
+		}
+
 		inline friend Vector3 operator + (const Real lhs, const Vector3& rhs)
 		{
 			return Vector3(
@@ -308,6 +313,14 @@ namespace Sapphire
 			this->y = Y;
 			this->z = Z;
 		}
+
+		inline void set(Vector3 v)
+		{
+			this->x = v.x;
+			this->y = v.y;
+			this->z = v.z;
+		}
+
 		inline Vector3& operator /= (const Vector3& rkVector)
 		{
 			x /= rkVector.x;
@@ -612,6 +625,26 @@ namespace Sapphire
 		{
 			const Real inv = 1.0 - d;
 			return Vector3(other.x*inv + x*d, other.y*inv + y*d, other.z*inv + z*d);
+		}
+
+
+		//! Creates a quadratically interpolated vector between this and two other vectors.
+		/** \param v2 Second vector to interpolate with.
+		\param v3 Third vector to interpolate with (maximum at 1.0f)
+		\param d Interpolation value between 0.0f (all this vector) and 1.0f (all the 3rd vector).
+		Note that this is the opposite direction of interpolation to getInterpolated() and interpolate()
+		\return An interpolated vector. This vector is not modified. */
+		Vector3 getInterpolated_quadratic(const Vector3& v2, const Vector3& v3, Real d) const
+		{
+			// this*(1-d)*(1-d) + 2 * v2 * (1-d) + v3 * d * d;
+			const Real inv =  1.0 - d;
+			const Real mul0 = inv * inv;
+			const Real mul1 =  2.0 * d * inv;
+			const Real mul2 = d * d;
+
+			return Vector3 ( (x * mul0 + v2.x * mul1 + v3.x * mul2),
+				(y * mul0 + v2.y * mul1 + v3.y * mul2),
+				(z * mul0 + v2.z * mul1 + v3.z * mul2));
 		}
 		 
 		inline bool isNaN() const

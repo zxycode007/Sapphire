@@ -20,7 +20,7 @@ namespace Sapphire
 		virtual const Vector3& getCenter() const = 0;
 
 		//! 获取粒子发射球的半径
-		virtual Real getRadius() const = 0;
+		virtual FLOAT32 getRadius() const = 0;
 
 		//! 获取粒子发射器类型
 		virtual E_PARTICLE_EMITTER_TYPE getType() const { return EPET_SPHERE; }
