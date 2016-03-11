@@ -1,8 +1,8 @@
 /*
 
-    这个头文件定义了获取关于CPU操作系统和编译器的相关信息
+	这个头文件定义了获取关于CPU操作系统和编译器的相关信息
 
-*/
+	*/
 
 #ifndef __SAPPHIRE_PLATFROM__
 #define __SAPPHIRE_PLATFROM__
@@ -26,7 +26,6 @@ namespace Sapphire
 #define SAPPHIRE_PLATFORM_APPLE_IOS 4
 #define SAPPHIRE_PLATFORM_ANDROID 5
 #define SAPPHIRE_PLATFORM_SDL 6
-#define SAPPHIRE_PLATFORM_X11 7
 #define SAPPHIRE_PLATFORM_X11 7
 #define SAPPHIRE_POSIX_API 8
 #define SAPPHIRE_WINDOWS_CE_PLATFORM 9
@@ -95,6 +94,7 @@ namespace Sapphire
 	//win32平台
 #if defined( __WIN32__ ) || defined( _WIN32 )
 #   define SAPPHIRE_PLATFORM SAPPHIRE_PLATFORM_WIN32
+#define 	_SAPPHIRE_COMPILE_WITH_WINDOWS_DEVICE_
 	//苹果平台
 #elif defined( __APPLE_CC__)
 #   if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 40000 || __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000

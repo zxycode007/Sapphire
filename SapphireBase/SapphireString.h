@@ -41,6 +41,7 @@ namespace Sapphire {
 	{
 	public:
 		typedef StringStream StrStreamType;
+		typedef StringWStream StrWStreamType;
 
 		/** 
 		删除字符串的空格或TAB
@@ -239,10 +240,23 @@ namespace Sapphire {
 			ss << f;
 			return ss.str();
 		}
+		static StringW floatToStringW(FLOAT32 f)
+		{
+			StringUtil::StrWStreamType ss;
+			ss << f;
+			return ss.str();
+		}
 
 		static String int32ToString(SINT32 s)
 		{
 			StringUtil::StrStreamType ss;
+			ss << s;
+			return ss.str();
+		}
+
+		static StringW int32ToStringW(SINT32 s)
+		{
+			StringUtil::StrWStreamType ss;
 			ss << s;
 			return ss.str();
 		}
@@ -252,7 +266,12 @@ namespace Sapphire {
 			ss << u;
 			return ss.str();
 		}
-
+		static StringW uint32ToStringW(UINT32 u)
+		{
+			StringUtil::StrWStreamType ss;
+			ss << u;
+			return ss.str();
+		}
 
 		//! 比较字符串，无视大小写
 		/** 

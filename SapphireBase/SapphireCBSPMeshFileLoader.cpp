@@ -1,5 +1,5 @@
 #include "SapphireCompileConifg.h"
-#ifndef _SAPPHIRE_COMPILE_WITH_BSP_LOADER_
+#ifdef _SAPPHIRE_COMPILE_WITH_BSP_LOADER_
 #include "SapphireCBSPMeshFileLoader.h"
 #include "SapphireCQ3LevelMesh.h"
 

@@ -10,11 +10,11 @@ namespace Sapphire
 {
 	class IEventReceiver;
 
-	//! Structure for holding Irrlicht Device creation parameters.
-	/** This structure is used in the createDeviceEx() function. */
+	//! 保存Sapphire设备创建参数的结果
+	/** 这个结果用createDeviceEx()函数创建 */
 	struct SSapphireCreationParameters
 	{
-		//! Constructs a SIrrlichtCreationParameters structure with default values.
+		//! 构造一个SSapphireCreationParameters结构的默认值
 		SSapphireCreationParameters() :
 			DeviceType(EIDT_BEST),
 			DriverType(EDT_BURNINGSVIDEO),
@@ -77,7 +77,7 @@ namespace Sapphire
 			return *this;
 		}
 
-		//! Type of the device.
+		//! 设备类型
 		/** This setting decides the windowing system used by the device, most device types are native
 		to a specific operating system and so may not be available.
 		EIDT_WIN32 is only available on Windows desktops,
@@ -97,13 +97,13 @@ namespace Sapphire
 		Default: Software. */
 		E_DRIVER_TYPE DriverType;
 
-		//! Size of the window or the video mode in fullscreen mode. Default: 800x600
+		//! 全屏幕模式下的窗口大小 默认：800X600
 		dimension2d<UINT32> WindowSize;
 
-		//! Minimum Bits per pixel of the color buffer in fullscreen mode. Ignored if windowed mode. Default: 16.
+		//! 全屏幕下下颜色缓冲区每个像素的最小位数  默认16
 		UINT8 Bits;
 
-		//! Minimum Bits per pixel of the depth buffer. Default: 16.
+		//! 深度缓冲区每个像素最小位数 默认16
 		UINT8 ZBufferBits;
 
 		//! Should be set to true if the device should run in fullscreen.

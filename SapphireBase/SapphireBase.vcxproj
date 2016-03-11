@@ -100,6 +100,7 @@
     <ClInclude Include="SapphireCBoneSceneNode.h" />
     <ClInclude Include="SapphireCBSPMeshFileLoader.h" />
     <ClInclude Include="SapphireCCameraSceneNode.h" />
+    <ClInclude Include="SapphireCColorConverter.h" />
     <ClInclude Include="SapphireCCubeSceneNode.h" />
     <ClInclude Include="SapphireCDefaultSceneNodeAnimatorFactory.h" />
     <ClInclude Include="SapphireCDefaultSceneNodeFactory.h" />
@@ -151,6 +152,8 @@
     <ClInclude Include="SapphireCMemoryFile.h" />
     <ClInclude Include="SapphireCMeshBuffer.h" />
     <ClInclude Include="SapphireCMeshCache.h" />
+    <ClInclude Include="SapphireCMeshFileLoader.h" />
+    <ClInclude Include="SapphireCMeshFileWriter.h" />
     <ClInclude Include="SapphireCMeshManipulator.h" />
     <ClInclude Include="SapphireCMeshSceneNode.h" />
     <ClInclude Include="SapphireCMetaTriangleSelector.h" />
@@ -164,7 +167,10 @@
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireCompileConifg.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireCOpenGLDriver.h" />
     <ClInclude Include="SapphireCOpenGLExtensionHandler.h" />
+    <ClInclude Include="SapphireCOpenGLMaterialRenderer.h" />
+    <ClInclude Include="SapphireCOpenGLTexture.h" />
     <ClInclude Include="SapphireCoreUtil.h" />
     <ClInclude Include="SapphireCPakReader.h" />
     <ClInclude Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.h" />
@@ -547,6 +553,8 @@
     <ClCompile Include="SapphireCLimitReadFile.cpp" />
     <ClCompile Include="SapphireCMemeoryFile.cpp" />
     <ClCompile Include="SapphireCMeshCache.cpp" />
+    <ClCompile Include="SapphireCMeshFileLoader.cpp" />
+    <ClCompile Include="SapphireCMeshFileWriter.cpp" />
     <ClCompile Include="SapphireCMeshManipulator.cpp" />
     <ClCompile Include="SapphireCMeshSceneNode.cpp" />
     <ClCompile Include="SapphireCMetaTriangleSelector.cpp" />
@@ -559,6 +567,7 @@
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
+    <ClCompile Include="SapphireCOpenGLTexture.cpp" />
     <ClCompile Include="SapphireCPakReader.cpp" />
     <ClCompile Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.cpp" />
     <ClCompile Include="SapphireCParticleAttractionAffector.cpp" />

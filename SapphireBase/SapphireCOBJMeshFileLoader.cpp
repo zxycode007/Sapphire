@@ -1,5 +1,5 @@
 #include "SapphireCompileConifg.h"
-#ifndef _SAPPHIRE_COMPILE_WITH_OBJ_LOADER_
+#ifdef _SAPPHIRE_COMPILE_WITH_OBJ_LOADER_
 #include "SapphireCOBJMeshFileLoader.h"
 #include "SapphireIMeshManipulator.h"
 #include "SapphireIVideoDriver.h"

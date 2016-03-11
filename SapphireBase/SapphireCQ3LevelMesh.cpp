@@ -1,5 +1,5 @@
 #include "SapphireCompileConifg.h"
-#ifndef _SAPPHIRE_COMPILE_WITH_BSP_LOADER_
+#ifdef _SAPPHIRE_COMPILE_WITH_BSP_LOADER_
 #include "SapphireCQ3LevelMesh.h"
 #include "SapphireIScenesManager.h"
 #include "SapphireOS.h"

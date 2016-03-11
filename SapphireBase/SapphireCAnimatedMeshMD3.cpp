@@ -1,5 +1,5 @@
 #include "SapphireCompileConifg.h"
-#ifndef _SAPPHIRE _COMPILE_WITH_MD3_LOADER_
+#ifdef _SAPPHIRE_COMPILE_WITH_MD3_LOADER_
 
 #include "SapphireCAnimatedMeshMD3.h"
 #include "SapphireOS.h"

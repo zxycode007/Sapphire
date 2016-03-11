@@ -1,5 +1,5 @@
 #include "SapphireCompileConifg.h"
-#ifndef _SAPPHIRE_COMPILE_WITH_MD2_LOADER_
+#ifdef _SAPPHIRE_COMPILE_WITH_MD2_LOADER_
 
 #include "SapphireCAnimatedMeshMD2.h"
 #include "SapphireColorValue.h"

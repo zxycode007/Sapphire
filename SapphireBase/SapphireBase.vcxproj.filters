@@ -106,6 +106,9 @@
     <Filter Include="源文件\scene\particleSystem">
       <UniqueIdentifier>{493fa02c-5117-4d52-8b06-a2dfd8f67c63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\scene\writers">
+      <UniqueIdentifier>{3049c9e0-b910-49b8-b9c2-c0527a9f4178}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -1173,6 +1176,24 @@
     <ClInclude Include="SapphireCOBJMeshFileLoader.h">
       <Filter>源文件\scene\loader</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCMeshFileLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMeshFileWriter.h">
+      <Filter>源文件\scene\writers</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLTexture.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLDriver.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCColorConverter.h">
+      <Filter>源文件\rendersystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLMaterialRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1813,6 +1834,15 @@
     </ClCompile>
     <ClCompile Include="SapphireCOBJMeshFileLoader.cpp">
       <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMeshFileLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMeshFileWriter.cpp">
+      <Filter>源文件\scene\writers</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLTexture.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
