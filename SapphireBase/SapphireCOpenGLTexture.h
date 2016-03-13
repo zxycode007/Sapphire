@@ -5,7 +5,7 @@
 #include "SapphireIImage.h"
 
 #include "SapphireCompileConifg.h"
-#ifdef _SAPPHIRE_C_OPENGL_TEXTURE_
+#ifdef _SAPPHIRE_COMPILE_WITH_OPENGL_
 
 #if defined(SAPPHIRE_OPENGL_USE_EXTPOINTER)
 #define GL_GLEXT_LEGACY 1

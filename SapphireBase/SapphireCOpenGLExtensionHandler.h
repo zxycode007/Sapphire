@@ -1255,7 +1255,7 @@ namespace Sapphire
 		{
 #ifdef SAPPHIRE_OPENGL_USE_EXTPOINTER
 			if (MultiTextureExtension && pGlActiveTextureARB)
-				pGlActiveTextureARB(texture);
+				pGlActiveTextureARB(texture); //选择可以由纹理函数进行修改的当前纹理单位，
 #else
 			if (MultiTextureExtension)
 #ifdef GL_ARB_multitexture

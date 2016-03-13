@@ -12,6 +12,7 @@
 namespace Sapphire
 {
 	//! Base class for all internal OpenGL material renderers
+	// 所有OpenGL材质渲染器的内部基类
 	class COpenGLMaterialRenderer : public IMaterialRenderer
 	{
 	public:
@@ -28,13 +29,15 @@ namespace Sapphire
 
 
 	//! Solid material renderer
+	// 固体材质渲染器
 	class COpenGLMaterialRenderer_SOLID : public COpenGLMaterialRenderer
 	{
 	public:
 
 		COpenGLMaterialRenderer_SOLID(COpenGLDriver* d)
 			: COpenGLMaterialRenderer(d) {}
-
+		//重载OnSetMaterial()函数  
+		//在调用IVideoDriver::setMaterial()时设置渲染状态
 		virtual void OnSetMaterial(const SMaterial& material, const SMaterial& lastMaterial,
 			bool resetAllRenderstates, IMaterialRendererServices* services)
 		{
@@ -45,6 +48,7 @@ namespace Sapphire
 			{
 				// thanks to Murphy, the following line removed some
 				// bugs with several OpenGL implementations.
+				//设置OpenGL纹理环境
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 			}
 		}
@@ -52,6 +56,7 @@ namespace Sapphire
 
 
 	//! Generic Texture Blend
+	//普通纹理混合渲染器
 	class COpenGLMaterialRenderer_ONETEXTURE_BLEND : public COpenGLMaterialRenderer
 	{
 	public:
@@ -75,24 +80,30 @@ namespace Sapphire
 				unpack_textureBlendFunc(srcFact, dstFact, modulate, alphaSource, material.MaterialTypeParam);
 
 #ifdef GL_ARB_texture_env_combine
+				//设置纹理环境模式:   GL_COMBINE
 				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
+				//设置纹理RGB组合：  GL_MODULATE   颜色调制
 				glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_MODULATE);
+				//设置纹理RGB源1：  GL_TEXTURE  当前激活的纹理单元
 				glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
+				//设置纹理RGB源2：  GL_PREVIOUS   前一个纹理单元的结果值
 				glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
 				glTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_ARB, (FLOAT32)modulate);
 #else
 				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
 				glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB_EXT, GL_MODULATE);
-				glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_RGB_EXT, GL_TEXTURE);
+				glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_RGB_EXT, GL_TEXTURE);  
 				glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE1_RGB_EXT, GL_PREVIOUS_EXT);
 				glTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, (FLOAT32)modulate);
 #endif
-
+				//设置源和目的的混合因子函数
 				glBlendFunc(Driver->getGLBlend(srcFact), Driver->getGLBlend(dstFact));
+				//启用alpha测试
 				glEnable(GL_ALPHA_TEST);
 				glAlphaFunc(GL_GREATER, 0.f);
+				//打开混合
 				glEnable(GL_BLEND);
-
+				//判断是否有alpha混合因子
 				if (textureBlendFunc_hasAlpha(srcFact) || textureBlendFunc_hasAlpha(dstFact))
 				{
 					if (alphaSource == EAS_VERTEX_COLOR)
@@ -130,7 +141,7 @@ namespace Sapphire
 				}
 			}
 		}
-
+		//取消材质
 		virtual void OnUnsetMaterial()
 		{
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -148,7 +159,9 @@ namespace Sapphire
 			glDisable(GL_ALPHA_TEST);
 		}
 
-		//! Returns if the material is transparent.
+		
+		//Returns if the material is transparent.
+		//这个材质是否透明
 		/** Is not always transparent, but mostly. */
 		virtual bool isTransparent() const
 		{
@@ -158,6 +171,7 @@ namespace Sapphire
 
 
 	//! Solid 2 layer material renderer
+	// 2层材质固体渲染器
 	class COpenGLMaterialRenderer_SOLID_2_LAYER : public COpenGLMaterialRenderer
 	{
 	public:
@@ -173,17 +187,27 @@ namespace Sapphire
 
 			if (material.MaterialType != lastMaterial.MaterialType || resetAllRenderstates)
 			{
+				//是否有多重纹理
 				if (Driver->queryFeature(EVDF_MULTITEXTURE))
 				{
+					//激活纹理单元1
 					Driver->extGlActiveTexture(GL_TEXTURE1_ARB);
 #ifdef GL_ARB_texture_env_combine
+					//设置纹理环境模式:   GL_COMBINE
 					glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
+					//设置Alpha组合属性 GL_REPLACE
 					glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_ALPHA_ARB, GL_REPLACE);
+					//设置alpha源1   GL_PRIMARY_COLOR_ARB  几何图元颜色
 					glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_ALPHA_ARB, GL_PRIMARY_COLOR_ARB);
+					//设置RGB组合属性  GL_INTERPOLATE   插值
 					glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_INTERPOLATE);
+					//设置RGB源1  GL_TEXTURE  当前激活的纹理单元
 					glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
+					//设置RGB源2  GL_PREVIOUS 前一个纹理单元的结果
 					glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_PREVIOUS_ARB);
+					//设置RGB源3  GL_PRIMARY_COLOR  几何图元自身颜色
 					glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE2_RGB_ARB, GL_PRIMARY_COLOR);
+					//设定操作数Arg2 为GL_SRC_ALPHA  使用alpha值  （几何图元自身颜色只使用alpha值）
 					glTexEnvf(GL_TEXTURE_ENV, GL_OPERAND2_RGB_ARB, GL_SRC_ALPHA);
 #else
 					glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_EXT);
@@ -217,6 +241,7 @@ namespace Sapphire
 
 
 	//! Transparent add color material renderer
+	//  透明附加颜色材质渲染器
 	class COpenGLMaterialRenderer_TRANSPARENT_ADD_COLOR : public COpenGLMaterialRenderer
 	{
 	public:
@@ -229,9 +254,10 @@ namespace Sapphire
 		{
 			Driver->disableTextures(1);
 			Driver->setBasicRenderStates(material, lastMaterial, resetAllRenderstates);
-
+			//如果材质类型发生改变或重置所有渲染状态
 			if ((material.MaterialType != lastMaterial.MaterialType) || resetAllRenderstates)
 			{
+				//设置源和目的的混合因子函数
 				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
 				glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 				glEnable(GL_BLEND);
@@ -252,6 +278,7 @@ namespace Sapphire
 
 
 	//! Transparent vertex alpha material renderer
+	//透明顶点alpha材质渲染器
 	class COpenGLMaterialRenderer_TRANSPARENT_VERTEX_ALPHA : public COpenGLMaterialRenderer
 	{
 	public:
@@ -309,7 +336,8 @@ namespace Sapphire
 	};
 
 
-	//! Transparent alpha channel material renderer
+	//!Transparent alpha channel material renderer
+	//alpha透明通道材质渲染器
 	class COpenGLMaterialRenderer_TRANSPARENT_ALPHA_CHANNEL : public COpenGLMaterialRenderer
 	{
 	public:
@@ -370,6 +398,7 @@ namespace Sapphire
 
 
 	//! Transparent alpha channel material renderer
+	//  透明alpha通道材质渲染器
 	class COpenGLMaterialRenderer_TRANSPARENT_ALPHA_CHANNEL_REF : public COpenGLMaterialRenderer
 	{
 	public:
@@ -405,6 +434,7 @@ namespace Sapphire
 
 
 	//! material renderer for all kinds of lightmaps
+	//所有光照贴图的材质渲染器
 	class COpenGLMaterialRenderer_LIGHTMAP : public COpenGLMaterialRenderer
 	{
 	public:
@@ -420,7 +450,7 @@ namespace Sapphire
 
 			if (material.MaterialType != lastMaterial.MaterialType || resetAllRenderstates)
 			{
-				// diffuse map
+				// 漫反射贴图
 
 				switch (material.MaterialType)
 				{
@@ -437,7 +467,7 @@ namespace Sapphire
 					glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 					break;
 				}
-
+				//是否有多重纹理
 				if (Driver->queryFeature(EVDF_MULTITEXTURE))
 				{
 					// lightmap
@@ -521,6 +551,7 @@ namespace Sapphire
 
 
 	//! detail map  material renderer
+	//细节贴图材质 渲染器
 	class COpenGLMaterialRenderer_DETAIL_MAP : public COpenGLMaterialRenderer
 	{
 	public:
@@ -539,6 +570,7 @@ namespace Sapphire
 				// diffuse map is default modulated
 
 				// detail map on second layer
+				//细节纹理在第二层
 				if (Driver->queryFeature(EVDF_MULTITEXTURE))
 				{
 					Driver->extGlActiveTexture(GL_TEXTURE1_ARB);
@@ -570,6 +602,7 @@ namespace Sapphire
 
 
 	//! sphere map material renderer
+	//球体贴图材质渲染器
 	class COpenGLMaterialRenderer_SPHERE_MAP : public COpenGLMaterialRenderer
 	{
 	public:
@@ -582,6 +615,7 @@ namespace Sapphire
 		{
 			Driver->disableTextures(1);
 			// texture needs to be flipped for OpenGL
+			// 纹理在OpenGL中需要被翻转
 			Matrix4 tmp = Driver->getTransform(ETS_TEXTURE_0);
 			//tmp[5] *= -1;
 			tmp.getIndex(5) *= -1;
@@ -607,6 +641,7 @@ namespace Sapphire
 
 
 	//! reflection 2 layer material renderer
+	// 反射2层材质渲染器
 	class COpenGLMaterialRenderer_REFLECTION_2_LAYER : public COpenGLMaterialRenderer
 	{
 	public:
@@ -637,6 +672,7 @@ namespace Sapphire
 					glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_EXT, GL_PREVIOUS_EXT);
 #endif
 				}
+				//自动生成纹理设置
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 				glEnable(GL_TEXTURE_GEN_S);

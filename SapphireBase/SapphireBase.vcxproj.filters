@@ -1194,6 +1194,12 @@
     <ClInclude Include="SapphireCOpenGLMaterialRenderer.h">
       <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCOpenGLShaderMaterialRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLGLSLMaterialRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

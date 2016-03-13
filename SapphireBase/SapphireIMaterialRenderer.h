@@ -18,8 +18,30 @@ namespace Sapphire
 	{
 	public:
 
+		// Called by the IVideoDriver implementation the let the renderer set its needed render states.
+		/** This is called during the IVideoDriver::setMaterial() call.
+		When overriding this, you can set some renderstates or for example a
+		vertex or pixel shader if you like.
+		\param material: The new material parameters to be set. The renderer
+		may change the material flags in this material. For example if this
+		material does not accept the zbuffer = true, it can set it to false.
+		This is useful, because in the next lastMaterial will be just the
+		material in this call.
+		\param lastMaterial: The material parameters which have been set before
+		this material.
+		\param resetAllRenderstates: True if all renderstates should really be
+		reset. This is usually true if the last rendering mode was not a usual
+		3d rendering mode, but for example a 2d rendering mode.
+		You should reset really all renderstates if this is true, no matter if
+		the lastMaterial had some similar settings. This is used because in
+		most cases, some common renderstates are not changed if they are
+		already there, for example bilinear filtering, wireframe,
+		gouraudshading, lighting, zbuffer, zwriteenable, backfaceculling and
+		fogenable.
+		\param services: Interface providing some methods for changing
+		advanced, internal states of a IVideoDriver. */
 		//! 通过IVideoDriver实现调用，让渲染器设置它所需的渲染状态
-		/** 它的调用是通过IVideoDriver::setMaterial()来实现。当重新它，你可以设置
+		/** 它的调用是通过IVideoDriver::setMaterial()来实现。当重载它，你可以设置
 		一些渲染状态或者例如顶点或像素着色器的
 		\param material: 要设置新的材质参数。这个渲染器会改变这个材质里的材质标志。
 		例如：如果这个材质不接受zbuffer=true，它可以设置为flase。 

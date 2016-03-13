@@ -169,7 +169,9 @@
     <ClInclude Include="SapphireConfig.h" />
     <ClInclude Include="SapphireCOpenGLDriver.h" />
     <ClInclude Include="SapphireCOpenGLExtensionHandler.h" />
+    <ClInclude Include="SapphireCOpenGLGLSLMaterialRenderer.h" />
     <ClInclude Include="SapphireCOpenGLMaterialRenderer.h" />
+    <ClInclude Include="SapphireCOpenGLShaderMaterialRenderer.h" />
     <ClInclude Include="SapphireCOpenGLTexture.h" />
     <ClInclude Include="SapphireCoreUtil.h" />
     <ClInclude Include="SapphireCPakReader.h" />

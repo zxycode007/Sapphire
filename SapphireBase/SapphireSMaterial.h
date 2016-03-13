@@ -44,6 +44,7 @@ namespace Sapphire
 	};
 
 	//!材质类型参数: e.g. DirectX: D3DTOP_MODULATE, D3DTOP_MODULATE2X, D3DTOP_MODULATE4X
+	//对颜色或alpha分量数值的缩放因子
 	enum E_MODULATE_FUNC
 	{
 		EMFN_MODULATE_1X = 1,
