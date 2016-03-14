@@ -196,7 +196,7 @@ namespace Sapphire
 							const UINT32 oldSize = LightMapMeshes[i].Indices.size();
 							//LightMapMeshes[i].Indices.set_free_when_destroyed(false);
 							//LightMapMeshes[i].Indices.set_pointer(d[i].Indices, d[i].CurrentSize, false, false);
-							LightMapMeshes[i].Indices.resize(d[i].CurrentSize);
+							LightMapMeshes[i].Indices.resize(d[i].CurrentSize);   //stl不支持指针，只能用数组拷贝
 							std::copy(d[i].Indices, d[i].Indices + d[i].CurrentSize, LightMapMeshes[i].Indices.begin());
 							LightMapMeshes[i].setDirty(EBT_INDEX);
 							driver->drawMeshBuffer(&LightMapMeshes[i]);

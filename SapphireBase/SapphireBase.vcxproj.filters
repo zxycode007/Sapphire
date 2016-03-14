@@ -1200,6 +1200,15 @@
     <ClInclude Include="SapphireCOpenGLGLSLMaterialRenderer.h">
       <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireCOpenGLParallexMapRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLNormalMapRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLCgRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1848,6 +1857,15 @@
       <Filter>源文件\scene\writers</Filter>
     </ClCompile>
     <ClCompile Include="SapphireCOpenGLTexture.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLGLSLMaterialRenderer.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLShaderMaterialRenderer.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLNormalMapRenderer.cpp">
       <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>

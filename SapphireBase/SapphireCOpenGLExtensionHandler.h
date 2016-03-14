@@ -1029,6 +1029,7 @@ namespace Sapphire
 			void extGlDeleteProgram(GLuint object);
 			void extGlDeleteShader(GLuint shader);
 			void extGlGetAttachedShaders(GLuint program, GLsizei maxcount, GLsizei* count, GLuint* shaders);
+			//!取得shader编译后的OBJ对象
 			void extGlGetAttachedObjects(GLhandleARB program, GLsizei maxcount, GLsizei* count, GLhandleARB* shaders);
 			void extGlGetInfoLog(GLhandleARB object, GLsizei maxLength, GLsizei *length, GLcharARB *infoLog);
 			void extGlGetShaderInfoLog(GLuint shader, GLsizei maxLength, GLsizei *length, GLchar *infoLog);
@@ -1291,7 +1292,7 @@ namespace Sapphire
 #elif defined(GL_NV_vertex_program) || defined(GL_NV_fragment_program)
 			glGenProgramsNV(n, programs);
 #else
-			os::Printer::log("glGenPrograms not supported", ELL_ERROR);
+			Printer::log("glGenPrograms not supported", LML_ERROR);
 #endif
 		}
 
@@ -1307,7 +1308,7 @@ namespace Sapphire
 #elif defined(GL_NV_vertex_program) || defined(GL_NV_fragment_program)
 			glBindProgramNV(target, program);
 #else
-			os::Printer::log("glBindProgram not supported", ELL_ERROR);
+			Printer::log("glBindProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1319,7 +1320,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_program) || defined(GL_ARB_fragment_program)
 			glProgramStringARB(target, format, len, string);
 #else
-			os::Printer::log("glProgramString not supported", ELL_ERROR);
+			Printer::log("glProgramString not supported", LML_ERROR);
 #endif
 		}
 
@@ -1331,7 +1332,7 @@ namespace Sapphire
 #elif defined(GL_NV_vertex_program) || defined(GL_NV_fragment_program)
 			glLoadProgramNV(target, id, len, string);
 #else
-			os::Printer::log("glLoadProgram not supported", ELL_ERROR);
+			Printer::log("glLoadProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1347,7 +1348,7 @@ namespace Sapphire
 #elif defined(GL_NV_vertex_program) || defined(GL_NV_fragment_program)
 			glDeleteProgramsNV(n, programs);
 #else
-			os::Printer::log("glDeletePrograms not supported", ELL_ERROR);
+			Printer::log("glDeletePrograms not supported", LML_ERROR);
 #endif
 		}
 
@@ -1359,7 +1360,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_program) || defined(GL_ARB_fragment_program)
 			glProgramLocalParameter4fvARB(n, i, f);
 #else
-			os::Printer::log("glProgramLocalParameter4fv not supported", ELL_ERROR);
+			Printer::log("glProgramLocalParameter4fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1371,11 +1372,12 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			return glCreateShaderObjectARB(shaderType);
 #else
-			os::Printer::log("glCreateShaderObject not supported", ELL_ERROR);
+			Printer::log("glCreateShaderObject not supported", LML_ERROR);
 #endif
 			return 0;
 		}
-
+		//!创建Shader
+		//调用OpenGL本地函数创建shader
 		inline GLuint COpenGLExtensionHandler::extGlCreateShader(GLenum shaderType)
 		{
 #ifdef SAPPHIRE_OPENGL_USE_EXTPOINTER
@@ -1384,7 +1386,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			return glCreateShader(shaderType);
 #else
-			os::Printer::log("glCreateShader not supported", ELL_ERROR);
+			Printer::log("glCreateShader not supported", LML_ERROR);
 #endif
 			return 0;
 		}
@@ -1397,7 +1399,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glShaderSourceARB(shader, numOfStrings, strings, (GLint *)lenOfStrings);
 #else
-			os::Printer::log("glShaderSource not supported", ELL_ERROR);
+			Printer::log("glShaderSource not supported", LML_ERROR);
 #endif
 		}
 
@@ -1409,7 +1411,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glShaderSource(shader, numOfStrings, strings, (GLint *)lenOfStrings);
 #else
-			os::Printer::log("glShaderSource not supported", ELL_ERROR);
+			Printer::log("glShaderSource not supported", LML_ERROR);
 #endif
 		}
 
@@ -1421,7 +1423,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glCompileShaderARB(shader);
 #else
-			os::Printer::log("glCompileShader not supported", ELL_ERROR);
+			Printer::log("glCompileShader not supported", LML_ERROR);
 #endif
 		}
 
@@ -1433,7 +1435,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glCompileShader(shader);
 #else
-			os::Printer::log("glCompileShader not supported", ELL_ERROR);
+			Printer::log("glCompileShader not supported", LML_ERROR);
 #endif
 		}
 
@@ -1445,7 +1447,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			return glCreateProgramObjectARB();
 #else
-			os::Printer::log("glCreateProgramObject not supported", ELL_ERROR);
+			Printer::log("glCreateProgramObject not supported", LML_ERROR);
 #endif
 			return 0;
 		}
@@ -1458,7 +1460,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			return glCreateProgram();
 #else
-			os::Printer::log("glCreateProgram not supported", ELL_ERROR);
+			Printer::log("glCreateProgram not supported", LML_ERROR);
 #endif
 			return 0;
 		}
@@ -1471,7 +1473,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glAttachObjectARB(program, shader);
 #else
-			os::Printer::log("glAttachObject not supported", ELL_ERROR);
+			Printer::log("glAttachObject not supported", LML_ERROR);
 #endif
 		}
 
@@ -1483,7 +1485,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glAttachShader(program, shader);
 #else
-			os::Printer::log("glAttachShader not supported", ELL_ERROR);
+			Printer::log("glAttachShader not supported", LML_ERROR);
 #endif
 		}
 
@@ -1495,7 +1497,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glLinkProgramARB(program);
 #else
-			os::Printer::log("glLinkProgram not supported", ELL_ERROR);
+			Printer::log("glLinkProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1507,7 +1509,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glLinkProgram(program);
 #else
-			os::Printer::log("glLinkProgram not supported", ELL_ERROR);
+			Printer::log("glLinkProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1519,7 +1521,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUseProgramObjectARB(prog);
 #else
-			os::Printer::log("glUseProgramObject not supported", ELL_ERROR);
+			Printer::log("glUseProgramObject not supported", LML_ERROR);
 #endif
 		}
 
@@ -1531,7 +1533,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glUseProgram(prog);
 #else
-			os::Printer::log("glUseProgram not supported", ELL_ERROR);
+			Printer::log("glUseProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1543,7 +1545,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glDeleteObjectARB(object);
 #else
-			os::Printer::log("glDeleteObject not supported", ELL_ERROR);
+			Printer::log("glDeleteObject not supported", LML_ERROR);
 #endif
 		}
 
@@ -1555,7 +1557,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glDeleteProgram(object);
 #else
-			os::Printer::log("glDeleteProgram not supported", ELL_ERROR);
+			Printer::log("glDeleteProgram not supported", LML_ERROR);
 #endif
 		}
 
@@ -1567,10 +1569,10 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glDeleteShader(shader);
 #else
-			os::Printer::log("glDeleteShader not supported", ELL_ERROR);
+			Printer::log("glDeleteShader not supported", LML_ERROR);
 #endif
 		}
-
+		//获取与Program关联的shader obj和数量
 		inline void COpenGLExtensionHandler::extGlGetAttachedObjects(GLhandleARB program, GLsizei maxcount, GLsizei* count, GLhandleARB* shaders)
 		{
 			if (count)
@@ -1581,7 +1583,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glGetAttachedObjectsARB(program, maxcount, count, shaders);
 #else
-			os::Printer::log("glGetAttachedObjects not supported", ELL_ERROR);
+			Printer::log("glGetAttachedObjects not supported", LML_ERROR);
 #endif
 		}
 
@@ -1595,7 +1597,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetAttachedShaders(program, maxcount, count, shaders);
 #else
-			os::Printer::log("glGetAttachedShaders not supported", ELL_ERROR);
+			Printer::log("glGetAttachedShaders not supported", LML_ERROR);
 #endif
 		}
 
@@ -1609,7 +1611,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glGetInfoLogARB(object, maxLength, length, infoLog);
 #else
-			os::Printer::log("glGetInfoLog not supported", ELL_ERROR);
+			Printer::log("glGetInfoLog not supported", LML_ERROR);
 #endif
 		}
 
@@ -1623,7 +1625,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetShaderInfoLog(shader, maxLength, length, infoLog);
 #else
-			os::Printer::log("glGetShaderInfoLog not supported", ELL_ERROR);
+			Printer::log("glGetShaderInfoLog not supported", LML_ERROR);
 #endif
 		}
 
@@ -1637,7 +1639,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetProgramInfoLog(program, maxLength, length, infoLog);
 #else
-			os::Printer::log("glGetProgramInfoLog not supported", ELL_ERROR);
+			Printer::log("glGetProgramInfoLog not supported", LML_ERROR);
 #endif
 		}
 
@@ -1649,7 +1651,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glGetObjectParameterivARB(object, type, param);
 #else
-			os::Printer::log("glGetObjectParameteriv not supported", ELL_ERROR);
+			Printer::log("glGetObjectParameteriv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1661,7 +1663,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetShaderiv(shader, type, param);
 #else
-			os::Printer::log("glGetShaderiv not supported", ELL_ERROR);
+			Printer::log("glGetShaderiv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1673,7 +1675,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetProgramiv(program, type, param);
 #else
-			os::Printer::log("glGetProgramiv not supported", ELL_ERROR);
+			Printer::log("glGetProgramiv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1685,7 +1687,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			return glGetUniformLocationARB(program, name);
 #else
-			os::Printer::log("glGetUniformLocation not supported", ELL_ERROR);
+			Printer::log("glGetUniformLocation not supported", LML_ERROR);
 #endif
 			return 0;
 		}
@@ -1698,7 +1700,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			return glGetUniformLocation(program, name);
 #else
-			os::Printer::log("glGetUniformLocation not supported", ELL_ERROR);
+			Printer::log("glGetUniformLocation not supported", LML_ERROR);
 #endif
 			return 0;
 		}
@@ -1711,7 +1713,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform1fvARB(loc, count, v);
 #else
-			os::Printer::log("glUniform1fv not supported", ELL_ERROR);
+			Printer::log("glUniform1fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1723,7 +1725,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform2fvARB(loc, count, v);
 #else
-			os::Printer::log("glUniform2fv not supported", ELL_ERROR);
+			Printer::log("glUniform2fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1735,7 +1737,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform3fvARB(loc, count, v);
 #else
-			os::Printer::log("glUniform3fv not supported", ELL_ERROR);
+			Printer::log("glUniform3fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1747,7 +1749,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform4fvARB(loc, count, v);
 #else
-			os::Printer::log("glUniform4fv not supported", ELL_ERROR);
+			Printer::log("glUniform4fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1759,7 +1761,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform1ivARB(loc, count, v);
 #else
-			os::Printer::log("glUniform1iv not supported", ELL_ERROR);
+			Printer::log("glUniform1iv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1771,7 +1773,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform2ivARB(loc, count, v);
 #else
-			os::Printer::log("glUniform2iv not supported", ELL_ERROR);
+			Printer::log("glUniform2iv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1783,7 +1785,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform3ivARB(loc, count, v);
 #else
-			os::Printer::log("glUniform3iv not supported", ELL_ERROR);
+			Printer::log("glUniform3iv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1795,7 +1797,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniform4ivARB(loc, count, v);
 #else
-			os::Printer::log("glUniform4iv not supported", ELL_ERROR);
+			Printer::log("glUniform4iv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1807,7 +1809,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniformMatrix2fvARB(loc, count, transpose, v);
 #else
-			os::Printer::log("glUniformMatrix2fv not supported", ELL_ERROR);
+			Printer::log("glUniformMatrix2fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1819,7 +1821,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniformMatrix3fvARB(loc, count, transpose, v);
 #else
-			os::Printer::log("glUniformMatrix3fv not supported", ELL_ERROR);
+			Printer::log("glUniformMatrix3fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1831,7 +1833,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glUniformMatrix4fvARB(loc, count, transpose, v);
 #else
-			os::Printer::log("glUniformMatrix4fv not supported", ELL_ERROR);
+			Printer::log("glUniformMatrix4fv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1847,7 +1849,7 @@ namespace Sapphire
 #elif defined(GL_ARB_shader_objects)
 			glGetActiveUniformARB(program, index, maxlength, length, size, type, name);
 #else
-			os::Printer::log("glGetActiveUniform not supported", ELL_ERROR);
+			Printer::log("glGetActiveUniform not supported", LML_ERROR);
 #endif
 		}
 
@@ -1863,7 +1865,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_2_0)
 			glGetActiveUniform(program, index, maxlength, length, size, type, name);
 #else
-			os::Printer::log("glGetActiveUniform not supported", ELL_ERROR);
+			Printer::log("glGetActiveUniform not supported", LML_ERROR);
 #endif
 		}
 
@@ -1875,7 +1877,7 @@ namespace Sapphire
 #elif defined(GL_ARB_point_parameters)
 			glPointParameterfARB(loc, f);
 #else
-			os::Printer::log("glPointParameterf not supported", ELL_ERROR);
+			Printer::log("glPointParameterf not supported", LML_ERROR);
 #endif
 		}
 
@@ -1887,7 +1889,7 @@ namespace Sapphire
 #elif defined(GL_ARB_point_parameters)
 			glPointParameterfvARB(loc, v);
 #else
-			os::Printer::log("glPointParameterfv not supported", ELL_ERROR);
+			Printer::log("glPointParameterfv not supported", LML_ERROR);
 #endif
 		}
 
@@ -1903,7 +1905,7 @@ namespace Sapphire
 #elif defined(GL_ATI_separate_stencil)
 			glStencilFuncSeparateATI(frontfunc, backfunc, ref, mask);
 #else
-			os::Printer::log("glStencilFuncSeparate not supported", ELL_ERROR);
+			Printer::log("glStencilFuncSeparate not supported", LML_ERROR);
 #endif
 		}
 
@@ -1919,7 +1921,7 @@ namespace Sapphire
 #elif defined(GL_ATI_separate_stencil)
 			glStencilOpSeparateATI(face, fail, zfail, zpass);
 #else
-			os::Printer::log("glStencilOpSeparate not supported", ELL_ERROR);
+			Printer::log("glStencilOpSeparate not supported", LML_ERROR);
 #endif
 		}
 
@@ -1932,7 +1934,7 @@ namespace Sapphire
 #elif defined(GL_ARB_texture_compression)
 			glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 #else
-			os::Printer::log("glCompressedTexImage2D not supported", ELL_ERROR);
+			Printer::log("glCompressedTexImage2D not supported", LML_ERROR);
 #endif
 		}
 
@@ -1948,7 +1950,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glBindFramebufferEXT(target, framebuffer);
 #else
-			os::Printer::log("glBindFramebuffer not supported", ELL_ERROR);
+			Printer::log("glBindFramebuffer not supported", LML_ERROR);
 #endif
 		}
 
@@ -1964,7 +1966,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glDeleteFramebuffersEXT(n, framebuffers);
 #else
-			os::Printer::log("glDeleteFramebuffers not supported", ELL_ERROR);
+			Printer::log("glDeleteFramebuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -1982,7 +1984,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glGenFramebuffersEXT(n, framebuffers);
 #else
-			os::Printer::log("glGenFramebuffers not supported", ELL_ERROR);
+			Printer::log("glGenFramebuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2000,7 +2002,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			return glCheckFramebufferStatusEXT(target);
 #else
-			os::Printer::log("glCheckFramebufferStatus not supported", ELL_ERROR);
+			Printer::log("glCheckFramebufferStatus not supported", LML_ERROR);
 			return 0;
 #endif
 		}
@@ -2017,7 +2019,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glFramebufferTexture2DEXT(target, attachment, textarget, texture, level);
 #else
-			os::Printer::log("glFramebufferTexture2D not supported", ELL_ERROR);
+			Printer::log("glFramebufferTexture2D not supported", LML_ERROR);
 #endif
 		}
 
@@ -2033,7 +2035,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glBindRenderbufferEXT(target, renderbuffer);
 #else
-			os::Printer::log("glBindRenderbuffer not supported", ELL_ERROR);
+			Printer::log("glBindRenderbuffer not supported", LML_ERROR);
 #endif
 		}
 
@@ -2049,7 +2051,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glDeleteRenderbuffersEXT(n, renderbuffers);
 #else
-			os::Printer::log("glDeleteRenderbuffers not supported", ELL_ERROR);
+			Printer::log("glDeleteRenderbuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2067,7 +2069,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glGenRenderbuffersEXT(n, renderbuffers);
 #else
-			os::Printer::log("glGenRenderbuffers not supported", ELL_ERROR);
+			Printer::log("glGenRenderbuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2083,7 +2085,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glRenderbufferStorageEXT(target, internalformat, width, height);
 #else
-			os::Printer::log("glRenderbufferStorage not supported", ELL_ERROR);
+			Printer::log("glRenderbufferStorage not supported", LML_ERROR);
 #endif
 		}
 
@@ -2099,7 +2101,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer);
 #else
-			os::Printer::log("glFramebufferRenderbuffer not supported", ELL_ERROR);
+			Printer::log("glFramebufferRenderbuffer not supported", LML_ERROR);
 #endif
 		}
 
@@ -2115,7 +2117,7 @@ namespace Sapphire
 #elif defined(GL_EXT_framebuffer_object)
 			glGenerateMipmapEXT(target);
 #else
-			os::Printer::log("glGenerateMipmap not supported", ELL_ERROR);
+			Printer::log("glGenerateMipmap not supported", LML_ERROR);
 #endif
 		}
 
@@ -2127,7 +2129,7 @@ namespace Sapphire
 #elif defined(GL_EXT_stencil_two_side)
 			glActiveStencilFaceEXT(face);
 #else
-			os::Printer::log("glActiveStencilFace not supported", ELL_ERROR);
+			Printer::log("glActiveStencilFace not supported", LML_ERROR);
 #endif
 		}
 
@@ -2143,7 +2145,7 @@ namespace Sapphire
 #elif defined(GL_ATI_draw_buffers)
 			glDrawBuffersATI(n, bufs);
 #else
-			os::Printer::log("glDrawBuffers not supported", ELL_ERROR);
+			Printer::log("glDrawBuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2158,7 +2160,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glGenBuffers(n, buffers);
 #else
-			os::Printer::log("glGenBuffers not supported", ELL_ERROR);
+			Printer::log("glGenBuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2170,7 +2172,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glBindBuffer(target, buffer);
 #else
-			os::Printer::log("glBindBuffer not supported", ELL_ERROR);
+			Printer::log("glBindBuffer not supported", LML_ERROR);
 #endif
 		}
 
@@ -2182,7 +2184,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glBufferData(target, size, data, usage);
 #else
-			os::Printer::log("glBufferData not supported", ELL_ERROR);
+			Printer::log("glBufferData not supported", LML_ERROR);
 #endif
 		}
 
@@ -2194,7 +2196,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glDeleteBuffers(n, buffers);
 #else
-			os::Printer::log("glDeleteBuffers not supported", ELL_ERROR);
+			Printer::log("glDeleteBuffers not supported", LML_ERROR);
 #endif
 		}
 
@@ -2206,7 +2208,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glBufferSubData(target, offset, size, data);
 #else
-			os::Printer::log("glBufferSubData not supported", ELL_ERROR);
+			Printer::log("glBufferSubData not supported", LML_ERROR);
 #endif
 		}
 
@@ -2218,7 +2220,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glGetBufferSubData(target, offset, size, data);
 #else
-			os::Printer::log("glGetBufferSubData not supported", ELL_ERROR);
+			Printer::log("glGetBufferSubData not supported", LML_ERROR);
 #endif
 		}
 
@@ -2231,7 +2233,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			return glMapBuffer(target, access);
 #else
-			os::Printer::log("glMapBuffer not supported", ELL_ERROR);
+			Printer::log("glMapBuffer not supported", LML_ERROR);
 			return 0;
 #endif
 		}
@@ -2245,7 +2247,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			return glUnmapBuffer(target);
 #else
-			os::Printer::log("glUnmapBuffer not supported", ELL_ERROR);
+			Printer::log("glUnmapBuffer not supported", LML_ERROR);
 			return false;
 #endif
 		}
@@ -2259,7 +2261,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			return glIsBuffer(buffer);
 #else
-			os::Printer::log("glDeleteBuffers not supported", ELL_ERROR);
+			Printer::log("glDeleteBuffers not supported", LML_ERROR);
 			return false;
 #endif
 		}
@@ -2272,7 +2274,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glGetBufferParameteriv(target, pname, params);
 #else
-			os::Printer::log("glGetBufferParameteriv not supported", ELL_ERROR);
+			Printer::log("glGetBufferParameteriv not supported", LML_ERROR);
 #endif
 		}
 
@@ -2284,7 +2286,7 @@ namespace Sapphire
 #elif defined(GL_ARB_vertex_buffer_object)
 			glGetBufferPointerv(target, pname, params);
 #else
-			os::Printer::log("glGetBufferPointerv not supported", ELL_ERROR);
+			Printer::log("glGetBufferPointerv not supported", LML_ERROR);
 #endif
 		}
 
@@ -2301,7 +2303,7 @@ namespace Sapphire
 #elif defined(GL_EXT_provoking_vertex)
 			glProvokingVertexEXT(mode);
 #else
-			os::Printer::log("glProvokingVertex not supported", ELL_ERROR);
+			Printer::log("glProvokingVertex not supported", LML_ERROR);
 #endif
 		}
 
@@ -2314,7 +2316,7 @@ namespace Sapphire
 #elif defined(GL_EXT_draw_buffers2)
 			glColorMaskIndexedEXT(buf, r, g, b, a);
 #else
-			os::Printer::log("glColorMaskIndexed not supported", ELL_ERROR);
+			Printer::log("glColorMaskIndexed not supported", LML_ERROR);
 #endif
 		}
 
@@ -2327,7 +2329,7 @@ namespace Sapphire
 #elif defined(GL_EXT_draw_buffers2)
 			glEnableIndexedEXT(target, index);
 #else
-			os::Printer::log("glEnableIndexed not supported", ELL_ERROR);
+			Printer::log("glEnableIndexed not supported", LML_ERROR);
 #endif
 		}
 
@@ -2339,7 +2341,7 @@ namespace Sapphire
 #elif defined(GL_EXT_draw_buffers2)
 			glDisableIndexedEXT(target, index);
 #else
-			os::Printer::log("glDisableIndexed not supported", ELL_ERROR);
+			Printer::log("glDisableIndexed not supported", LML_ERROR);
 #endif
 		}
 
@@ -2355,7 +2357,7 @@ namespace Sapphire
 #elif defined(GL_AMD_draw_buffers_blend)
 			glBlendFuncIndexedAMD(buf, src, dst);
 #else
-			os::Printer::log("glBlendFuncIndexed not supported", ELL_ERROR);
+			Printer::log("glBlendFuncIndexed not supported", LML_ERROR);
 #endif
 		}
 
@@ -2371,7 +2373,7 @@ namespace Sapphire
 #elif defined(GL_AMD_draw_buffers_blend)
 			glBlendEquationIndexedAMD(buf, mode);
 #else
-			os::Printer::log("glBlendEquationIndexed not supported", ELL_ERROR);
+			Printer::log("glBlendEquationIndexed not supported", LML_ERROR);
 #endif
 		}
 
@@ -2392,7 +2394,7 @@ namespace Sapphire
 #elif defined(GL_NV_geometry_program4) || defined(GL_NV_geometry_shader4)
 			glProgramParameteriNV(program, pname, value);
 #else
-			os::Printer::log("glProgramParameteri not supported", ELL_ERROR);
+			Printer::log("glProgramParameteri not supported", LML_ERROR);
 #endif
 		}
 
@@ -2408,7 +2410,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glGenOcclusionQueriesNV(n, ids);
 #else
-			os::Printer::log("glGenQueries not supported", ELL_ERROR);
+			Printer::log("glGenQueries not supported", LML_ERROR);
 #endif
 		}
 
@@ -2424,7 +2426,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glDeleteOcclusionQueriesNV(n, ids);
 #else
-			os::Printer::log("glDeleteQueries not supported", ELL_ERROR);
+			Printer::log("glDeleteQueries not supported", LML_ERROR);
 #endif
 		}
 
@@ -2457,7 +2459,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glBeginOcclusionQueryNV(id);
 #else
-			os::Printer::log("glBeginQuery not supported", ELL_ERROR);
+			Printer::log("glBeginQuery not supported", LML_ERROR);
 #endif
 		}
 
@@ -2473,7 +2475,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glEndOcclusionQueryNV();
 #else
-			os::Printer::log("glEndQuery not supported", ELL_ERROR);
+			Printer::log("glEndQuery not supported", LML_ERROR);
 #endif
 		}
 
@@ -2485,7 +2487,7 @@ namespace Sapphire
 #elif defined(GL_ARB_occlusion_query)
 			glGetQueryivARB(target, pname, params);
 #else
-			os::Printer::log("glGetQueryivARB not supported", ELL_ERROR);
+			Printer::log("glGetQueryivARB not supported", LML_ERROR);
 #endif
 		}
 
@@ -2501,7 +2503,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glGetOcclusionQueryivNV(id, pname, params);
 #else
-			os::Printer::log("glGetQueryObjectiv not supported", ELL_ERROR);
+			Printer::log("glGetQueryObjectiv not supported", LML_ERROR);
 #endif
 		}
 
@@ -2517,7 +2519,7 @@ namespace Sapphire
 #elif defined(GL_NV_occlusion_query)
 			glGetOcclusionQueryuivNV(id, pname, params);
 #else
-			os::Printer::log("glGetQueryObjectuiv not supported", ELL_ERROR);
+			Printer::log("glGetQueryObjectuiv not supported", LML_ERROR);
 #endif
 		}
 
@@ -2574,7 +2576,7 @@ namespace Sapphire
 #elif defined(GL_VERSION_1_2)
 			glBlendEquation(mode);
 #else
-			os::Printer::log("glBlendEquation not supported", ELL_ERROR);
+			Printer::log("glBlendEquation not supported", LML_ERROR);
 #endif
 		}
 

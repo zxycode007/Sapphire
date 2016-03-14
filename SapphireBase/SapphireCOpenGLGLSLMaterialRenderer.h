@@ -53,23 +53,23 @@ namespace Sapphire
 
 		//! Constructor
 		COpenGLSLMaterialRenderer(
-			COpenGLDriver* driver,
-			SINT32& outMaterialTypeNr,
-			const c8* vertexShaderProgram = 0,
-			const c8* vertexShaderEntryPointName = 0,
-			E_VERTEX_SHADER_TYPE vsCompileTarget = EVST_VS_1_1,
-			const c8* pixelShaderProgram = 0,
-			const c8* pixelShaderEntryPointName = 0,
-			E_PIXEL_SHADER_TYPE psCompileTarget = EPST_PS_1_1,
-			const c8* geometryShaderProgram = 0,
-			const c8* geometryShaderEntryPointName = "main",
-			E_GEOMETRY_SHADER_TYPE gsCompileTarget = EGST_GS_4_0,
-			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,
-			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,
-			UINT32 verticesOut = 0,
-			IShaderConstantSetCallBack* callback = 0,
-			IMaterialRenderer* baseMaterial = 0,
-			SINT32 userData = 0);
+			COpenGLDriver* driver,          //opengl 驱动
+			SINT32& outMaterialTypeNr,               //输出材质类型数
+			const c8* vertexShaderProgram = 0,       //vertex shader名
+			const c8* vertexShaderEntryPointName = 0,     //vertex shader 入口名
+			E_VERTEX_SHADER_TYPE vsCompileTarget = EVST_VS_1_1,   //vertex shader 编译版本
+			const c8* pixelShaderProgram = 0,                 //pixel shader 名
+			const c8* pixelShaderEntryPointName = 0,            //pixel shader 入口名
+			E_PIXEL_SHADER_TYPE psCompileTarget = EPST_PS_1_1,      //pixel shader 编译版本
+			const c8* geometryShaderProgram = 0,                      //geometry shader  名
+			const c8* geometryShaderEntryPointName = "main",         // geometry shader 入口名
+			E_GEOMETRY_SHADER_TYPE gsCompileTarget = EGST_GS_4_0,    //geometry shader  编译版本
+			E_PRIMITIVE_TYPE inType = EPT_TRIANGLES,                  //输入图元类型
+			E_PRIMITIVE_TYPE outType = EPT_TRIANGLE_STRIP,            // 输出图元类型
+			UINT32 verticesOut = 0,                          //输出顶点数
+			IShaderConstantSetCallBack* callback = 0,            //Constant设置回调指针
+			IMaterialRenderer* baseMaterial = 0,                 //材质渲染器
+			SINT32 userData = 0);                                 //用户数据
 
 		//! Destructor
 		virtual ~COpenGLSLMaterialRenderer();
@@ -85,6 +85,7 @@ namespace Sapphire
 		virtual bool isTransparent() const;
 
 		// implementations for the render services
+		// 渲染器服务的实现
 		virtual void setBasicRenderStates(const SMaterial& material, const SMaterial& lastMaterial, bool resetAllRenderstates);
 		virtual bool setVertexShaderConstant(const c8* name, const FLOAT32* floats, int count);
 		virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);

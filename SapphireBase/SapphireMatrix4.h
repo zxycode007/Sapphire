@@ -291,6 +291,11 @@ namespace Sapphire
 			m[1][0] = mat3.m[1][0]; m[1][1] = mat3.m[1][1]; m[1][2] = mat3.m[1][2];
 			m[2][0] = mat3.m[2][0]; m[2][1] = mat3.m[2][1]; m[2][2] = mat3.m[2][2];
 		}
+
+		inline Real* pointer()
+		{
+			return this->_m;
+		}
 		//返回转置矩阵 （本引擎是列优先矩阵，转置后可成行优先矩阵）
 		inline Matrix4 transpose(void) const
 		{
@@ -497,6 +502,7 @@ namespace Sapphire
 
 			return false;
 		}
+
 
 		 
 		inline bool hasNegativeScale() const

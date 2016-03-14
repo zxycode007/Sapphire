@@ -167,10 +167,13 @@
     <ClInclude Include="SapphireCommon.h" />
     <ClInclude Include="SapphireCompileConifg.h" />
     <ClInclude Include="SapphireConfig.h" />
+    <ClInclude Include="SapphireCOpenGLCgRenderer.h" />
     <ClInclude Include="SapphireCOpenGLDriver.h" />
     <ClInclude Include="SapphireCOpenGLExtensionHandler.h" />
     <ClInclude Include="SapphireCOpenGLGLSLMaterialRenderer.h" />
     <ClInclude Include="SapphireCOpenGLMaterialRenderer.h" />
+    <ClInclude Include="SapphireCOpenGLNormalMapRenderer.h" />
+    <ClInclude Include="SapphireCOpenGLParallexMapRenderer.h" />
     <ClInclude Include="SapphireCOpenGLShaderMaterialRenderer.h" />
     <ClInclude Include="SapphireCOpenGLTexture.h" />
     <ClInclude Include="SapphireCoreUtil.h" />
@@ -569,6 +572,9 @@
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
+    <ClCompile Include="SapphireCOpenGLGLSLMaterialRenderer.cpp" />
+    <ClCompile Include="SapphireCOpenGLNormalMapRenderer.cpp" />
+    <ClCompile Include="SapphireCOpenGLShaderMaterialRenderer.cpp" />
     <ClCompile Include="SapphireCOpenGLTexture.cpp" />
     <ClCompile Include="SapphireCPakReader.cpp" />
     <ClCompile Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.cpp" />

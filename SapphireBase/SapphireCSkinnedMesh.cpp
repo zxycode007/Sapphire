@@ -945,6 +945,7 @@ namespace Sapphire
 		for (i = 0; i<LocalBuffers.size(); ++i)
 		{
 			Vertices_Moved.push_back(deque<bool>::type());
+			//Vertices_Moved[i].set_used(LocalBuffers[i]->getVertexCount());
 			Vertices_Moved[i].resize(LocalBuffers[i]->getVertexCount());
 		}
 

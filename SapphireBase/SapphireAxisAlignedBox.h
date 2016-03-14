@@ -6,6 +6,7 @@
 #include "SapphireMatrix4.h"
 #include "SapphireLine3D.h"
 
+
 namespace Sapphire
 {
 	/**
@@ -810,21 +811,26 @@ namespace Sapphire
 				return 0;
 			else
 			{
-				Real maxDist = std::numeric_limits<Real>::min();
+				Real maxDist = 0;
+#ifdef min(a,b)
+#undef min(a,b)
+				maxDist = std::numeric_limits<Real>::min();
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
 
 				if (v.x < mMinimum.x)
-					maxDist = std::max(maxDist, mMinimum.x - v.x);
+					maxDist = Math::_max(maxDist, mMinimum.x - v.x);
 				if (v.y < mMinimum.y)
-					maxDist = std::max(maxDist, mMinimum.y - v.y);
+					maxDist = Math::_max(maxDist, mMinimum.y - v.y);
 				if (v.z < mMinimum.z)
-					maxDist = std::max(maxDist, mMinimum.z - v.z);
+					maxDist = Math::_max(maxDist, mMinimum.z - v.z);
 
 				if (v.x > mMaximum.x)
-					maxDist = std::max(maxDist, v.x - mMaximum.x);
+					maxDist = Math::_max(maxDist, v.x - mMaximum.x);
 				if (v.y > mMaximum.y)
-					maxDist = std::max(maxDist, v.y - mMaximum.y);
+					maxDist = Math::_max(maxDist, v.y - mMaximum.y);
 				if (v.z > mMaximum.z)
-					maxDist = std::max(maxDist, v.z - mMaximum.z);
+					maxDist = Math::_max(maxDist, v.z - mMaximum.z);
 
 				return maxDist;
 			}
