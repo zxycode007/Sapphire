@@ -230,6 +230,7 @@
     <ClInclude Include="SapphireCZipReader.h" />
     <ClInclude Include="SapphireDefines.h" />
     <ClInclude Include="SapphireDevice.h" />
+    <ClInclude Include="SapphireDeviceConsole.h" />
     <ClInclude Include="SapphireDeviceStub.h" />
     <ClInclude Include="SapphireDimension2D.h" />
     <ClInclude Include="SapphireEAttributes.h" />
@@ -571,9 +572,11 @@
     <ClCompile Include="SapphireCOctreeTriangleSelector.cpp" />
     <ClCompile Include="SapphireColorValue.cpp" />
     <ClCompile Include="SapphireCommon.cpp" />
+    <ClCompile Include="SapphireCOpenGLDriver.cpp" />
     <ClCompile Include="SapphireCOpenGLExtensionHandler.cpp" />
     <ClCompile Include="SapphireCOpenGLGLSLMaterialRenderer.cpp" />
     <ClCompile Include="SapphireCOpenGLNormalMapRenderer.cpp" />
+    <ClCompile Include="SapphireCOpenGLParallaxMapRenderer.cpp" />
     <ClCompile Include="SapphireCOpenGLShaderMaterialRenderer.cpp" />
     <ClCompile Include="SapphireCOpenGLTexture.cpp" />
     <ClCompile Include="SapphireCPakReader.cpp" />
@@ -622,6 +625,7 @@
     <ClCompile Include="SapphireCWriteFile.cpp" />
     <ClCompile Include="SapphireCXMLWriter.cpp" />
     <ClCompile Include="SapphireCZipReader.cpp" />
+    <ClCompile Include="SapphireDeviceStub.cpp" />
     <ClCompile Include="SapphireEMaterialFlags.h" />
     <ClCompile Include="SapphireException.cpp" />
     <ClCompile Include="SapphireIAnimatedMeshMD2.h" />

@@ -4,7 +4,7 @@
 #include "SapphireBuildSets.h"
 
 
-#define SAPPHIRE_DOUBLE_PRECISION 1     //1为双精度 0为单精度
+#define SAPPHIRE_DOUBLE_PRECISION 0     //1为双精度 0为单精度
 
 #ifndef SAPPHIRE_WCHAR_T_STRINGS
    #define SAPPHIRE_WCHAR_T_STRINGS 0    //定义是否使用WCHAR

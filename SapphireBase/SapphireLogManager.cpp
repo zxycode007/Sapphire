@@ -2,6 +2,7 @@
 //#include "SapphireStableHeaders.h"
 
 #include "SapphireLogManager.h"
+#include "SapphireIEventRecevier.h"
 #include "SapphireException.h"
 #include <algorithm>
 namespace Sapphire { 
@@ -42,6 +43,23 @@ namespace Sapphire {
 		SAPPHIRE_LOCK_AUTO_MUTEX
 
 			Log* newLog = SAPPHIRE_NEW Log(name, debuggerOutput, suppressFileOutput);
+
+		if (!mDefaultLog || defaultLog)
+		{
+			mDefaultLog = newLog;
+		}
+
+		mLogs.insert(LogList::value_type(name, newLog));
+
+		return newLog;
+	}
+	//-----------------------------------------------------------------------
+	Log* LogManager::createLog(const String& name, IEventReceiver* recevier, bool defaultLog, bool debuggerOutput,
+		bool suppressFileOutput)
+	{
+		SAPPHIRE_LOCK_AUTO_MUTEX
+
+			Log* newLog = SAPPHIRE_NEW Log(name, recevier, debuggerOutput, suppressFileOutput);
 
 		if (!mDefaultLog || defaultLog)
 		{

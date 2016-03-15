@@ -3,6 +3,7 @@
 #include "SapphireLog.h"
 #include "SapphireLogManager.h"
 #include "SapphireString.h"
+#include "SapphireIEventRecevier.h"
 #if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_NACL
 #   include "ppapi/cpp/var.h"
 #   include "ppapi/cpp/instance.h"
@@ -22,6 +23,20 @@ namespace Sapphire
 		if (!mSuppressFile)
 		{
 			mLog.open(name.c_str());
+		}
+	}
+	//-----------------------------------------------------------------------
+	Log::Log(const String& name, IEventReceiver* recevier, bool debuggerOuput, bool suppressFile) :
+		mLogLevel(LL_NORMAL), mDebugOut(debuggerOuput),
+		mSuppressFile(suppressFile), mTimeStamp(true), mLogName(name)
+	{
+		if (!mSuppressFile)
+		{
+			mLog.open(name.c_str());
+		}
+		if (recevier)
+		{
+			Receiver = recevier;				 
 		}
 	}
 	//-----------------------------------------------------------------------
@@ -54,7 +69,15 @@ namespace Sapphire
 					if (mDebugOut && !maskDebug)
 						std::cerr << message << std::endl;
 #endif
-
+					if (Receiver)
+					{
+						SEvent event;
+						event.EventType = EET_LOG_TEXT_EVENT;
+						event.LogEvent.Text = message.c_str();
+						event.LogEvent.Level = lml;
+						if (Receiver->OnEvent(event));
+					}
+					
 					// 写出时间到日志
 					if (!mSuppressFile)
 					{
@@ -75,6 +98,7 @@ namespace Sapphire
 					}
 				}
 			}
+		
 	}
 
 	//-----------------------------------------------------------------------
@@ -116,5 +140,8 @@ namespace Sapphire
 	{
 		return Stream(this, lml, maskDebug);
 
+	}
+	void Log::setReceiver(IEventReceiver* r)	{
+		Receiver = r;
 	}
 }

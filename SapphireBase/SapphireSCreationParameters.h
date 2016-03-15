@@ -34,7 +34,7 @@ namespace Sapphire
 			EventReceiver(0),
 			WindowId(0),
 #ifdef _DEBUG
-			LogMessageLevel(LML_DEBUG),
+			LogLevel(LL_NORMAL),
 #else
 			LogMessageLevel(LML_NORMAL),
 #endif
@@ -70,7 +70,7 @@ namespace Sapphire
 			HighPrecisionFPU = other.HighPrecisionFPU;
 			EventReceiver = other.EventReceiver;
 			WindowId = other.WindowId;
-			LogMessageLevel = other.LogMessageLevel;
+			LogLevel = other.LogLevel;
 			DriverMultithreaded = other.DriverMultithreaded;
 			DisplayAdapter = other.DisplayAdapter;
 			UsePerformanceTimer = other.UsePerformanceTimer;
@@ -262,7 +262,7 @@ namespace Sapphire
 		But if you need more or less logging information already from device creation,
 		then you have to change it here.
 		*/
-		LogMessageLevel LogMessageLevel;
+		LoggingLevel LogLevel;
 
 		//! Allows to select which graphic card is used for rendering when more than one card is in the system.
 		/** So far only supported on D3D */

@@ -101,7 +101,7 @@ namespace Sapphire
 		/** 对于确定一个在渲染patch的LOD， 如果任意LOD被覆盖，那么这个场景节点不再对这些值应用缩放因子、
 		如果你覆盖这些距离，并且引用缩放因子到这个节点， 你需要最后和你信的地形大小一起更新新的距离
 		  */
-		virtual bool overrideLODDistance(SINT32 LOD, Real newDistance) = 0;
+		virtual bool overrideLODDistance(SINT32 LOD, FLOAT64 newDistance) = 0;
 
 		//! 缩放基础纹理，类似makePlanarTextureMapping 
 		/** \param scale  缩放量，值大于1，0，会增加在地形上绘制纹理的时间。值小于0，会减少在地形上绘制纹理的世界。

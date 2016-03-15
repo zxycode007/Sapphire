@@ -232,7 +232,7 @@ namespace Sapphire
 
 		// set transposed world matrix
 		//const Matrix4& tWorld = driver->getTransform(ETS_WORLD).getTransposed();
-		const Matrix4& tWorld = driver->getTransform(ETS_WORLD);
+		Matrix4 tWorld = driver->getTransform(ETS_WORLD);
 		services->setVertexShaderConstant(tWorld.pointer(), 0, 4);
 
 		// set transposed worldViewProj matrix
@@ -275,10 +275,10 @@ namespace Sapphire
 			
 
 			services->setVertexShaderConstant(
-				reinterpret_cast<const FLOAT32*>(&light.Position), 12 + (i * 2), 1);
+				reinterpret_cast<const Real*>(&light.Position), 12 + (i * 2), 1);
 
 			services->setVertexShaderConstant(
-				reinterpret_cast<const FLOAT32*>(&light.DiffuseColor), 13 + (i * 2), 1);
+				reinterpret_cast<const Real*>(&light.DiffuseColor), 13 + (i * 2), 1);
 		}
 	}
 }

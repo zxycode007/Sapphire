@@ -456,11 +456,15 @@ namespace Sapphire
 #endif
 	}
 
+#if SAPPHIRE_DOUBLE_PRECISION == 0
 	// º∆À„: 1 / x
-	FORCEINLINE Real reciprocal(const Real f)
+	
+	FORCEINLINE FLOAT64 reciprocal(const FLOAT64 f)
 	{
 		return 1.0 / f;
 	}
+
+#endif
 
 	inline SINT32 SINT32_min(SINT32 a, SINT32 b)
 	{

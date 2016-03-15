@@ -958,7 +958,7 @@ namespace Sapphire
 
 	//! Override the default generation of distance thresholds for determining the LOD a patch
 	//! is rendered at.
-	bool CTerrainSceneNode::overrideLODDistance(SINT32 LOD, Real newDistance)
+	bool CTerrainSceneNode::overrideLODDistance(SINT32 LOD, FLOAT64 newDistance)
 	{
 		OverrideDistanceThreshold = true;
 

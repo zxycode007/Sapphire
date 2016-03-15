@@ -9,6 +9,7 @@
 
 namespace Sapphire
 {
+	class IEventReceiver;
 	 
 	/**
 	这个日志管理句柄创建并且恢复应用程序的日志
@@ -22,7 +23,7 @@ namespace Sapphire
 	在创建一个根实例之前你需要创建一个LogManager， 要创建一个默认的日志。根会检查如果你已经创建有了，那么它不会再单独创建，
 	因此用第一个实例来记录你所有的参考信息
 	*/
-	class _SapphireExport LogManager : public Singleton<LogManager>, public LogAlloc
+	class _SapphireExport LogManager : public Singleton<LogManager>, public LogAlloc,virtual public IReferenceCounter
 	{
 	protected:
 		typedef map<String, Log*>::type	LogList;
@@ -54,6 +55,25 @@ namespace Sapphire
 		如果你要注册一个日志监听器，那么逻辑输出会被丢弃
 		*/
 		Log* createLog(const String& name, bool defaultLog = false, bool debuggerOutput = true,
+			bool suppressFileOutput = false);
+
+		/**
+
+		用给定的名字创建一个新的日志
+		@param
+		name  给日志的命名如'Sapphire.log'
+		@param
+		defaultLog 如果为true， 如果在用这个类通用日志方法，除非这个参数被设置，这个默认日志输出将会发送
+		第一个日志已经创建一种作为默认
+		@param
+		recevier 事件接收器
+		@param
+		debuggerOutput 如果为true，输出这个日志将按路径发个调试输出窗口
+		@param
+		suppressFileOutput 如果为true，这是一个逻辑而不是一个物理日志并且没有文件输出。
+		如果你要注册一个日志监听器，那么逻辑输出会被丢弃
+		*/
+		Log* createLog(const String& name, IEventReceiver* recevier, bool defaultLog = false, bool debuggerOutput = true,
 			bool suppressFileOutput = false);
 
 		/** 返回一个日志

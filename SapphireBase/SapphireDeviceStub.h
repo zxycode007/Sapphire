@@ -9,38 +9,28 @@
 namespace Sapphire
 {
 
-	// lots of prototypes:
-	class ILogger;
 	class CLogger;
 	class IRandomizer;
+	class LogManager;
 
-	namespace gui
-	{
-		class IGUIEnvironment;
-		IGUIEnvironment* createGUIEnvironment(IFileSystem* fs,
-			IVideoDriver* Driver, IOSOperator* op);
-	}
+	class IGUIEnvironment;
 
-	namespace scene
-	{
-		ISceneManager* createSceneManager(IVideoDriver* driver,
-			IFileSystem* fs, ICursorControl* cc, IGUIEnvironment *gui);
-	}
+	IGUIEnvironment* createGUIEnvironment(IFileSystem* fs,
+		IVideoDriver* Driver, IOSOperator* op);
 
-	namespace io
-	{
-		IFileSystem* createFileSystem();
-	}
+	ISceneManager* createSceneManager(IVideoDriver* driver,
 
-	namespace video
-	{
-		IVideoDriver* createSoftwareDriver(const dimension2d<UINT32>& windowSize,
-			bool fullscreen, IFileSystem* io,
-			IImagePresenter* presenter);
-		IVideoDriver* createBurningVideoDriver(const SSapphireCreationParameters& params,
-			IFileSystem* io, IImagePresenter* presenter);
-		IVideoDriver* createNullDriver(IFileSystem* io, const dimension2d<UINT32>& screenSize);
-	}
+		IFileSystem* fs, ICursorControl* cc, IGUIEnvironment *gui);
+	IFileSystem* createFileSystem();
+
+	IVideoDriver* createSoftwareDriver(const dimension2d<UINT32>& windowSize,
+		bool fullscreen, IFileSystem* io,
+		IImagePresenter* presenter);
+
+	IVideoDriver* createBurningVideoDriver(const SSapphireCreationParameters& params,
+		IFileSystem* io, IImagePresenter* presenter);
+
+	IVideoDriver* createNullDriver(IFileSystem* io, const dimension2d<UINT32>& screenSize);
 
 
 
@@ -93,7 +83,7 @@ namespace Sapphire
 		virtual void setInputReceivingSceneManager(ISceneManager* sceneManager);
 
 		//! Returns a pointer to the logger.
-		virtual ILogger* getLogger();
+		virtual LogManager* getLogger();
 
 		//! Provides access to the engine's currently set randomizer.
 		virtual IRandomizer* getRandomizer() const;
@@ -153,7 +143,7 @@ namespace Sapphire
 		ITimer* Timer;
 		ICursorControl* CursorControl;
 		IEventReceiver* UserReceiver;
-		CLogger* Logger;
+		LogManager* Logger;
 		IOSOperator* Operator;
 		IRandomizer* Randomizer;
 		IFileSystem* FileSystem;

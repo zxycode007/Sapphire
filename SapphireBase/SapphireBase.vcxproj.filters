@@ -1200,14 +1200,17 @@
     <ClInclude Include="SapphireCOpenGLGLSLMaterialRenderer.h">
       <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireCOpenGLParallexMapRenderer.h">
-      <Filter>源文件\rendersystem\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireCOpenGLNormalMapRenderer.h">
       <Filter>源文件\rendersystem\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="SapphireCOpenGLCgRenderer.h">
       <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOpenGLParallexMapRenderer.h">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDeviceConsole.h">
+      <Filter>源文件\device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1867,6 +1870,15 @@
     </ClCompile>
     <ClCompile Include="SapphireCOpenGLNormalMapRenderer.cpp">
       <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLParallaxMapRenderer.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOpenGLDriver.cpp">
+      <Filter>源文件\rendersystem\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireDeviceStub.cpp">
+      <Filter>源文件\device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

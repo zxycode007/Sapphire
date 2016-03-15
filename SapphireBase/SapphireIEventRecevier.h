@@ -375,7 +375,7 @@ namespace Sapphire
 			const c8* Text;
 
 			//! Log级别
-			LoggingLevel Level;
+			LogMessageLevel Level;
 		};
 
 		//! 各种类型用户事件

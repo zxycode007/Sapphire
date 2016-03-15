@@ -85,7 +85,7 @@ namespace Sapphire
 
 		//! 提供范围消息日志接口
 		/** \return 日志器指针 */
-		virtual ILogger* getLogger() = 0;
+		virtual LogManager* getLogger() = 0;
 
 		//! 获取可用视频模式列表
 		/** 如果搞不清楚，由于你要用一个视频模式创建一个Device之前要获取视频模式列表。

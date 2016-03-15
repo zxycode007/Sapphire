@@ -294,7 +294,11 @@ namespace Sapphire
 
 		inline Real* pointer()
 		{
-			return this->_m;
+			return _m;
+		}
+		const Real* cpointer() const
+		{
+			return _m;
 		}
 		//返回转置矩阵 （本引擎是列优先矩阵，转置后可成行优先矩阵）
 		inline Matrix4 transpose(void) const
@@ -440,7 +444,7 @@ namespace Sapphire
 			}
 			const Vector3 invScale(reciprocal(scale.x), reciprocal(scale.y), reciprocal(scale.z));
 
-			Real Y = -asin(Math::Clamp(mat.getIndex(2) * invScale.x, -1.0, 1.0));
+			Real Y = -asin(Math::Clamp<Real>(mat.getIndex(2) * invScale.x, -1.0, 1.0));
 			const Real C = cos(Y);
 			//Y *= RADTODEG64;
 
@@ -471,6 +475,12 @@ namespace Sapphire
 
 			return Vector3(X, Y, Z);
 		}
+
+		Matrix4& buildTextureTransform(Real rotateRad,
+			const Vector2 &rotatecenter,
+			const Vector2 &translate,
+			const Vector2 &scale);
+		
 
 		inline void extract3x3Matrix(Matrix3& m3x3) const
 		{
@@ -577,6 +587,76 @@ namespace Sapphire
 			//然后转换回列矩阵
 			*this = transpose();
 
+			return *this;
+		}
+
+
+		 
+		inline Matrix4& buildProjectionMatrixOrthoLH(
+			FLOAT32 widthOfViewVolume, FLOAT32 heightOfViewVolume, FLOAT32 zNear, FLOAT32 zFar)
+		{
+			assert(widthOfViewVolume == 0.f); //divide by zero
+			assert(heightOfViewVolume == 0.f); //divide by zero
+			assert(zNear == zFar); //divide by zero
+			*this = transpose();
+			getIndex(0) = (Real)(2 / widthOfViewVolume);
+			getIndex(1) = 0;
+			getIndex(2) = 0;
+			getIndex(3) = 0;
+
+			getIndex(4) = 0;
+			getIndex(5) = (Real)(2 / heightOfViewVolume);
+			getIndex(6) = 0;
+			getIndex(7) = 0;
+
+			getIndex(8) = 0;
+			getIndex(9) = 0;
+			getIndex(10) = (Real)(1 / (zFar - zNear));
+			getIndex(11) = 0;
+
+			getIndex(12) = 0;
+			getIndex(13) = 0;
+			getIndex(14) = (Real)(zNear / (zNear - zFar));
+			getIndex(15) = 1;
+			*this = transpose();
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
+			return *this;
+		}
+
+
+		 
+		inline Matrix4& buildProjectionMatrixOrthoRH(
+			FLOAT32 widthOfViewVolume, FLOAT32 heightOfViewVolume, FLOAT32 zNear, FLOAT32 zFar)
+		{
+			assert(widthOfViewVolume == 0.f); //divide by zero
+			assert(heightOfViewVolume == 0.f); //divide by zero
+			assert(zNear == zFar); //divide by zero
+			*this = transpose();
+			getIndex(0) = (Real)(2 / widthOfViewVolume);
+			getIndex(1) = 0;
+			getIndex(2) = 0;
+			getIndex(3) = 0;
+
+			getIndex(4) = 0;
+			getIndex(5) = (Real)(2 / heightOfViewVolume);
+			getIndex(6) = 0;
+			getIndex(7) = 0;
+
+			getIndex(8) = 0;
+			getIndex(9) = 0;
+			getIndex(10) = (Real)(1 / (zNear - zFar));
+			getIndex(11) = 0;
+
+			getIndex(12) = 0;
+			getIndex(13) = 0;
+			getIndex(14) = (Real)(zNear / (zNear - zFar));
+			getIndex(15) = 1;
+			*this = transpose();
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
 			return *this;
 		}
 

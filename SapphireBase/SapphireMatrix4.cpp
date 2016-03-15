@@ -1,5 +1,6 @@
 #include "SapphirePrerequisites.h"
 #include "SapphireMatrix4.h"
+#include "SapphireVector2.h"
 
 namespace Sapphire
 {
@@ -175,7 +176,39 @@ namespace Sapphire
 	}
 	//-----------------------------------------------------------------------
 
+	Matrix4& Matrix4::buildTextureTransform(Real rotateRad,
+		const Vector2 &rotatecenter,
+		const Vector2 &translate,
+		const Vector2 &scale)
+	{
+		const Real c = cosf(rotateRad);
+		const Real s = sinf(rotateRad);
+		*this = transpose();
+		getIndex(0) = (Real)(c * scale.x);
+		getIndex(1) = (Real)(s * scale.y);
+		getIndex(2) = 0;
+		getIndex(3) = 0;
 
+		getIndex(4) = (Real)(-s * scale.x);
+		getIndex(5) = (Real)(c * scale.y);
+		getIndex(6) = 0;
+		getIndex(7) = 0;
+
+		getIndex(8) = (Real)(c * scale.x * rotatecenter.x + -s * rotatecenter.y + translate.x);
+		getIndex(9) = (Real)(s * scale.y * rotatecenter.x + c * rotatecenter.y + translate.y);
+		getIndex(10) = 1;
+		getIndex(11) = 0;
+
+		getIndex(12) = 0;
+		getIndex(13) = 0;
+		getIndex(14) = 0;
+		getIndex(15) = 1;
+		*this = transpose();
+#if defined ( USE_MATRIX_TEST )
+		definitelyIdentityMatrix = false;
+#endif
+		return *this;
+	}
 
 	inline bool Matrix4::getInverse(Matrix4& out) const
 	{

@@ -334,32 +334,42 @@ namespace Sapphire {
 			static_cast<Real>(blue) / 255;
 		};
 
-		UINT32 getAlpha()
+		UINT32 getAlpha() const
 		{
 			return static_cast<UINT32>(a * 255);
 		}
 
-		UINT32 getRed()
+		UINT32 getRed() const
 		{
 			return static_cast<UINT32>(r * 255);
 		}
 
-		UINT32 getGreen()
+		UINT32 getGreen() const
 		{
 			return static_cast<UINT32>(g * 255);
 		}
 
-		UINT32 getBlue()
+		UINT32 getBlue() const
 		{
 			return static_cast<UINT32>(b * 255);
 		}
 
-		UINT32 getAverage()
+		UINT32 getAverage() 
 		{
 			return (getRed()+ getGreen() + getBlue()) / 3;
 		}
 
-
+		//! Converts color to OpenGL color format
+		/** From ARGB to RGBA in 4 byte components for endian aware
+		passing to OpenGL
+		\param dest: address where the 4x8 bit OpenGL color is stored. */
+		void toOpenGLColor(UINT8* dest) const
+		{
+			*dest = (UINT8)getRed();
+			*++dest = (UINT8)getGreen();
+			*++dest = (UINT8)getBlue();
+			*++dest = (UINT8)getAlpha();
+		}
 		//----------------------------------------------------------
 		
 

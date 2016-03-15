@@ -214,6 +214,15 @@ namespace Sapphire
 				(BlendFuncDst != other.BlendFuncDst) ||
 				(BlendOp != other.BlendOp));
 		}
+		bool operator==(const IRenderTarget& other) const
+		{
+			return ((RenderTexture == other.RenderTexture) ||
+				(TargetType == other.TargetType) ||
+				(ColorMask == other.ColorMask) ||
+				(BlendFuncSrc == other.BlendFuncSrc) ||
+				(BlendFuncDst == other.BlendFuncDst) ||
+				(BlendOp == other.BlendOp));
+		}
 		//‰÷»æŒ∆¿Ì
 		ITexture* RenderTexture;
 		E_RENDER_TARGET TargetType : 8;

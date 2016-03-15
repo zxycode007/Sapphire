@@ -247,6 +247,19 @@ namespace Sapphire
 		}
 	};
 
+
+	inline UINT32 getVertexPitchFromType(E_VERTEX_TYPE vertexType)
+	{
+		switch (vertexType)
+		{
+		case EVT_2TCOORDS:
+			return sizeof(S3DVertex2TCoords);
+		case EVT_TANGENTS:
+			return sizeof(S3DVertexTangents);
+		default:
+			return sizeof(S3DVertex);
+		}
+	}
 }
 
 #endif

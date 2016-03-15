@@ -2,14 +2,17 @@
 #define __SAPPHIRE_LOG__
 
 #include "SapphirePrerequisites.h"
+#include "SapphireIReferenceCounter.h"
 #include "SapphireString.h"
 
 namespace Sapphire {
- 
+
+	class IEventReceiver;
+
 	// LogMessageLevel + LoggingLevel > SAPPHIRE_LOG_THRESHOLD = message logged
 #define SAPPHIRE_LOG_THRESHOLD 4
 
-	/** 
+	/**
 	将进入更详细的日志细节等级
 	*/
 	enum LoggingLevel
@@ -19,7 +22,7 @@ namespace Sapphire {
 		LL_BOREME = 3
 	};
 
-	/** 
+	/**
 	日志消息的价值
 	*/
 	enum LogMessageLevel
@@ -46,7 +49,7 @@ namespace Sapphire {
 		@param lml
 		要使用的信息级别
 		@param maskDebug
-	    决定我们是否输出到控制台
+		决定我们是否输出到控制台
 		@param logName
 		这个日志的名字,(对于不同的日志你可以使用几个监听器，并且确定它)
 		@param skipThisMessage
@@ -60,10 +63,12 @@ namespace Sapphire {
 	@remarks
 	日志类对于输出debug/log 数据到文件
 	@note
-	<br>不能被直接使用，插入到LogManager中 
+	<br>不能被直接使用，插入到LogManager中
 	*/
-	class _SapphireExport Log : public LogAlloc
+	class _SapphireExport Log : public LogAlloc, virtual IReferenceCounter
 	{
+	private:
+		IEventReceiver* Receiver;
 	protected:
 		std::ofstream	mLog;    //文件输出流
 		LoggingLevel	mLogLevel;     //log等级
@@ -84,6 +89,11 @@ namespace Sapphire {
 			构造函数，由LogManager调用
 			*/
 			Log(const String& name, bool debugOutput = true, bool suppressFileOutput = false);
+		/**
+			@remarks
+			构造函数，由LogManager调用
+			*/
+		Log(const String& name, IEventReceiver* recevier, bool debugOutput = true, bool suppressFileOutput = false);
 
 		/**
 		@remarks
@@ -91,6 +101,9 @@ namespace Sapphire {
 		*/
 		~Log();
 
+
+		//! 设置event receiver
+		void setReceiver(IEventReceiver* r);
 		/// 返回log的名字
 		const String& getName() const { return mLogName; }
 		/// 获取是否要debug输出日志的开启
@@ -100,7 +113,7 @@ namespace Sapphire {
 		/// 获取是否加上时间输出到这个日志
 		bool isTimeStampEnabled() const { return mTimeStamp; }
 
-		/** 
+		/**
 		记录信息到debugger并且记录文件(这个默认是SAPPHIRE.log),
 		*/
 		void logMessage(const String& message, LogMessageLevel lml = LML_NORMAL, bool maskDebug = false);
@@ -130,7 +143,7 @@ namespace Sapphire {
 		@remarks
 		注册一个监听器到这个日志
 		@param
-	    一个有效的监听器派生类
+		一个有效的监听器派生类
 		*/
 		void addListener(LogListener* listener);
 
@@ -142,14 +155,14 @@ namespace Sapphire {
 		*/
 		void removeListener(LogListener* listener);
 
-		/** 
+		/**
 		日志的目标流对象
 		@remarks
 		一个流日志对象使它更简单的发送不同东西到一个日志.
 		你能用操作符<<实现所有事情到流到日志。在调用Stream：：Flush之前它会缓冲。
 		或者这个流自己被销毁，此时缓冲内容会被发送到默认的日志。
 		可以不用关联它到一个局部变量，而直接使用Log::stream()并且一旦流完成，这个对象将被销毁，日志被记录。
-		
+
 		@par
 		你能够用流控制操作这个对象，就如同std::setw() 并且 std::setfill() 去控制格式
 		@note
@@ -206,7 +219,7 @@ namespace Sapphire {
 			}
 
 
-		};
+			};
 #if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_NACL
 	protected:
 		static pp::Instance* mInstance;
@@ -214,8 +227,8 @@ namespace Sapphire {
 		static void setInstance(pp::Instance* instance) { mInstance = instance; };
 #endif
 
-	};
-	 
-}
+		};
+
+	}
 
 #endif

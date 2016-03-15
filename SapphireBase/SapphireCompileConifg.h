@@ -12,6 +12,13 @@ you will not be able to use anything provided by the GUI Environment, including 
 #endif
 
 
+//! Comment this line to compile without the fallback console device.
+#define SAPPHIRE_COMPILE_WITH_CONSOLE_DEVICE_
+#ifdef NO_SAPPHIRE_COMPILE_WITH_CONSOLE_DEVICE_
+#undef SAPPHIRE_COMPILE_WITH_CONSOLE_DEVICE_
+#endif
+
+
 
 //! Define SAPPHIRE_COMPILE_WITH_LIBPNG_ to enable compiling the engine using libpng.
 /** This enables the engine to read png images. If you comment this out,
