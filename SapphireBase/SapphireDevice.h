@@ -32,7 +32,7 @@ namespace Sapphire
 	//! 设备. 你可以通过函数createDevice() 或 createDeviceEx()创建设备
 	/** 这是引擎最重要的类。如果你有一个这个类的实例指针，你就可以访问引擎的所有东西。这个类在任何时刻只能有一个实例。
 	*/
-	class Device
+	class Device : public virtual IReferenceCounter
 	{
 	public:
 
@@ -202,7 +202,7 @@ namespace Sapphire
 		\param joystickInfo , 返回的手柄信息，这将包含每一个找到和激活的手柄数组
 		\return true 如果在这个设备上被支持和_IRR_COMPILE_WITH_JOYSTICK_EVENTS_被定义，返回True
 		*/
-		virtual bool activateJoysticks(std::vector<SJoystickInfo>& joystickInfo) = 0;
+		virtual bool activateJoysticks(vector<SJoystickInfo>::type& joystickInfo) = 0;
 
 		//! 设置显示的当前的gamma值
 		virtual bool setGammaRamp(Real red, Real green, Real blue,

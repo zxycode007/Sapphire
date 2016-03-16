@@ -48,7 +48,7 @@ namespace Sapphire
 	
 
 
-	class ISceneNode : public SceneAlloc, virtual public  IReferenceCounter
+	class ISceneNode : virtual public  IReferenceCounter
 	{
 	public:
 

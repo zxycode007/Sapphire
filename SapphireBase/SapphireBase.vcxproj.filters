@@ -1119,9 +1119,6 @@
     <ClInclude Include="SapphireCSceneLoader.h">
       <Filter>源文件\scene\loader</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireISceneUserDataSerializer.h">
-      <Filter>头文件\IO</Filter>
-    </ClInclude>
     <ClInclude Include="SapphireCParticleAnimatedMeshSceneNodeEmitter.h">
       <Filter>源文件\scene\particleSystem</Filter>
     </ClInclude>
@@ -1211,6 +1208,15 @@
     </ClInclude>
     <ClInclude Include="SapphireDeviceConsole.h">
       <Filter>源文件\device</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireDeviceW32.h">
+      <Filter>源文件\device</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCOSOperator.h">
+      <Filter>源文件\device</Filter>
+    </ClInclude>
+    <ClInclude Include="Sapphire.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1879,6 +1885,18 @@
     </ClCompile>
     <ClCompile Include="SapphireDeviceStub.cpp">
       <Filter>源文件\device</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireDeviceConsole.cpp">
+      <Filter>源文件\device</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireDeviceW32cpp.cpp">
+      <Filter>源文件\device</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCOSOperator.cpp">
+      <Filter>源文件\device</Filter>
+    </ClCompile>
+    <ClCompile Include="Sapphire.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

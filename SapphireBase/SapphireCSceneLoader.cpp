@@ -5,6 +5,7 @@
 #include "SapphireIFileSystem.h"
 #include "SapphireOS.h"
 #include "SapphireSceneParameters.h"
+#include "SapphireIUserDataSerializer.h"
 
 
 namespace Sapphire

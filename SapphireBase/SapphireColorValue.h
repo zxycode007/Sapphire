@@ -582,6 +582,82 @@ namespace Sapphire {
 			return *this;
 		}
 
+		//! set the color by expecting data in the given format
+		/** \param data: must point to valid memory containing color information in the given format
+		\param format: tells the format in which data is available
+		*/
+		void setData(const void *data, ECOLOR_FORMAT format)
+		{
+			UINT32 color;
+			switch (format)
+			{
+			case ECF_A1R5G5B5:
+				color = A1R5G5B5toA8R8G8B8(*(UINT16*)data);
+				break;
+			case ECF_R5G6B5:
+				color = R5G6B5toA8R8G8B8(*(UINT16*)data);
+				break;
+			case ECF_A8R8G8B8:
+				color = *(UINT32*)data;
+				break;
+			case ECF_R8G8B8:
+			{
+				UINT8* p = (UINT8*)data;
+				//set(255, p[0], p[1], p[2]);
+				color = ((255 & 0xff) << 24) | ((p[0] & 0xff) << 16) | ((p[1] & 0xff) << 8) | (p[2] & 0xff);
+			}
+			break;
+			default:
+				color = 0xffffffff;
+				break;
+			}
+			setAsARGB(color);
+		}
+
+		//! 以指定的颜色格式写入一个颜色数据
+		/** \param data: 目标的颜色数据。必须包含足够大的内容一般接受指定格式的颜色数据
+		\param format: 告诉要用什么颜色数据
+		*/
+		void getData(void *data, ECOLOR_FORMAT format)
+		{
+			UINT32 color = getAsARGB();
+			switch (format)
+			{
+			case ECF_A1R5G5B5:
+			{
+				UINT16 * dest = (UINT16*)data;
+				*dest = A8R8G8B8toA1R5G5B5(color);
+			}
+			break;
+
+			case ECF_R5G6B5:
+			{
+				UINT16 * dest = (UINT16*)data;
+				*dest = A8R8G8B8toR5G6B5(color);
+			}
+			break;
+
+			case ECF_R8G8B8:
+			{
+				UINT8* dest = (UINT8*)data;
+				dest[0] = (UINT8)getRed();
+				dest[1] = (UINT8)getGreen();
+				dest[2] = (UINT8)getBlue();
+			}
+			break;
+
+			case ECF_A8R8G8B8:
+			{
+				UINT32 * dest = (UINT32*)data;
+				*dest = color;
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+
 		/** 设置色相Hue，饱和度Saturation，和明亮度Brithtness
 		@param hue 色相值, 将0-360缩放到 [0,1]范围
 		@param saturation 饱和度级别, [0,1]
@@ -603,6 +679,7 @@ namespace Sapphire {
 		/** \param data: 目标的颜色数据。必须包含足够大的内容一般接受指定格式的颜色数据
 		\param format: 告诉要用什么颜色数据
 		*/
+		/*
 		void getData(void *data, ECOLOR_FORMAT format)
 		{
 			switch (format)
@@ -641,6 +718,8 @@ namespace Sapphire {
 				break;
 			}
 		}
+		*/
+
 
 		//! 用Real插值这个颜色到另外一个颜色
 		/** \param other: 另外的颜色

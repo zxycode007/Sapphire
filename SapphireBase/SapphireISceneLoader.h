@@ -3,12 +3,13 @@
 
 #include "SapphireIReferenceCounter.h"
 #include "SapphirePath.h"
+#include "SapphireIUserDataSerializer.h"
 
 namespace Sapphire
 {
 	class IReadFile;
 	class ISceneNode;
-	class ISceneUserDataSerializer;
+	//class ISceneUserDataSerializer;
 
 	//! 这个类能够加载一个场景到场景管理器中
 	/** 如果你想要引擎加载当前不支持的场景文件格式，那么实现这个接口，并且用ISceneManager::addExternalSceneLoader()添加你的新SceneLoader到引擎  */

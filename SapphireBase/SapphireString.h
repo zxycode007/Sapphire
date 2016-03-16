@@ -198,9 +198,13 @@ namespace Sapphire {
 			const char* cstr = src.c_str();
 			size_t cstr_len = src.length();
 			wchar_t* wstr = SAPPHIRE_ALLOC_T(wchar_t, cstr_len*sizeof(wchar_t), MEMCATEGORY_GENERAL);
+			char* old_local = _strdup(setlocale(LC_ALL, ""));   //备份原来的设置
+			setlocale(LC_ALL, SAPPHIRE_LOCATION_SET);
 			mbstowcs(wstr, cstr, cstr_len);
 			StringW ret = wstr;
+			setlocale(LC_ALL, old_local);
 			SAPPHIRE_FREE(wstr, MEMCATEGORY_GENERAL);
+			free(old_local);
 			return ret;
 		}
 
@@ -209,7 +213,7 @@ namespace Sapphire {
 			const wchar_t* cwstr = src.c_str();
 			size_t cwstr_len = src.length()*2;
 			char* str = SAPPHIRE_ALLOC_T(char, cwstr_len*sizeof(char), MEMCATEGORY_GENERAL);
-			char* old_local = _strdup(setlocale(LC_ALL, NULL));   //备份原来的设置
+			char* old_local = _strdup(setlocale(LC_ALL, ""));   //备份原来的设置
 			setlocale(LC_ALL, SAPPHIRE_LOCATION_SET);
 			wcstombs(str, cwstr, cwstr_len);
 			String ret = str;

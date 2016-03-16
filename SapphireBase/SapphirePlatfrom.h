@@ -92,9 +92,10 @@ namespace Sapphire
 
 	/* 判断当前平台 */
 	//win32平台
-#if defined( __WIN32__ ) || defined( _WIN32 )
-#   define SAPPHIRE_PLATFORM SAPPHIRE_PLATFORM_WIN32
-#define 	_SAPPHIRE_COMPILE_WITH_WINDOWS_DEVICE_
+#if defined(_WIN32) || defined(_WIN64) || defined(WIN32) || defined(WIN64)
+#define SAPPHIRE_PLATFORM SAPPHIRE_PLATFORM_WIN32
+#define _SAPPHIRE_WINDOWS_
+#define _SAPPHIRE_WINDOWS_API_
 	//苹果平台
 #elif defined( __APPLE_CC__)
 #   if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 40000 || __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000

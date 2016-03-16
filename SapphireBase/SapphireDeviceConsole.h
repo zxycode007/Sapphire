@@ -137,10 +137,10 @@ namespace Sapphire
 			}
 
 			//! Sets the new position of the cursor.
-			virtual void setPosition(const Position2d &pos)
-			{
-				setPosition(pos.x, pos.y);
-			}
+			//virtual void setPosition(const Position2d &pos)
+			//{
+			//	setPosition(pos.x, pos.y);
+			//}
 
 			//! Sets the new position of the cursor.
 			virtual void setPosition(SINT32 x, SINT32 y)
@@ -148,6 +148,7 @@ namespace Sapphire
 				setInternalCursorPosition(Position2d(x, y));
 			}
 
+			
 			//! Returns the current position of the mouse cursor.
 			virtual const Position2d& getPosition()
 			{

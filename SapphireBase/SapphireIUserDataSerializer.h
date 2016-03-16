@@ -1,8 +1,9 @@
 #ifndef _SAPPHIRE_USER_DATA_SERIALIZER
 #define _SAPPHIRE_USER_DATA_SERIALIZER
 
-class IAttributes;
-class ISceneNode;
+#include "SapphireIAttributes.h"
+#include "SapphireISceneNode.h"
+
 
 namespace Sapphire
 {
