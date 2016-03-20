@@ -365,7 +365,7 @@ namespace Sapphire
 		virtual IGUIFileOpenDialog* addFileOpenDialog(const wchar_t* title = 0,
 			bool modal = true, IGUIElement* parent = 0, SINT32 id = -1,
 			//bool restoreCWD = false, path::char_type* startDir = 0) = 0;
-			bool restoreCWD = false, String startDir = 0) = 0;
+			bool restoreCWD = false, wchar_t* startDir = 0) = 0;
 
 		//! Adds a color select dialog.
 		/** \param title The title of the dialog.

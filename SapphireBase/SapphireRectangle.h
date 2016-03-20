@@ -74,6 +74,7 @@ namespace Sapphire {
 			return *this;
 		}
 
+
 		//! 向左移动给定的量
 		rect<T> operator-(const position2d& pos) const
 		{

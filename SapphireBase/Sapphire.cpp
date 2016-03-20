@@ -119,8 +119,9 @@ namespace Sapphire
 
 	namespace video
 	{
-		SMaterial IdentityMaterial;
+		
 	}
+	SMaterial IdentityMaterial;
 
 } // end namespace irr
 

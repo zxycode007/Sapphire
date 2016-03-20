@@ -535,7 +535,14 @@ namespace Sapphire
 	}
 
 	 
-	
+	namespace video
+	{
+
+	}
+	namespace core
+	{
+
+	}
 
 }
 

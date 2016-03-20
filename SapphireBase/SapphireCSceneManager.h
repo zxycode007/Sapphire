@@ -35,7 +35,7 @@ namespace Sapphire
 		virtual ~CSceneManager();
 
 		//! gets an animateable mesh. loads it if needed. returned pointer must not be dropped.
-		virtual IAnimatedMesh* getMesh(const path& filename);
+		virtual IAnimatedMesh* getMesh(const String& filename);
 
 		//! gets an animateable mesh. loads it if needed. returned pointer must not be dropped.
 		virtual IAnimatedMesh* getMesh(IReadFile* file);
@@ -74,7 +74,8 @@ namespace Sapphire
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f));
 
 		//! adds a scene node for rendering an animated mesh model
-		virtual IAnimatedMeshSceneNode* addAnimatedMeshSceneNode(IAnimatedMesh* mesh, ISceneNode* parent = 0, SINT32 id = -1,
+		virtual IAnimatedMeshSceneNode* addAnimatedMeshSceneNode(IAnimatedMesh* mesh,
+			ISceneNode* parent = 0, SINT32 id = -1,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f),
@@ -177,8 +178,8 @@ namespace Sapphire
 		//! Adds a text scene node, which is able to display
 		//! 2d text at a position in three dimensional space
 		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const wchar_t* text,
-			ColourValue color = ColourValue(100, 255, 255, 255),
-			ISceneNode* parent = 0, const Vector3& position = Vector3(0, 0, 0),
+			ColourValue color = ColourValue::getColourValue(100, 255, 255, 255),
+			ISceneNode* parent = 0, Vector3& position = Vector3(0, 0, 0),
 			SINT32 id = -1);
 
 		//! Adds a text scene node, which uses billboards

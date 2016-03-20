@@ -48,7 +48,7 @@ namespace Sapphire
 	
 
 
-	class ISceneNode : virtual public  IReferenceCounter
+	class ISceneNode : public virtual  IReferenceCounter
 	{
 	public:
 
@@ -404,7 +404,7 @@ namespace Sapphire
 		\return ²ÄÖÊË÷Òı */
 		virtual  SMaterial& getMaterial(UINT32 num)
 		{
-			return IdentityMaterial;
+			return  IdentityMaterial;
 		}
 
 

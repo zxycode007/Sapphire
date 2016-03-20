@@ -109,6 +109,12 @@
     <Filter Include="源文件\scene\writers">
       <UniqueIdentifier>{3049c9e0-b910-49b8-b9c2-c0527a9f4178}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\externs\aesGladman">
+      <UniqueIdentifier>{6ec11a5a-4f65-475a-8a48-0ca0d98237e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\externs\bzip2">
+      <UniqueIdentifier>{098fd04b-43ca-4d4c-808f-a1773cf18f84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -1218,6 +1224,60 @@
     <ClInclude Include="Sapphire.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="aesGladman\aes.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\aesopt.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\fileenc.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\hmac.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\prng.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\pwd2key.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\sha1.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="aesGladman\sha2.h">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClInclude>
+    <ClInclude Include="bzip2\bzlib.h">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClInclude>
+    <ClInclude Include="bzip2\bzlib_private.h">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClInclude>
+    <ClInclude Include="lzma\LzmaDec.h">
+      <Filter>源文件\externs</Filter>
+    </ClInclude>
+    <ClInclude Include="lzma\Types.h">
+      <Filter>源文件\externs</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIEnvironment.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCGUIFileOpenDialog.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireBuiltInFont.h">
+      <Filter>源文件\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMD2MeshFileLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCMD3MeshFileLoader.h">
+      <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireCSceneNodeAnimatorDelete.h">
+      <Filter>源文件\scene\animator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1889,14 +1949,83 @@
     <ClCompile Include="SapphireDeviceConsole.cpp">
       <Filter>源文件\device</Filter>
     </ClCompile>
-    <ClCompile Include="SapphireDeviceW32cpp.cpp">
-      <Filter>源文件\device</Filter>
-    </ClCompile>
     <ClCompile Include="SapphireCOSOperator.cpp">
       <Filter>源文件\device</Filter>
     </ClCompile>
     <ClCompile Include="Sapphire.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\aescrypt.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\aeskey.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\aestab.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\fileenc.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\hmac.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\prng.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\pwd2key.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\sha1.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="aesGladman\sha2.cpp">
+      <Filter>源文件\externs\aesGladman</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\blocksort.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\bzcompress.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\bzlib.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\crctable.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\decompress.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\huffman.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="bzip2\randtable.c">
+      <Filter>源文件\externs\bzip2</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireDeviceW32.cpp">
+      <Filter>源文件\device</Filter>
+    </ClCompile>
+    <ClCompile Include="lzma\LzmaDec.c">
+      <Filter>源文件\externs</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIEnvironment.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCGUIFileOpenDialog.cpp">
+      <Filter>源文件\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMD2MeshFileLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCMD3MeshFileLoader.cpp">
+      <Filter>源文件\scene\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCSceneNodeAnimatorDelete.cpp">
+      <Filter>源文件\scene\animator</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCAnimatedMeshSceneNode.cpp">
+      <Filter>源文件\scene\nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

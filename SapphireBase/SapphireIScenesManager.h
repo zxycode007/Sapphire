@@ -202,7 +202,7 @@ namespace Sapphire
 		\param rotation: 初始的旋转
 		\param scale: 初始的缩放
 		\return 指向创建的测试节点的指针 */
-		virtual IMeshSceneNode* addCubeSceneNode(Real size = 10.0f, ISceneNode* parent = 0, SINT32 id = -1,
+		virtual IMeshSceneNode* addCubeSceneNode(FLOAT32 size = 10.0f, ISceneNode* parent = 0, SINT32 id = -1,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f)) = 0;
@@ -218,7 +218,7 @@ namespace Sapphire
 		\param rotation: 初始的旋转
 		\param scale: 初始的缩放
 		\return Pointer 指向创建的测试节点的指针 */
-		virtual IMeshSceneNode* addSphereSceneNode(Real radius = 5.0f, SINT32 polyCount = 16,
+		virtual IMeshSceneNode* addSphereSceneNode(FLOAT32 radius = 5.0f, SINT32 polyCount = 16,
 			ISceneNode* parent = 0, SINT32 id = -1,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
@@ -240,7 +240,7 @@ namespace Sapphire
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
 			const Vector3& scale = Vector3(1.0f, 1.0f, 1.0f),
-			bool alsoAddIfMeshPointerZero = false) const = 0;
+			bool alsoAddIfMeshPointerZero = false)  = 0;
 
 
 		//! 添加用于渲染的静态网格的一个场景节点（长期保留的网格）
@@ -274,7 +274,7 @@ namespace Sapphire
 		\param alsoAddIfMeshPointerZero: 如果传递个空指针，也添加场景节点
 		\return 指向创建的测试节点的指针. */
 		virtual ISceneNode* addWaterSurfaceSceneNode(IMesh* mesh,
-			Real waveHeight = 2.0f, Real waveSpeed = 300.0f, Real waveLength = 10.0f,
+			FLOAT32 waveHeight = 2.0f, FLOAT32 waveSpeed = 300.0f, FLOAT32 waveLength = 10.0f,
 			ISceneNode* parent = 0, SINT32 id = -1,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& rotation = Vector3(0, 0, 0),
@@ -336,8 +336,8 @@ namespace Sapphire
 		\param makeActive 设置该相机为活动的一个，确定同时只能有一个活动相机、
 		\return 如果成功返回一个相机接口的指针 */
 		virtual ICameraSceneNode* addCameraSceneNodeMaya(ISceneNode* parent = 0,
-			Real rotateSpeed = -1500.f, Real zoomSpeed = 200.f,
-			Real translationSpeed = 1500.f, Real id = -1, Real distance = 70.f,
+			FLOAT32 rotateSpeed = -1500.f, FLOAT32 zoomSpeed = 200.f,
+			FLOAT32 translationSpeed = 1500.f, SINT32 id = -1, FLOAT32 distance = 70.f,
 			bool makeActive = true) = 0;
 
 		//! 
@@ -404,7 +404,7 @@ namespace Sapphire
 		virtual ILightSceneNode* addLightSceneNode(ISceneNode* parent = 0,
 			const Vector3& position = Vector3(0, 0, 0),
 			ColourValue = ColourValue(1.0f, 1.0f, 1.0f),
-			Real radius = 100.0f, SINT32 id = -1) = 0;
+			FLOAT32 radius = 100.0f, SINT32 id = -1) = 0;
 
 
 
@@ -456,8 +456,8 @@ namespace Sapphire
 		\return 如果成功返回一个接口的指针 */
 		virtual ISceneNode* addSkyDomeSceneNode(ITexture* texture,
 			UINT32 horiRes = 16, UINT32 vertRes = 8,
-			Real texturePercentage = 0.9, Real spherePercentage = 2.0, Real radius = 1000.f,
-			ISceneNode* parent = 0, Real id = -1) = 0;
+			FLOAT32 texturePercentage = 0.9, FLOAT32 spherePercentage = 2.0, FLOAT32 radius = 1000.f,
+			ISceneNode* parent = 0, SINT32 id = -1) = 0;
 
 
 
@@ -554,7 +554,7 @@ namespace Sapphire
 
 
 		//! 添加一个文本场景节点，它显示一个2d文本到3维空间的一个位置
-		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const StringW text,
+		virtual ITextSceneNode* addTextSceneNode(IGUIFont* font, const wchar_t* text,
 			ColourValue color = ColourValue::getColourValue(100, 255, 255, 255),
 			ISceneNode* parent = 0, Vector3& position = Vector3(0, 0, 0),
 			SINT32 id = -1) = 0;
@@ -572,9 +572,9 @@ namespace Sapphire
 		\param colorTop billboard顶点颜色的最高值（默认white）
 		\param colorBottom billboard顶点颜色的最低值（默认white)
 		\return 返回节点指针 */
-		virtual IBillboardTextSceneNode* addBillboardTextSceneNode(IGUIFont* font, const String* text,
+		virtual IBillboardTextSceneNode* addBillboardTextSceneNode(IGUIFont* font, const wchar_t* text,
 			ISceneNode* parent = 0,
-			const  dimension2d<Real>& size = dimension2d<Real>(10.0f, 10.0f),
+			const  dimension2d<FLOAT32>& size = dimension2d<FLOAT32>(10.0f, 10.0f),
 			const Vector3& position = Vector3(0, 0, 0), SINT32 id = -1,
 			ColourValue colorTop = ColourValue::getColourValue(255, 255, 255, 255), ColourValue colorBottom = ColourValue::getColourValue(255, 255, 255, 255)) = 0;
 
@@ -592,10 +592,10 @@ namespace Sapphire
 		\param textureRepeatCount: 定义在x和y方向纹理重复的次数
 		return 如果创建失败返回NULL。 这个原因由于无效参数造成*/
 		virtual IAnimatedMesh* addHillPlaneMesh(const  path& name,
-			const dimension2d<Real>& tileSize, const  dimension2d<UINT32>& tileCount,
-			SMaterial* material = 0, Real hillHeight = 0.0f,
-			const dimension2d<Real>& countHills = dimension2d<Real>(0.0f, 0.0f),
-			const dimension2d<Real>& textureRepeatCount = dimension2d<Real>(1.0f, 1.0f)) = 0;
+			const dimension2d<FLOAT32>& tileSize, const  dimension2d<UINT32>& tileCount,
+			SMaterial* material = 0, FLOAT32 hillHeight = 0.0f,
+			const dimension2d<FLOAT32>& countHills = dimension2d<FLOAT32>(0.0f, 0.0f),
+			const dimension2d<FLOAT32>& textureRepeatCount = dimension2d<FLOAT32>(1.0f, 1.0f)) = 0;
 
 
 
@@ -613,8 +613,8 @@ namespace Sapphire
 		\return Null 如果创建失败，可能因为无效参数，或者这个网格名已经存在,或者纹理没有找到；如果成功，返回网格指针 */
 		virtual IAnimatedMesh* addTerrainMesh(const  path& meshname,
 			IImage* texture, IImage* heightmap,
-			const  dimension2d<Real>& stretchSize = dimension2d<Real>(10.0f, 10.0f),
-			Real maxHeight = 200.0f,
+			const  dimension2d<FLOAT32>& stretchSize = dimension2d<FLOAT32>(10.0f, 10.0f),
+			FLOAT32 maxHeight = 200.0f,
 			const  dimension2d<UINT32>& defaultVertexBlockSize = dimension2d<UINT32>(64, 64)) = 0;
 
 
@@ -635,8 +635,8 @@ namespace Sapphire
 			ColourValue vtxColorCylinder = ColourValue::getColourValue(255, 255, 255, 255),
 			ColourValue vtxColorCone = ColourValue::getColourValue(255, 255, 255, 255),
 			UINT32 tesselationCylinder = 4, UINT32 tesselationCone = 8,
-			Real height = 1.f, Real cylinderHeight = 0.6f,
-			Real widthCylinder = 0.05f, Real widthCone = 0.3f) = 0;
+			FLOAT32 height = 1.f, FLOAT32 cylinderHeight = 0.6f,
+			FLOAT32 widthCylinder = 0.05f, FLOAT32 widthCone = 0.3f) = 0;
 
 
 
@@ -648,7 +648,7 @@ namespace Sapphire
 		\return 如果成功，返回球体网格指针，否则返回0
 		 */
 		virtual IAnimatedMesh* addSphereMesh(const path& name,
-			Real radius = 5.f, UINT32 polyCountX = 16,
+			FLOAT32 radius = 5.f, UINT32 polyCountX = 16,
 			UINT32 polyCountY = 16) = 0;
 
 
@@ -706,7 +706,7 @@ namespace Sapphire
 		\param outNodes: 要填充的结果数组
 		\param start: 从这个场景节点开始，所有的只节点都会被搜索。如果NULL被指定，那么会从根节点开始 */
 		virtual void getSceneNodesFromType(ESCENE_NODE_TYPE type,
-			vector<ISceneNode*>& outNodes,
+			vector<ISceneNode*>::type& outNodes,
 			ISceneNode* start = 0) = 0;
 
 
@@ -768,10 +768,10 @@ namespace Sapphire
 		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
 		virtual ISceneNodeAnimator* createFlyCircleAnimator(
 			const Vector3& center = Vector3(0.f, 0.f, 0.f),
-			Real radius = 100.f, Real speed = 0.001f,
+			FLOAT32 radius = 100.f, FLOAT32 speed = 0.001f,
 			const Vector3& direction = Vector3(0.f, 1.f, 0.f),
-			Real startPosition = 0.f,
-			Real radiusEllipsoid = 0.f) = 0;
+			FLOAT32 startPosition = 0.f,
+			FLOAT32 radiusEllipsoid = 0.f) = 0;
 		
 
 
@@ -794,7 +794,7 @@ namespace Sapphire
 		\param loop: 如果为false，动画停止后，最后一个纹理会被设置。如果为true，动画会重新从第一个纹理开始。
 		\return 这个animator. 关联它到场景节点用ISceneNode::addAnimator()，然后这个animator能够活动它
 		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
-		virtual ISceneNodeAnimator* createTextureAnimator(const vector<ITexture*>& textures,
+		virtual ISceneNodeAnimator* createTextureAnimator(const vector<ITexture*>::type& textures,
 			SINT32 timePerFrame, bool loop = true) = 0;
 
 
@@ -829,7 +829,7 @@ namespace Sapphire
 			const Vector3& ellipsoidRadius = Vector3(30, 60, 30),
 			const Vector3& gravityPerSecond = Vector3(0, -10.0f, 0),
 			const Vector3& ellipsoidTranslation = Vector3(0, 0, 0),
-			Real slidingValue = 0.0005f) = 0;
+			FLOAT32 slidingValue = 0.0005f) = 0;
 
 
 
@@ -838,7 +838,7 @@ namespace Sapphire
 		这个animator在1/speed秒内从一个控制点移动到下一个。
 		如果不需要长期用animator，可以调用ISceneNodeAnimator::drop() */
 		virtual ISceneNodeAnimator* createFollowSplineAnimator(SINT32 startTime,
-			const vector< Vector3 >& points,
+			const vector< Vector3 >::type& points,
 			Real speed = 1.0f, Real tightness = 0.5f, bool loop = true, bool pingpong = false) = 0;
 
 

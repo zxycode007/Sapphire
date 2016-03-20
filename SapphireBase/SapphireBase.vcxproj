@@ -70,6 +70,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="aesGladman\aes.h" />
+    <ClInclude Include="aesGladman\aesopt.h" />
+    <ClInclude Include="aesGladman\fileenc.h" />
+    <ClInclude Include="aesGladman\hmac.h" />
+    <ClInclude Include="aesGladman\prng.h" />
+    <ClInclude Include="aesGladman\pwd2key.h" />
+    <ClInclude Include="aesGladman\sha1.h" />
+    <ClInclude Include="aesGladman\sha2.h" />
+    <ClInclude Include="bzip2\bzlib.h" />
+    <ClInclude Include="bzip2\bzlib_private.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="jpeglib\cderror.h" />
     <ClInclude Include="jpeglib\jdct.h" />
@@ -87,11 +97,14 @@
     <ClInclude Include="libpng\pnglibconf.h" />
     <ClInclude Include="libpng\pngpriv.h" />
     <ClInclude Include="libpng\pngstruct.h" />
+    <ClInclude Include="lzma\LzmaDec.h" />
+    <ClInclude Include="lzma\Types.h" />
     <ClInclude Include="Sapphire.h" />
     <ClInclude Include="SapphireAlignedAllocator.h" />
     <ClInclude Include="SapphireAny.h" />
     <ClInclude Include="SapphireAxisAlignedBox.h" />
     <ClInclude Include="SapphireBuildSets.h" />
+    <ClInclude Include="SapphireBuiltInFont.h" />
     <ClInclude Include="SapphireCAnimatedMeshMD2.h" />
     <ClInclude Include="SapphireCAnimatedMeshMD3.h" />
     <ClInclude Include="SapphireCAnimatedMeshSceneNode.h" />
@@ -120,6 +133,8 @@
     <ClInclude Include="SapphireCGUICheckBox.h" />
     <ClInclude Include="SapphireCGUIColorSelectDialog.h" />
     <ClInclude Include="SapphireCGUIContextMenu.h" />
+    <ClInclude Include="SapphireCGUIEnvironment.h" />
+    <ClInclude Include="SapphireCGUIFileOpenDialog.h" />
     <ClInclude Include="SapphireCGUIFont.h" />
     <ClInclude Include="SapphireCGUIImage.h" />
     <ClInclude Include="SapphireCGUIImageList.h" />
@@ -150,6 +165,8 @@
     <ClInclude Include="SapphireCImageWriterTGA.h" />
     <ClInclude Include="SapphireCIndexBuffer.h" />
     <ClInclude Include="SapphireCLightSceneNode.h" />
+    <ClInclude Include="SapphireCMD2MeshFileLoader.h" />
+    <ClInclude Include="SapphireCMD3MeshFileLoader.h" />
     <ClInclude Include="SapphireCMemoryFile.h" />
     <ClInclude Include="SapphireCMeshBuffer.h" />
     <ClInclude Include="SapphireCMeshCache.h" />
@@ -202,6 +219,7 @@
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraFPS.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraMaya.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCollisionResponse.h" />
+    <ClInclude Include="SapphireCSceneNodeAnimatorDelete.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFinish.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFlyCircle.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFlyStraight.h" />
@@ -441,6 +459,22 @@
     <ClInclude Include="zlib\zutil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aesGladman\aescrypt.cpp" />
+    <ClCompile Include="aesGladman\aeskey.cpp" />
+    <ClCompile Include="aesGladman\aestab.cpp" />
+    <ClCompile Include="aesGladman\fileenc.cpp" />
+    <ClCompile Include="aesGladman\hmac.cpp" />
+    <ClCompile Include="aesGladman\prng.cpp" />
+    <ClCompile Include="aesGladman\pwd2key.cpp" />
+    <ClCompile Include="aesGladman\sha1.cpp" />
+    <ClCompile Include="aesGladman\sha2.cpp" />
+    <ClCompile Include="bzip2\blocksort.c" />
+    <ClCompile Include="bzip2\bzcompress.c" />
+    <ClCompile Include="bzip2\bzlib.c" />
+    <ClCompile Include="bzip2\crctable.c" />
+    <ClCompile Include="bzip2\decompress.c" />
+    <ClCompile Include="bzip2\huffman.c" />
+    <ClCompile Include="bzip2\randtable.c" />
     <ClCompile Include="jpeglib\jaricom.c" />
     <ClCompile Include="jpeglib\jcapimin.c" />
     <ClCompile Include="jpeglib\jcapistd.c" />
@@ -502,6 +536,7 @@
     <ClCompile Include="libpng\pngwrite.c" />
     <ClCompile Include="libpng\pngwtran.c" />
     <ClCompile Include="libpng\pngwutil.c" />
+    <ClCompile Include="lzma\LzmaDec.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sapphire.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
@@ -509,6 +544,7 @@
     <ClCompile Include="SapphireBoneSceneNode.cpp" />
     <ClCompile Include="SapphireCAnimatedMeshMD2.cpp" />
     <ClCompile Include="SapphireCAnimatedMeshMD3.cpp" />
+    <ClCompile Include="SapphireCAnimatedMeshSceneNode.cpp" />
     <ClCompile Include="SapphireCAttributeImpl.h" />
     <ClCompile Include="SapphireCAttributes.cpp" />
     <ClCompile Include="SapphireCBillboardSceneNode.cpp" />
@@ -530,6 +566,8 @@
     <ClCompile Include="SapphireCGUIComboBox.cpp" />
     <ClCompile Include="SapphireCGUIContextMenu.cpp" />
     <ClCompile Include="SapphireCGUIEditBox.cpp" />
+    <ClCompile Include="SapphireCGUIEnvironment.cpp" />
+    <ClCompile Include="SapphireCGUIFileOpenDialog.cpp" />
     <ClCompile Include="SapphireCGUIFont.cpp" />
     <ClCompile Include="SapphireCGUIImage.cpp" />
     <ClCompile Include="SapphireCGUIImageList.cpp" />
@@ -560,6 +598,8 @@
     <ClCompile Include="SapphireCIXMLReader.cpp" />
     <ClCompile Include="SapphireCLightSceneNode.cpp" />
     <ClCompile Include="SapphireCLimitReadFile.cpp" />
+    <ClCompile Include="SapphireCMD2MeshFileLoader.cpp" />
+    <ClCompile Include="SapphireCMD3MeshFileLoader.cpp" />
     <ClCompile Include="SapphireCMemeoryFile.cpp" />
     <ClCompile Include="SapphireCMeshCache.cpp" />
     <ClCompile Include="SapphireCMeshFileLoader.cpp" />
@@ -604,6 +644,7 @@
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraFPS.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraMaya.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCollisionResponse.cpp" />
+    <ClCompile Include="SapphireCSceneNodeAnimatorDelete.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFinish.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFlyCircle.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFlyStraight.cpp" />
@@ -631,7 +672,7 @@
     <ClCompile Include="SapphireCZipReader.cpp" />
     <ClCompile Include="SapphireDeviceConsole.cpp" />
     <ClCompile Include="SapphireDeviceStub.cpp" />
-    <ClCompile Include="SapphireDeviceW32cpp.cpp" />
+    <ClCompile Include="SapphireDeviceW32.cpp" />
     <ClCompile Include="SapphireEMaterialFlags.h" />
     <ClCompile Include="SapphireException.cpp" />
     <ClCompile Include="SapphireIAnimatedMeshMD2.h" />
