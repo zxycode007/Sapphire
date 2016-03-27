@@ -11,7 +11,6 @@
 #include "SapphireIReadFile.h"
 #include "SapphireIWriteFile.h"
 #include "SapphireISceneLoader.h"
-
 #include "SapphireOS.h"
 
 
@@ -74,7 +73,7 @@
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_OGRE_LOADER_
-//#include "COgreMeshFileLoader.h"
+#include "COgreMeshFileLoader.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_OBJ_LOADER_
@@ -90,19 +89,19 @@
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_LWO_LOADER_
-//#include "CLWOMeshFileLoader.h"
+#include "CLWOMeshFileLoader.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_STL_LOADER_
-//#include "CSTLMeshFileLoader.h"
+#include "CSTLMeshFileLoader.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_PLY_LOADER_
-//#include "CPLYMeshFileLoader.h"
+#include "CPLYMeshFileLoader.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_SMF_LOADER_
-//#include "CSMFMeshFileLoader.h"
+#include "CSMFMeshFileLoader.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_SAPPHIRE_SCENE_LOADER_
@@ -110,7 +109,7 @@
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_COLLADA_WRITER_
-//#include "CColladaMeshWriter.h"
+#include "CColladaMeshWriter.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_SAPPHIRE_WRITER_
@@ -118,15 +117,15 @@
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_STL_WRITER_
-//#include "CSTLMeshWriter.h"
+#include "CSTLMeshWriter.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_OBJ_WRITER_
-//#include "COBJMeshWriter.h"
+#include "COBJMeshWriter.h"
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_PLY_WRITER_
-//#include "CPLYMeshWriter.h"
+#include "CPLYMeshWriter.h"
 #endif
 
 #include "SapphireCCubeSceneNode.h"
@@ -162,7 +161,7 @@
 #include "SapphireCSceneNodeAnimatorFlyStraight.h"
 #include "SapphireCSceneNodeAnimatorTexture.h"
 #include "SapphireCSceneNodeAnimatorCollisionResponse.h"
-#include "SapphireCSceneNodeAnimatorDelete.h"
+#include "SapphireCSceneNodeAnimatorFinish.h"
 #include "SapphireCSceneNodeAnimatorFollowSpline.h"
 #include "SapphireCSceneNodeAnimatorCameraFPS.h"
 #include "SapphireCSceneNodeAnimatorCameraMaya.h"
@@ -264,7 +263,7 @@ namespace Sapphire
 		//MeshLoaderList.push_back(new CLWOMeshFileLoader(this, FileSystem));
 #endif
 #ifdef _SAPPHIRE_COMPILE_WITH_MD2_LOADER_
-		//MeshLoaderList.push_back(new CMD2MeshFileLoader());
+		MeshLoaderList.push_back(new CMD2MeshFileLoader());
 #endif
 #ifdef _SAPPHIRE_COMPILE_WITH_SAPPHIRE_MESH_LOADER_
 		MeshLoaderList.push_back(new CMeshFileLoader(this, FileSystem));
@@ -634,11 +633,13 @@ namespace Sapphire
 
 		if (!parent)
 			parent = this;
-
+		
 		IAnimatedMeshSceneNode* node =
 			new CAnimatedMeshSceneNode(mesh, parent, this, id, position, rotation, scale);
+		
 		node->drop();
-
+		
+		
 		return node;
 	}
 

@@ -4751,6 +4751,26 @@ namespace Sapphire
 
 
 	
+		// -----------------------------------
+		// WINDOWS VERSION
+		// -----------------------------------
+#ifdef _SAPPHIRE_COMPILE_WITH_WINDOWS_DEVICE_
+		IVideoDriver* createOpenGLDriver(const SSapphireCreationParameters& params,
+			IFileSystem* io, CSapphireDeviceWin32* device)
+		{
+#ifdef _SAPPHIRE_COMPILE_WITH_OPENGL_
+			COpenGLDriver* ogl = new COpenGLDriver(params, io, device);
+			if (!ogl->initDriver(device))
+			{
+				ogl->drop();
+				ogl = 0;
+			}
+			return ogl;
+#else
+			return 0;
+#endif // _IRR_COMPILE_WITH_OPENGL_
+		}
+#endif // _IRR_COMPILE_WITH_WINDOWS_DEVICE_
 }
 
 

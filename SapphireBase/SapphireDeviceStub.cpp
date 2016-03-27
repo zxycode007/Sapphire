@@ -35,6 +35,7 @@ namespace Sapphire
 		{
 			//Logger = new CLogger(UserReceiver);
 			Logger = SAPPHIRE_NEW LogManager();
+			LogManager::getSingletonPtr()->createLog("sapphire.log");
 			Logger->getDefaultLog()->setReceiver(UserReceiver);
 			Printer::Logger = Logger;
 		}

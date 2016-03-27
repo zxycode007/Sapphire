@@ -35,11 +35,13 @@ namespace Sapphire
 		Looping(true), ReadOnlyMaterials(false), RenderFromIdentity(false),
 		LoopCallBack(0), PassCount(0), Shadow(0), MD3Special(0)
 	{
+		
 #ifdef _DEBUG
 		setDebugName("CAnimatedMeshSceneNode");
 #endif
-
+		
 		setMesh(mesh);
+		
 	}
 
 
@@ -821,7 +823,7 @@ namespace Sapphire
 	{
 		if (!mesh)
 			return; // won't set null mesh
-
+		
 		if (Mesh != mesh)
 		{
 			if (Mesh)
@@ -832,34 +834,41 @@ namespace Sapphire
 			// grab the mesh (it's non-null!)
 			Mesh->grab();
 		}
-
+		
 		// get materials and bounding box
 		Box = Mesh->getBoundingBox();
-
+		 
 		IMesh* m = Mesh->getMesh(0, 0);
+		 
 		if (m)
 		{
 			Materials.clear();
 			//Materials.reallocate(m->getMeshBufferCount());
 			Materials.reserve(m->getMeshBufferCount());
-
 			for (UINT32 i = 0; i<m->getMeshBufferCount(); ++i)
 			{
 				IMeshBuffer* mb = m->getMeshBuffer(i);
+				
 				if (mb)
-					Materials.push_back(mb->getMaterial());
+				{
+	
+					Materials.push_back(mb->getMaterial());				
+					//Materials.push_back(mb->getMaterial());
+					
+				}
 				else
 					Materials.push_back(SMaterial());
 			}
+			
 		}
-
+		
 		// clean up joint nodes
 		if (JointsUsed)
 		{
 			JointsUsed = false;
 			checkJoints();
 		}
-
+		 
 		// get start and begin time
 		//	setAnimationSpeed(Mesh->getAnimationSpeed());
 		setFrameLoop(0, Mesh->getFrameCount());

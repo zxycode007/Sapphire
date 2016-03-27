@@ -55,14 +55,16 @@ namespace Sapphire
 			LODBias(0)
 			//TextureMatrix(0)
 		{
-			TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
+			//TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
+			TextureMatrix = new Matrix4(Matrix4::IDENTITY);
 		}
 
 		//! 拷贝构造函数
 		/** \param 其它的材质层. */
 		SMaterialLayer(const SMaterialLayer& other)
 		{
-			TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
+			//TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GENERAL);
+			TextureMatrix = new Matrix4(Matrix4::IDENTITY);
 			//TextureMatrix = 0;
 			*this = other;
 		}
@@ -72,7 +74,8 @@ namespace Sapphire
 		{
 			//MatrixAllocator.destruct(TextureMatrix);
 			//MatrixAllocator.deallocate(TextureMatrix);
-			SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+			//SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+			delete TextureMatrix;
 		}
 
 		//! 重载操作符

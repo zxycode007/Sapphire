@@ -1790,7 +1790,15 @@ namespace Sapphire
 
 		SMaterialRenderer r;
 		r.Renderer = renderer;
-		r.Name = name;
+		if (name)
+		{
+			r.Name = name;
+		}
+		else
+		{
+			//r.Name = String();
+		}
+		
 
 		if (name == 0 && (MaterialRenderers.size() < (sizeof(sBuiltInMaterialTypeNames) / sizeof(char*)) - 1))
 		{

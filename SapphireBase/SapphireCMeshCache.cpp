@@ -80,8 +80,18 @@ namespace Sapphire
 	{
 		MeshEntry e(name);
 		//SINT32 id = Meshes.binary_search(e);
-		SINT32 id = std::distance(Meshes.begin(), std::find(Meshes.begin(), Meshes.end(), e));
-		return (id != -1) ? Meshes[id].Mesh : 0;
+		vector<MeshEntry>::iterator it = std::find(Meshes.begin(), Meshes.end(), e);
+		if (it != Meshes.end())
+		{
+			SINT32 id = std::distance(Meshes.begin(), it);
+			return Meshes[id].Mesh;
+		}
+		else
+		{
+			return NULL;
+		}
+		
+		//return (id != -1) ? Meshes[id].Mesh : 0;
 	}
 
 

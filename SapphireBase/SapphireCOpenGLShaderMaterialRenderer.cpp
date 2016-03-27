@@ -48,7 +48,7 @@ namespace Sapphire
 		VertexShader(0), UserData(userData)
 	{
 		//PixelShader.set_used(4);
-		PixelShader.reserve(4);
+		PixelShader.resize(4);
 		for (UINT32 i = 0; i<4; ++i)
 		{
 			PixelShader[i] = 0;

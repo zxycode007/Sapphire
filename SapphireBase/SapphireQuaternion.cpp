@@ -602,6 +602,75 @@ namespace Sapphire
 	}
 
 
+	inline Quaternion& Quaternion::makeIdentity()
+	{
+		w = 1.f;
+		x = 0.f;
+		y = 0.f;
+		z = 0.f;
+		return *this;
+	}
+
+	Quaternion& Quaternion::rotationFromTo(const Vector3& from, const Vector3& to)
+	{
+		// Based on Stan Melax's article in Game Programming Gems
+		// Copy, since cannot modify local
+		Vector3 v0 = from;
+		Vector3 v1 = to;
+		v0.normalize();
+		v1.normalize();
+
+		const FLOAT32 d = v0.dotProduct(v1);
+		if (d >= 1.0f) // If dot == 1, vectors are the same
+		{
+			return makeIdentity();
+		}
+		else if (d <= -1.0f) // exactly opposite
+		{
+			Vector3 axis(1.0f, 0.f, 0.f);
+			axis = axis.crossProduct(v0);
+			if (axis.length() == 0)
+			{
+				axis.set(0.f, 1.f, 0.f);
+				axis = axis.crossProduct(v0);
+			}
+			// same as fromAngleAxis(PI, axis).normalize();
+			set(axis.x, axis.y, axis.z, 0);
+			normalise();
+			return *this;
+		}
+
+		const FLOAT32 s = sqrtf((1 + d) * 2); // optimize inv_sqrt
+		const FLOAT32 invs = 1.f / s;
+		const Vector3 c = v0.crossProduct(v1)*invs;
+		set(c.x, c.y, c.z, s * 0.5f);
+		normalise();
+		return *this;
+	}
+
+	inline void Quaternion::getMatrixCenter(Matrix4 &dest,
+		const Vector3 &center,
+		const Vector3 &translation) const
+	{
+		dest = dest.transpose(); 
+		dest.getIndex(0) = 1.0f - 2.0f*y*y - 2.0f*z*z;
+		dest.getIndex(1) = 2.0f*x*y + 2.0f*z*w;
+		dest.getIndex(2) = 2.0f*x*z - 2.0f*y*w;
+		dest.getIndex(3) = 0.0f;
+
+		dest.getIndex(4) = 2.0f*x*y - 2.0f*z*w;
+		dest.getIndex(5) = 1.0f - 2.0f*x*x - 2.0f*z*z;
+		dest.getIndex(6) = 2.0f*z*y + 2.0f*x*w;
+		dest.getIndex(7) = 0.0f;
+
+		dest.getIndex(8) = 2.0f*x*z + 2.0f*y*w;
+		dest.getIndex(9) = 2.0f*z*y - 2.0f*x*w;
+		dest.getIndex(10) = 1.0f - 2.0f*x*x - 2.0f*y*y;
+		dest.getIndex(11) = 0.0f;
+		dest = dest.transpose();
+		dest.setRotationCenter(center, translation);
+	}
+
 	void Quaternion::getMatrix(Matrix4 &dest, const Vector3 &translation) const
 	{
 		Matrix3 mat3;

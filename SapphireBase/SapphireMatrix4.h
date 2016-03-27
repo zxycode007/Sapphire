@@ -114,9 +114,15 @@ namespace Sapphire
 
 		
 
-		inline Real& getIndex(SINT32 iIndex)
+		inline  Real& getIndex(SINT32 iIndex) 
 		{
 		assert(iIndex < 16);
+			return _m[iIndex];
+		}
+
+		inline const Real& getCIndex(SINT32 iIndex) const
+		{
+			assert(iIndex < 16);
 			return _m[iIndex];
 		}
 
@@ -513,7 +519,18 @@ namespace Sapphire
 			return false;
 		}
 
-
+		inline void setRotationCenter(const Vector3& center, const Vector3& translation)
+		{
+			*this = transpose();
+			getIndex(12) = -getIndex(0) * center.x - getIndex(4) * center.y - getIndex(8) * center.z + (center.x - translation.x);
+			getIndex(13) = -getIndex(1) * center.x - getIndex(5) * center.y - getIndex(9) * center.z + (center.y - translation.y);
+			getIndex(14) = -getIndex(2) * center.x - getIndex(6) * center.y - getIndex(10) * center.z + (center.z - translation.z);
+			getIndex(15) = (Real) 1.0;
+			*this = transpose();
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
+		}
 		 
 		inline bool hasNegativeScale() const
 		{
@@ -558,6 +575,66 @@ namespace Sapphire
 			return *this;
 		}
 
+
+		//! Builds a matrix which rotates a source vector to a look vector over an arbitrary axis
+		/** \param camPos: viewer position in world coord
+		\param center: object position in world-coord, rotation pivot
+		\param translation: object final translation from center
+		\param axis: axis to rotate about
+		\param from: source vector to rotate from
+		*/
+		inline void buildAxisAlignedBillboard(
+			const Vector3& camPos,
+			const Vector3& center,
+			const Vector3& translation,
+			const Vector3& axis,
+			const Vector3& from)
+		{
+			*this = transpose();
+			// axis of rotation
+			Vector3 up = axis;
+			up.normalize();
+			const Vector3 forward = (camPos - center).normalize();
+			const Vector3 right = up.crossProduct(forward).normalize();
+
+			// correct look vector
+			const Vector3 look = right.crossProduct(up);
+
+			// rotate from to
+			// axis multiplication by sin
+			const Vector3 vs = look.crossProduct(from);
+
+			// cosinus angle
+			const FLOAT32 ca = from.dotProduct(look);
+
+			Vector3 vt(up * (1.f - ca));
+
+			getIndex(0) = static_cast<Real>(vt.x * up.x + ca);
+			getIndex(5) = static_cast<Real>(vt.y * up.y + ca);
+			getIndex(10) = static_cast<Real>(vt.z * up.z + ca);
+
+			vt.x *= up.y;
+			vt.z *= up.x;
+			vt.y *= up.z;
+
+			getIndex(1) = static_cast<Real>(vt.x - vs.z);
+			getIndex(2) = static_cast<Real>(vt.z + vs.y);
+			getIndex(3) = 0;
+
+			getIndex(4) = static_cast<Real>(vt.x + vs.z);
+			getIndex(6) = static_cast<Real>(vt.y - vs.x);
+			getIndex(7) = 0;
+
+			getIndex(8) = static_cast<Real>(vt.z - vs.y);
+			getIndex(9) = static_cast<Real>(vt.y + vs.x);
+			getIndex(11) = 0;
+
+
+			*this = transpose();
+
+			setRotationCenter(center, translation);
+		}
+
 		inline Matrix4&  setRotationDegrees(const Vector3& rotation, bool useTable = false)
 		{
 			//先转置为行矩阵
@@ -591,13 +668,124 @@ namespace Sapphire
 		}
 
 
+
+		inline Matrix4& Matrix4::setTextureTranslate(FLOAT32 x, FLOAT32 y)
+		{
+			//M[8] = (Real)x;
+			m[0][3] = (Real)x;
+			m[1][3] = (Real)y;
+			//M[9] = (Real)y;
+
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = definitelyIdentityMatrix && (x == 0.0f) && (y == 0.0f);
+#endif
+			return *this;
+		}
+
+
+		 
+		inline Matrix4& setTextureScale(FLOAT32 sx, FLOAT32 sy)
+		{
+			m[0][0] = (Real)sx;
+			m[1][1] = (Real)sy;
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = definitelyIdentityMatrix && (sx == 1.0f) && (sy == 1.0f);
+#endif
+			return *this;
+		}
+
+
+
+		 
+		inline Matrix4& setTextureRotationCenter(FLOAT32 rotateRad)
+		{
+			const FLOAT32 c = cosf(rotateRad);
+			const FLOAT32 s = sinf(rotateRad);
+			m[0][0] = (Real)c;
+			//M[1] = (Real)s;
+			m[1][0] = (Real)s;
+
+			//M[4] = (Real)-s;
+			m[0][1] = (Real)-s;
+			//M[5] = (Real)c;
+			m[1][1] = (Real)c;
+
+			//M[8] = (Real)(0.5f * (s - c) + 0.5f);
+			m[0][2] = (Real)(0.5f * (s - c) + 0.5f);
+			 
+			//M[9] = (Real)(-0.5f * (s + c) + 0.5f);
+			m[1][2] = (Real)(-0.5f * (s + c) + 0.5f);
+
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = definitelyIdentityMatrix && (rotateRad == 0.0f);
+#endif
+			return *this;
+		}
+
+
+		//! Builds a matrix that rotates from one vector to another
+		/** \param from: vector to rotate from
+		\param to: vector to rotate to
+
+		http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/index.htm
+		*/
+		inline Matrix4& buildRotateFromTo(const Vector3& from, const Vector3& to)
+		{
+			// unit vectors
+			Vector3 f(from);
+			Vector3 t(to);
+			f.normalize();
+			t.normalize();
+
+			// axis multiplication by sin
+			Vector3 vs(t.crossProduct(f));
+
+			// axis of rotation
+			Vector3 v(vs);
+			v.normalize();
+
+			// cosinus angle
+			Real ca = f.dotProduct(t);
+
+			Vector3 vt(v * (1 - ca));
+			*this = transpose();
+			getIndex(0) = vt.x * v.x + ca;
+			getIndex(5) = vt.y * v.y + ca;
+			getIndex(10) = vt.z * v.z + ca;
+
+			vt.x *= v.y;
+			vt.z *= v.x;
+			vt.y *= v.z;
+
+			getIndex(1) = vt.x - vs.z;
+			getIndex(2) = vt.z + vs.y;
+			getIndex(3) = 0;
+
+			getIndex(4) = vt.x + vs.z;
+			getIndex(6) = vt.y - vs.x;
+			getIndex(7) = 0;
+
+			getIndex(8) = vt.z - vs.y;
+			getIndex(9) = vt.y + vs.x;
+			getIndex(11) = 0;
+
+			getIndex(12) = 0;
+			getIndex(13) = 0;
+			getIndex(14) = 0;
+			getIndex(15) = 1;
+
+			*this = transpose();
+			return *this;
+		}
+
+
 		 
 		inline Matrix4& buildProjectionMatrixOrthoLH(
 			FLOAT32 widthOfViewVolume, FLOAT32 heightOfViewVolume, FLOAT32 zNear, FLOAT32 zFar)
 		{
-			assert(widthOfViewVolume == 0.f); //divide by zero
-			assert(heightOfViewVolume == 0.f); //divide by zero
-			assert(zNear == zFar); //divide by zero
+			assert(widthOfViewVolume != 0.f); //divide by zero
+			assert(heightOfViewVolume != 0.f); //divide by zero
+			assert(zNear != zFar); //divide by zero
 			*this = transpose();
 			getIndex(0) = (Real)(2 / widthOfViewVolume);
 			getIndex(1) = 0;
@@ -665,10 +853,10 @@ namespace Sapphire
 			Real fieldOfViewRadians, Real aspectRatio, Real zNear, Real zFar)
 		{
 			const Real h = reciprocal(tan(fieldOfViewRadians*0.5));
-			assert(aspectRatio == 0.f); //divide by zero
+			assert(aspectRatio != 0.f); //divide by zero
 			const Real w = static_cast<Real>(h / aspectRatio);
 
-			assert(zNear == zFar); //divide by zero
+			assert(zNear != zFar); //divide by zero
 			*this = transpose();
 			getIndex(0) = w;
 			getIndex(1) = 0;
@@ -782,6 +970,37 @@ namespace Sapphire
 #endif
 			return *this;
 		}
+
+
+	
+		inline Matrix4& setTextureScaleCenter(FLOAT32 sx, FLOAT32 sy)
+		{
+			//M[0] = (Real)sx;
+			m[0][0] = (Real)sx;
+			//M[5] = (Real)sy;
+			m[1][1] = (Real)sy;
+			//M[8] = (Real)(0.5f - 0.5f * sx);
+			m[0][2] = (Real)(0.5f - 0.5f * sx);
+			//M[9] = (Real)(0.5f - 0.5f * sy);
+			m[1][2] = (Real)(0.5f - 0.5f * sy);
+
+#if defined ( USE_MARealRIX_RealESReal )
+			definitelyIdentityMatrix = definitelyIdentityMatrix && (sx == 1.0f) && (sy == 1.0f);
+#endif
+			return *this;
+		}
+
+		 
+		inline Matrix4& setM(const Real *data)
+		{
+			memcpy(_m, data, 16 * sizeof(Real));
+
+#if defined ( USE_MATRIX_TEST )
+			definitelyIdentityMatrix = false;
+#endif
+			return *this;
+		}
+
 
 		inline Matrix4 setbyProduct(const Matrix4& other_a, const Matrix4& other_b)
 		{

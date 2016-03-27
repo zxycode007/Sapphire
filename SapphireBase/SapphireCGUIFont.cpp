@@ -540,7 +540,7 @@ namespace Sapphire
 			SFontArea& area = Areas[getAreaFromCharacter(c)];
 
 			offset.x += area.underhang;
-			if (Invisible.at(c) < 0)//if (Invisible.findFirst(c) < 0)
+			if (Invisible.find(c) == std::string::npos)//if (Invisible.findFirst(c) < 0)
 			{
 				indices.push_back(area.spriteno);
 				offsets.push_back(offset);

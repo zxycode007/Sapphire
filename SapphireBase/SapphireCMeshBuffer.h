@@ -30,6 +30,7 @@ namespace Sapphire
 		/** \return Material of this buffer */
 		virtual SMaterial& getMaterial()
 		{
+			
 			return Material;
 		}
 

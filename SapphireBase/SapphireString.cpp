@@ -464,7 +464,7 @@ namespace Sapphire {
 			return false;
 
 		UINT32 i;
-		String _s1 = source;
+		String _s1 = source.substr(sourceStartPos,source.length());
 		String _s2 = other;
 		//toLowerCase(_s1);
 		//toLowerCase(_s2);

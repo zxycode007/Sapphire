@@ -115,6 +115,9 @@
     <Filter Include="源文件\externs\bzip2">
       <UniqueIdentifier>{098fd04b-43ca-4d4c-808f-a1773cf18f84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\demo">
+      <UniqueIdentifier>{df6ecb7a-e499-46b3-9dc5-4613b0a312c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SapphirePlatfrom.h">
@@ -1275,14 +1278,8 @@
     <ClInclude Include="SapphireCMD3MeshFileLoader.h">
       <Filter>源文件\scene\loader</Filter>
     </ClInclude>
-    <ClInclude Include="SapphireCSceneNodeAnimatorDelete.h">
-      <Filter>源文件\scene\animator</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="SapphireMemoryTracker.cpp">
       <Filter>源文件\memory</Filter>
     </ClCompile>
@@ -2021,11 +2018,20 @@
     <ClCompile Include="SapphireCMD3MeshFileLoader.cpp">
       <Filter>源文件\scene\loader</Filter>
     </ClCompile>
-    <ClCompile Include="SapphireCSceneNodeAnimatorDelete.cpp">
-      <Filter>源文件\scene\animator</Filter>
-    </ClCompile>
     <ClCompile Include="SapphireCAnimatedMeshSceneNode.cpp">
       <Filter>源文件\scene\nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCParticleSystemSceneNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCQuake3ShaderSceneNode.cpp">
+      <Filter>源文件\scene\nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireCDefaultSceneNodeAnimatorFactory.cpp">
+      <Filter>源文件\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="demo1.cpp">
+      <Filter>源文件\demo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

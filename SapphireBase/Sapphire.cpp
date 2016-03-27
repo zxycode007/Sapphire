@@ -113,9 +113,10 @@ namespace Sapphire
 
 	namespace core
 	{
-		const Matrix4 IdentityMatrix(Matrix4::IDENTITY);
-		String LOCALE_DECIMAL_POINTS(".");
+	
 	}
+	const Matrix4 IdentityMatrix(Matrix4::IDENTITY);
+	String LOCALE_DECIMAL_POINTS(".");
 
 	namespace video
 	{

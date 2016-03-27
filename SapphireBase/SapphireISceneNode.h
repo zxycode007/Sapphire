@@ -48,7 +48,7 @@ namespace Sapphire
 	
 
 
-	class ISceneNode : public virtual  IReferenceCounter
+	class ISceneNode : public IAttributeExchangingObject
 	{
 	public:
 
@@ -422,7 +422,8 @@ namespace Sapphire
 		\param newvalue 这个标志的新值 */
 		void setMaterialFlag( E_MATERIAL_FLAG flag, bool newvalue)
 		{
-			for (UINT32 i = 0; i<getMaterialCount(); ++i)
+			UINT32 count = getMaterialCount();
+			for (UINT32 i = 0; i<count; ++i)
 				getMaterial(i).setFlag(flag, newvalue);
 		}
 

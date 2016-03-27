@@ -219,7 +219,6 @@
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraFPS.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCameraMaya.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorCollisionResponse.h" />
-    <ClInclude Include="SapphireCSceneNodeAnimatorDelete.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFinish.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFlyCircle.h" />
     <ClInclude Include="SapphireCSceneNodeAnimatorFlyStraight.h" />
@@ -475,6 +474,7 @@
     <ClCompile Include="bzip2\decompress.c" />
     <ClCompile Include="bzip2\huffman.c" />
     <ClCompile Include="bzip2\randtable.c" />
+    <ClCompile Include="demo1.cpp" />
     <ClCompile Include="jpeglib\jaricom.c" />
     <ClCompile Include="jpeglib\jcapimin.c" />
     <ClCompile Include="jpeglib\jcapistd.c" />
@@ -537,7 +537,6 @@
     <ClCompile Include="libpng\pngwtran.c" />
     <ClCompile Include="libpng\pngwutil.c" />
     <ClCompile Include="lzma\LzmaDec.c" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Sapphire.cpp" />
     <ClCompile Include="SapphireAlignedAllocator.cpp" />
     <ClCompile Include="SapphireAxisAlignedBox.cpp" />
@@ -553,6 +552,7 @@
     <ClCompile Include="SapphireCCubeSceneNode.cpp" />
     <ClCompile Include="SapphireCDefaultGUIElementFactory.cpp" />
     <ClCompile Include="SapphireCColourConverter.cpp" />
+    <ClCompile Include="SapphireCDefaultSceneNodeAnimatorFactory.cpp" />
     <ClCompile Include="SapphireCDefaultSceneNodeFactory.cpp" />
     <ClCompile Include="SapphireCDummyTransformSceneNode.cpp" />
     <ClCompile Include="SapphireCEmptySceneNode.cpp" />
@@ -636,7 +636,9 @@
     <ClCompile Include="SapphireCParticleRotationAffector.cpp" />
     <ClCompile Include="SapphireCParticleScaleAffector.cpp" />
     <ClCompile Include="SapphireCParticleSphereEmitter.cpp" />
+    <ClCompile Include="SapphireCParticleSystemSceneNode.cpp" />
     <ClCompile Include="SapphireCQ3LevelMesh.cpp" />
+    <ClCompile Include="SapphireCQuake3ShaderSceneNode.cpp" />
     <ClCompile Include="SapphireCReadFile.cpp" />
     <ClCompile Include="SapphireCSceneCollisionManager.cpp" />
     <ClCompile Include="SapphireCSceneLoader.cpp" />
@@ -644,7 +646,6 @@
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraFPS.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCameraMaya.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorCollisionResponse.cpp" />
-    <ClCompile Include="SapphireCSceneNodeAnimatorDelete.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFinish.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFlyCircle.cpp" />
     <ClCompile Include="SapphireCSceneNodeAnimatorFlyStraight.cpp" />

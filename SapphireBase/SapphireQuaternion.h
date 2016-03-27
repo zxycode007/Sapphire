@@ -126,7 +126,7 @@ namespace Sapphire {
 		@看 FromAxes */
 		void ToAxes(Vector3* akAxis) const;
 		
-		void ToAxes(Vector3& xAxis, Vector3& yAxis, Vector3& zAxis) const;
+		void ToAxes(Vector3& xAxis, Vector3& yAxis, Vector3& zAxis) const; 
 
 		/** 
 		返回这个四元数定义这个X正交轴。 就像做xAxis = Vector3::UNIT_X * this
@@ -182,6 +182,10 @@ namespace Sapphire {
 		Quaternion UnitInverse() const;  // 应用单位长度四元数
 		Quaternion Exp() const;
 		Quaternion Log() const;
+
+		inline Quaternion& makeIdentity();
+
+		inline Quaternion& rotationFromTo(const Vector3& from, const Vector3& to);
 
 		/// 通过一个四元数旋转一个向量
 		Vector3 operator* (const Vector3& rkVector) const;
@@ -272,6 +276,11 @@ namespace Sapphire {
 
 		Real w, x, y, z;
 
+		inline void getMatrixCenter(Matrix4 &dest,
+			const Vector3 &center,
+			const Vector3 &translation) const;
+		
+
 		 
 		inline bool isNaN() const
 		{
@@ -285,6 +294,8 @@ namespace Sapphire {
 			o << "Quaternion(" << q.w << ", " << q.x << ", " << q.y << ", " << q.z << ")";
 			return o;
 		}
+
+		
 
 	};
 	/** @} */

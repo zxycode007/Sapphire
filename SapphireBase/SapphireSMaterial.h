@@ -111,7 +111,7 @@ namespace Sapphire
 
 	//! EMT_ONETEXTURE_BLEND: 包装srcFact, dstFact, Modulate 和 alpha source 到材质类型参数 MaterialTypeParam
 	/** alpha 源可以由E_ALPHA_SOURCE的值和进行或或组合 */
-	inline Real pack_textureBlendFunc(const E_BLEND_FACTOR srcFact, const E_BLEND_FACTOR dstFact, const E_MODULATE_FUNC modulate = EMFN_MODULATE_1X, const UINT32 alphaSource = EAS_TEXTURE)
+	inline FLOAT32 pack_textureBlendFunc(const E_BLEND_FACTOR srcFact, const E_BLEND_FACTOR dstFact, const E_MODULATE_FUNC modulate = EMFN_MODULATE_1X, const UINT32 alphaSource = EAS_TEXTURE)
 	{
 		const UINT32 tmp = (alphaSource << 12) | (modulate << 8) | (srcFact << 4) | dstFact;
 		return FR(tmp);
@@ -120,7 +120,7 @@ namespace Sapphire
 
 	//! EMT_ONETEXTURE_BLEND: 解包 srcFact & dstFact and Modulo 到材质类型参数 MaterialTypeParam
 	inline void unpack_textureBlendFunc(E_BLEND_FACTOR &srcFact, E_BLEND_FACTOR &dstFact,
-		E_MODULATE_FUNC &modulo, UINT32& alphaSource, const Real param)
+		E_MODULATE_FUNC &modulo, UINT32& alphaSource, const FLOAT32 param)
 	{
 		const UINT32 state = IR(param);
 		alphaSource = (state & 0x0000F000) >> 12;
@@ -223,8 +223,8 @@ namespace Sapphire
 	public:
 		//! 默认的构造函数， 创建固体，白色明亮材质
 		SMaterial()
-			: MaterialType(EMT_SOLID), AmbientColor(255, 255, 255, 255), DiffuseColor(255, 255, 255, 255),
-			EmissiveColor(0, 0, 0, 0), SpecularColor(255, 255, 255, 255),
+			: MaterialType(EMT_SOLID), AmbientColor(ColourValue::getColourValue(255, 255, 255, 255)), DiffuseColor(ColourValue::getColourValue(255, 255, 255, 255)),
+			EmissiveColor(ColourValue::getColourValue(0, 0, 0, 0)), SpecularColor(ColourValue::getColourValue(255, 255, 255, 255)),
 			Shininess(0.0f), MaterialTypeParam(0.0f), MaterialTypeParam2(0.0f), Thickness(1.0f),
 			ZBuffer(ECFN_LESSEQUAL), AntiAliasing(EAAM_SIMPLE), ColorMask(ECP_ALL),
 			ColorMaterial(ECM_DIFFUSE), BlendOperation(EBO_NONE),
@@ -332,18 +332,18 @@ namespace Sapphire
 		// 添加白色光源
 		scene::ILightSceneNode* light = smgr->addLightSceneNode(0,
 		core::vector3df(5,5,5), video::SColorf(1.0f, 1.0f, 1.0f));*/
-		Real Shininess;
+		FLOAT32 Shininess;
 
 		//! 自由参数，依赖于材质类型
 		/** 多数情况无效，Mostly ignored, 用在EMT_PARALLAX_MAP_SOLID  EMT_TRANSPARENT_ALPHA_CHANNEL. */
-		Real MaterialTypeParam;
+		FLOAT32 MaterialTypeParam;
 
 		//! 第二个自由参数，依赖材质类型
 		/** 多数情况. */
-		Real MaterialTypeParam2;
+		FLOAT32 MaterialTypeParam2;
 
 		//! 非3维元素如一个点和一条线的厚度
-		Real Thickness;
+		FLOAT32 Thickness;
 
 		//! 是否开启Z缓冲区，默认ECFN_LESSEQUAL
 		/** 值来自于 E_COMPARISON_FUNC. */
