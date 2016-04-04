@@ -178,7 +178,8 @@ namespace Sapphire
 		{
 			LightData.Direction = Vector3(.0f, .0f, 1.0f);
 			//getAbsoluteTransformation().rotateVect(LightData.Direction);
-			LightData.Direction = getAbsoluteTransformation().rotateVect(LightData.Direction);
+			Matrix4 mat = getAbsoluteTransformation();
+			LightData.Direction = mat.rotateVect(LightData.Direction);
 			LightData.Direction.normalize();
 		}
 		if ((LightData.Type == ELT_SPOT) || (LightData.Type == ELT_POINT))

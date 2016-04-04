@@ -34,18 +34,23 @@ namespace Sapphire
 		virtual void OnPostRender(void) = 0;
 
 		//! Called before a render pass begins
+		// 在一个渲染通道开始前调用
 		/** \param renderPass: the render pass that's about to begin */
+		/** \param renderPass: 开始的渲染通道 */
 		virtual void OnRenderPassPreRender(E_SCENE_NODE_RENDER_PASS renderPass) = 0;
 
 		//! Called after the render pass specified in OnRenderPassPreRender() ends
+		// 在OnRenderPreRender（）特定的渲染通道结束后调用
 		/** \param[in] renderPass: the render pass that has finished */
 		virtual void OnRenderPassPostRender(E_SCENE_NODE_RENDER_PASS renderPass) = 0;
 
 		//! Called before the given scene node is rendered
+		// 在给定场景节点被渲染之前调用
 		/** \param[in] node: the scene node that's about to be rendered */
 		virtual void OnNodePreRender(ISceneNode* node) = 0;
 
 		//! Called after the the node specified in OnNodePreRender() has been rendered
+		// 在OnNodePreRender（）指定节点被渲染后调用
 		/** \param[in] node: the scene node that has just been rendered */
 		virtual void OnNodePostRender(ISceneNode* node) = 0;
 	};

@@ -368,6 +368,7 @@ namespace Sapphire
 
 
 	//! gets an animateable mesh. loads it if needed. returned pointer must not be dropped.
+	// 获取一个动画网格
 	IAnimatedMesh* CSceneManager::getMesh(const String& filename)
 	{
 		IAnimatedMesh* msh = MeshCache->getMeshByName(filename);
@@ -1153,6 +1154,7 @@ namespace Sapphire
 
 
 	//! returns if node is culled
+	// 返回是否节点被剔除
 	bool CSceneManager::isCulled(const ISceneNode* node) const
 	{
 		const ICameraSceneNode* cam = getActiveCamera();
@@ -1164,12 +1166,14 @@ namespace Sapphire
 		bool result = false;
 
 		// has occlusion query information
+		// 遮蔽查询信息
 		if (node->getAutomaticCulling() & EAC_OCC_QUERY)
 		{
 			result = (Driver->getOcclusionQueryResult(const_cast<ISceneNode*>(node)) == 0);
 		}
 
 		// can be seen by a bounding box ?
+		// 能否看作一个碰撞盒子
 		if (!result && (node->getAutomaticCulling() & EAC_BOX))
 		{
 			AxisAlignedBox tbox = node->getBoundingBox();
@@ -1180,18 +1184,21 @@ namespace Sapphire
 		}
 
 		// can be seen by a bounding sphere
+		// 是否被看作一个碰撞球
 		if (!result && (node->getAutomaticCulling() & EAC_FRUSTUM_SPHERE))
 		{ // requires bbox diameter
 		}
 
 		// can be seen by cam pyramid planes ?
+		// 是否看作一个金字塔面
 		if (!result && (node->getAutomaticCulling() & EAC_FRUSTUM_BOX))
 		{
 			SViewFrustum frust = *cam->getViewFrustum();
 
 			//transform the frustum to the node's current absolute transformation
 			//Matrix4 invTrans(node->getAbsoluteTransformation(), Matrix4::EM4CONST_INVERSE);
-			Matrix4 invTrans = node->getAbsoluteTransformation().inverse();
+			Matrix4 invTrans = node->getAbsoluteTransformation();
+			invTrans = invTrans.inverse();
 			//invTrans.makeInverse();
 			frust.transform(invTrans);
 
@@ -1342,6 +1349,8 @@ namespace Sapphire
 
 	//! This method is called just before the rendering process of the whole scene.
 	//! draws all scene nodes
+	//这个方法在整个场景的渲染处理之前调用
+	//绘制所有场景节点
 	void CSceneManager::drawAll()
 	{
 		if (!Driver)
@@ -1359,24 +1368,33 @@ namespace Sapphire
 		UINT32 i; // new ISO for scoping problem in some compilers
 
 		// reset all transforms
+		//这个地方重置所有的变换
 		Driver->setMaterial(SMaterial());
+		//为驱动设置透视变换矩阵
 		Driver->setTransform(ETS_PROJECTION, Matrix4::IDENTITY);
+		//为驱动设置观察变换矩阵
 		Driver->setTransform(ETS_VIEW, Matrix4::IDENTITY);
+		//为驱动设置世界变换矩阵
 		Driver->setTransform(ETS_WORLD, Matrix4::IDENTITY);
 		for (i = ETS_COUNT - 1; i >= ETS_TEXTURE_0; --i)
 			Driver->setTransform((E_TRANSFORMATION_STATE)i, Matrix4::IDENTITY);
 
 		// TODO: This should not use an attribute here but a real parameter when necessary (too slow!)
+		//这里不应该使用属性，只有必要时再使用真实参数（太慢了）
+		//设置在是否将透明材质写入Z缓冲
 		Driver->setAllowZWriteOnTransparent(Parameters.getAttributeAsBool(ALLOW_ZWRITE_ON_TRANSPARENT));
 
 		// do animations and other stuff.
+		//开始激活物体动画
 		OnAnimate(Timer::getTime());
 
 		/*!
 		First Scene Node for prerendering should be the active camera
 		consistent Camera is needed for culling
+		
 		*/
 		camWorldPos.set(0, 0, 0);
+		//激活的相机
 		if (ActiveCamera)
 		{
 			ActiveCamera->render();
@@ -1384,12 +1402,14 @@ namespace Sapphire
 		}
 
 		// let all nodes register themselves
+		// 让所有节点注册自己
 		OnRegisterSceneNode();
 
 		if (LightManager)
 			LightManager->OnPreRender(LightList);
 
 		//render camera scenes
+		// 渲染相机场景
 		{
 			CurrentRendertime = ESNRP_CAMERA;
 			Driver->getOverrideMaterial().Enabled = ((Driver->getOverrideMaterial().EnablePasses & CurrentRendertime) != 0);
@@ -1408,8 +1428,10 @@ namespace Sapphire
 		}
 
 		//render lights scenes
+		//渲染光源场景
 	{
 		CurrentRendertime = ESNRP_LIGHT;
+		//材质覆盖是否打开
 		Driver->getOverrideMaterial().Enabled = ((Driver->getOverrideMaterial().EnablePasses & CurrentRendertime) != 0);
 
 		if (LightManager)
@@ -1419,6 +1441,7 @@ namespace Sapphire
 		else
 		{
 			// Sort the lights by distance from the camera
+			//根据与相机的距离排序光源
 			Vector3 camWorldPos(0, 0, 0);
 			if (ActiveCamera)
 				camWorldPos = ActiveCamera->getAbsolutePosition();
@@ -1436,16 +1459,16 @@ namespace Sapphire
 			for (SINT32 light = (SINT32)LightList.size() - 1; light >= 0; --light)
 				LightList[light] = SortedLights[light].Node;
 		}
-
+		//删除所有动态光源
 		Driver->deleteAllDynamicLights();
-
+		//设置环境光源
 		Driver->setAmbientLight(AmbientLight);
 
 		UINT32 maxLights = LightList.size();
 
 		if (!LightManager)
 			maxLights = Math::min_(Driver->getMaximalDynamicLightAmount(), maxLights);
-
+		//渲染 
 		for (i = 0; i < maxLights; ++i)
 			LightList[i]->render();
 
@@ -1454,6 +1477,7 @@ namespace Sapphire
 	}
 
 	// render skyboxes
+	// 天空盒子渲染器
 	{
 		CurrentRendertime = ESNRP_SKY_BOX;
 		Driver->getOverrideMaterial().Enabled = ((Driver->getOverrideMaterial().EnablePasses & CurrentRendertime) != 0);
@@ -1484,12 +1508,13 @@ namespace Sapphire
 
 
 	// render default objects
+	// 默认对象渲染器 
 	{
 		CurrentRendertime = ESNRP_SOLID;
 		Driver->getOverrideMaterial().Enabled = ((Driver->getOverrideMaterial().EnablePasses & CurrentRendertime) != 0);
 
 		//SolidNodeList.sort(); // sort by textures
-		sort(SolidNodeList.begin(), SolidNodeList.end());
+		//sort(SolidNodeList.begin(), SolidNodeList.end());
 
 		if (LightManager)
 		{
@@ -1518,6 +1543,7 @@ namespace Sapphire
 	}
 
 	// render shadows
+	// 渲染阴影
 	{
 		CurrentRendertime = ESNRP_SHADOW;
 		Driver->getOverrideMaterial().Enabled = ((Driver->getOverrideMaterial().EnablePasses & CurrentRendertime) != 0);
@@ -1527,9 +1553,13 @@ namespace Sapphire
 			LightManager->OnRenderPassPreRender(CurrentRendertime);
 			for (i = 0; i < ShadowNodeList.size(); ++i)
 			{
+				//找到阴影节点进行渲染
 				ISceneNode* node = ShadowNodeList[i];
+				//在节点之前调用的回调函数
 				LightManager->OnNodePreRender(node);
+				//渲染节点
 				node->render();
+				//在节点之后调用的回调函数
 				LightManager->OnNodePostRender(node);
 			}
 		}

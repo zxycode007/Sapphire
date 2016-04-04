@@ -30,6 +30,7 @@ namespace Sapphire
 			)
 		{
 			void* ptr = malloc(count);
+			//void* ptr = new unsigned char(count);
 #if SAPPHIRE_MEMORY_TRACKER
 			// 使用内存跟踪器，这个分配策略部分被莼处理内存池
 			MemoryTracker::get()._recordAlloc(ptr, count, 0, file, line, func);
@@ -43,6 +44,7 @@ namespace Sapphire
 			MemoryTracker::get()._recordDealloc(ptr);
 #endif
 			free(ptr);
+			//delete ptr;
 		}
 
 		///取得单次分配的最大值

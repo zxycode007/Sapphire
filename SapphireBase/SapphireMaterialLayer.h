@@ -101,7 +101,8 @@ namespace Sapphire
 					//MatrixAllocator.destruct(TextureMatrix);
 					//MatrixAllocator.deallocate(TextureMatrix);
 					
-					SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+					//SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+					delete TextureMatrix;
 				}
 			}
 			else
@@ -109,7 +110,7 @@ namespace Sapphire
 				//对面纹理矩阵存在
 				if (other.TextureMatrix )
 				{
-					TextureMatrix = SAPPHIRE_NEW_T(Matrix4(*(other.TextureMatrix)), MEMCATEGORY_GENERAL);
+					TextureMatrix = new Matrix4(Matrix4(*other.TextureMatrix));
 					//TextureMatrix = MatrixAllocator.allocate(1);
 					//MatrixAllocator.construct(TextureMatrix, *other.TextureMatrix);
 				}
@@ -136,7 +137,8 @@ namespace Sapphire
 			{
 				//TextureMatrix = MatrixAllocator.allocate(1);
 				//MatrixAllocator.construct(TextureMatrix, core::IdentityMatrix);
-				TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY);
+				//TextureMatrix = SAPPHIRE_NEW_T(Matrix4(Matrix4::IDENTITY), MEMCATEGORY_GEOMETRY);
+				TextureMatrix = new Matrix4(Matrix4::IDENTITY);
 			}
 			return *TextureMatrix;
 		}
@@ -167,7 +169,8 @@ namespace Sapphire
 			}
 			else
 			{	 
-				TextureMatrix = SAPPHIRE_NEW_T(Matrix4(mat), MEMCATEGORY_GEOMETRY);;
+				//TextureMatrix = SAPPHIRE_NEW_T(Matrix4(mat), MEMCATEGORY_GEOMETRY);;
+				TextureMatrix = new Matrix4(mat);
 			}
 				
 		}
@@ -177,7 +180,8 @@ namespace Sapphire
 			//如果纹理矩阵不为空
 			if (TextureMatrix)
 			{
-				SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+				//SAPPHIRE_DELETE_T(TextureMatrix, Matrix4, MEMCATEGORY_GENERAL);
+				delete TextureMatrix;
 			}
 		}
 

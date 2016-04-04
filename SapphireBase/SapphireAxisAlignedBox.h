@@ -56,8 +56,8 @@ namespace Sapphire
 		inline AxisAlignedBox() : mMinimum(Vector3::ZERO), mMaximum(Vector3::UNIT_SCALE), mCorners(0)
 		{
 			// 默认为空盒子
-			setMinimum(-0.5, -0.5, -0.5);
-			setMaximum(0.5, 0.5, 0.5);
+			setMinimum(-1.0, -1.0, -1.0);
+			setMaximum(1.0, 1.0, 1.0);
 			mExtent = EXTENT_NULL;
 		}
 		inline AxisAlignedBox(Extent e) : mMinimum(Vector3::ZERO), mMaximum(Vector3::UNIT_SCALE), mCorners(0)
@@ -76,7 +76,7 @@ namespace Sapphire
 				setInfinite();
 			else
 				setExtents(rkBox.mMinimum, rkBox.mMaximum);
-		}
+		} 
 
 		inline AxisAlignedBox(const Vector3& min, const Vector3& max) : mMinimum(Vector3::ZERO), mMaximum(Vector3::UNIT_SCALE), mCorners(0)
 		{
@@ -509,7 +509,7 @@ namespace Sapphire
 		*/
 		void transformAffine(const Matrix4& m)
 		{
-			assert(m.isAffine());
+			//assert(!m.isAffine());
 
 			// 如果当前是无限的，什么都别做
 			if (mExtent != EXTENT_FINITE)

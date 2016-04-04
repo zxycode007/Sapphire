@@ -7,10 +7,11 @@
 #include "SapphireQMath.h"
 #include "SapphireColorValue.h"
 #include "SapphireMaterialLayer.h"
+#include "SapphireITexture.h"
 
 namespace Sapphire
 {
-	class ITexture;
+	//class ITexture;
 
 	//! EMT_ONETEXTURE_BLEND 的标志( 混合因子) BlendFunc = source * sourceFactor + dest * destFactor
 	enum E_BLEND_FACTOR
@@ -239,8 +240,10 @@ namespace Sapphire
 		{
 			// 清空每一层材质的纹理矩阵
 			for (UINT32 i = 0; i < MATERIAL_MAX_TEXTURES; ++i)
+			{
 				//先删除本纹理自身的纹理矩阵
-				TextureLayer[i].emptyTextureMatrix();
+				//TextureLayer[i].emptyTextureMatrix();
+			}
 			*this = other;
 		}
 
@@ -288,7 +291,7 @@ namespace Sapphire
 		}
 
 		//! 本材质的纹理层数组
-		SMaterialLayer TextureLayer[MATERIAL_MAX_TEXTURES];
+		SMaterialLayer TextureLayer[SAPPHIRE_MAX_TEXTURE_LAYERS];
 
 		//! 材质类型，指定所有东西如何进行混合
 		E_MATERIAL_TYPE MaterialType;
@@ -432,7 +435,7 @@ namespace Sapphire
 		\return 第i层纹理的纹理矩阵,或者i大于MATERIAL_MAX_TEXTURES则是单位矩阵*/
 		 const Matrix4& getTextureMatrix(UINT32 i) const
 		{
-			if (i<MATERIAL_MAX_TEXTURES)
+			if (i<SAPPHIRE_MAX_TEXTURE_LAYERS)
 				return TextureLayer[i].getTextureMatrix();
 			else
 				return Matrix4::IDENTITY;
@@ -443,7 +446,7 @@ namespace Sapphire
 		\param mat 第i层纹理的纹理矩阵. */
 		 void setTextureMatrix(UINT32 i, const Matrix4& mat)
 		{
-			if (i >= MATERIAL_MAX_TEXTURES)
+			if (i >= SAPPHIRE_MAX_TEXTURE_LAYERS)
 				return;
 			TextureLayer[i].setTextureMatrix(mat);
 		}
@@ -453,7 +456,7 @@ namespace Sapphire
 		\return 如果定义了，返回第i层纹理，否则返回0 */
 		ITexture* getTexture(UINT32 i) const
 		{
-			return i < MATERIAL_MAX_TEXTURES ? TextureLayer[i].Texture : 0;
+			return i < SAPPHIRE_MAX_TEXTURE_LAYERS ? TextureLayer[i].Texture : 0;
 		}
 
 		//! 设置第i层纹理
@@ -462,7 +465,7 @@ namespace Sapphire
 		\param tex 纹理指针 */
 		void setTexture(UINT32 i, ITexture* tex)
 		{
-			if (i >= MATERIAL_MAX_TEXTURES)
+			if (i >= SAPPHIRE_MAX_TEXTURE_LAYERS)
 				return;
 			TextureLayer[i].Texture = tex;
 		}
@@ -492,23 +495,23 @@ namespace Sapphire
 				FrontfaceCulling = value; break;
 			case EMF_BILINEAR_FILTER:
 			{
-				for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
+				for (UINT32 i = 0; i<SAPPHIRE_MAX_TEXTURE_LAYERS; ++i)
 					TextureLayer[i].BilinearFilter = value;
 			}
 			break;
 			case EMF_TRILINEAR_FILTER:
 			{
-				for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
+				for (UINT32 i = 0; i<SAPPHIRE_MAX_TEXTURE_LAYERS; ++i)
 					TextureLayer[i].TrilinearFilter = value;
 			}
 			break;
 			case EMF_ANISOTROPIC_FILTER:
 			{
 				if (value)
-					for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
+					for (UINT32 i = 0; i<SAPPHIRE_MAX_TEXTURE_LAYERS; ++i)
 						TextureLayer[i].AnisotropicFilter = 0xFF;
 				else
-					for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
+					for (UINT32 i = 0; i<SAPPHIRE_MAX_TEXTURE_LAYERS; ++i)
 						TextureLayer[i].AnisotropicFilter = 0;
 			}
 			break;
@@ -518,7 +521,7 @@ namespace Sapphire
 				NormalizeNormals = value; break;
 			case EMF_TEXTURE_WRAP:
 			{
-				for (UINT32 i = 0; i<MATERIAL_MAX_TEXTURES; ++i)
+				for (UINT32 i = 0; i<SAPPHIRE_MAX_TEXTURE_LAYERS; ++i)
 				{
 					TextureLayer[i].TextureWrapU = (E_TEXTURE_CLAMP)value;
 					TextureLayer[i].TextureWrapV = (E_TEXTURE_CLAMP)value;
@@ -633,7 +636,7 @@ namespace Sapphire
 				PolygonOffsetFactor != b.PolygonOffsetFactor ||
 				PolygonOffsetDirection != b.PolygonOffsetDirection ||
 				UseMipMaps != b.UseMipMaps;
-			for (UINT32 i = 0; (i<MATERIAL_MAX_TEXTURES) && !different; ++i)
+			for (UINT32 i = 0; (i<SAPPHIRE_MAX_TEXTURE_LAYERS) && !different; ++i)
 			{
 				different |= (TextureLayer[i] != b.TextureLayer[i]);
 			}
@@ -656,7 +659,7 @@ namespace Sapphire
 	};
 
 	//! 全局常一致性材质
-	_SapphireExport extern SMaterial IdentityMaterial;
+	 extern SMaterial IdentityMaterial;
 
 }
 

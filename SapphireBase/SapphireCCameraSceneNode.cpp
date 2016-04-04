@@ -235,33 +235,43 @@ namespace Sapphire
 
 
 	//! render
+	// 这个节点渲染自身的方法
 	void CCameraSceneNode::render()
 	{
+		//获取该节点的位置
 		Vector3 pos = getAbsolutePosition();
+		//相机朝向目标Target的方向向量
 		Vector3 tgtv = Target - pos;
-		tgtv.normalize();
+		//标准化
+		tgtv = tgtv.normalize();
 
 		// if upvector and vector to the target are the same, we have a
 		// problem. so solve this problem:
+		//如果up向量和目标向量是相同的，我们会出现一个问题，所以必须解决这个问题
 		Vector3 up = UpVector;
-		up.normalize();
-
+		//标准化UP向量
+		up = up.normalize();
+		//求出up与target向量的点积
 		FLOAT32 dp = tgtv.dotProduct(up);
-
+		//如果点积的绝对值==1，up.x+0，5f
 		if (Math::equals(Math::Abs(dp), 1.f))
 		{
 			up.x += 0.5f;
 		}
-
+		//为视锥体区域构建LookAt矩阵
 		ViewArea.getTransform(ETS_VIEW).buildCameraLookAtMatrixLH(pos, Target, up);
 		//ViewArea.getTransform(ETS_VIEW) *= Affector;
 		ViewArea.getTransform(ETS_VIEW) = Affector * ViewArea.getTransform(ETS_VIEW);
+		//重新计算视锥体区域
 		recalculateViewArea();
 
+		//从SceneManager获取视频驱动
 		IVideoDriver* driver = SceneManager->getVideoDriver();
 		if (driver)
 		{
+			//对视锥体进行透视变换
 			driver->setTransform(ETS_PROJECTION, ViewArea.getTransform(ETS_PROJECTION));
+			//对视锥体进行观察变换
 			driver->setTransform(ETS_VIEW, ViewArea.getTransform(ETS_VIEW));
 		}
 	}

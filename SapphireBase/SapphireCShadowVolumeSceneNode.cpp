@@ -320,7 +320,8 @@ namespace Sapphire
 				SViewFrustum frust = *SceneManager->getActiveCamera()->getViewFrustum();
 
 				//Matrix4 invTrans(Parent->getAbsoluteTransformation(), Matrix4::EM4CONST_INVERSE);
-				Matrix4 invTrans = Parent->getAbsoluteTransformation().inverse();
+				Matrix4 invTrans = Parent->getAbsoluteTransformation();
+				invTrans = invTrans.inverse();
 				frust.transform(invTrans);
 
 				//Vector3 edges[8];

@@ -652,7 +652,7 @@ namespace Sapphire
 		const Vector3 &center,
 		const Vector3 &translation) const
 	{
-		dest = dest.transpose(); 
+		dest.transpose(); 
 		dest.getIndex(0) = 1.0f - 2.0f*y*y - 2.0f*z*z;
 		dest.getIndex(1) = 2.0f*x*y + 2.0f*z*w;
 		dest.getIndex(2) = 2.0f*x*z - 2.0f*y*w;
@@ -667,7 +667,7 @@ namespace Sapphire
 		dest.getIndex(9) = 2.0f*z*y - 2.0f*x*w;
 		dest.getIndex(10) = 1.0f - 2.0f*x*x - 2.0f*y*y;
 		dest.getIndex(11) = 0.0f;
-		dest = dest.transpose();
+		dest.transpose();
 		dest.setRotationCenter(center, translation);
 	}
 

@@ -69,8 +69,13 @@ namespace Sapphire
 			m[0][3] * MINOR(*this, 1, 2, 3, 0, 1, 2);
 	}
 	//-----------------------------------------------------------------------
-	Matrix4 Matrix4::inverse() const
+	Matrix4 Matrix4::inverse() 
 	{
+		if (RowMajor == true)
+		{
+			transpose();
+		}
+
 		Real m00 = m[0][0], m01 = m[0][1], m02 = m[0][2], m03 = m[0][3];
 		Real m10 = m[1][0], m11 = m[1][1], m12 = m[1][2], m13 = m[1][3];
 		Real m20 = m[2][0], m21 = m[2][1], m22 = m[2][2], m23 = m[2][3];
@@ -175,6 +180,35 @@ namespace Sapphire
 			0, 0, 0, 1);
 	}
 	//-----------------------------------------------------------------------
+	Vector3 Matrix4::transformAffine(const Vector3& v) const
+	{
+		Matrix4  mat = *this;
+		//assert(!isAffine());
+		if (RowMajor == true)
+		{
+			mat.transpose();
+		}
+		return Vector3(
+			mat.m[0][0] * v.x + mat.m[0][1] * v.y + mat.m[0][2] * v.z + mat.m[0][3],
+			mat.m[1][0] * v.x + mat.m[1][1] * v.y + mat.m[1][2] * v.z + mat.m[1][3],
+			mat.m[2][0] * v.x + mat.m[2][1] * v.y + mat.m[2][2] * v.z + mat.m[2][3]);
+	}
+	//-----------------------------------------------------------------------
+	Vector4 Matrix4::transformAffine(const Vector4& v) const
+	{
+		Matrix4  mat = *this;
+		//assert(!isAffine());
+		if (RowMajor == true)
+		{
+			mat.transpose();
+		}
+		return Vector4(
+			mat.m[0][0] * v.x + mat.m[0][1] * v.y + mat.m[0][2] * v.z + mat.m[0][3] * v.w,
+			mat.m[1][0] * v.x + mat.m[1][1] * v.y + mat.m[1][2] * v.z + mat.m[1][3] * v.w,
+			mat.m[2][0] * v.x + mat.m[2][1] * v.y + mat.m[2][2] * v.z + mat.m[2][3] * v.w,
+			v.w);
+	}
+	//-----------------------------------------------------------------------
 
 	Matrix4& Matrix4::buildTextureTransform(Real rotateRad,
 		const Vector2 &rotatecenter,
@@ -183,7 +217,10 @@ namespace Sapphire
 	{
 		const Real c = cosf(rotateRad);
 		const Real s = sinf(rotateRad);
-		*this = transpose();
+		if (RowMajor == false)
+		{
+			transpose();
+		}
 		getIndex(0) = (Real)(c * scale.x);
 		getIndex(1) = (Real)(s * scale.y);
 		getIndex(2) = 0;
@@ -203,7 +240,8 @@ namespace Sapphire
 		getIndex(13) = 0;
 		getIndex(14) = 0;
 		getIndex(15) = 1;
-		*this = transpose();
+
+		transpose();
 #if defined ( USE_MATRIX_TEST )
 		definitelyIdentityMatrix = false;
 #endif
@@ -224,8 +262,11 @@ namespace Sapphire
 		}
 #endif
 		Matrix4 m = *this;
-		m.transpose();
-
+		if (m.RowMajor == false)
+		{
+			m.transpose();
+		}
+		
 		Real d = (m(0, 0) * m(1, 1) - m(0, 1) * m(1, 0)) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2)) -
 			(m(0, 0) * m(1, 2) - m(0, 2) * m(1, 0)) * (m(2, 1) * m(3, 3) - m(2, 3) * m(3, 1)) +
 			(m(0, 0) * m(1, 3) - m(0, 3) * m(1, 0)) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1)) +
@@ -305,6 +346,10 @@ namespace Sapphire
 		Matrix3 rot3x3;
 		orientation.ToRotationMatrix(rot3x3);
 
+		if (RowMajor == true)
+		{
+			transpose();
+		}
 		 
 		m[0][0] = scale.x * rot3x3[0][0]; m[0][1] = scale.y * rot3x3[0][1]; m[0][2] = scale.z * rot3x3[0][2]; m[0][3] = position.x;
 		m[1][0] = scale.x * rot3x3[1][0]; m[1][1] = scale.y * rot3x3[1][1]; m[1][2] = scale.z * rot3x3[1][2]; m[1][3] = position.y;
@@ -330,6 +375,11 @@ namespace Sapphire
 		Matrix3 rot3x3;
 		invRot.ToRotationMatrix(rot3x3);
 
+		if (RowMajor == true)
+		{
+			transpose();
+		}
+
 		//  设置最终的缩放，旋转和平移矩阵
 		m[0][0] = invScale.x * rot3x3[0][0]; m[0][1] = invScale.x * rot3x3[0][1]; m[0][2] = invScale.x * rot3x3[0][2]; m[0][3] = invTranslate.x;
 		m[1][0] = invScale.y * rot3x3[1][0]; m[1][1] = invScale.y * rot3x3[1][1]; m[1][2] = invScale.y * rot3x3[1][2]; m[1][3] = invTranslate.y;
@@ -351,7 +401,16 @@ namespace Sapphire
 		m3x3.QDUDecomposition(matQ, scale, vecU);
 
 		orientation = Quaternion(matQ);
-		position = Vector3(m[0][3], m[1][3], m[2][3]);
+
+		if (RowMajor == false)
+		{
+			position = Vector3(m[0][3], m[1][3], m[2][3]);
+		}
+		else
+		{
+			position = Vector3(m[3][0], m[3][1], m[3][2]);
+		}
+		
 	}
 
 }

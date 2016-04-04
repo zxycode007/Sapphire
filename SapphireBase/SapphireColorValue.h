@@ -326,12 +326,12 @@ namespace Sapphire {
 
 		void setGreen(UINT32 green)
 		{
-			static_cast<Real>(green) / 255;
+			g = static_cast<Real>(green) / 255;
 		}
 
 		void setBlue(UINT32 blue)
 		{
-			static_cast<Real>(blue) / 255;
+			b = static_cast<Real>(blue) / 255;
 		};
 
 		UINT32 getAlpha() const

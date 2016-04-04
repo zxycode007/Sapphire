@@ -63,6 +63,7 @@ namespace Sapphire
 		
 		//! 清空ZBUFFER
 		//开始渲染场景
+		//初始化所有渲染参数
 		virtual bool beginScene(bool backBuffer = true, bool zBuffer = true,
 			ColourValue color = ColourValue::getColourValue(255, 0, 0, 0),
 			const SExposedVideoData& videoData = SExposedVideoData(),
@@ -435,11 +436,13 @@ namespace Sapphire
 		void getColorBuffer(const void* vertices, UINT32 vertexCount, E_VERTEX_TYPE vType);
 
 		//! helper function doing the actual rendering.
+		// 实际渲染的辅助函数
 		void renderArray(const void* indexList, UINT32 primitiveCount,
 			E_PRIMITIVE_TYPE pType, E_INDEX_TYPE iType);
 
 		StringW Name;
 		Matrix4 Matrices[ETS_COUNT];
+		//颜色缓冲区
 		vector<UINT8>::type ColorBuffer;
 
 		//! 渲染模式的枚举类型

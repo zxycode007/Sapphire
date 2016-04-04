@@ -9,7 +9,7 @@
 
 namespace Sapphire
 {
-	/** 
+	/**
 	封装了标准的4X4齐次矩阵类
 	@remarks
 	SAPPHIRE在矩阵乘法时使用列向量，这意味着一个向量被表述为一单个列，4行矩阵。
@@ -39,9 +39,13 @@ namespace Sapphire
 			Real _m[16];
 		};
 	public:
-	 
+
+		bool RowMajor;
+
 		inline Matrix4()
 		{
+			*this = Matrix4::IDENTITY;
+			RowMajor = false;
 		}
 
 		inline Matrix4(
@@ -66,9 +70,10 @@ namespace Sapphire
 			m[3][1] = m31;
 			m[3][2] = m32;
 			m[3][3] = m33;
+			RowMajor = false;
 		}
 
-		 
+
 
 		inline Matrix4(const Matrix3& m3x3)
 		{
@@ -76,7 +81,7 @@ namespace Sapphire
 			operator=(m3x3);
 		}
 
-		 
+
 
 		inline Matrix4(const Quaternion& rot)
 		{
@@ -88,10 +93,10 @@ namespace Sapphire
 
 		~Matrix4()
 		{
-			 
+
 		};
 
-		 
+
 		inline void swap(Matrix4& other)
 		{
 			std::swap(m[0][0], other.m[0][0]);
@@ -112,11 +117,11 @@ namespace Sapphire
 			std::swap(m[3][3], other.m[3][3]);
 		}
 
-		
 
-		inline  Real& getIndex(SINT32 iIndex) 
+
+		inline  Real& getIndex(SINT32 iIndex)
 		{
-		assert(iIndex < 16);
+			assert(iIndex < 16);
 			return _m[iIndex];
 		}
 
@@ -143,64 +148,89 @@ namespace Sapphire
 			return m[iRow];
 		}
 
+		//按列矩阵进行计算
 		inline Matrix4 concatenate(const Matrix4 &m2) const
 		{
+
+			Matrix4 mat = *this;
+			Matrix4 mat2 = m2;
+			if (mat.RowMajor == true)
+			{
+				mat.transpose();
+			}
+			if (mat2.RowMajor == true)
+			{
+				mat2.transpose();
+			}
 			Matrix4 r;
-			r.m[0][0] = m[0][0] * m2.m[0][0] + m[0][1] * m2.m[1][0] + m[0][2] * m2.m[2][0] + m[0][3] * m2.m[3][0];
-			r.m[0][1] = m[0][0] * m2.m[0][1] + m[0][1] * m2.m[1][1] + m[0][2] * m2.m[2][1] + m[0][3] * m2.m[3][1];
-			r.m[0][2] = m[0][0] * m2.m[0][2] + m[0][1] * m2.m[1][2] + m[0][2] * m2.m[2][2] + m[0][3] * m2.m[3][2];
-			r.m[0][3] = m[0][0] * m2.m[0][3] + m[0][1] * m2.m[1][3] + m[0][2] * m2.m[2][3] + m[0][3] * m2.m[3][3];
+			r.m[0][0] = mat.m[0][0] * mat2.m[0][0] + mat.m[0][1] * mat2.m[1][0] + mat.m[0][2] * mat2.m[2][0] + mat.m[0][3] * mat2.m[3][0];
+			r.m[0][1] = mat.m[0][0] * mat2.m[0][1] + mat.m[0][1] * mat2.m[1][1] + mat.m[0][2] * mat2.m[2][1] + mat.m[0][3] * mat2.m[3][1];
+			r.m[0][2] = mat.m[0][0] * mat2.m[0][2] + mat.m[0][1] * mat2.m[1][2] + mat.m[0][2] * mat2.m[2][2] + mat.m[0][3] * mat2.m[3][2];
+			r.m[0][3] = mat.m[0][0] * mat2.m[0][3] + mat.m[0][1] * mat2.m[1][3] + mat.m[0][2] * mat2.m[2][3] + mat.m[0][3] * mat2.m[3][3];
 
-			r.m[1][0] = m[1][0] * m2.m[0][0] + m[1][1] * m2.m[1][0] + m[1][2] * m2.m[2][0] + m[1][3] * m2.m[3][0];
-			r.m[1][1] = m[1][0] * m2.m[0][1] + m[1][1] * m2.m[1][1] + m[1][2] * m2.m[2][1] + m[1][3] * m2.m[3][1];
-			r.m[1][2] = m[1][0] * m2.m[0][2] + m[1][1] * m2.m[1][2] + m[1][2] * m2.m[2][2] + m[1][3] * m2.m[3][2];
-			r.m[1][3] = m[1][0] * m2.m[0][3] + m[1][1] * m2.m[1][3] + m[1][2] * m2.m[2][3] + m[1][3] * m2.m[3][3];
+			r.m[1][0] = mat.m[1][0] * mat2.m[0][0] + mat.m[1][1] * mat2.m[1][0] + mat.m[1][2] * mat2.m[2][0] + mat.m[1][3] * mat2.m[3][0];
+			r.m[1][1] = mat.m[1][0] * mat2.m[0][1] + mat.m[1][1] * mat2.m[1][1] + mat.m[1][2] * mat2.m[2][1] + mat.m[1][3] * mat2.m[3][1];
+			r.m[1][2] = mat.m[1][0] * mat2.m[0][2] + mat.m[1][1] * mat2.m[1][2] + mat.m[1][2] * mat2.m[2][2] + mat.m[1][3] * mat2.m[3][2];
+			r.m[1][3] = mat.m[1][0] * mat2.m[0][3] + mat.m[1][1] * mat2.m[1][3] + mat.m[1][2] * mat2.m[2][3] + mat.m[1][3] * mat2.m[3][3];
 
-			r.m[2][0] = m[2][0] * m2.m[0][0] + m[2][1] * m2.m[1][0] + m[2][2] * m2.m[2][0] + m[2][3] * m2.m[3][0];
-			r.m[2][1] = m[2][0] * m2.m[0][1] + m[2][1] * m2.m[1][1] + m[2][2] * m2.m[2][1] + m[2][3] * m2.m[3][1];
-			r.m[2][2] = m[2][0] * m2.m[0][2] + m[2][1] * m2.m[1][2] + m[2][2] * m2.m[2][2] + m[2][3] * m2.m[3][2];
-			r.m[2][3] = m[2][0] * m2.m[0][3] + m[2][1] * m2.m[1][3] + m[2][2] * m2.m[2][3] + m[2][3] * m2.m[3][3];
+			r.m[2][0] = mat.m[2][0] * mat2.m[0][0] + mat.m[2][1] * mat2.m[1][0] + mat.m[2][2] * mat2.m[2][0] + mat.m[2][3] * mat2.m[3][0];
+			r.m[2][1] = mat.m[2][0] * mat2.m[0][1] + mat.m[2][1] * mat2.m[1][1] + mat.m[2][2] * mat2.m[2][1] + mat.m[2][3] * mat2.m[3][1];
+			r.m[2][2] = mat.m[2][0] * mat2.m[0][2] + mat.m[2][1] * mat2.m[1][2] + mat.m[2][2] * mat2.m[2][2] + mat.m[2][3] * mat2.m[3][2];
+			r.m[2][3] = mat.m[2][0] * mat2.m[0][3] + mat.m[2][1] * mat2.m[1][3] + mat.m[2][2] * mat2.m[2][3] + mat.m[2][3] * mat2.m[3][3];
 
-			r.m[3][0] = m[3][0] * m2.m[0][0] + m[3][1] * m2.m[1][0] + m[3][2] * m2.m[2][0] + m[3][3] * m2.m[3][0];
-			r.m[3][1] = m[3][0] * m2.m[0][1] + m[3][1] * m2.m[1][1] + m[3][2] * m2.m[2][1] + m[3][3] * m2.m[3][1];
-			r.m[3][2] = m[3][0] * m2.m[0][2] + m[3][1] * m2.m[1][2] + m[3][2] * m2.m[2][2] + m[3][3] * m2.m[3][2];
-			r.m[3][3] = m[3][0] * m2.m[0][3] + m[3][1] * m2.m[1][3] + m[3][2] * m2.m[2][3] + m[3][3] * m2.m[3][3];
+			r.m[3][0] = mat.m[3][0] * mat2.m[0][0] + mat.m[3][1] * mat2.m[1][0] + mat.m[3][2] * mat2.m[2][0] + mat.m[3][3] * mat2.m[3][0];
+			r.m[3][1] = mat.m[3][0] * mat2.m[0][1] + mat.m[3][1] * mat2.m[1][1] + mat.m[3][2] * mat2.m[2][1] + mat.m[3][3] * mat2.m[3][1];
+			r.m[3][2] = mat.m[3][0] * mat2.m[0][2] + mat.m[3][1] * mat2.m[1][2] + mat.m[3][2] * mat2.m[2][2] + mat.m[3][3] * mat2.m[3][2];
+			r.m[3][3] = mat.m[3][0] * mat2.m[0][3] + mat.m[3][1] * mat2.m[1][3] + mat.m[3][2] * mat2.m[2][3] + mat.m[3][3] * mat2.m[3][3];
 
 			return r;
 		}
 
-		 
+
 		inline Matrix4 operator * (const Matrix4 &m2) const
 		{
 			return concatenate(m2);
 		}
 
-		 
+
 		inline Vector3 operator * (const Vector3 &v) const
 		{
 			Vector3 r;
 
 			Real fInvW = 1.0f / (m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3]);
-
-			r.x = (m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3]) * fInvW;
-			r.y = (m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3]) * fInvW;
-			r.z = (m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3]) * fInvW;
+			Matrix4 mat = *this;
+			if (mat.RowMajor == true)
+			{
+				mat.transpose();
+			}
+			{
+				
+				r.x = (mat.m[0][0] * v.x + mat.m[0][1] * v.y + mat.m[0][2] * v.z + mat.m[0][3]) * fInvW;
+				r.y = (mat.m[1][0] * v.x + mat.m[1][1] * v.y + mat.m[1][2] * v.z + mat.m[1][3]) * fInvW;
+				r.z = (mat.m[2][0] * v.x + mat.m[2][1] * v.y + mat.m[2][2] * v.z + mat.m[2][3]) * fInvW;
+			}
 
 			return r;
 		}
 		inline Vector4 operator * (const Vector4& v) const
 		{
+			Matrix4 mat = *this;
+			if (mat.RowMajor == true)
+			{
+				mat.transpose();
+			}
 			return Vector4(
-				m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
-				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
-				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
-				m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w
+				mat.m[0][0] * v.x + mat.m[0][1] * v.y + mat.m[0][2] * v.z + mat.m[0][3] * v.w,
+				mat.m[1][0] * v.x + mat.m[1][1] * v.y + mat.m[1][2] * v.z + mat.m[1][3] * v.w,
+				mat.m[2][0] * v.x + mat.m[2][1] * v.y + mat.m[2][2] * v.z + mat.m[2][3] * v.w,
+				mat.m[3][0] * v.x + mat.m[3][1] * v.y + mat.m[3][2] * v.z + mat.m[3][3] * v.w
 				);
 		}
-		inline Plane operator * (const Plane& p) const
+		inline Plane operator * (const Plane& p) 
 		{
 			Plane ret;
-			Matrix4 invTrans = inverse().transpose();
+			Matrix4 invTrans = inverse();
+			invTrans.transpose();
 			Vector4 v4(p.normal.x, p.normal.y, p.normal.z, p.d);
 			v4 = invTrans * v4;
 			ret.normal.x = v4.x;
@@ -211,7 +241,7 @@ namespace Sapphire
 			return ret;
 		}
 
- 
+
 		inline Matrix4 operator + (const Matrix4 &m2) const
 		{
 			Matrix4 r;
@@ -239,7 +269,7 @@ namespace Sapphire
 			return r;
 		}
 
-	 
+
 		inline Matrix4 operator - (const Matrix4 &m2) const
 		{
 			Matrix4 r;
@@ -266,7 +296,7 @@ namespace Sapphire
 			return r;
 		}
 
-		 
+
 		inline bool operator == (const Matrix4& m2) const
 		{
 			if (
@@ -278,7 +308,7 @@ namespace Sapphire
 			return true;
 		}
 
-	 
+
 		inline bool operator != (const Matrix4& m2) const
 		{
 			if (
@@ -290,7 +320,7 @@ namespace Sapphire
 			return false;
 		}
 
-		 
+
 		inline void operator = (const Matrix3& mat3)
 		{
 			m[0][0] = mat3.m[0][0]; m[0][1] = mat3.m[0][1]; m[0][2] = mat3.m[0][2];
@@ -307,12 +337,23 @@ namespace Sapphire
 			return _m;
 		}
 		//返回转置矩阵 （本引擎是列优先矩阵，转置后可成行优先矩阵）
-		inline Matrix4 transpose(void) const
+		void transpose(void)
 		{
-			return Matrix4(m[0][0], m[1][0], m[2][0], m[3][0],
-				m[0][1], m[1][1], m[2][1], m[3][1],
-				m[0][2], m[1][2], m[2][2], m[3][2],
-				m[0][3], m[1][3], m[2][3], m[3][3]);
+
+			std::swap(m[0][1], m[1][0]);
+			std::swap(m[0][2], m[2][0]);
+			std::swap(m[0][3], m[3][0]);
+			std::swap(m[1][2], m[2][1]);
+			std::swap(m[1][3], m[3][1]);
+			std::swap(m[2][3], m[3][2]);
+
+			RowMajor = !RowMajor;
+
+			//return Matrix4(m[0][0], m[1][0], m[2][0], m[3][0],
+			//	m[0][1], m[1][1], m[2][1], m[3][1],
+			//	m[0][2], m[1][2], m[2][2], m[3][2],
+			//	m[0][3], m[1][3], m[2][3], m[3][3]);
+			;
 		}
 
 		/*
@@ -324,25 +365,40 @@ namespace Sapphire
 		*/
 		inline void setTrans(const Vector3& v)
 		{
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			m[0][3] = v.x;
 			m[1][3] = v.y;
 			m[2][3] = v.z;
 		}
 
-		/** 
+		/**
 		提取矩阵的平移变换
 		*/
 		inline Vector3 getTrans() const
 		{
-			return Vector3(m[0][3], m[1][3], m[2][3]);
+			if (RowMajor == true)
+			{
+				return Vector3(m[3][0], m[3][1], m[3][2]);
+			}
+			else{
+				return Vector3(m[0][3], m[1][3], m[2][3]);
+			}
+			
 		}
 
 
-		/** 
+		/**
 		构建平移矩阵
 		*/
 		inline void makeTrans(const Vector3& v)
 		{
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			m[0][0] = 1.0; m[0][1] = 0.0; m[0][2] = 0.0; m[0][3] = v.x;
 			m[1][0] = 0.0; m[1][1] = 1.0; m[1][2] = 0.0; m[1][3] = v.y;
 			m[2][0] = 0.0; m[2][1] = 0.0; m[2][2] = 1.0; m[2][3] = v.z;
@@ -351,6 +407,10 @@ namespace Sapphire
 
 		inline void makeTrans(Real tx, Real ty, Real tz)
 		{
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			m[0][0] = 1.0; m[0][1] = 0.0; m[0][2] = 0.0; m[0][3] = tx;
 			m[1][0] = 0.0; m[1][1] = 1.0; m[1][2] = 0.0; m[1][3] = ty;
 			m[2][0] = 0.0; m[2][1] = 0.0; m[2][2] = 1.0; m[2][3] = tz;
@@ -371,7 +431,7 @@ namespace Sapphire
 
 			return r;
 		}
- 
+
 		inline static Matrix4 getTrans(Real t_x, Real t_y, Real t_z)
 		{
 			Matrix4 r;
@@ -384,7 +444,7 @@ namespace Sapphire
 			return r;
 		}
 
-		 
+
 		inline void setScale(const Vector3& v)
 		{
 			m[0][0] = v.x;
@@ -397,7 +457,7 @@ namespace Sapphire
 			return Vector3(m[0][0], m[1][1], m[2][2]);
 		}
 
-		 
+
 		inline static Matrix4 getScale(const Vector3& v)
 		{
 			Matrix4 r;
@@ -408,9 +468,9 @@ namespace Sapphire
 
 			return r;
 		}
- 
 
-		 
+
+
 		inline static Matrix4 getScale(Real s_x, Real s_y, Real s_z)
 		{
 			Matrix4 r;
@@ -426,24 +486,27 @@ namespace Sapphire
 		/** This code was sent in by Chev.  Note that it does not necessarily return
 		the *same* Euler angles as those set by setRotationDegrees(), but the rotation will
 		be equivalent, i.e. will have the same result when used to rotate a vector or node. */
-		 
-		inline Vector3 getRotationDegrees() 
+
+		inline Vector3 getRotationDegrees()
 		{
 			Matrix4 mat = *this;
-			mat = mat.transpose();
+			if (mat.RowMajor == false)
+			{
+				mat.transpose();
+			}			
 			Vector3 scale = this->getScale();
 			// we need to check for negative scale on to axes, which would bring up wrong results
-			if (scale.y<0 && scale.z<0)
+			if (scale.y < 0 && scale.z < 0)
 			{
 				scale.y = -scale.y;
 				scale.z = -scale.z;
 			}
-			else if (scale.x<0 && scale.z<0)
+			else if (scale.x < 0 && scale.z < 0)
 			{
 				scale.x = -scale.x;
 				scale.z = -scale.z;
 			}
-			else if (scale.x<0 && scale.y<0)
+			else if (scale.x < 0 && scale.y < 0)
 			{
 				scale.x = -scale.x;
 				scale.y = -scale.y;
@@ -486,7 +549,7 @@ namespace Sapphire
 			const Vector2 &rotatecenter,
 			const Vector2 &translate,
 			const Vector2 &scale);
-		
+
 
 		inline void extract3x3Matrix(Matrix3& m3x3) const
 		{
@@ -502,10 +565,10 @@ namespace Sapphire
 
 		}
 
-	 
+
 		inline bool hasScale() const
 		{
-			 
+
 			Real t = m[0][0] * m[0][0] + m[1][0] * m[1][0] + m[2][0] * m[2][0];
 			if (!Math::RealEqual(t, 1.0, (Real)1e-04))
 				return true;
@@ -521,22 +584,26 @@ namespace Sapphire
 
 		inline void setRotationCenter(const Vector3& center, const Vector3& translation)
 		{
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
+			
 			getIndex(12) = -getIndex(0) * center.x - getIndex(4) * center.y - getIndex(8) * center.z + (center.x - translation.x);
 			getIndex(13) = -getIndex(1) * center.x - getIndex(5) * center.y - getIndex(9) * center.z + (center.y - translation.y);
 			getIndex(14) = -getIndex(2) * center.x - getIndex(6) * center.y - getIndex(10) * center.z + (center.z - translation.z);
 			getIndex(15) = (Real) 1.0;
-			*this = transpose();
+			transpose();
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = false;
 #endif
 		}
-		 
+
 		inline bool hasNegativeScale() const
 		{
 			return determinant() < 0;
 		}
- 
+
 		inline Quaternion extractQuaternion() const
 		{
 			Matrix3 m3x3;
@@ -544,18 +611,21 @@ namespace Sapphire
 			return Quaternion(m3x3);
 		}
 
-		inline Matrix4&  setRotationRadians(const Vector3& rotation, bool useTable=false)
+		inline Matrix4&  setRotationRadians(const Vector3& rotation, bool useTable = false)
 		{
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 
-			const Real cr = Math::Cos(rotation.x,useTable);
+			const Real cr = Math::Cos(rotation.x, useTable);
 			const Real sr = Math::Sin(rotation.x, useTable);
 			const Real cp = Math::Cos(rotation.y, useTable);
 			const Real sp = Math::Sin(rotation.y, useTable);
 			const Real cy = Math::Cos(rotation.z, useTable);
 			const Real sy = Math::Sin(rotation.z, useTable);
 
-			getIndex(0) =  (cp*cy);
+			getIndex(0) = (cp*cy);
 			getIndex(1) = (cp*sy);
 			getIndex(2) = (-sp);
 
@@ -570,7 +640,7 @@ namespace Sapphire
 			getIndex(9) = (crsp*sy - sr*cy);
 			getIndex(10) = (cr*cp);
 
-			*this = transpose();
+			transpose();
 
 			return *this;
 		}
@@ -590,7 +660,10 @@ namespace Sapphire
 			const Vector3& axis,
 			const Vector3& from)
 		{
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			// axis of rotation
 			Vector3 up = axis;
 			up.normalize();
@@ -630,7 +703,7 @@ namespace Sapphire
 			getIndex(11) = 0;
 
 
-			*this = transpose();
+			transpose();
 
 			setRotationCenter(center, translation);
 		}
@@ -638,7 +711,10 @@ namespace Sapphire
 		inline Matrix4&  setRotationDegrees(const Vector3& rotation, bool useTable = false)
 		{
 			//先转置为行矩阵
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 
 			const Real cr = Math::Cos(Math::DegreesToRadians(rotation.x), useTable); //roll 绕Z轴旋转角度的cos值
 			const Real sr = Math::Sin(Math::DegreesToRadians(rotation.x), useTable); // roll绕Z轴旋转角度的sin值
@@ -662,7 +738,7 @@ namespace Sapphire
 			getIndex(9) = (crsp*sy - sr*cy);
 			getIndex(10) = (cr*cp);
 			//然后转换回列矩阵
-			*this = transpose();
+			transpose();
 
 			return *this;
 		}
@@ -671,10 +747,16 @@ namespace Sapphire
 
 		inline Matrix4& Matrix4::setTextureTranslate(FLOAT32 x, FLOAT32 y)
 		{
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			//M[8] = (Real)x;
 			m[0][3] = (Real)x;
 			m[1][3] = (Real)y;
 			//M[9] = (Real)y;
+
+			transpose();
 
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = definitelyIdentityMatrix && (x == 0.0f) && (y == 0.0f);
@@ -683,42 +765,53 @@ namespace Sapphire
 		}
 
 
-		 
+
 		inline Matrix4& setTextureScale(FLOAT32 sx, FLOAT32 sy)
 		{
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			m[0][0] = (Real)sx;
 			m[1][1] = (Real)sy;
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = definitelyIdentityMatrix && (sx == 1.0f) && (sy == 1.0f);
 #endif
+			transpose();
 			return *this;
 		}
 
 
 
-		 
+
 		inline Matrix4& setTextureRotationCenter(FLOAT32 rotateRad)
 		{
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			const FLOAT32 c = cosf(rotateRad);
 			const FLOAT32 s = sinf(rotateRad);
-			m[0][0] = (Real)c;
-			//M[1] = (Real)s;
-			m[1][0] = (Real)s;
+			getIndex(0) = (Real)s;
+			//m[0][0] = (Real)c;
+			getIndex(1) = (Real)s;
+			//m[1][0] = (Real)s;
 
-			//M[4] = (Real)-s;
-			m[0][1] = (Real)-s;
-			//M[5] = (Real)c;
-			m[1][1] = (Real)c;
+			getIndex(4) = (Real)-s;
+			//m[0][1] = (Real)-s;
+			getIndex(5) = (Real)c;
+			//m[1][1] = (Real)c;
 
-			//M[8] = (Real)(0.5f * (s - c) + 0.5f);
-			m[0][2] = (Real)(0.5f * (s - c) + 0.5f);
-			 
-			//M[9] = (Real)(-0.5f * (s + c) + 0.5f);
-			m[1][2] = (Real)(-0.5f * (s + c) + 0.5f);
+			getIndex(8) = (Real)(0.5f * (s - c) + 0.5f);
+			//m[0][2] = (Real)(0.5f * (s - c) + 0.5f);
+
+			getIndex(9) = (Real)(-0.5f * (s + c) + 0.5f);
+			//m[1][2] = (Real)(-0.5f * (s + c) + 0.5f);
 
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = definitelyIdentityMatrix && (rotateRad == 0.0f);
 #endif
+			transpose();
 			return *this;
 		}
 
@@ -748,7 +841,10 @@ namespace Sapphire
 			Real ca = f.dotProduct(t);
 
 			Vector3 vt(v * (1 - ca));
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = vt.x * v.x + ca;
 			getIndex(5) = vt.y * v.y + ca;
 			getIndex(10) = vt.z * v.z + ca;
@@ -774,19 +870,22 @@ namespace Sapphire
 			getIndex(14) = 0;
 			getIndex(15) = 1;
 
-			*this = transpose();
+			transpose();
 			return *this;
 		}
 
 
-		 
+
 		inline Matrix4& buildProjectionMatrixOrthoLH(
 			FLOAT32 widthOfViewVolume, FLOAT32 heightOfViewVolume, FLOAT32 zNear, FLOAT32 zFar)
 		{
 			assert(widthOfViewVolume != 0.f); //divide by zero
 			assert(heightOfViewVolume != 0.f); //divide by zero
 			assert(zNear != zFar); //divide by zero
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = (Real)(2 / widthOfViewVolume);
 			getIndex(1) = 0;
 			getIndex(2) = 0;
@@ -806,7 +905,7 @@ namespace Sapphire
 			getIndex(13) = 0;
 			getIndex(14) = (Real)(zNear / (zNear - zFar));
 			getIndex(15) = 1;
-			*this = transpose();
+			transpose();
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = false;
 #endif
@@ -814,14 +913,17 @@ namespace Sapphire
 		}
 
 
-		 
+
 		inline Matrix4& buildProjectionMatrixOrthoRH(
 			FLOAT32 widthOfViewVolume, FLOAT32 heightOfViewVolume, FLOAT32 zNear, FLOAT32 zFar)
 		{
 			assert(widthOfViewVolume == 0.f); //divide by zero
 			assert(heightOfViewVolume == 0.f); //divide by zero
 			assert(zNear == zFar); //divide by zero
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = (Real)(2 / widthOfViewVolume);
 			getIndex(1) = 0;
 			getIndex(2) = 0;
@@ -841,7 +943,7 @@ namespace Sapphire
 			getIndex(13) = 0;
 			getIndex(14) = (Real)(zNear / (zNear - zFar));
 			getIndex(15) = 1;
-			*this = transpose();
+			transpose();
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = false;
 #endif
@@ -857,7 +959,10 @@ namespace Sapphire
 			const Real w = static_cast<Real>(h / aspectRatio);
 
 			assert(zNear != zFar); //divide by zero
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = w;
 			getIndex(1) = 0;
 			getIndex(2) = 0;
@@ -878,7 +983,7 @@ namespace Sapphire
 			getIndex(14) = (Real)(-zNear*zFar / (zFar - zNear));
 			getIndex(15) = 0;
 
-			*this = transpose();
+			transpose();
 
 
 #if defined ( USE_MATRIX_TEST )
@@ -898,7 +1003,10 @@ namespace Sapphire
 
 			assert(zNear == zFar); //divide by zero
 
-			*this = transpose();
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = w;
 			getIndex(1) = 0;
 			getIndex(2) = 0;
@@ -921,7 +1029,7 @@ namespace Sapphire
 			//		M[14] = (T)(2.0f*zNear*zFar/(zNear-zFar)); // OpenGL version
 			getIndex(15) = 0;
 
-			*this = transpose();
+			transpose();
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = false;
 #endif
@@ -936,14 +1044,17 @@ namespace Sapphire
 			const Vector3& upVector)
 		{
 			Vector3 zaxis = target - position;
-			zaxis.normalize();
+			zaxis.normalise();
 
 			Vector3 xaxis = upVector.crossProduct(zaxis);
-			xaxis.normalize();
+			xaxis.normalise();
 
 			Vector3 yaxis = zaxis.crossProduct(xaxis);
 			//计算方法是以行矩阵，而Matrix4是列矩阵存储的，先转置
-			*this = transpose(); 
+			if (RowMajor == false)
+			{
+				transpose();
+			}
 			getIndex(0) = (Real)xaxis.x;
 			getIndex(1) = (Real)yaxis.x;
 			getIndex(2) = (Real)zaxis.x;
@@ -964,7 +1075,7 @@ namespace Sapphire
 			getIndex(14) = (Real)-zaxis.dotProduct(position);
 			getIndex(15) = 1;
 			//计算方法是以行矩阵，而Matrix4是列矩阵存储的，再转置回列矩阵
-			*this = transpose(); 
+			 transpose(); 
 #if defined ( USE_MARealRIX_RealESReal )
 			definitelyIdentityMatrix = false;
 #endif
@@ -972,25 +1083,30 @@ namespace Sapphire
 		}
 
 
-	
+
 		inline Matrix4& setTextureScaleCenter(FLOAT32 sx, FLOAT32 sy)
 		{
-			//M[0] = (Real)sx;
-			m[0][0] = (Real)sx;
-			//M[5] = (Real)sy;
-			m[1][1] = (Real)sy;
-			//M[8] = (Real)(0.5f - 0.5f * sx);
-			m[0][2] = (Real)(0.5f - 0.5f * sx);
-			//M[9] = (Real)(0.5f - 0.5f * sy);
-			m[1][2] = (Real)(0.5f - 0.5f * sy);
+			if (RowMajor == false)
+			{
+				transpose();
+			}
+			getIndex(0) = (Real)sx;
+			//m[0][0] = (Real)sx;
+			getIndex(5) = (Real)sy;
+			//m[1][1] = (Real)sy;
+			getIndex(8) = (Real)(0.5f - 0.5f * sx);
+		//	m[0][2] = (Real)(0.5f - 0.5f * sx);
+			getIndex(9) = (Real)(0.5f - 0.5f * sy);
+		//	m[1][2] = (Real)(0.5f - 0.5f * sy);
 
 #if defined ( USE_MARealRIX_RealESReal )
 			definitelyIdentityMatrix = definitelyIdentityMatrix && (sx == 1.0f) && (sy == 1.0f);
 #endif
+			transpose();
 			return *this;
 		}
 
-		 
+
 		inline Matrix4& setM(const Real *data)
 		{
 			memcpy(_m, data, 16 * sizeof(Real));
@@ -1004,9 +1120,14 @@ namespace Sapphire
 
 		inline Matrix4 setbyProduct(const Matrix4& other_a, const Matrix4& other_b)
 		{
-			
-		    Matrix4 m1 = other_a;
+
+			Matrix4 m1 = other_a;
 			Matrix4 m2 = other_b;
+
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			m[0][0] = m1.m[0][0] * m2.m[0][0] + m1.m[0][1] * m2.m[1][0] + m1.m[0][2] * m2.m[2][0] + m1.m[0][3] * m2.m[3][0];
 			m[0][1] = m1.m[0][0] * m2.m[0][1] + m1.m[0][1] * m2.m[1][1] + m1.m[0][2] * m2.m[2][1] + m1.m[0][3] * m2.m[3][1];
 			m[0][2] = m1.m[0][0] * m2.m[0][2] + m1.m[0][1] * m2.m[1][2] + m1.m[0][2] * m2.m[2][2] + m1.m[0][3] * m2.m[3][2];
@@ -1034,33 +1155,43 @@ namespace Sapphire
 		// goal is to reduce stack use and copy
 		inline Matrix4 setbyproduct_nocheck(const Matrix4& other_a, const Matrix4& other_b)
 		{
-			 Matrix4 m1 = other_a;
-			 Matrix4 m2 = other_b;
-			 //列矩阵转成行矩阵
-			 m1.transpose();
-			 m2.transpose();
+			//列矩阵转成行矩阵
+			Matrix4 m1 = other_a;
+			Matrix4 m2 = other_b;
 
-			 getIndex(0) = m1.getIndex(0) * m2.getIndex(0) + m1.getIndex(4) * m2.getIndex(1) + m1.getIndex(8) * m2.getIndex(2) + m1.getIndex(12) * m2.getIndex(3);
-			 getIndex(1) = m1.getIndex(1) * m2.getIndex(0) + m1.getIndex(5) * m2.getIndex(1) + m1.getIndex(9) * m2.getIndex(2) + m1.getIndex(13) * m2.getIndex(3);
-			 getIndex(2) = m1.getIndex(2) * m2.getIndex(0) + m1.getIndex(6) * m2.getIndex(1) + m1.getIndex(10) * m2.getIndex(2) + m1.getIndex(14) * m2.getIndex(3);
-			 getIndex(3) = m1.getIndex(3) * m2.getIndex(0) + m1.getIndex(7) * m2.getIndex(1) + m1.getIndex(11) * m2.getIndex(2) + m1.getIndex(15) * m2.getIndex(3);
+			if (m1.RowMajor == false)
+			{
+				m1.transpose();
+			}
+			if (m2.RowMajor == false)
+			{
+				m2.transpose();
+			}
 
-			 getIndex(4) = m1.getIndex(0) * m2.getIndex(4) + m1.getIndex(4) * m2.getIndex(5) + m1.getIndex(8) * m2.getIndex(6) + m1.getIndex(12) * m2.getIndex(7);
-			 getIndex(5) = m1.getIndex(1) * m2.getIndex(4) + m1.getIndex(5) * m2.getIndex(5) + m1.getIndex(9) * m2.getIndex(6) + m1.getIndex(13) * m2.getIndex(7);
-			 getIndex(6) = m1.getIndex(2) * m2.getIndex(4) + m1.getIndex(6) * m2.getIndex(5) + m1.getIndex(10) * m2.getIndex(6) + m1.getIndex(14) * m2.getIndex(7);
-			 getIndex(7) = m1.getIndex(3) * m2.getIndex(4) + m1.getIndex(7) * m2.getIndex(5) + m1.getIndex(11) * m2.getIndex(6) + m1.getIndex(15) * m2.getIndex(7);
 
-			 getIndex(8) = m1.getIndex(0) * m2.getIndex(8) + m1.getIndex(4) * m2.getIndex(9) + m1.getIndex(8) * m2.getIndex(10) + m1.getIndex(12) * m2.getIndex(11);
-			 getIndex(9) = m1.getIndex(1) * m2.getIndex(8) + m1.getIndex(5) * m2.getIndex(9) + m1.getIndex(9) * m2.getIndex(10) + m1.getIndex(13) * m2.getIndex(11);
-			 getIndex(10) = m1.getIndex(2) * m2.getIndex(8) + m1.getIndex(6) * m2.getIndex(9) + m1.getIndex(10) * m2.getIndex(10) + m1.getIndex(14) * m2.getIndex(11);
-			 getIndex(11) = m1.getIndex(3) * m2.getIndex(8) + m1.getIndex(7) * m2.getIndex(9) + m1.getIndex(11) * m2.getIndex(10) + m1.getIndex(15) * m2.getIndex(11);
+			getIndex(0) = m1.getIndex(0) * m2.getIndex(0) + m1.getIndex(4) * m2.getIndex(1) + m1.getIndex(8) * m2.getIndex(2) + m1.getIndex(12) * m2.getIndex(3);
+			getIndex(1) = m1.getIndex(1) * m2.getIndex(0) + m1.getIndex(5) * m2.getIndex(1) + m1.getIndex(9) * m2.getIndex(2) + m1.getIndex(13) * m2.getIndex(3);
+			getIndex(2) = m1.getIndex(2) * m2.getIndex(0) + m1.getIndex(6) * m2.getIndex(1) + m1.getIndex(10) * m2.getIndex(2) + m1.getIndex(14) * m2.getIndex(3);
+			getIndex(3) = m1.getIndex(3) * m2.getIndex(0) + m1.getIndex(7) * m2.getIndex(1) + m1.getIndex(11) * m2.getIndex(2) + m1.getIndex(15) * m2.getIndex(3);
 
-			 getIndex(12) = m1.getIndex(0) * m2.getIndex(12) + m1.getIndex(4) * m2.getIndex(13) + m1.getIndex(8) * m2.getIndex(14) + m1.getIndex(12) * m2.getIndex(15);
-			 getIndex(13) = m1.getIndex(1) * m2.getIndex(12) + m1.getIndex(5) * m2.getIndex(13) + m1.getIndex(9) * m2.getIndex(14) + m1.getIndex(13) * m2.getIndex(15);
-			 getIndex(14) = m1.getIndex(2) * m2.getIndex(12) + m1.getIndex(6) * m2.getIndex(13) + m1.getIndex(10) * m2.getIndex(14) + m1.getIndex(14) * m2.getIndex(15);
-			 getIndex(15) = m1.getIndex(3) * m2.getIndex(12) + m1.getIndex(7) * m2.getIndex(13) + m1.getIndex(11) * m2.getIndex(14) + m1.getIndex(15) * m2.getIndex(15);
-			 //将行矩阵计算结果再转换会列矩阵（计算方法是按行矩阵，Matrix4是按列矩阵存储的）
-			 *this = transpose();
+			getIndex(4) = m1.getIndex(0) * m2.getIndex(4) + m1.getIndex(4) * m2.getIndex(5) + m1.getIndex(8) * m2.getIndex(6) + m1.getIndex(12) * m2.getIndex(7);
+			getIndex(5) = m1.getIndex(1) * m2.getIndex(4) + m1.getIndex(5) * m2.getIndex(5) + m1.getIndex(9) * m2.getIndex(6) + m1.getIndex(13) * m2.getIndex(7);
+			getIndex(6) = m1.getIndex(2) * m2.getIndex(4) + m1.getIndex(6) * m2.getIndex(5) + m1.getIndex(10) * m2.getIndex(6) + m1.getIndex(14) * m2.getIndex(7);
+			getIndex(7) = m1.getIndex(3) * m2.getIndex(4) + m1.getIndex(7) * m2.getIndex(5) + m1.getIndex(11) * m2.getIndex(6) + m1.getIndex(15) * m2.getIndex(7);
+
+			getIndex(8) = m1.getIndex(0) * m2.getIndex(8) + m1.getIndex(4) * m2.getIndex(9) + m1.getIndex(8) * m2.getIndex(10) + m1.getIndex(12) * m2.getIndex(11);
+			getIndex(9) = m1.getIndex(1) * m2.getIndex(8) + m1.getIndex(5) * m2.getIndex(9) + m1.getIndex(9) * m2.getIndex(10) + m1.getIndex(13) * m2.getIndex(11);
+			getIndex(10) = m1.getIndex(2) * m2.getIndex(8) + m1.getIndex(6) * m2.getIndex(9) + m1.getIndex(10) * m2.getIndex(10) + m1.getIndex(14) * m2.getIndex(11);
+			getIndex(11) = m1.getIndex(3) * m2.getIndex(8) + m1.getIndex(7) * m2.getIndex(9) + m1.getIndex(11) * m2.getIndex(10) + m1.getIndex(15) * m2.getIndex(11);
+
+			getIndex(12) = m1.getIndex(0) * m2.getIndex(12) + m1.getIndex(4) * m2.getIndex(13) + m1.getIndex(8) * m2.getIndex(14) + m1.getIndex(12) * m2.getIndex(15);
+			getIndex(13) = m1.getIndex(1) * m2.getIndex(12) + m1.getIndex(5) * m2.getIndex(13) + m1.getIndex(9) * m2.getIndex(14) + m1.getIndex(13) * m2.getIndex(15);
+			getIndex(14) = m1.getIndex(2) * m2.getIndex(12) + m1.getIndex(6) * m2.getIndex(13) + m1.getIndex(10) * m2.getIndex(14) + m1.getIndex(14) * m2.getIndex(15);
+			getIndex(15) = m1.getIndex(3) * m2.getIndex(12) + m1.getIndex(7) * m2.getIndex(13) + m1.getIndex(11) * m2.getIndex(14) + m1.getIndex(15) * m2.getIndex(15);
+
+			RowMajor = false;
+			//将行矩阵计算结果再转换会列矩阵（计算方法是按行矩阵，Matrix4是按列矩阵存储的）
+			transpose();
 #if defined ( USE_MATRIX_TEST )
 			definitelyIdentityMatrix = false;
 #endif
@@ -1068,7 +1199,7 @@ namespace Sapphire
 		}
 
 		//零矩阵
-		static const Matrix4 ZERO;    
+		static const Matrix4 ZERO;
 		//零仿射矩阵
 		static const Matrix4 ZEROAFFINE;
 		//单位矩阵
@@ -1086,7 +1217,7 @@ namespace Sapphire
 				scalar*m[3][0], scalar*m[3][1], scalar*m[3][2], scalar*m[3][3]);
 		}
 
-		
+
 		inline _SapphireExport friend std::ostream& operator <<
 			(std::ostream& o, const Matrix4& mat)
 		{
@@ -1106,19 +1237,19 @@ namespace Sapphire
 
 		Matrix4 adjoint() const;
 		Real determinant() const;
-		Matrix4 inverse() const;
+		Matrix4 inverse();
 		inline bool Matrix4::getInverse(Matrix4& out) const;
 
-		 
+
 		void makeTransform(const Vector3& position, const Vector3& scale, const Quaternion& orientation);
 
-		 
+
 		void makeInverseTransform(const Vector3& position, const Vector3& scale, const Quaternion& orientation);
 
-		 
+
 		void decomposition(Vector3& position, Vector3& scale, Quaternion& orientation) const;
 
-		/** 
+		/**
 		检测这个矩阵是否是仿射矩阵
 		@remarks
 		一个仿射矩阵是4X4矩阵由3行等于(0,0,0,1)构成
@@ -1126,7 +1257,14 @@ namespace Sapphire
 		*/
 		inline bool isAffine(void) const
 		{
-			return m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0 && m[3][3] == 1;
+			if (RowMajor == true)
+			{
+				return m[0][3] == 0 && m[1][3] == 0 && m[2][3] == 0 && m[3][3] == 1;
+			}
+			else{
+				return m[3][0] == 0 && m[3][1] == 0 && m[3][2] == 0 && m[3][3] == 1;
+			}
+			
 		}
 
 
@@ -1141,17 +1279,22 @@ namespace Sapphire
 			return m[0][0] == 1 && m[1][1] == 1 && m[2][2] == 1 && m[3][3] == 1;
 		}
 
-		 
+
 		Matrix4 inverseAffine(void) const;
 
 		/** 链接两个仿射矩阵
 		@note
-		这个矩阵必须是仿射矩阵 
+		这个矩阵必须是仿射矩阵
 		*/
-		inline Matrix4 concatenateAffine(const Matrix4 &m2) const
+		inline Matrix4 concatenateAffine(const Matrix4 &m2) 
 		{
 			assert(isAffine() && m2.isAffine());
 
+			if (RowMajor == true )
+			{
+				transpose();
+			}
+			
 			return Matrix4(
 				m[0][0] * m2.m[0][0] + m[0][1] * m2.m[1][0] + m[0][2] * m2.m[2][0],
 				m[0][0] * m2.m[0][1] + m[0][1] * m2.m[1][1] + m[0][2] * m2.m[2][1],
@@ -1169,6 +1312,7 @@ namespace Sapphire
 				m[2][0] * m2.m[0][3] + m[2][1] * m2.m[1][3] + m[2][2] * m2.m[2][3] + m[2][3],
 
 				0, 0, 0, 1);
+			
 		}
 
 		/** 用一个仿射矩阵变换3d向量
@@ -1178,41 +1322,33 @@ namespace Sapphire
 		@note
 		这个矩阵必须是仿射矩阵
 		*/
-		inline Vector3 transformAffine(const Vector3& v) const
+		Vector3 transformAffine(const Vector3& v) const;
+		
+
+
+		Vector4 transformAffine(const Vector4& v) const;
+		
+
+		inline Vector3 rotateVect(const Vector3& v)  
 		{
-			assert(isAffine());
-
-			return Vector3(
-				m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3],
-				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3],
-				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3]);
-		}
-
-		 
-		inline Vector4 transformAffine(const Vector4& v) const
-		{
-			assert(isAffine());
-
-			return Vector4(
-				m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w,
-				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w,
-				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w,
-				v.w);
-		}
-
-		inline Vector3 rotateVect(const Vector3& v) const
-		{
-			assert(isAffine());
-
+			//assert(!isAffine());
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			return Vector3(
 				m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z,
 				m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z,
 				m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z);
 		}
-		
-		inline void inverseRotateVect(Vector3& vect) const
+
+		inline void inverseRotateVect(Vector3& vect) 
 		{
 			Vector3 tmp;
+			if (RowMajor == true)
+			{
+				transpose();
+			}
 			//vect.x = m[0][0] * vect.x + m[0][1] * vect.y + m[0][2] * vect.z + m[0][3];
 			//vect.y = m[1][0] * vect.x + m[1][1] * vect.y + m[1][2] * vect.z + m[1][3];
 			//vect.z = m[2][0] * vect.x + m[2][1] * vect.y + m[2][2] * vect.z + m[2][3];
@@ -1223,22 +1359,34 @@ namespace Sapphire
 			vect.x = tmp.x;
 			vect.y = tmp.y;
 			vect.z = tmp.z;
-		
+
 		}
 	};
 
-	 
+
 	inline Vector4 operator * (const Vector4& v, const Matrix4& mat)
 	{
-		return Vector4(
-			v.x*mat[0][0] + v.y*mat[1][0] + v.z*mat[2][0] + v.w*mat[3][0],
-			v.x*mat[0][1] + v.y*mat[1][1] + v.z*mat[2][1] + v.w*mat[3][1],
-			v.x*mat[0][2] + v.y*mat[1][2] + v.z*mat[2][2] + v.w*mat[3][2],
-			v.x*mat[0][3] + v.y*mat[1][3] + v.z*mat[2][3] + v.w*mat[3][3]
-			);
+		if (mat.RowMajor == false)
+		{
+			return Vector4(
+				v.x*mat[0][0] + v.y*mat[0][1] + v.z*mat[0][2] + v.w*mat[0][3],
+				v.x*mat[1][0] + v.y*mat[1][1] + v.z*mat[1][2] + v.w*mat[1][3],
+				v.x*mat[2][0] + v.y*mat[2][1] + v.z*mat[2][2] + v.w*mat[2][3],
+				v.x*mat[3][0] + v.y*mat[3][1] + v.z*mat[3][2] + v.w*mat[3][3]
+				);
+		}
+		else{
+			return Vector4(
+				v.x*mat[0][0] + v.y*mat[1][0] + v.z*mat[2][0] + v.w*mat[3][0],
+				v.x*mat[0][1] + v.y*mat[1][1] + v.z*mat[2][1] + v.w*mat[3][1],
+				v.x*mat[0][2] + v.y*mat[1][2] + v.z*mat[2][2] + v.w*mat[3][2],
+				v.x*mat[0][3] + v.y*mat[1][3] + v.z*mat[2][3] + v.w*mat[3][3]
+				);
+		}
+		
 	}
-	 
-	
+
+
 
 }
 

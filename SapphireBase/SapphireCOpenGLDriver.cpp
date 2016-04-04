@@ -937,6 +937,7 @@ namespace Sapphire
 
 
 		//! sets transformation
+		// 设置几何变换
 		void COpenGLDriver::setTransform(E_TRANSFORMATION_STATE state, const Matrix4& mat)
 		{
 			Matrices[state] = mat;
@@ -948,17 +949,21 @@ namespace Sapphire
 			case ETS_WORLD:
 			{
 				// OpenGL only has a model matrix, view and world is not existent. so lets fake these two.
+				// OpenGL 同时只有一个模型矩阵，观察矩阵和世界矩阵
 				glMatrixMode(GL_MODELVIEW);
 
 				// first load the viewing transformation for user clip planes
+				// 首先加载用户剪裁平面的观察变换矩阵
 				glLoadMatrixf((Matrices[ETS_VIEW]).pointer());
 
 				// we have to update the clip planes to the latest view matrix
+				//更新用户剪裁平面到最后的观察矩阵
 				for (UINT32 i = 0; i<MaxUserClipPlanes; ++i)
 					if (UserClipPlanes[i].Enabled)
 						uploadClipPlane(i);
-
+				 
 				// now the real model-view matrix
+				// 现在是真实的模型观察矩阵
 				glMultMatrixf(Matrices[ETS_WORLD].pointer());
 			}
 			break;
@@ -1436,6 +1441,7 @@ namespace Sapphire
 
 
 		// small helper function to create vertex buffer object adress offsets
+		// 创建顶点缓冲对象VBO偏移地址的辅助函数
 		static inline UINT8* buffer_offset(const long offset)
 		{
 			return ((UINT8*)0 + offset);
@@ -1443,34 +1449,37 @@ namespace Sapphire
 
 
 		//! draws a vertex primitive list
+		//绘制顶点图元列表
 		void COpenGLDriver::drawVertexPrimitiveList(const void* vertices, UINT32 vertexCount,
 			const void* indexList, UINT32 primitiveCount,
 			E_VERTEX_TYPE vType, E_PRIMITIVE_TYPE pType, E_INDEX_TYPE iType)
 		{
 			if (!primitiveCount || !vertexCount)
 				return;
-
+			//检测图元数
 			if (!checkPrimitiveCount(primitiveCount))
 				return;
-
+			//NullDriver并非真正绘制顶点图元列表
 			CNullDriver::drawVertexPrimitiveList(vertices, vertexCount, indexList, primitiveCount, vType, pType, iType);
-
+			//再做顶点数据有效性检测，OpenGL特征检测是否支持ARB BGR或BGRA像素格式扩展支持或EXT BGR或BGRA像素格式扩展支持
 			if (vertices && !FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] && !FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra])
 				getColorBuffer(vertices, vertexCount, vType);
 
 			// draw everything
+			// 绘制所有东西
 			setRenderStates3DMode();
-
+			//是否多纹理支持
 			if (MultiTextureExtension)
-				extGlClientActiveTexture(GL_TEXTURE0_ARB);
+				extGlClientActiveTexture(GL_TEXTURE0_ARB);  //选取纹理单位0
 
-			glEnableClientState(GL_COLOR_ARRAY);
+			glEnableClientState(GL_COLOR_ARRAY);    
 			glEnableClientState(GL_VERTEX_ARRAY);
 			if ((pType != EPT_POINTS) && (pType != EPT_POINT_SPRITES))
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			if ((pType != EPT_POINTS) && (pType != EPT_POINT_SPRITES))
 				glEnableClientState(GL_NORMAL_ARRAY);
 
+			// 由于没有OSX头文件定义，必须多检测特性
 			//due to missing defines in OSX headers, we have to be more specific with this check
 			//#if defined(GL_ARB_vertex_array_bgra) || defined(GL_EXT_vertex_array_bgra)
 #ifdef GL_BGRA
@@ -1482,15 +1491,19 @@ namespace Sapphire
 			{
 				if (FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] || FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra])
 				{
+					//判断顶点类型
 					switch (vType)
 					{
 					case EVT_STANDARD:
+						//设置顶点颜色数组指针
 						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].Color);
 						break;
 					case EVT_2TCOORDS:
+						//设置顶点颜色数组指针
 						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].Color);
 						break;
 					case EVT_TANGENTS:
+						//设置顶点颜色数组指针
 						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertexTangents), &(static_cast<const S3DVertexTangents*>(vertices))[0].Color);
 						break;
 					}
@@ -1498,6 +1511,7 @@ namespace Sapphire
 				else
 				{
 					// avoid passing broken pointer to OpenGL
+					// 避免传递错误指针给OpenGL
 					assert(ColorBuffer.size() == 0);
 					glColorPointer(colorSize, GL_UNSIGNED_BYTE, 0, &ColorBuffer[0]);
 				}
@@ -1505,24 +1519,34 @@ namespace Sapphire
 
 			switch (vType)
 			{
+				//判断顶点类型
 			case EVT_STANDARD:
 				if (vertices)
 				{
+					//传统顶点数组模式
+					//定义一个法线数组指针
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].Normal);
+					//定义纹理坐标数组指针
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].TCoords);
+					//定义顶点坐标数组指针 参数：字节数 /数据类型 /数据块大小 /缓冲区偏移位置
 					glVertexPointer(3, GL_FLOAT, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].Pos);
 				}
 				else
-				{
+				{    //使用VBO模式
+					//定义一个法线数组指针
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex), buffer_offset(12));
+				    //定义顶点颜色数组指针 
 					glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex), buffer_offset(24));
+					//定义顶点坐标数组指针 参数：字节数 /数据类型 /数据块大小 /缓冲区偏移位置
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex), buffer_offset(28));
+					//定义顶点指针
 					glVertexPointer(3, GL_FLOAT, sizeof(S3DVertex), 0);
 				}
 
+				//是否存在多重纹理
 				if (MultiTextureExtension && CurrentTexture[1])
 				{
-					extGlClientActiveTexture(GL_TEXTURE1_ARB);
+					extGlClientActiveTexture(GL_TEXTURE1_ARB);     //选取纹理单元1
 					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 					if (vertices)
 						glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].TCoords);
@@ -1533,12 +1557,14 @@ namespace Sapphire
 			case EVT_2TCOORDS:
 				if (vertices)
 				{
+					//传统顶点数组模式
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].Normal);
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].TCoords);
 					glVertexPointer(3, GL_FLOAT, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].Pos);
 				}
 				else
 				{
+					//使用VBO模式
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(12));
 					glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex2TCoords), buffer_offset(24));
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(28));
@@ -1589,9 +1615,9 @@ namespace Sapphire
 				}
 				break;
 			}
-
+			//渲染数组
 			renderArray(indexList, primitiveCount, pType, iType);
-
+			//卸载硬件资源
 			if (MultiTextureExtension)
 			{
 				if (vType == EVT_TANGENTS)
@@ -1612,7 +1638,7 @@ namespace Sapphire
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
 
-
+		//获取颜色缓冲区
 		void COpenGLDriver::getColorBuffer(const void* vertices, UINT32 vertexCount, E_VERTEX_TYPE vType)
 		{
 			// convert colors to gl color format.
@@ -1656,12 +1682,12 @@ namespace Sapphire
 			}
 		}
 
-
+		//渲染数组
 		void COpenGLDriver::renderArray(const void* indexList, UINT32 primitiveCount,
 			E_PRIMITIVE_TYPE pType, E_INDEX_TYPE iType)
 		{
 			GLenum indexSize = 0;
-
+			//判断设置索引元素的数据类型16BIT/32BIT
 			switch (iType)
 			{
 			case EIT_16BIT:
@@ -1676,9 +1702,12 @@ namespace Sapphire
 			}
 			}
 
+			//图元类型
 			switch (pType)
 			{
+			//点
 			case EPT_POINTS:
+				//点精灵
 			case EPT_POINT_SPRITES:
 			{
 #ifdef GL_ARB_point_sprite
@@ -1687,6 +1716,7 @@ namespace Sapphire
 #endif
 
 				// prepare size and attenuation (where supported)
+				// 预分配大小和衰减参数
 				GLfloat particleSize = Material.Thickness;
 				//			if (AntiAlias)
 				//				particleSize=clamp(particleSize, DimSmoothedPoint[0], DimSmoothedPoint[1]);
@@ -1764,6 +1794,7 @@ namespace Sapphire
 
 
 		//! draws a vertex primitive list in 2d
+		// 绘制一个2d顶点图元列表
 		void COpenGLDriver::draw2DVertexPrimitiveList(const void* vertices, UINT32 vertexCount,
 			const void* indexList, UINT32 primitiveCount,
 			E_VERTEX_TYPE vType, E_PRIMITIVE_TYPE pType, E_INDEX_TYPE iType)
@@ -3229,6 +3260,7 @@ namespace Sapphire
 					Matrix4 m(Matrix4::ZERO);
 					m.buildProjectionMatrixOrthoLH(FLOAT32(renderTargetSize.Width), FLOAT32(-(SINT32)(renderTargetSize.Height)), -1.0f, 1.0f);
 					m.setTrans(Vector3(-1, 1, 0));
+					m.transpose();
 					glLoadMatrixf(m.pointer());
 
 					glMatrixMode(GL_MODELVIEW);

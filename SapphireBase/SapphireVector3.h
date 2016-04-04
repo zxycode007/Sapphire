@@ -19,7 +19,7 @@ namespace Sapphire
 		Real x, y, z;
 
 	public:
-		inline Vector3()
+		inline Vector3() :x(0), y(0), z(0)
 		{
 		}
 
@@ -399,20 +399,19 @@ namespace Sapphire
 		}
 
 
-		inline Vector3 normalize()
+		inline Vector3& normalize()
 		{
-			Real fLength = Math::Sqrt(x * x + y * y + z * z);
-			Vector3 v = *this;
+			FLOAT64 length = x*x + y*y + z*z;
+			if (length == 0) // this check isn't an optimization but prevents getting NAN in the sqrt.
+				return *this;
+			length = Math::Sqrt(length);
 
-			if (fLength > Real(0.0f))
-			{
-				Real fInvLength = 1.0f / fLength;
-				v.x *= fInvLength;
-				v.y *= fInvLength;
-				v.z *= fInvLength;
-			}
+			x = (Real)(x * length);
+			y = (Real)(y * length);
+			z = (Real)(z * length);
+			return *this;
 
-			return v;
+			
 		}
 
 		/** 

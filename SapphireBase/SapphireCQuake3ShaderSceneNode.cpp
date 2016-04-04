@@ -1181,7 +1181,7 @@ namespace Sapphire
 				f[8] = getAsFloat(v.content, pos);
 				f[9] = getAsFloat(v.content, pos);
 				m2.setM(f);
-				m2 = m2.transpose();
+				m2.transpose();
 				break;
 
 			case STRETCH:	// stretch

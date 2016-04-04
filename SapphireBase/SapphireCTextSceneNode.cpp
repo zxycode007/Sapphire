@@ -313,7 +313,8 @@ namespace Sapphire
 
 		BBox = Mesh->getBoundingBox();
 		//Matrix4 mat (getAbsoluteTransformation(), Matrix4::EM4CONST_INVERSE);
-		Matrix4 mat = getAbsoluteTransformation().inverse();
+		Matrix4 mat = getAbsoluteTransformation();
+		mat.inverse();
 		//mat.transformBoxEx(BBox);
 		BBox.transform(mat);
 	}

@@ -17,7 +17,6 @@
 #include "SapphireCompileConifg.h"
 
 
-
 namespace Sapphire
 {
 
@@ -149,6 +148,8 @@ namespace Sapphire
 			// transparent and solid material at the same time, we need to go through all
 			// materials, check of what type they are and register this node for the right
 			// render pass according to that.
+			// 由于这些节点要支持透明和固体材质的混合渲染模式，必须访问所有材质，检测他们的类型
+			// 并且注册这些节点到正确渲染通道
 
 			IVideoDriver* driver = SceneManager->getVideoDriver();
 
@@ -157,8 +158,10 @@ namespace Sapphire
 			int solidCount = 0;
 
 			// count transparent and solid materials in this scene node
+			// 计算当前场景节点的透明和固体材质数量
 			for (UINT32 i = 0; i<Materials.size(); ++i)
 			{
+				//获取相应的材质渲染器
 				IMaterialRenderer* rnd =
 					driver->getMaterialRenderer(Materials[i].MaterialType);
 
@@ -172,7 +175,7 @@ namespace Sapphire
 			}
 
 			// register according to material types counted
-
+			// 注册材质类型
 			if (solidCount)
 				SceneManager->registerNodeForRendering(this, ESNRP_SOLID);
 
@@ -193,7 +196,7 @@ namespace Sapphire
 		}
 		else
 		{
-#ifndef _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_
+#ifndef _SAPPHIRE_COMPILE_WITH_SKINNED_MESH_SUPPORT_
 			return 0;
 #else
 
@@ -243,9 +246,11 @@ namespace Sapphire
 		}
 
 		// set CurrentFrameNr
+		// 设置当前帧
 		buildFrameNr(timeMs - LastTimeMs);
 
 		// update bbox
+		// 更新AABB
 		if (Mesh)
 		{
 			IMesh * mesh = getMeshForCurrentFrame();
@@ -260,23 +265,26 @@ namespace Sapphire
 
 
 	//! renders the node.
+	// 渲染这个节点
 	void CAnimatedMeshSceneNode::render()
 	{
+		//获取视频驱动
 		IVideoDriver* driver = SceneManager->getVideoDriver();
-
+		//判断驱动和网格是否有效
 		if (!Mesh || !driver)
 			return;
 
-
+		//是否是透明通道
 		bool isTransparentPass =
 			SceneManager->getSceneNodeRenderPass() == ESNRP_TRANSPARENT;
 
 		++PassCount;
-
+		//获取当前帧的网格
 		IMesh* m = getMeshForCurrentFrame();
 
 		if (m)
 		{
+			//获取AABB碰撞盒子
 			Box = m->getBoundingBox();
 		}
 		else
@@ -285,14 +293,14 @@ namespace Sapphire
 			Printer::log(String("Animated Mesh returned no mesh to render. \n") + String(Mesh->getDebugName()) , LML_WARNING);
 #endif
 		}
-
+		//设置变换矩阵
 		driver->setTransform(ETS_WORLD, AbsoluteTransformation);
 
 		if (Shadow && PassCount == 1)
 			Shadow->updateShadowVolumes();
 
 		// for debug purposes only:
-
+		//debug模式 
 		bool renderMeshes = true;
 		SMaterial mat;
 		if (DebugDataVisible && PassCount == 1)
@@ -319,25 +327,49 @@ namespace Sapphire
 		}
 
 		// render original meshes
+		// 渲染原网格
 		if (renderMeshes)
 		{
 			for (UINT32 i = 0; i<m->getMeshBufferCount(); ++i)
 			{
+				//获取材质渲染器
 				IMaterialRenderer* rnd = driver->getMaterialRenderer(Materials[i].MaterialType);
+				//是否透明
 				bool transparent = (rnd && rnd->isTransparent());
 
 				// only render transparent buffer if this is the transparent render pass
+				// 如果这是一个透明渲染通道，只渲染透明缓冲区
 				// and solid only in solid pass
+			    // 并且固体只能在固体通道中
 				if (transparent == isTransparentPass)
 				{
+					//获取网格缓冲区
 					IMeshBuffer* mb = m->getMeshBuffer(i);
+					//获取材质
 					const SMaterial& material = ReadOnlyMaterials ? mb->getMaterial() : Materials[i];
+					
 					if (RenderFromIdentity)
 						driver->setTransform(ETS_WORLD, Matrix4::IDENTITY);
-					else if (Mesh->getMeshType() == EAMT_SKINNED)
+					else if (Mesh->getMeshType() == EAMT_SKINNED)    //是否骨骼蒙皮
 						driver->setTransform(ETS_WORLD, AbsoluteTransformation * ((SSkinMeshBuffer*)mb)->Transformation);
 
+					{
+						//////////////测试代码////////////////
+						int vsize = mb->getVertexCount();
+						const char* s = typeid(mb->getVertices()).name();
+						E_VERTEX_TYPE t = mb->getVertexType();
+						S3DVertex* vs = (S3DVertex*)mb->getVertices();
+
+						for (size_t i = 0; i < vsize; i++)
+						{
+							StringStream ss;
+							ss << "vertex " << i << " x:" << vs[i].Pos.x << "  y:" << vs[i].Pos.y << " z:" << vs[i].Pos.z;
+							Printer::log(ss.str(), LML_NORMAL);
+						}
+					}
+					//设置材质
 					driver->setMaterial(material);
+					//绘制网格缓冲区
 					driver->drawMeshBuffer(mb);
 				}
 			}

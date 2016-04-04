@@ -40,7 +40,10 @@ namespace Sapphire
 
 
 		//! 默认构造函数
-		SViewFrustum() {}
+		SViewFrustum() { 
+			for (int i = 0; i<ETS_COUNT_FRUSTUM; ++i)
+				Matrices[i] = Matrix4::IDENTITY;
+		}
 
 		//! 拷贝构造函数
 		SViewFrustum(const SViewFrustum& other);
@@ -238,17 +241,20 @@ namespace Sapphire
 		 
 		boundingBox.reset(cameraPosition);
 		
-		boundingBox.merge(getFarLeftUp());
-		boundingBox.merge(getFarRightUp());
-		boundingBox.merge(getFarLeftDown());
-		boundingBox.merge(getFarRightDown());
+		boundingBox.addInternalPoint(getFarLeftUp());
+		boundingBox.addInternalPoint(getFarRightUp());
+		boundingBox.addInternalPoint(getFarLeftDown());
+		boundingBox.addInternalPoint(getFarRightDown());
 	}
 
 	//! 这个构造器创建一个基于透视投影和观察矩阵的视锥体
 	inline void SViewFrustum::setFrom(const Matrix4& matrix)
 	{
 		Matrix4 mat = matrix;
-		mat.transpose();
+		if (mat.RowMajor == false)
+		{
+			mat.transpose();
+		}
 		// 左裁平面
 		planes[VF_LEFT_PLANE].normal.x = mat.getIndex(3) + mat.getIndex(0);
 		planes[VF_LEFT_PLANE].normal.y = mat.getIndex(7) + mat.getIndex(4);
@@ -307,9 +313,9 @@ namespace Sapphire
 		UINT32 index = 0;
 		switch (state)
 		{
-		case ETS_PROJECTION:
+		case E_TRANSFORMATION_STATE::ETS_PROJECTION:
 			index = SViewFrustum::ETS_PROJECTION; break;
-		case ETS_VIEW:
+		case E_TRANSFORMATION_STATE::ETS_VIEW:
 			index = SViewFrustum::ETS_VIEW; break;
 		default:
 			break;

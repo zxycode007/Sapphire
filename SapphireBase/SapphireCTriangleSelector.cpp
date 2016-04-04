@@ -200,7 +200,8 @@ namespace Sapphire
 		if (SceneNode)
 		{
 			//SceneNode->getAbsoluteTransformation().getInverse(mat);
-			mat = SceneNode->getAbsoluteTransformation().inverse();
+			mat = SceneNode->getAbsoluteTransformation();
+			mat.inverse();
 			tBox.transform(mat);
 			//mat.transformBoxEx(tBox);
 		}

@@ -21,6 +21,7 @@ namespace Sapphire
 
 	/*!
 	The Scene Manager manages scene nodes, mesh recources, cameras and all the other stuff.
+    Scene Manager 管理场景节点，网格资源，相机和所有其它东西
 	*/
 	class CSceneManager : public ISceneManager, public ISceneNode
 	{
@@ -120,11 +121,12 @@ namespace Sapphire
 			SINT32 id = -1, SINT32 minimalPolysPerNode = 128, bool alsoAddIfMeshPointerZero = false);
 
 		//! Adds a camera scene node to the tree and sets it as active camera.
-		//! \param position: Position of the space relative to its parent where the camera will be placed.
-		//! \param lookat: Position where the camera will look at. Also known as target.
-		//! \param parent: Parent scene node of the camera. Can be null. If the parent moves,
+		// 添加一个相机场景节点到树并且设置它为激活相机
+		//! \param position: Position of the space relative to its parent where the camera will be placed.这个相机相对于父节点的空间位置
+		//! \param lookat: Position where the camera will look at. Also known as target.这个朝向的位置。
+		//! \param parent: Parent scene node of the camera. Can be null. If the parent moves, 这个相机节点的父节点，可以为NULL
 		//! the camera will move too.
-		//! \return Pointer to interface to camera
+		//! \return Pointer to interface to camera  指向相机的接口
 		virtual ICameraSceneNode* addCameraSceneNode(ISceneNode* parent = 0,
 			const Vector3& position = Vector3(0, 0, 0),
 			const Vector3& lookat = Vector3(0, 0, 100),
@@ -635,6 +637,7 @@ namespace Sapphire
 
 		//! An optional callbacks manager to allow the user app finer control
 		//! over the scene lighting and rendering.
+		// 一个可选的回调管理器，它允许用户应用程序更好的控制场景光源和渲染
 		ILightManager* LightManager;
 
 		//! constants for reading and writing XML.

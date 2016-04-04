@@ -120,18 +120,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SapphirePlatfrom.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireBuildSets.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphirePrerequisites.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SapphireConfig.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="threads\SapphireThreadDefines.h">
       <Filter>头文件\threads</Filter>
     </ClInclude>
@@ -1277,6 +1265,18 @@
     </ClInclude>
     <ClInclude Include="SapphireCMD3MeshFileLoader.h">
       <Filter>源文件\scene\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePlatfrom.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphirePrerequisites.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireBuildSets.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
+    <ClInclude Include="SapphireConfig.h">
+      <Filter>头文件\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
