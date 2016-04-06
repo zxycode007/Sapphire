@@ -635,6 +635,7 @@ namespace Sapphire
 					Parent->getAbsoluteTransformation() * getRelativeTransformation();
 			}
 			else
+				//没有父节点，直接去相对位置
 				AbsoluteTransformation = getRelativeTransformation();
 		}
 

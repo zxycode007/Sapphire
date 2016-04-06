@@ -943,6 +943,17 @@ namespace Sapphire
 			Matrices[state] = mat;
 			Transformation3DChanged = true;
 
+			if (Matrices[state].RowMajor == false)
+			{
+				Matrices[state].transpose();
+				
+			}
+			Matrix4 m = mat;
+			if (m.RowMajor == false)
+			{
+				m.transpose();
+			}
+			
 			switch (state)
 			{
 			case ETS_VIEW:
@@ -970,7 +981,7 @@ namespace Sapphire
 			case ETS_PROJECTION:
 			{
 				glMatrixMode(GL_PROJECTION);
-				glLoadMatrixf(mat.cpointer());
+				glLoadMatrixf(m.cpointer());
 			}
 			break;
 			case ETS_COUNT:
@@ -987,15 +998,15 @@ namespace Sapphire
 					extGlActiveTexture(GL_TEXTURE0_ARB + i);
 
 				glMatrixMode(GL_TEXTURE);
-				if (!isRTT && mat.isIdentify())
+				if (!isRTT && m.isIdentify())
 					glLoadIdentity();
 				else
 				{
 					GLfloat glmat[16];
 					if (isRTT)
-						getGLTextureMatrix(glmat, mat * TextureFlipMatrix);
+						getGLTextureMatrix(glmat, m * TextureFlipMatrix);
 					else
-						getGLTextureMatrix(glmat, mat);
+						getGLTextureMatrix(glmat, m);
 					glLoadMatrixf(glmat);
 				}
 				break;

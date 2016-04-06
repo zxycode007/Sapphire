@@ -1159,12 +1159,15 @@ namespace Sapphire
 
 
 	//! runs the device. Returns false if device wants to be deleted
+	// 允许设备。 如果设备已经被删除，反复false
 	bool CSapphireDeviceWin32::run()
 	{
+		//获取当前时钟周期
 		Timer::tick();
-
+		//对鼠标控制进行更新
 		static_cast<CCursorControl*>(CursorControl)->update();
 
+		//操作系统的消息控制
 		handleSystemMessages();
 
 		if (!Close)
@@ -1782,6 +1785,7 @@ namespace Sapphire
 
 
 	//! Process system events
+	// 处理系统事件
 	void CSapphireDeviceWin32::handleSystemMessages()
 	{
 		MSG msg;

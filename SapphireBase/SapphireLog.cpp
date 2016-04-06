@@ -92,7 +92,6 @@ namespace Sapphire
 								<< ": ";
 						}
 						mLog << message << std::endl;
-
 						 
 						mLog.flush();
 					}

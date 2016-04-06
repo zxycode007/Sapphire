@@ -237,7 +237,8 @@ namespace Sapphire
 	}
 
 
-	//! OnAnimate() is called just before rendering the whole scene.
+	//! OnAnimate() is called just before rendering the whole scene.   
+	//在渲染之前调用
 	void CAnimatedMeshSceneNode::OnAnimate(UINT32 timeMs)
 	{
 		if (LastTimeMs == 0)	// first frame
@@ -355,17 +356,34 @@ namespace Sapphire
 
 					{
 						//////////////测试代码////////////////
+						
+
+						
+
 						int vsize = mb->getVertexCount();
 						const char* s = typeid(mb->getVertices()).name();
 						E_VERTEX_TYPE t = mb->getVertexType();
 						S3DVertex* vs = (S3DVertex*)mb->getVertices();
 
+						
 						for (size_t i = 0; i < vsize; i++)
 						{
-							StringStream ss;
-							ss << "vertex " << i << " x:" << vs[i].Pos.x << "  y:" << vs[i].Pos.y << " z:" << vs[i].Pos.z;
-							Printer::log(ss.str(), LML_NORMAL);
+						StringStream ss;
+						ss << "vertex " << i << " x:" << vs[i].Pos.x << "  y:" << vs[i].Pos.y << " z:" << vs[i].Pos.z;
+						Printer::log(ss.str(), LML_NORMAL);
 						}
+						
+						//StringStream ss;
+						//ss << "vertex " << 0 << " x:" << vs[0].Pos.x << "  y:" << vs[0].Pos.y << " z:" << vs[0].Pos.z;
+						//Printer::log(ss.str(), LML_NORMAL);
+						//ss.clear();
+						//Matrix4 mt = AbsoluteTransformation * ((SSkinMeshBuffer*)mb)->Transformation;
+						//ss << endl;
+						//ss << " ETS_WORLD MATRIX4 = " << mt.getIndex(0) << "   " << mt.getIndex(1) << "   " << mt.getIndex(2) << "   " << mt.getIndex(3)<< endl;
+						//ss << " ETS_WORLD MATRIX4 = " << mt.getIndex(4) << "   " << mt.getIndex(5) << "   " << mt.getIndex(6) << "   " << mt.getIndex(7) << endl;
+						//ss << " ETS_WORLD MATRIX4 = " << mt.getIndex(8) << "   " << mt.getIndex(9) << "   " << mt.getIndex(10) << "   " << mt.getIndex(11) << endl;
+						//ss << " ETS_WORLD MATRIX4 = " << mt.getIndex(12) << "   " << mt.getIndex(13) << "   " << mt.getIndex(14) << "   " << mt.getIndex(15) << endl;
+						//Printer::log(ss.str(), LML_NORMAL);
 					}
 					//设置材质
 					driver->setMaterial(material);

@@ -404,7 +404,8 @@ namespace Sapphire
 			FLOAT64 length = x*x + y*y + z*z;
 			if (length == 0) // this check isn't an optimization but prevents getting NAN in the sqrt.
 				return *this;
-			length = Math::Sqrt(length);
+			//length = Math::Sqrt(length);
+			length = Math::InvSqrt(length);
 
 			x = (Real)(x * length);
 			y = (Real)(y * length);

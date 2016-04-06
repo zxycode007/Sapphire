@@ -260,6 +260,7 @@ namespace Sapphire
 		}
 
 		//! returns current virtual time
+		// 返回当前虚拟时间
 		UINT32 Timer::getTime()
 		{
 			if (isStopped())

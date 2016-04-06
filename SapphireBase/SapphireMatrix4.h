@@ -1189,7 +1189,7 @@ namespace Sapphire
 			getIndex(14) = m1.getIndex(2) * m2.getIndex(12) + m1.getIndex(6) * m2.getIndex(13) + m1.getIndex(10) * m2.getIndex(14) + m1.getIndex(14) * m2.getIndex(15);
 			getIndex(15) = m1.getIndex(3) * m2.getIndex(12) + m1.getIndex(7) * m2.getIndex(13) + m1.getIndex(11) * m2.getIndex(14) + m1.getIndex(15) * m2.getIndex(15);
 
-			RowMajor = false;
+			RowMajor = true;
 			//将行矩阵计算结果再转换会列矩阵（计算方法是按行矩阵，Matrix4是按列矩阵存储的）
 			transpose();
 #if defined ( USE_MATRIX_TEST )

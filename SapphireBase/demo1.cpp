@@ -325,7 +325,7 @@ int main()
 		*/
 		driver->beginScene(true, true, ColourValue::getColourValue(255, 100, 101, 140));
 
-		smgr->drawAll();
+ 		smgr->drawAll();
 		guienv->drawAll();
 
 		driver->endScene();

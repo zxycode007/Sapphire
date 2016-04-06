@@ -240,8 +240,10 @@ namespace Sapphire
 
 
 	//! returns the animated mesh based on a detail level. 0 is the lowest, 255 the highest detail. Note, that some Meshes will ignore the detail level.
+	// 返回基于lod的动画网格,0是最低，255最高。 注意有些网格lod无效
 	IMesh* CAnimatedMeshMD2::getMesh(SINT32 frame, SINT32 detailLevel, SINT32 startFrameLoop, SINT32 endFrameLoop)
 	{
+		//获取帧
 		if ((UINT32)frame > getFrameCount())
 			frame = (frame % getFrameCount());
 
@@ -250,7 +252,7 @@ namespace Sapphire
 			startFrameLoop = 0;
 			endFrameLoop = getFrameCount();
 		}
-
+		//更新插值buffer
 		updateInterpolationBuffer(frame, startFrameLoop, endFrameLoop);
 		return this;
 	}
@@ -284,6 +286,7 @@ namespace Sapphire
 
 
 	// updates the interpolation buffer
+	// 更新插值缓冲区
 	void CAnimatedMeshMD2::updateInterpolationBuffer(SINT32 frame, SINT32 startFrameLoop, SINT32 endFrameLoop)
 	{
 		UINT32 firstFrame, secondFrame;
