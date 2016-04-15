@@ -72,6 +72,7 @@ namespace Sapphire
 
 
 	//! Returns the currently displayed frame number.
+	// 返回当前显示的帧号
 	FLOAT32 CAnimatedMeshSceneNode::getFrameNr() const
 	{
 		return CurrentFrameNr;
@@ -79,6 +80,7 @@ namespace Sapphire
 
 
 	//! Get CurrentFrameNr and update transiting settings
+	// 获取当前帧号并且更新转换设置
 	void CAnimatedMeshSceneNode::buildFrameNr(UINT32 timeMs)
 	{
 		if (Transiting != 0.f)
@@ -93,15 +95,16 @@ namespace Sapphire
 
 		if ((StartFrame == EndFrame))
 		{
-			CurrentFrameNr = (FLOAT32)StartFrame; //Support for non animated meshes
+			CurrentFrameNr = (FLOAT32)StartFrame; //Support for non animated meshes 对非动画网格的支持
 		}
 		else if (Looping)
 		{
-			// play animation looped
+			// play animation looped  循环播放动画
 			CurrentFrameNr += timeMs * FramesPerSecond;
 
 			// We have no interpolation between EndFrame and StartFrame,
 			// the last frame must be identical to first one with our current solution.
+			// 循环动画我们不需要在结束帧和起始帧之间插值，最后一帧等同于第一帧
 			if (FramesPerSecond > 0.f) //forwards...
 			{
 				if (CurrentFrameNr > EndFrame)
@@ -116,7 +119,7 @@ namespace Sapphire
 		else
 		{
 			// play animation non looped
-
+			// 非循环播放动画
 			CurrentFrameNr += timeMs * FramesPerSecond;
 			if (FramesPerSecond > 0.f) //forwards...
 			{
@@ -353,25 +356,25 @@ namespace Sapphire
 						driver->setTransform(ETS_WORLD, Matrix4::IDENTITY);
 					else if (Mesh->getMeshType() == EAMT_SKINNED)    //是否骨骼蒙皮
 						driver->setTransform(ETS_WORLD, AbsoluteTransformation * ((SSkinMeshBuffer*)mb)->Transformation);
-
+					
 					{
 						//////////////测试代码////////////////
 						
 
 						
 
-						int vsize = mb->getVertexCount();
-						const char* s = typeid(mb->getVertices()).name();
-						E_VERTEX_TYPE t = mb->getVertexType();
-						S3DVertex* vs = (S3DVertex*)mb->getVertices();
+						//int vsize = mb->getVertexCount();
+						//const char* s = typeid(mb->getVertices()).name();
+						//E_VERTEX_TYPE t = mb->getVertexType();
+						//S3DVertex* vs = (S3DVertex*)mb->getVertices();
 
 						
-						for (size_t i = 0; i < vsize; i++)
-						{
-						StringStream ss;
-						ss << "vertex " << i << " x:" << vs[i].Pos.x << "  y:" << vs[i].Pos.y << " z:" << vs[i].Pos.z;
-						Printer::log(ss.str(), LML_NORMAL);
-						}
+						//for (size_t i = 0; i < vsize; i++)
+						//{
+					//	StringStream ss;
+					//	ss << "vertex " << i << " x:" << vs[i].Pos.x << "  y:" << vs[i].Pos.y << " z:" << vs[i].Pos.z;
+					//	Printer::log(ss.str(), LML_NORMAL);
+					//	}
 						
 						//StringStream ss;
 						//ss << "vertex " << 0 << " x:" << vs[0].Pos.x << "  y:" << vs[0].Pos.y << " z:" << vs[0].Pos.z;
@@ -385,6 +388,7 @@ namespace Sapphire
 						//ss << " ETS_WORLD MATRIX4 = " << mt.getIndex(12) << "   " << mt.getIndex(13) << "   " << mt.getIndex(14) << "   " << mt.getIndex(15) << endl;
 						//Printer::log(ss.str(), LML_NORMAL);
 					}
+					
 					//设置材质
 					driver->setMaterial(material);
 					//绘制网格缓冲区
@@ -437,6 +441,7 @@ namespace Sapphire
 			}
 
 			// show skeleton
+			// 显示骨骼
 			if (DebugDataVisible & EDS_SKELETON)
 			{
 				if (Mesh->getMeshType() == EAMT_SKINNED)
@@ -457,6 +462,7 @@ namespace Sapphire
 				}
 
 				// show tag for quake3 models
+				// 显示quake3 模型标志
 				if (Mesh->getMeshType() == EAMT_MD3)
 				{
 					IAnimatedMesh * arrow =
@@ -492,6 +498,7 @@ namespace Sapphire
 			}
 
 			// show mesh
+			// 显示网格
 			if (DebugDataVisible & EDS_MESH_WIRE_OVERLAY)
 			{
 				debug_mat.Lighting = false;

@@ -116,7 +116,9 @@ TBBø‚œﬂ≥Ã
 #endif // STDCALL_SUPPORTED
 
 
+//#define SAPPHIRE_DEBUG
 //#define SAPPHIRE_WCHAR_FILESYSTEM
+#define SAPPHIRE_ALLOW_WIN32_CONSOLE
 
 namespace Sapphire
 {

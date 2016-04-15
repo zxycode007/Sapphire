@@ -162,6 +162,7 @@
 #include "SapphireTriangle3D.h"
 #include "SapphireVector2.h"
 #include "SapphireVector3.h"
+#include "SapphireMap.h"
 
 
 //! Everything in the Sapphire Engine can be found in this namespace.

@@ -11,12 +11,12 @@
 #include "SapphireCoreUtil.h"
 #include "SapphireOS.h"
 #include "SapphireSceneParameters.h"
-
+#include <consoleapi.h>
 namespace Sapphire
 {
 
 #ifdef _DEBUG
-#define _IRR_DEBUG_OBJ_LOADER_
+#define _SAPPHIRE_DEBUG_OBJ_LOADER_
 #endif
 
 	static const UINT32 WORD_BUFFER_LENGTH = 512;
@@ -28,7 +28,7 @@ namespace Sapphire
 #ifdef _DEBUG
 		setDebugName("COBJMeshFileLoader");
 #endif
-
+		
 		if (FileSystem)
 			FileSystem->grab();
 	}
@@ -44,6 +44,7 @@ namespace Sapphire
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
+	// 如果文件可以被这个类加载，返回true
 	bool COBJMeshFileLoader::isALoadableFileExtension(const path& filename) const
 	{
 		return hasFileExtension(filename, "obj");
@@ -54,32 +55,51 @@ namespace Sapphire
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
+	// 从这个文件加载一个动画网格
+	// \return 指向创建网格的指针。如果失败返回0
+	// 如果你长时间不需要这个网格，你可以调用IAnimatedMesh::drop()
 	IAnimatedMesh* COBJMeshFileLoader::createMesh(IReadFile* file)
 	{
+		//获取文件大小
 		const long filesize = file->getSize();
 		if (!filesize)
 			return 0;
 
+		//字缓冲长度
 		const UINT32 WORD_BUFFER_LENGTH = 512;
 
+		//顶点缓冲区
 		vector<Vector3>::type vertexBuffer;
+		//法线缓冲区
 		vector<Vector3>::type normalsBuffer;
+		//纹理坐标缓冲区
 		vector<Vector2>::type textureCoordBuffer;
 
+		//OBj模型的Mtl文件对象（材质描述）
+		//当前材质
 		SObjMtl * currMtl = new SObjMtl();
 		Materials.push_back(currMtl);
+		//平滑组
 		UINT32 smoothingGroup = 0;
-
+		//获取完整文件名
 		const path fullName = file->getFileName();
+		//真实路径
 		const path relPath = FileSystem->getFileDir(fullName) + "/";
 
+		//字节缓冲区
 		c8* buf = new c8[filesize];
+		//清零
 		memset(buf, 0, filesize);
+		//将文件内容读入到缓冲区中
 		file->read((void*)buf, filesize);
+		//文件结束指针地址
 		const c8* const bufEnd = buf + filesize;
 
 		// Process obj information
+		//下面处理OBJ信息
+		//buf读取指针
 		const c8* bufPtr = buf;
+		//MTL名
 		String grpName, mtlName;
 		bool mtlChanged = false;
 		bool useGroups = !SceneManager->getParameters()->getAttributeAsBool(OBJ_LOADER_IGNORE_GROUPS);
@@ -92,16 +112,18 @@ namespace Sapphire
 			{
 				if (useMaterials)
 				{
+					//名字缓冲区
 					c8 name[WORD_BUFFER_LENGTH];
 					bufPtr = goAndCopyNextWord(name, bufPtr, WORD_BUFFER_LENGTH, bufEnd);
-#ifdef _IRR_DEBUG_OBJ_LOADER_
+#ifdef _SAPPHIRE_DEBUG_OBJ_LOADER_
 					Printer::log("Reading material file", name);
 #endif
+					//按照MTL名，读取mtl文件
 					readMTL(name, relPath);
 				}
 			}
 			break;
-
+			//区分顶点，法线，纹理坐标.....
 			case 'v':               // v, vn, vt
 				switch (bufPtr[1])
 				{
@@ -131,11 +153,11 @@ namespace Sapphire
 				}
 				break;
 
-			case 'g': // group name
+			case 'g': // group name  组名
 			{
 				c8 grp[WORD_BUFFER_LENGTH];
 				bufPtr = goAndCopyNextWord(grp, bufPtr, WORD_BUFFER_LENGTH, bufEnd);
-#ifdef _IRR_DEBUG_OBJ_LOADER_
+#ifdef _SAPPHIRE_DEBUG_OBJ_LOADER_
 				Printer::log("Loaded group start", grp, LML_DEBUG);
 #endif
 				if (useGroups)
@@ -153,7 +175,7 @@ namespace Sapphire
 			{
 				c8 smooth[WORD_BUFFER_LENGTH];
 				bufPtr = goAndCopyNextWord(smooth, bufPtr, WORD_BUFFER_LENGTH, bufEnd);
-#ifdef _IRR_DEBUG_OBJ_LOADER_
+#ifdef _SAPPHIRE_DEBUG_OBJ_LOADER_
 				Printer::log("Loaded smoothing group start", smooth, LML_DEBUG);
 #endif
 				if (String("off") == smooth)
@@ -168,7 +190,7 @@ namespace Sapphire
 			{
 				c8 matName[WORD_BUFFER_LENGTH];
 				bufPtr = goAndCopyNextWord(matName, bufPtr, WORD_BUFFER_LENGTH, bufEnd);
-#ifdef _IRR_DEBUG_OBJ_LOADER_
+#ifdef _SAPPHIRE_DEBUG_OBJ_LOADER_
 				Printer::log("Loaded material start", matName, LML_DEBUG);
 #endif
 				mtlName = matName;
@@ -176,24 +198,29 @@ namespace Sapphire
 			}
 			break;
 
-			case 'f':               // face
+			case 'f':               // face  多边形面
 			{
-				c8 vertexWord[WORD_BUFFER_LENGTH]; // for retrieving vertex data
+				c8 vertexWord[WORD_BUFFER_LENGTH]; // 用于接收顶点数据 for retrieving vertex data
+				//顶点对象
 				S3DVertex v;
 				// Assign vertex color from currently active material's diffuse color
+				// 从激活的材质的漫反射的颜色分配顶点颜色
 				if (mtlChanged)
 				{
 					// retrieve the material
-					SObjMtl *useMtl = findMtl(mtlName, grpName);
+					// 接收这个材质
+					SObjMtl *useMtl = findMtl(mtlName, grpName);  //查找对应的材质
 					// only change material if we found it
+					// 只有找到这个材质才替换它
 					if (useMtl)
 						currMtl = useMtl;
 					mtlChanged = false;
 				}
 				if (currMtl)
-					v.Color = currMtl->Meshbuffer->Material.DiffuseColor;
+					v.Color = currMtl->Meshbuffer->Material.DiffuseColor;   //设置顶点颜色为当前材质的漫反射颜色
 
-				// get all vertices data in this face (current line of obj file)
+				// get all vertices data in this face (current line of obj file) 
+				// 获取这个面的所有顶点数据(obj文件的当前行)
 				const String wordBuffer = copyLine(bufPtr, bufEnd);
 				const c8* linePtr = wordBuffer.c_str();
 				const c8* const endPtr = linePtr + wordBuffer.size();
@@ -202,25 +229,32 @@ namespace Sapphire
 				faceCorners.reserve(32);//faceCorners.reallocate(32); // should be large enough
 
 				// read in all vertices
+				//读取所有顶点
 				linePtr = goNextWord(linePtr, endPtr);
+#ifdef SAPPHIRE_DEBUG
+				int fcount = 0; int round = 0;
+#endif
 				while (0 != linePtr[0])
 				{
 					// Array to communicate with retrieveVertexIndices()
 					// sends the buffer sizes and gets the actual indices
 					// if index not set returns -1
-					SINT32 Idx[3];
+					// 数组要与retrieveVertexIndices（）通信，发送缓冲区大小和实际的索引
+					SINT32 Idx[3];   //存放顶点坐标/纹理坐标/法线向量的索引
 					Idx[1] = Idx[2] = -1;
 
 					// read in next vertex's data
+					// 读入下一个顶点数据到vertexWord
 					UINT32 wlength = copyWord(vertexWord, linePtr, WORD_BUFFER_LENGTH, endPtr);
 					// this function will also convert obj's 1-based index to c++'s 0-based index
+					//这个函数将转换obj 基于1的起始索引到C++基于0的索引
 					retrieveVertexIndices(vertexWord, Idx, vertexWord + wlength + 1, vertexBuffer.size(), textureCoordBuffer.size(), normalsBuffer.size());
 					v.Pos = vertexBuffer[Idx[0]];
-					if (-1 != Idx[1])
+					if (-1 != Idx[1])  //判断有无纹理坐标
 						v.TCoords = textureCoordBuffer[Idx[1]];
 					else
 						v.TCoords.set(0.0f, 0.0f);
-					if (-1 != Idx[2])
+					if (-1 != Idx[2])   //判断有无法线向量
 						v.Normal = normalsBuffer[Idx[2]];
 					else
 					{
@@ -230,30 +264,48 @@ namespace Sapphire
 
 					int vertLocation;
 					//map<S3DVertex, int>::Node* n = currMtl->VertMap.find(v);
-					map<S3DVertex, int>::iterator n = currMtl->VertMap.find(v);
-					if (n != currMtl->VertMap.end())
+					//到当前顶点Map查找这个顶点
+					order_map<S3DVertex, int>::Node* n = currMtl->VertMap.find(v);
+					if (n)
 					{
+
+						 
+#ifdef SAPPHIRE_DEBUG
+						fcount++;
+#endif
 						//vertLocation = n->getValue();
-						vertLocation = n->second;
+						//取出它顶点对应位置
+						vertLocation = n->getValue();
 					}
 					else
 					{
+						//没有找到的话
 						currMtl->Meshbuffer->Vertices.push_back(v);
 						vertLocation = currMtl->Meshbuffer->Vertices.size() - 1;
 						//currMtl->VertMap.insert(v, vertLocation);
-						currMtl->VertMap.insert(pair<S3DVertex, int>(v, vertLocation));
+						currMtl->VertMap.insert(v, vertLocation);
 					}
 
 					faceCorners.push_back(vertLocation);
 
 					// go to next vertex
+					// 下一个顶点
 					linePtr = goNextWord(linePtr, endPtr);
+#ifdef SAPPHIRE_DEBUG
+					round++;
+#endif
 				}
 
+#ifdef SAPPHIRE_DEBUG
+				Printer::log(String("FCOUNT ==") + StringUtil::int32ToString(fcount), LML_DEBUG);
+				Printer::log(String("ROUND ==") + StringUtil::int32ToString(round), LML_DEBUG);
+#endif 
 				// triangulate the face
+				// 面的三角形化
 				for (UINT32 i = 1; i < faceCorners.size() - 1; ++i)
 				{
 					// Add a triangle
+					// 添加一个三角形
 					currMtl->Meshbuffer->Indices.push_back(faceCorners[i + 1]);
 					currMtl->Meshbuffer->Indices.push_back(faceCorners[i]);
 					currMtl->Meshbuffer->Indices.push_back(faceCorners[0]);
@@ -263,17 +315,28 @@ namespace Sapphire
 			}
 			break;
 
-			case '#': // comment
+			case '#': // comment 注释 不用管
 			default:
 				break;
 			}	// end switch(bufPtr[0])
 			// eat up rest of line
+			// 读取下一行
 			bufPtr = goNextLine(bufPtr, bufEnd);
-		}	// end while(bufPtr && (bufPtr-buf<filesize))
-
+		}	// end while(bufPtr && (bufPtr-buf<filesize)) 
+#ifdef SAPPHIRE_DEBUG
+		int cvmap_size = currMtl->VertMap.size();
+		Printer::log(String("CurrMTL->VertMapSize ==") + StringUtil::int32ToString(cvmap_size), LML_DEBUG);
+#if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_WIN32
+         
+	
+#endif
+		
+#endif
+		int cvmap_size = currMtl->VertMap.size();
 		SMesh* mesh = new SMesh();
 
 		// Combine all the groups (meshbuffers) into the mesh
+		// 合并所有的组（网格缓冲区）到一个网格
 		for (UINT32 m = 0; m < Materials.size(); ++m)
 		{
 			if (Materials[m]->Meshbuffer->getIndexCount() > 0)
@@ -295,6 +358,7 @@ namespace Sapphire
 		}
 
 		// Create the Animated mesh if there's anything in the mesh
+		//创建这个动画网格
 		SAnimatedMesh* animMesh = 0;
 		if (0 != mesh->getMeshBufferCount())
 		{
@@ -306,6 +370,7 @@ namespace Sapphire
 		}
 
 		// Clean up the allocate obj file contents
+		//清空文件缓冲区
 		delete[] buf;
 		// more cleaning up
 		cleanUp();
@@ -673,6 +738,7 @@ namespace Sapphire
 
 
 	//! Read 3d vector of floats
+	// 读取3d浮点向量
 	const c8* COBJMeshFileLoader::readVec3(const c8* bufPtr, Vector3& vec, const c8* const bufEnd)
 	{
 		const UINT32 WORD_BUFFER_LENGTH = 256;
@@ -763,9 +829,11 @@ namespace Sapphire
 
 
 	//! skip current word and stop at beginning of next one
+	// 跳过当前的字并且在下一个之前停止
 	const c8* COBJMeshFileLoader::goNextWord(const c8* buf, const c8* const bufEnd, bool acrossNewlines)
 	{
 		// skip current word
+		// 跳过当前的字
 		while ((buf != bufEnd) && !isspace(*buf))
 			++buf;
 

@@ -386,6 +386,7 @@
     <ClInclude Include="SapphireLine3D.h" />
     <ClInclude Include="SapphireLog.h" />
     <ClInclude Include="SapphireLogManager.h" />
+    <ClInclude Include="SapphireMap.h" />
     <ClInclude Include="SapphireMaterialLayer.h" />
     <ClInclude Include="SapphireMath.h" />
     <ClInclude Include="SapphireMatrix3.h" />
@@ -690,6 +691,7 @@
     <ClCompile Include="SapphireQMath.cpp" />
     <ClCompile Include="SapphireQuaternion.cpp" />
     <ClCompile Include="SapphireString.cpp" />
+    <ClCompile Include="SapphireSVertex.cpp" />
     <ClCompile Include="SapphireUserObjectBinding.cpp" />
     <ClCompile Include="SapphireVector2.cpp" />
     <ClCompile Include="SapphireVector3.cpp" />

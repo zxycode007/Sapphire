@@ -1,11 +1,13 @@
-#ifndef _SAPPHIRE_SVERTEX_
-#define _SAPPHIRE_SVERTEX_
+#ifndef _SAPPHIRE_S3D_VERTEX_
+#define _SAPPHIRE_S3D_VERTEX_
 
-#include "SapphirePrerequisites.h"
+
 #include "SapphireVector2.h"
 #include "SapphireVector3.h"
 #include "SapphireColorValue.h"
 #include "SapphireMath.h"
+
+
 
 namespace Sapphire
 {
@@ -33,6 +35,7 @@ namespace Sapphire
 		0
 	};
 
+	
 
 	//! 标准顶点结构
 	struct S3DVertex
@@ -95,6 +98,8 @@ namespace Sapphire
 				TCoords.getInterpolated(other.TCoords, d));
 		}
 	};
+
+
 
 
 	//! 带两个纹理坐标的顶点
@@ -260,6 +265,21 @@ namespace Sapphire
 			return sizeof(S3DVertex);
 		}
 	}
+
+
+	size_t  S3DVertexHasher(const S3DVertex& sv);
+
+
+	bool  S3DVertexEqualOperator(const S3DVertex& lhs, const S3DVertex& rhs);
+
+	size_t  S3DVertex2TCoordsHasher(const S3DVertex2TCoords& sv);
+
+	bool  S3DVertex2TCoordsEqualOperator(const S3DVertex2TCoords& lhs, const S3DVertex2TCoords& rhs);
+
+	size_t  S3DVertexTangentsHasher(const S3DVertexTangents& sv);
+
+	bool  S3DVertexTangentsEqualOperator(const S3DVertexTangents& lhs, const S3DVertexTangents& rhs);
+	
 }
 
 #endif

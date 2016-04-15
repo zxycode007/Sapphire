@@ -82,11 +82,14 @@ extern "C" {
 
 
 #if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_WIN32
+#include <consoleapi.h>
+#include <Windows.h>
 #  undef min
 #  undef max
 #  if defined( __MINGW32__ )
 //对类Unix系统的系统API调用接口函数
 #    include <unistd.h>
+
 #  endif
 #endif
 

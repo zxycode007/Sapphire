@@ -183,6 +183,8 @@ namespace Sapphire
 			r.m[3][2] = mat.m[3][0] * mat2.m[0][2] + mat.m[3][1] * mat2.m[1][2] + mat.m[3][2] * mat2.m[2][2] + mat.m[3][3] * mat2.m[3][2];
 			r.m[3][3] = mat.m[3][0] * mat2.m[0][3] + mat.m[3][1] * mat2.m[1][3] + mat.m[3][2] * mat2.m[2][3] + mat.m[3][3] * mat2.m[3][3];
 
+			r.transpose();
+
 			return r;
 		}
 

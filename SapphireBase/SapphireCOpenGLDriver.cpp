@@ -650,7 +650,7 @@ namespace Sapphire
 		// -----------------------------------------------------------------------
 		// METHODS
 		// -----------------------------------------------------------------------
-
+		//驱动的初始化
 		bool COpenGLDriver::genericDriverInit()
 		{
 			Name = L"OpenGL ";
@@ -769,7 +769,7 @@ namespace Sapphire
 			return true;
 		}
 
-
+		//创建材质渲染器
 		void COpenGLDriver::createMaterialRenderers()
 		{
 			// create OpenGL material renderers
@@ -864,6 +864,7 @@ namespace Sapphire
 
 
 		//! clears the zbuffer and color buffer
+		//清空ZBuffer和ColorBuffer
 		void COpenGLDriver::clearBuffers(bool backBuffer, bool zBuffer, bool stencilBuffer, ColourValue
  color)
 		{
@@ -1197,6 +1198,7 @@ namespace Sapphire
 
 
 		//! updates hardware buffer if needed
+		// 如果需要更新硬件缓冲区
 		bool COpenGLDriver::updateHardwareBuffer(SHWBufferLink *HWBuffer)
 		{
 			if (!HWBuffer)
@@ -1233,6 +1235,7 @@ namespace Sapphire
 
 
 		//! Create hardware buffer from meshbuffer
+		//为网格缓冲区创建硬件缓冲区
 		COpenGLDriver::SHWBufferLink *COpenGLDriver::createHardwareBuffer(const IMeshBuffer* mb)
 		{
 #if defined(GL_ARB_vertex_buffer_object)
@@ -1293,6 +1296,7 @@ namespace Sapphire
 
 
 		//! Draw hardware buffer
+		// 绘制硬件缓冲区
 		void COpenGLDriver::drawHardwareBuffer(SHWBufferLink *_HWBuffer)
 		{
 			if (!_HWBuffer)
@@ -1331,7 +1335,10 @@ namespace Sapphire
 
 
 		//! Create occlusion query.
-		/** Use node for identification and mesh for occlusion test. */
+		// 创建遮蔽查询
+		/** Use node for identification and mesh for occlusion test. 
+		用于网格节点的遮蔽测试
+		*/
 		void COpenGLDriver::addOcclusionQuery(ISceneNode* node,
 			const IMesh* mesh)
 		{
@@ -1347,6 +1354,7 @@ namespace Sapphire
 
 
 		//! Remove occlusion query.
+		// 移除遮蔽查询
 		void COpenGLDriver::removeOcclusionQuery(ISceneNode* node)
 		{
 			//const SINT32 index = OcclusionQueries.linear_search(SOccQuery(node));
@@ -1361,7 +1369,9 @@ namespace Sapphire
 
 
 		//! Run occlusion query. Draws mesh stored in query.
+		// 允许遮蔽查询。绘制网格到查询中
 		/** If the mesh shall not be rendered visible, use
+		如果网格渲染不可见，用overrideMaterial关闭色彩和深度缓冲区
 		overrideMaterial to disable the color and depth buffer. */
 		void COpenGLDriver::runOcclusionQuery(ISceneNode* node, bool visible)
 		{
@@ -1394,7 +1404,9 @@ namespace Sapphire
 
 
 		//! Update occlusion query. Retrieves results from GPU.
+		// 更新遮蔽查询。从GPU返回结果
 		/** If the query shall not block, set the flag to false.
+		如果查询被阻挡，设置标志为false，这种情况下更新可能不会发生
 		Update might not occur in this case, though */
 		void COpenGLDriver::updateOcclusionQuery(ISceneNode* node, bool block)
 		{
@@ -1437,7 +1449,9 @@ namespace Sapphire
 
 
 		//! Return query result.
+		// 返回查询结果
 		/** Return value is the number of visible pixels/fragments.
+		返回值是可见的像素/片段数，这个值只是近似值,可能大于实际像素值
 		The value is a safe approximation, i.e. can be larger than the
 		actual value of pixels. */
 		UINT32 COpenGLDriver::getOcclusionQueryResult(ISceneNode* node) const
@@ -1494,10 +1508,12 @@ namespace Sapphire
 			//due to missing defines in OSX headers, we have to be more specific with this check
 			//#if defined(GL_ARB_vertex_array_bgra) || defined(GL_EXT_vertex_array_bgra)
 #ifdef GL_BGRA
-			const GLint colorSize = (FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] || FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra]) ? GL_BGRA : 4;
+			//const GLint colorSize = (FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] || FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra]) ? GL_BGRA : 4;
+			const GLint colorSize = (FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] || FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra]) ? 4 : 4;
 #else
 			const GLint colorSize = 4;
 #endif
+			
 			if (vertices)
 			{
 				if (FeatureAvailable[SAPPHIRE_ARB_vertex_array_bgra] || FeatureAvailable[SAPPHIRE_EXT_vertex_array_bgra])
@@ -1507,15 +1523,15 @@ namespace Sapphire
 					{
 					case EVT_STANDARD:
 						//设置顶点颜色数组指针
-						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].Color);
+						glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertex), &(static_cast<const S3DVertex*>(vertices))[0].Color);
 						break;
 					case EVT_2TCOORDS:
 						//设置顶点颜色数组指针
-						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].Color);
+						glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertex2TCoords), &(static_cast<const S3DVertex2TCoords*>(vertices))[0].Color);
 						break;
 					case EVT_TANGENTS:
 						//设置顶点颜色数组指针
-						glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertexTangents), &(static_cast<const S3DVertexTangents*>(vertices))[0].Color);
+						glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertexTangents), &(static_cast<const S3DVertexTangents*>(vertices))[0].Color);
 						break;
 					}
 				}
@@ -1524,7 +1540,7 @@ namespace Sapphire
 					// avoid passing broken pointer to OpenGL
 					// 避免传递错误指针给OpenGL
 					assert(ColorBuffer.size() == 0);
-					glColorPointer(colorSize, GL_UNSIGNED_BYTE, 0, &ColorBuffer[0]);
+					glColorPointer(colorSize, GL_FLOAT, 0, &ColorBuffer[0]);
 				}
 			}
 
@@ -1547,7 +1563,7 @@ namespace Sapphire
 					//定义一个法线数组指针
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex), buffer_offset(12));
 				    //定义顶点颜色数组指针 
-					glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex), buffer_offset(24));
+					glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertex), buffer_offset(24));
 					//定义顶点坐标数组指针 参数：字节数 /数据类型 /数据块大小 /缓冲区偏移位置
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex), buffer_offset(28));
 					//定义顶点指针
@@ -1577,7 +1593,7 @@ namespace Sapphire
 				{
 					//使用VBO模式
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(12));
-					glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertex2TCoords), buffer_offset(24));
+					glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(24));
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(28));
 					glVertexPointer(3, GL_FLOAT, sizeof(S3DVertex2TCoords), buffer_offset(0));
 				}
@@ -1603,7 +1619,7 @@ namespace Sapphire
 				else
 				{
 					glNormalPointer(GL_FLOAT, sizeof(S3DVertexTangents), buffer_offset(12));
-					glColorPointer(colorSize, GL_UNSIGNED_BYTE, sizeof(S3DVertexTangents), buffer_offset(24));
+					glColorPointer(colorSize, GL_FLOAT, sizeof(S3DVertexTangents), buffer_offset(24));
 					glTexCoordPointer(2, GL_FLOAT, sizeof(S3DVertexTangents), buffer_offset(28));
 					glVertexPointer(3, GL_FLOAT, sizeof(S3DVertexTangents), buffer_offset(0));
 				}

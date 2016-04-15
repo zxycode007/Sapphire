@@ -77,6 +77,10 @@ namespace Sapphire {
 		bool			mTimeStamp;
 		String			mLogName;
 
+		StringStream stringout;
+		StringWStream wstringout;
+
+
 		typedef vector<LogListener*>::type mtLogListener;
 		mtLogListener mListeners;
 	public:

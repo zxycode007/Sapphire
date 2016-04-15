@@ -1278,6 +1278,9 @@
     <ClInclude Include="SapphireConfig.h">
       <Filter>头文件\core</Filter>
     </ClInclude>
+    <ClInclude Include="SapphireMap.h">
+      <Filter>头文件\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SapphireMemoryTracker.cpp">
@@ -2032,6 +2035,9 @@
     </ClCompile>
     <ClCompile Include="demo1.cpp">
       <Filter>源文件\demo</Filter>
+    </ClCompile>
+    <ClCompile Include="SapphireSVertex.cpp">
+      <Filter>源文件\scene\nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

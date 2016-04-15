@@ -5,6 +5,7 @@
 #include "SapphireIFileSystem.h"
 #include "SapphireIScenesManager.h"
 #include "SapphireSMeshBuffer.h"
+#include "SapphireMap.h"
 
 namespace Sapphire
 {
@@ -41,6 +42,7 @@ namespace Sapphire
 				Meshbuffer->Material.AmbientColor = ColourValue(1.0f, 0.2f, 0.2f, 0.2f ) ;
 				Meshbuffer->Material.DiffuseColor = ColourValue(1.0f, 0.8f, 0.8f, 0.8f );
 				Meshbuffer->Material.SpecularColor = ColourValue(1.0f,1.0f, 1.0f, 1.0f );
+				 
 			}
 
 			SObjMtl(const SObjMtl& o)
@@ -52,7 +54,7 @@ namespace Sapphire
 				Meshbuffer->Material = o.Meshbuffer->Material;
 			}
 
-			map<S3DVertex, int>::type VertMap;
+			order_map<S3DVertex, int> VertMap;
 			SMeshBuffer *Meshbuffer;
 			String Name;
 			String Group;

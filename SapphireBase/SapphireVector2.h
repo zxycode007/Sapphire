@@ -380,17 +380,29 @@ namespace Sapphire
 		*/
 		inline bool operator < (const Vector2& rhs) const
 		{
-			if (x < rhs.x && y < rhs.y)
+			if ((x < rhs.x) && (y < rhs.y))
+			{
 				return true;
-			return false;
+			}
+			else
+			{
+				return false;
+			}
+				
+			
 		}
 
 		 
 		inline bool operator >(const Vector2& rhs) const
 		{
-			if (x > rhs.x && y > rhs.y)
+			if ((x > rhs.x) && (y > rhs.y))
+			{
 				return true;
-			return false;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		/** 

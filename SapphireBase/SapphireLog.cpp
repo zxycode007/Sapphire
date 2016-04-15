@@ -1,9 +1,11 @@
 //#include "SapphireStableHeaders.h"
 
+#include "SapphirePrerequisites.h"
 #include "SapphireLog.h"
 #include "SapphireLogManager.h"
 #include "SapphireString.h"
 #include "SapphireIEventRecevier.h"
+
 #if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_NACL
 #   include "ppapi/cpp/var.h"
 #   include "ppapi/cpp/instance.h"
@@ -94,6 +96,11 @@ namespace Sapphire
 						mLog << message << std::endl;
 						 
 						mLog.flush();
+#if SAPPHIRE_PLATFORM == SAPPHIRE_PLATFORM_WIN32
+						stringout << message << std::endl;					 
+						OutputDebugStringA(stringout.str().c_str());
+						stringout.clear();
+#endif
 					}
 				}
 			}

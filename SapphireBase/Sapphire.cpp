@@ -68,6 +68,13 @@ namespace Sapphire
 #ifdef _SAPPHIRE_COMPILE_WITH_WINDOWS_DEVICE_
 		if (params.DeviceType == EIDT_WIN32 || (!dev && params.DeviceType == EIDT_BEST))
 			dev = new CSapphireDeviceWin32(params);
+#ifdef SAPPHIRE_ALLOW_WIN32_CONSOLE
+		if (AllocConsole())
+		{
+			freopen("CONOUT$", "w", stdout);
+			printf("SAPPHIRE CONSOLE!\n");
+		}
+#endif
 #endif
 
 #ifdef _SAPPHIRE_COMPILE_WITH_OSX_DEVICE_
