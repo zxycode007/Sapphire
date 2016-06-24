@@ -118,42 +118,65 @@ namespace Sapphire
 		}
 
 
-
+		/**
+		@brief 获取矩阵第i个元素
+		@param i: 元素在矩阵的序号
+		@return 第i个元素
+		*/
 		inline  Real& getIndex(SINT32 iIndex)
 		{
 			assert(iIndex < 16);
 			return _m[iIndex];
 		}
-
+		/**
+		@brief 获取矩阵第i个元素   (常量)
+		@param i: 元素在矩阵的序号
+		@return 第i个元素
+		*/
 		inline const Real& getCIndex(SINT32 iIndex) const
 		{
 			assert(iIndex < 16);
 			return _m[iIndex];
 		}
-
+		//获取第iRow行iColumn列的元素
 		inline Real& operator () (size_t iRow, size_t iColumn)
 		{
 			assert(iRow < 4);
 			assert(iColumn < 4);
-			return m[iColumn][iRow];
+			return m[iRow][iColumn];  
 		}
+		/*
+		@brief 获取第iRow行数组
+		@param iRow  第iRow行数
+		Return 第iRow行数组
+		*/
 		inline Real* operator [] (size_t iRow)
 		{
 			assert(iRow < 4);
 			return m[iRow];
 		}
+		/*
+		@brief 获取第iRow行数组   (常量)
+		@param iRow  第iRow行数
+		Return 第iRow行数组
+		*/
 		inline const Real *operator [] (size_t iRow) const
 		{
 			assert(iRow < 4);
 			return m[iRow];
 		}
 
-		//按列矩阵进行计算
+		//
+		/**
+		@brief  按列矩阵连接进行计算
+		@param m2 另外一个矩阵
+		*/
 		inline Matrix4 concatenate(const Matrix4 &m2) const
 		{
 
 			Matrix4 mat = *this;
 			Matrix4 mat2 = m2;
+			//如果是行优先转置成列优先矩阵
 			if (mat.RowMajor == true)
 			{
 				mat.transpose();
@@ -198,9 +221,10 @@ namespace Sapphire
 		inline Vector3 operator * (const Vector3 &v) const
 		{
 			Vector3 r;
-
+			//w的倒数
 			Real fInvW = 1.0f / (m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3]);
 			Matrix4 mat = *this;
+			//如果是行优先转置成列优先矩阵
 			if (mat.RowMajor == true)
 			{
 				mat.transpose();
@@ -228,6 +252,7 @@ namespace Sapphire
 				mat.m[3][0] * v.x + mat.m[3][1] * v.y + mat.m[3][2] * v.z + mat.m[3][3] * v.w
 				);
 		}
+
 		inline Plane operator * (const Plane& p) 
 		{
 			Plane ret;
@@ -484,20 +509,22 @@ namespace Sapphire
 			return r;
 		}
 
-		//! Returns a rotation that is equivalent to that set by setRotationDegrees().
-		/** This code was sent in by Chev.  Note that it does not necessarily return
-		the *same* Euler angles as those set by setRotationDegrees(), but the rotation will
-		be equivalent, i.e. will have the same result when used to rotate a vector or node. */
+		// 返回旋转度数向量
+		/** 
+        注意它不总是返回setRotationDegrees（）设置相同的欧拉角, 但这个rotation用于旋转一个向量和节点
+		有着相同的结果
+		*/
 
 		inline Vector3 getRotationDegrees()
 		{
 			Matrix4 mat = *this;
+			//该算法用行矩阵
 			if (mat.RowMajor == false)
 			{
 				mat.transpose();
 			}			
 			Vector3 scale = this->getScale();
-			// we need to check for negative scale on to axes, which would bring up wrong results
+			//缩放值不能为负数
 			if (scale.y < 0 && scale.z < 0)
 			{
 				scale.y = -scale.y;
